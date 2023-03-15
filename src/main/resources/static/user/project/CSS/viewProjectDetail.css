@@ -357,7 +357,6 @@ pre {
 
 /* 댓글 */
 .comment {
-    /* border: 2px solid burlywood; */
     grid-area: reply;
     margin: 30px 0px;
 }
@@ -392,7 +391,7 @@ pre {
 
 #comment-box {
     resize: none; /* 텍스트 박스 크기 고정 */
-    font-family: 'Do Hyeon', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
     letter-spacing: 1px; /* 자간 */
     font-weight: 100;
     font-size: 17px;
@@ -493,7 +492,7 @@ pre {
 
 #comment {
     resize: none; /* 텍스트 박스 크기 고정 */
-    font-family: 'Do Hyeon', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
     font-weight: 100;
     font-size: 17px;
     padding: 20%;
