@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>project_page</title>
+    <title>프로젝트 상세페이지</title>
     <link rel="stylesheet" href="/src/main/resources/static/admin/project/CSS/projectPage.css" type="text/css">
     <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
     <div th:replace="src/main/resources/templates/common/sidebar/adminSidebar.html">
     </div>-->
 
-    
+  
     <div class="body-content wrapper">
         
         <div class="content-table">
@@ -101,8 +101,8 @@
                     </tr>
                     <tr>
                         <td class="content-title">상세소개</td>
-                        <td class="content-text1">
-                        <iframe width="600px" height="500px" scr="projectHome.html"></iframe>
+                        <td>
+                        <iframe width="600px" height="600px" scr="http://www.naver.com"></iframe>
                            
                         </td>
                         <td class="content-text2"></td>
@@ -193,27 +193,37 @@
 
                     <tr>
                         <td class="text-title" colspan="2">메인페이지 배너 노출</td>
-                        <td>
+                        <td class="mainBannerWrapper">
                             <input type="radio" name="mainBanner" id="yes" value="Y">
                             <label for="yes" class="content-text1">설정</label>
                             <input type="radio" name="mainBanner" id="no" value="N">
                             <label for="no" class="content-text1">해제</label>
+                            <label class="eventDateBox">시작일</label>
+                            <input type="date" name="startDate">
+                            <label class="eventDateBox" id="eEndbox">종료일</label>
+                            <input type="date" name="endDate">
                         </td>
                         <td></td>
                     </tr>
 
                     <tr>
                         <td class="text-title" colspan="2">오늘의 프로젝트</td>
-                        <td>
-                            <ul calss="radio-wrapper">
-                                <input type="radio" name="todayProject" id="yes" value="Y">
-                                <label for="yes" class="content-text1">설정</label>
-                                <input type="radio" name="todayProject" id="no" value="N">
-                                <label for="no" class="content-text1">해제</label>
-                            </ul>
+                        <td class="mainBannerWrapper">
+                            <input type="radio" name="todayProject" id="yes" value="Y">
+                            <label for="yes" class="content-text1">설정</label>
+                            <input type="radio" name="todayProject" id="no" value="N">
+                            <label for="no" class="content-text1">해제</label>
+                            <label class="eventDateBox">시작일</label>
+                            <input type="date" name="startDate">
+                            <label class="eventDateBox" id="eEndbox">종료일</label>
+                            <input type="date" name="endDate">
                         </td>
                         <td></td>
                     </tr>
+
+
+
+
                    
                 </tbody>
   
@@ -229,6 +239,8 @@
                     <a class="button-box" href=""><p class="button-text">취소</p></a>
                   
             </div>
+
+
 
 
         </div>
