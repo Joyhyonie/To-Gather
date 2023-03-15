@@ -137,8 +137,8 @@
                     </flex>
                     <br><br>
                     <div class="guide">
-                        - 펀딩 시작 및 종료일은 프로젝트 심사/승인 과정에서 조정될 수 있습니다. <br>
-                        - To-Gather가 채택하고 있는 <red>keep it all</red> 방식은 
+                        ✔ 펀딩 시작 및 종료일은 프로젝트 심사/승인 과정에서 조정될 수 있습니다. <br>
+                        ✔ To-Gather가 채택하고 있는 <red>keep it all</red> 방식은 
                         목표액을 달성하지 못 해도 Supporter에게 리워드를 <br>&nbsp;&nbsp; 제공하는 방식이며, 
                           운영 수수료는 7% 입니다.
                     </div>
@@ -247,7 +247,66 @@
                         <p class="title">* 리워드 배송비</p>
                         <input type="number" name="shippingfee" id="funding-goal" class="input" placeholder="단위 : 원" style="width:180px;">
                     </div>
-                    
+                    <div class="reward-box">
+                        <flex class="justify-between">
+                            <p class="title">리워드 1</p>
+                            <flex>
+                            <p class="title" id="remove-reward">리워드 삭제</p>
+                            <p class="title" id="add-reward">리워드 추가</p>
+                            </flex>
+                        </flex>
+                        <div class="reward-info">
+                            <flex>
+                                <div>
+                                    <p class="title">* 리워드명</p>
+                                    <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;">
+                                </div>
+                                <div>
+                                    <p class="title">* 리워드 금액</p>
+                                    <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:120px;">
+                                </div>
+                                <div>
+                                    <p class="title">* 리워드 예상 발송일</p>
+                                    <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:160px;">
+                                </div>
+                            </flex>
+                            <div>
+                                <p class="title">* 리워드 구성</p>
+                                <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:700px;">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="reward-box">
+                        <flex class="justify-between">
+                            <p class="title">리워드 2</p>
+                            <flex>
+                            <p class="title" id="remove-reward">리워드 삭제</p>
+                            <p class="title" id="add-reward">리워드 추가</p>
+                            </flex>
+                        </flex>
+                        <div class="reward-info">
+                            <flex>
+                                <div>
+                                    <p class="title">* 리워드명</p>
+                                    <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;">
+                                </div>
+                                <div>
+                                    <p class="title">* 리워드 금액</p>
+                                    <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:120px;">
+                                </div>
+                                <div>
+                                    <p class="title">* 리워드 예상 발송일</p>
+                                    <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:160px;">
+                                </div>
+                            </flex>
+                            <div>
+                                <p class="title">* 리워드 구성</p>
+                                <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:700px;">
+                            </div>
+                        </div>
+                        
+                    </div>
 
                 </div>
                 
@@ -257,15 +316,93 @@
             <div class="go" id="five"></div>
             <p class="description">리워드 배송 및 환불 정책을 Maker님의 프로젝트 내용에 맞춰 입력해주세요 :)</p>
             <div class="box five">
-                
-                
+                <div>
+                    <p class="title">* 제목</p>
+                    <input type="text" name="noticeTitle" id="notice-title" class="input" maxlength="20" style="width:830px;"
+                            value="리워드 배송 및 환불 정책">
+                </div>
+                <div>
+                    <p class="title">* 내용</p>
+                    <textarea name="noticeContent" id="notice-content" class="input" maxlength="1000" style="width:830px;height:300px;">✔ 리워드 배송 안내&#10;리워드는 프로젝트 종료 후 0월 0일부터 순차적으로 배송될 예정입니다. 배송이 시작되거나, 배송이 늦어지게 되는 경우 모두 따로 안내드릴 예정입니다.&#10;&#10;✔ 리워드 배송 지연 시&#10;펀딩해 주신 Supporter분들께 약속드린 리워드 발송일을 지키기 위해 최선을 다할 것을 약속합니다. &#10;단, 펀딩을 받아야만 생산을 시작할 수 있는 크라우드펀딩 특성과 생산 과정에서의 예상치 못한 상황으로 인해 리워드 발송이 다소 지연될 수 있는 점을 알려드립니다.&#10;&#10;✔ 환불 및 교환정책&#10;파손, 불량품 수령 시 7일 이내로 교환이 가능하며, 이 경우 발생하는 배송비는 Maker가 부담합니다.&#10;Supporter의 배송지 기재 오류, Supporter가 Maker에게 사전 고지 없이 배송지를 수정해 배송사고가 발생할 경우, 재 발송에 따른 배송비 부담은 Supporter에게 있습니다. </textarea>
+                </div>
             </div>
 
             <!-- step 6. 정산 확인 -->
             <div class="go" id="six"></div>
             <p class="description">정산을 위한 서류를 첨부해주세요 :)</p>
             <div class="box six">
-                
+                <div class="items">
+                    <div>
+                        <p class="title">정산 예상 금액 <gray>(설정하신 목표 금액을 기준으로 산정한 정산 예상 금액입니다.)</gray></p>
+                    </div>
+                    <table id="settle-result">
+                        <tr>
+                            <td class="left-td">목표 금액</td>
+                            <td class="right-td">10,000,000원</td>
+                        </tr>
+                        <tr>
+                            <td class="left-td">운영 수수료<gray> (7%)</gray></td>
+                            <td class="right-td">700,000원</td>
+                        </tr>
+                        <tr>
+                            <td class="left-td">결제 수수료<gray> (3%)</gray></td>
+                            <td class="right-td">300,000원</td>
+                        </tr>
+                        <tr>
+                            <td class="left-td">부가세<gray> (1%)</gray></td>
+                            <td class="right-td">100,000원</td>
+                        </tr>
+                        <tr>
+                            <td class="left-td">합계</td>
+                            <td class="right-td">8,900,000원</td>
+                        </tr>
+                    </table>
+
+                    <flex class="bottom-solid">
+                        <div>
+                            <p class="title">* 정산 서류</p><br>
+                            <p class="gray-text">(사업자등록증 또는 신분증 사본)</p>
+                        </div>
+                        <label for="main-image" class="upload" id="upload-main-image">파일 올리기</label>
+                        <input type="file" id="main-image" name="mainImage" accept="image/jpg, image/png">
+                    </flex>
+                    <div class="for-icon">
+                        <input class="upload-name" id="settle-doc-name" value="파일을 업로드 해주세요 :)" readonly>
+                        <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
+                    </div>
+
+                    <flex class="bottom-solid">
+                        <div>
+                            <p class="title">* 통장 사본</p><br>
+                            <p class="gray-text">(사업자의 경우 사업자명의 통장, 개인일 경우 개인명의의 통장)</p>
+                        </div>
+                        <label for="main-image" class="upload" id="upload-main-image">파일 올리기</label>
+                        <input type="file" id="main-image" name="mainImage" accept="image/jpg, image/png">
+                    </flex>
+                    <div class="for-icon">
+                        <input class="upload-name" id="settle-doc-name" value="파일을 업로드 해주세요 :)" readonly>
+                        <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
+                    </div>
+
+                    <flex class="bottom-solid">
+                        <div>
+                            <p class="title">* 기타 서류</p><br>
+                            <p class="gray-text">(프로젝트를 설명한 기타 서류나 리워드의 종류에 따라 To-Gather에서 추가 서류를 요청하는 경우)</p>
+                        </div>
+                        <label for="main-image" class="upload" id="upload-main-image">파일 올리기</label>
+                        <input type="file" id="main-image" name="mainImage" accept="image/jpg, image/png">
+                    </flex>
+                    <div class="for-icon">
+                        <input class="upload-name" id="settle-doc-name" value="파일을 업로드 해주세요 :)" readonly>
+                        <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
+                    </div>
+                    <br><br>
+                    <div class="guide">
+                        ✔ 접수된 프로젝트는 영업일 2일 이내 심사하여 피드백을 드립니다. <br>
+                        ✔ 제출 된 프로젝트는 수정이 <red>불가</red>하오니 작성된 내용을 꼼꼼히 확인하시어 제출해주시기 바랍니다. <br>
+                        ✔ 펀딩 정산은 해당 프로젝트의 종료일 이후 14일 째에 처리됩니다. <br>
+                    </div>
+                </div>
                 
             </div>
 

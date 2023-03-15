@@ -86,11 +86,11 @@ flex {
 }
 
 .input { /* 모든 input 클래스의 속성 */
-    border-radius: 30px;
+    border-radius: 20px;
     border: 2px solid #F8F8F8;
     background-color: #F8F8F8;
     padding: 13px 30px;
-    border: 1px solid #709053;
+    border: 1.5px solid #709053;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 18px;
 }
@@ -116,6 +116,10 @@ red {
     color: rgb(255, 82, 82);
 }
 
+gray {
+    color: #C2C2C2;
+}
+
 select { /* select 화살표 커스텀 */
     background: url('../images/polygon2.png') no-repeat 92% 55%; 
     -webkit-appearance: none; 
@@ -136,6 +140,10 @@ select { /* select 화살표 커스텀 */
     cursor: pointer;
     right: 20px;
     bottom :20px;
+}
+
+.upload:hover {
+    color: #C7E78B;
 }
 
 .bottom-solid {
@@ -169,6 +177,32 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
     top: 10px;
     left: 10px;
     width: 30px;
+}
+
+.justify-between {
+    justify-content: space-between;
+    border-bottom: 3px solid #709053;
+    margin: 20px 0px; /* 아래 리워드 요소들과 위 요소들과의 간격 */
+}
+
+#remove-reward,
+#add-reward {
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+#remove-reward:hover,
+#add-reward:hover {
+    color: #709053;
+}
+
+.reward-info {
+    border: 1.5px solid #709053;
+    border-radius: 20px;
+}
+
+#reward-contents {
+    margin-bottom: 30px;
 }
 
 
@@ -258,5 +292,59 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
     margin: auto;
 }
 
-#summernote {
+/* 4. 리워드 설계 */
+
+/* 5. 리워드 안내 */
+/* 스크롤바 설정 */
+#notice-content::-webkit-scrollbar {
+    width: 20px;
 }
+
+/* 스크롤바 막대 설정 */
+#notice-content::-webkit-scrollbar-thumb {
+    background-color: #DEDCDC;
+    border-radius: 10px; /* 스크롤바 둥글게 설정 */
+}
+
+/* 스크롤바 뒷 배경 설정 */
+#notice-content::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0); /* 투명 */
+}
+
+textarea {
+    resize: none;
+}
+
+/* 6. 정산 확인 */
+table {
+    font-size: 22px;
+    /* width: 100%; */
+    border-top: 3px solid #709053;
+    border-bottom: 3px solid #709053;
+    border-collapse: collapse;
+    margin: 20px 0px;;
+  }
+
+  .left-td {
+    border-bottom: 1px solid #444444;
+    border-left: none;
+    padding: -10px;
+    background-color: #F8F8F8;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 160px;
+    font-weight: 500;
+    align: right;
+  }
+
+  .left-td gray {
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .right-td {
+    border-bottom: 1px solid #444444;
+    border-left: 3px solid #709053;
+    padding: 0px 450px 0px 20px;
+    align: right;
+  }
