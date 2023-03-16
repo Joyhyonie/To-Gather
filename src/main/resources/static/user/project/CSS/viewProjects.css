@@ -85,10 +85,6 @@ select { /* select 화살표 커스텀 */
     cursor: pointer;
 }
 
-.like-full {
-    display: none;
-}
-
 .display-box {
     position: absolute;
     top:103px;

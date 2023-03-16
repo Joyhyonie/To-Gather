@@ -112,10 +112,6 @@ flex {
     cursor: pointer;
 }
 
-.like-full {
-    display: none;
-}
-
 .display-box {
     position: absolute;
     top:103px;

@@ -1,27 +1,22 @@
 window.onload = function() {
 
-    /* 이미지에 마우스오버를 하면 프로젝트 간략 소개 나타내기 */
-    // const projectImage = document.querySelector(".project-image")
-    // const displayBox = document.querySelector(".display-box")
+    /* 좋아요 버튼 */
+    const likeBtns = document.querySelectorAll('.like-btn'); /* querySelectorAll을 통해 모든 class=like-btn 가져옴 */
 
-    // projectImage.addEventListener('mouseenter', () => displayBox.style.transition = "block");
-    // displayBox.addEventListener('mouseout', () => displayBox.style.display = "none");
+    likeBtns.forEach((likeBtn) => { /* 가져온 요소들의 집합을 반복문을 통해 하나씩 접근 */
+        
+        let isLiked = false;
 
-
-    /* 하트를 클릭할 시 이미지 변경 */
-    const likeFull = document.querySelector(".like-full")
-    const likeEmpty = document.querySelector(".like-empty")
-
-    likeEmpty.addEventListener('click', changeToFull)
-    likeFull.addEventListener('click', changeToEmpty)
-
-    function changeToFull() {
-        likeEmpty.style.display = "none";
-        likeFull.style.display = "block";
-    }
-
-    function changeToEmpty() {
-        likeEmpty.style.display = "block";
-        likeFull.style.display = "none";
-    }
+        likeBtn.addEventListener('click', like)
+    
+        function like() {
+            if(isLiked) {
+                likeBtn.src = "/src/main/resources/static/user/main/images/like-empty.png";
+                isLiked = false;
+            } else {
+                likeBtn.src = "/src/main/resources/static/user/main/images/like-full.png"
+                isLiked = true;
+            }
+        }
+    })
 }
