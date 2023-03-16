@@ -71,7 +71,7 @@ button:hover {
 
 #today,
 #popular {
-    margin-top: -80px;
+    margin-top: -100px;
     padding-bottom: 80px;
     border-bottom: 2px solid #DEDCDC;
 }
@@ -90,6 +90,7 @@ flex {
     width: 250px;
     height: 350px;
     margin: 0px 20px;
+    cursor: pointer;
 }
 
 .project-image {
@@ -99,7 +100,6 @@ flex {
     height: 165px;
     top: 15px;
     left: 15px;
-    cursor: pointer;
 }
 
 .like-box {
@@ -178,8 +178,8 @@ flex {
 
 .percent {
     position: absolute;
-    top: 253px;
-    right: 20px;
+    top: 255px;
+    right: 15px;
     font-size: 40px;
     text-align: right;
     color: #709053;
@@ -187,7 +187,7 @@ flex {
 
 /* 게시판 */
 .board-box {
-    margin: -30px 50px 100px 50px;
+    margin: -50px 50px 100px 50px;
 }
 
 .board-type {
@@ -207,7 +207,7 @@ flex {
 .board-title {
     font-size: 20px;
     background-color: #F4F4F4;
-    border: 5px solid #F4F4F4;
+    border: 3px solid #F4F4F4;
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
@@ -215,7 +215,6 @@ flex {
 
 .board-title:hover {
     background-color: white;
-    /* color: white; */
+    border: 3px solid #DEDCDC;
     cursor: pointer;
 }
-
