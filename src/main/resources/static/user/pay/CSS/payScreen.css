@@ -319,6 +319,19 @@ span {
 
 .btn-point {
     padding: 1.625rem 0.9375rem;
+    margin-left: 2px;
+    background-color: #81AE64;
+    width: 500px;
+    height: 70px;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 50px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
 }
 
 p {

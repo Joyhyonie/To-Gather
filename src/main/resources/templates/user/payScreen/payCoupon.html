@@ -17,36 +17,49 @@
     <div class="listbox">
         <div class="list">
             <div class="imgbox">
+                <button type="button" class="btn">
                 <img id="logo" src="/src/main/resources/static/common/userCommon/images/logo.png">
                 <h3>회원 가입 축하 쿠폰</h3>
                 <h4>10,000원</h4>
-                <h4>2023.01.01~2023.03.01</h4>
+                <h4>2023.01.01~2023.03.01</h4></button>
             </div>
         </div>
         <div class="list">
             <div class="imgbox">
+                <button type="button" class="btn">
                 <img id="logo" src="/src/main/resources/static/common/userCommon/images/logo.png">
                 <h3>회원 가입 축하 쿠폰</h3>
                 <h4>10,000원</h4>
-                <h4>2023.01.01~2023.03.01</h4>
+                <h4>2023.01.01~2023.03.01</h4></button>
+            </div>
+        </div>
+        <div class="list">
+            <div class="imgbox" >
+                <button type="button" class="btn">
+                <img id="logo" src="/src/main/resources/static/common/userCommon/images/logo.png">
+                <h3>회원 가입 축하 쿠폰</h3>
+                <h4>10,000원</h4>
+                <h4>2023.01.01~2023.03.01</h4></button>
             </div>
         </div>
         <div class="list">
             <div class="imgbox">
+                <button type="button" class="btn">
                 <img id="logo" src="/src/main/resources/static/common/userCommon/images/logo.png">
                 <h3>회원 가입 축하 쿠폰</h3>
                 <h4>10,000원</h4>
-                <h4>2023.01.01~2023.03.01</h4>
-            </div>
-        </div>
-        <div class="list">
-            <div class="imgbox">
-                <img id="logo" src="/src/main/resources/static/common/userCommon/images/logo.png">
-                <h3>회원 가입 축하 쿠폰</h3>
-                <h4>10,000원</h4>
-                <h4>2023.01.01~2023.03.01</h4>
+                <h4>2023.01.01~2023.03.01</h4></button>
             </div>
         </div>
     </div>
+
+    <script>
+        const $change = document.getElementsByClassName('imgbox');
+        console.log($change);
+        $change[0].addEventListener("mouseover", function (event) {
+            console.log($change)
+            event.target.style.color = "white";
+        }, false)
+    </script>
 </body>
 </html>
