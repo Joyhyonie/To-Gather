@@ -1,9 +1,49 @@
+
+
+.wrapper { 
+    padding-top: 120px; 
+    max-width: 1100px;
+    margin: 0 auto; 
+    justify-content: center; /* 모든 요소 가운데 정렬 */
+
+}
+
+h1 {
+    font-size: 35px;
+}
+
+p {
+    font-size: 35px;
+}
+
+
 body {
     font-family: 'Do Hyeon', sans-serif;
+    font-weight: normal;
+    color: #535353;
+}
+
+
+.userName {
+
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+
+}
+
+.userName:focus {
+    border: 2px solid #709053;
+    outline: none;
 }
 
 .btn-id {
-    width:50px;
+    width:60px;
     height: 30px;
     background-color: #81AE64;
     border: none;
@@ -14,9 +54,10 @@ body {
     cursor: pointer;
     border-radius:15px;
     font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
 }
 
-.btn-adress {
+.searchZipCode {
     width:50px;
     height: 30px;
     background-color: #81AE64;
@@ -28,6 +69,7 @@ body {
     cursor: pointer;
     border-radius:15px;
     font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
 }
 
 .btn-sign_up{
@@ -43,6 +85,7 @@ body {
     font-family: 'Do Hyeon', sans-serif;
     border-radius:15px;
     font-size: 20px;
+    box-shadow: 5px 5px 5px #eee;
 }
 
 .btn-id:hover {
@@ -57,60 +100,122 @@ body {
     background-color: #C7E78B;
 }
 
-
-.email  {
-    border-radius:15px;
-    height: 25px;
-    font-family: 'Do Hyeon', sans-serif;
+.userId {  
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
     text-align: center;
-    width: 250px;
-    font-size : 15px;
 }
 
-.pwd {
-    border-radius:15px;
-    height: 25px;
-    font-family: 'Do Hyeon', sans-serif;
-    text-align: center;
-    width: 250px;
-    font-size : 15px;
+.userId:focus {
+border: 2px solid #709053;
+    outline: none;
 }
 
-.pwd-check {
-    border-radius:15px;
-    height: 25px;
-    font-family: 'Do Hyeon', sans-serif;
+.userPwd {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
     text-align: center;
-    width: 250px;
-    font-size : 15px;
+    
+
 }
 
-.name {
-    border-radius:15px;
-    height: 25px; 
-    font-family: 'Do Hyeon', sans-serif;
-    text-align: center;
-    width: 250px;
-    font-size : 15px;
+.userPwd:focus {
+    border: 2px solid #709053;
+    outline: none;
 }
 
-.phone2 {
-    border-radius:15px;
-    height: 25px;
-    font-family: 'Do Hyeon', sans-serif;
+.userPwd2 {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
     text-align: center;
-    width: 250px;
-    font-size : 15px;
+    
+}
+
+.userPwd2:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.phone {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.phone:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+
+.zipCode {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.zipCode:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.address1 {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.address1:focus {
+    border: 2px solid #709053;
+    outline: none;
 }
 
 .address2 {
-    border-radius:15px;
-    height: 25px;
-    font-family: 'Do Hyeon', sans-serif;
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
     text-align: center;
-    width: 250px;
-    font-size : 15px;
 }
+
+.address2:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
 
 .signup {
     

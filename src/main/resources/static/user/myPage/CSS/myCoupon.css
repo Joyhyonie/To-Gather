@@ -6,7 +6,7 @@
 }
 
 body {
-    display: grid;
+    /* display: flex; */
     font-family: 'Do Hyeon', sans-serif;
     font-weight: normal;
     color: #535353;
@@ -50,29 +50,31 @@ body {
 
     width: 250px;
     float: left;
-    margin-right: 50px;
+    margin-right: 200px;
 }
 
 .coupon {
     display: flex;
-    position: relative;
-    align-items: center;
-    font-size:25px;
+    justify-content: center;
+    align-items: center; 
+}
+.have-list {
+    display: flex;
+    justify-content:space-between;
+    /* width: 700px; */
+    height: 50px;
+    background-color: #F4F4F4;
+    
 }
 
-table {
-    border-collapse: collapse;
+.outline {
+    margin-left: auto; 
+    margin-right: 5%;
 }
 
-.content{
-    position: relative;
-    width: 700px;
+.list {
+    display: flex;
+    justify-content:space-between;
 }
 
-.table-header {
-    background-color:#F4F4F4;
-}
 
-.table-body {
-    text-align: center;
-}

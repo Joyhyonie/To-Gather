@@ -1,9 +1,21 @@
 /* 로그인 페이지 */
 
+.wrapper { 
+    padding-top: 120px; 
+    max-width: 1100px;
+    margin: 0 auto; 
+    justify-content: center; /* 모든 요소 가운데 정렬 */
+
+}
+
+
 body {
     font-family: 'Do Hyeon', sans-serif;
     font-weight: normal;
+    color: #535353;
+    font-size: 100%;
 }
+
 
 .btn-email {
     width:150px;
@@ -19,6 +31,7 @@ body {
     margin: 4px;
     cursor: pointer;
     border-radius:15px;
+    box-shadow: 5px 5px 5px #eee;
     
     
 }
@@ -38,21 +51,37 @@ body {
 }
 
 .email {
-    border-radius:15px;
-    height: 30px;
-    font-family: 'Do Hyeon', sans-serif;
-    width: 300px;
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 10px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
     text-align: center;
-    font-size: 15px;
+    
 }
 
 .pwd {
-    border-radius:15px;
-    height: 30px;
-    font-family: 'Do Hyeon', sans-serif;
-    width: 300px;
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 10px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
     text-align: center;
-    font-size: 15px;
+   
+}
+
+.email:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.pwd:focus {
+    border: 2px solid #709053;
+    outline: none;
 }
 
 .email-login {
@@ -75,6 +104,7 @@ body {
     background-color: white;
     font-family: 'Do Hyeon', sans-serif;
     font-size: 15px;
+    color: #535353;
 }
 
 .login-select:hover {
