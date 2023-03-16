@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/admin/user/CSS/user.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <title>회원관리</title>                    
+</head>
+<body>
+    <div class="content">
+        <div class="content1">
+            <div class="menu-title">회원 관리</div>
+            <div class="searchbar">
+                <form id="searchForm" action="" method="get">
+                    <select class="sort">
+                        <option value="email">아이디</option>
+                        <option value="userNm">이름</option>
+                        <option value="quitYn">탈퇴여부</option>
+                    </select>
+                    <input type="text" class="searchContent">
+                    <button class="search-button" type="submit"><i class="bi bi-search"></i></button>
+                </form>                  
+            </div>
+        </div>
+
+        <div class="content2">
+            <table>
+                <tr class="table-header">
+                    <th><form><input type="checkbox" class="checkbox"/></form></th>
+                    <th>회원번호</th>
+                    <th>아이디</th>
+                    <th>회원이름</th>
+                    <th>가입일</th>
+                    <th>탈퇴일</th>
+                    <th>탈퇴여부</th>
+                    <th>상세정보</th>
+                </tr>
+                <tr class="table-content">
+                    <td><form><input type="checkbox"/></form></td>
+                    <td>us00000002</td>
+                    <td>gildong123@greedy.com</td>
+                    <td>홍길동</td>
+                    <td>2022.12.19</td>
+                    <td>2023.03.15</td>
+                    <td>Y</td>
+                    <td><button class="user-detail">조회</button></td>
+                </tr>
+                <tr class="table-content">
+                    <td><form><input type="checkbox"/></form></td>
+                    <td>us00000003</td>
+                    <td>sinsa12343@greedy.com</td>
+                    <td>신사임당</td>
+                    <td>2021.05.02</td>
+                    <td></td>
+                    <td>N</td>
+                    <td><button class="user-detail">조회</button></td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div class="content3">
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+</body>
+</html>

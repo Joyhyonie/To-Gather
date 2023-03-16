@@ -1,0 +1,125 @@
+@charset "UTF-8"; 
+
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'BMDOHYEON';
+}
+
+.content {
+    position: relative;
+    max-width: 1100px;
+    margin: auto;
+    top: 120px;
+
+}
+
+.content1 {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    background-color:bisque;
+}
+
+.menu-title {
+    color: #355d3b;
+    font-size: 24px;
+    padding: 10px;
+}
+
+.sort { 
+    border-radius: 5px;
+    width: 80px;
+    height: 30px;
+    font-size: 14px;
+    color: #424242;
+}
+
+.searchbar {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 320px;
+    height: 100px;
+    
+}
+
+.searchContent {
+    width: 220px;
+    height: 30px;
+    border: 1px solid #424242;
+    border-radius: 8px;
+}
+/* 
+.searchContent:focus{
+    outline: 2px solid #C7E78B;
+} */
+
+
+.search-button {
+    position: absolute;
+    left: 278px;
+    top: 33.5px;
+    width: 33px;
+    height: 33px;
+    background-color: #ffffff;
+    border: 1px solid #424242;
+    border-radius: 8px;
+    background-color: #424242;
+}
+
+.bi {
+    position: absolute;
+   font-size: 18px;
+   top: 7px;
+   left: 7px;
+   color:#ffffff;
+}
+
+ 
+
+/* 테이블 content2*/
+
+.content2 {
+    display: inline-block;
+    align-items: center;
+    height: 800px;
+    color:#424242;
+
+}
+
+table {
+    border-collapse: collapse;
+    width: 1100px;
+    text-align: center;
+    line-height: 2.5;
+    height: 100px;
+    padding: 0 10px;
+    border-bottom: 0px 1px 1px 0px #424242;
+}
+
+.table-content {
+    height: 50px;
+    box-shadow: 0px 1.5px 0px 0px #c9c9c9;
+}
+
+.user-detail{
+    border: 0px;
+    border-radius: 5px;
+    width: 60px;
+    height: 25px;
+    background-color: #c7e78e;
+}
+
+.table-header {
+    background-color: #f8f8f8;
+    height: 55px;
+    border-top: 2px solid #c9c9c9;
+    box-shadow: 0px 3px 0px 0px #c9c9c9;
+}
