@@ -1,16 +1,25 @@
 
+.wrapper { 
+    padding-top: 120px; 
+    max-width: 1100px;
+    margin: 0 auto; 
+    justify-content: center; /* 모든 요소 가운데 정렬 */
+
+}
 body {
     font-family: 'Do Hyeon', sans-serif;
+    font-weight: normal;
+    color: #535353;
 }
 
-h2 {
-
-    font-weight: normal;
+h1 {
+    font-size: 40px;
+    margin-top: -3px;
 }
 
 .menu-link {
     text-decoration: none;
-    color:black;
+    color: #535353;
 }
 
 
@@ -25,61 +34,108 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center; 
+ 
 }
 
-.mail {
-    border-radius:15px;
-    height: 30px;
-    font-family: 'Do Hyeon', sans-serif;
-    width: 250px;
+.userId {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
     text-align: center;
-    font-size: 16px;
 }
 
-.name {
-    border-radius:15px;
-    height: 30px;
-    font-family: 'Do Hyeon', sans-serif;
-    width: 250px;
+.userId:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.userName {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
     text-align: center;
-    font-size: 16px;
 }
 
-.pwd{
-    width:250px;
-    height: 30px;
+.userName:focus{
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.updatePwd{
+    width:300px;
+    height: 36px;
     background-color: #81AE64;
     border: none;
     color:#fff;
     padding: 0px 0;
-    font-size: 18px;
+    font-size: 17px;
     margin: 4px;
     cursor: pointer;
     border-radius:15px;
-    font-family: 'Do Hyeon', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
 }
 
-.phone2 {
-    border-radius:15px;
-    height: 30px;
-    font-family: 'Do Hyeon', sans-serif;
-    width: 250px;
+.phone {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
     text-align: center;
-    font-size: 16px;
+}
+
+.phone:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.address1 {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.address1:focus {
+    border: 2px solid #709053;
+    outline: none;
 }
 
 .address2 {
-    border-radius:15px;
-    height: 30px;
-    font-family: 'Do Hyeon', sans-serif;
-    width: 250px;
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
     text-align: center;
-    font-size: 16px;
 }
 
-.btn-search {
+.address2:focus {
+    border: 2px solid #709053;
+    outline: none;
+}
+
+.btn-phone {
+
     width:50px;
-    height: 30px;
+    height: 35px;
     background-color: #81AE64;
     border: none;
     color:#fff;
@@ -89,6 +145,69 @@ h2 {
     cursor: pointer;
     border-radius:15px;
     font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+
+}
+
+.searchZipCode {
+
+    width:50px;
+    height: 35px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+
+}
+
+.address2 {
+    border-radius: 30px;
+    border: 2px solid #F8F8F8;
+    background-color: #F8F8F8;
+    padding: 5px 30px;
+    border: 1px solid #709053;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+.btn-phone {
+
+    width:50px;
+    height: 35px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+
+}
+
+
+.btn-search {
+    width:50px;
+    height: 35px;
+    background-color: #81AE64;
+    border: none;
+    color:#fff;
+    padding: 0px 0;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
 }
 
 
@@ -104,6 +223,7 @@ h2 {
     cursor: pointer;
     border-radius:15px;
     font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
 }
 
 .btn-myInfo {
@@ -119,8 +239,15 @@ h2 {
     cursor: pointer;
     border-radius:15px;
     font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 5px 5px 5px #eee;
+    
+}
+
    
 
+
+.btn-phone:hover {
+    background-color: #C7E78B;
 }
 
 .pwd:hover {
@@ -140,7 +267,7 @@ h2 {
 }
 
 .menu-link:hover {
-    background-color: #81AE64;
+    color: #81AE64;
  }
  
 .updateInfo {
@@ -150,15 +277,37 @@ h2 {
 }
 
 
-.myInfo {
+.my-Info {
     text-align: center;
+
+    margin-left: 270px;
+
+    margin-left: 240px;
+
 }
 
-
 .aside {
-
     width: 250px;
     float: left;
 }
 
+
+#profile-area {
+    position: relative;
+}
+
+#preview-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    margin-left: 60px;
+}
+
+.upload-name {
+    display: none;
+}
+
+#real-file { 
+    display: none;
+}
 

@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>searchId_result</title>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/src/main/resources/static/login/CSS/searchId_result.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/main/resources/static/user/login/CSS/searchIdResult.css" type="text/css">
 </head>
 <body>
     <div th:replace="header/userHeader.html"></div>
     
+    <div class="wrapper">
     <h1 align="center">아이디 찾기 결과</h1>
     <p align="center">
         아이디와 가입경로를 안내해드려요.
@@ -18,7 +20,7 @@
 
     <div class="searchId_result">
         <label for="useremail"></label>
-        <input class="mail" type="text" id="useremail" name="useremail" placeholder="hong***@greedy.com" required>
+        <input class="mail" type="text" id="userId" name="userId" placeholder="hong***@greedy.com" required>
     </div>
     <br>
 
@@ -28,6 +30,6 @@
     </div>
     
     <div th:replace="footer/userFooter.html"></div>
-
+</div>
 </body>
 </html>
