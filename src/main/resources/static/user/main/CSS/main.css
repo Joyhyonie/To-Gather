@@ -84,6 +84,7 @@ flex {
     display: flex;
 }
 
+/* 프로젝트 블럭 */
 .project-block {
     position: relative;
     border: 2px solid #DEDCDC;
