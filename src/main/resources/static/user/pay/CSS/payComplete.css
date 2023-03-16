@@ -86,3 +86,8 @@ img {
     top: 43%;
     left: 40%;
 }
+
+a {
+    color: black;
+    text-decoration: none;
+}

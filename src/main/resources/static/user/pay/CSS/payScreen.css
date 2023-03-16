@@ -102,7 +102,8 @@ body {
 }
 
 #countbox {
-    width: 50px;
+    width: 70px;
+    height: 30px;
     border: 1px solid #c7e78b;
     border-radius: 5px;
     font-weight:400;
@@ -364,12 +365,16 @@ p {
 }
 
 .img {
+    /* margin-left: 40px; */
     width: 100px;
     height: 100px;
 }
 
 .off {
+    margin-left: 40px;
     display: none;
+    width: 100px;
+    height: 100px;
 }
 
 a:link {
