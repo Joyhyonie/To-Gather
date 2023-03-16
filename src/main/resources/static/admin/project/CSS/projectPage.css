@@ -14,19 +14,6 @@ img {
 
 /* project page ------------------------------------------------------------------------------------- */
 
-.main-nav{
-
-    width: 100%;
-    height: 90px;
-    background-color: antiquewhite;
-}
-
-.side-nav{
-    width: 200px;
-    height: 800px;
-    background-color: azure;
-
-}
 
 .wrapper{
 
@@ -50,7 +37,7 @@ img {
 .button-wrapper{
     display: flex;
     gap: 10px;
-    margin-left: 212px;
+
     margin-top: 30px;
     margin-bottom: 100px;
     
@@ -58,9 +45,5 @@ img {
 
 .button-box{
     display: grid;
-    width: 150px;
-    height: 40px;
-    background-color: #81AE64;
-}
 
 
