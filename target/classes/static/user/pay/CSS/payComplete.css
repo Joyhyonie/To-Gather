@@ -1,0 +1,66 @@
+* {
+    /* display: grid; */
+}
+
+body {
+    font-family: 'Do Hyeon', sans-serif;
+    font-weight: normal;
+    color: #535353;
+}
+
+.container {
+    width: 1140px;
+    margin: auto;
+}
+
+.text-top {
+    text-align: center;
+    margin-top: 5%;
+}
+
+p {
+    text-align: center;
+    padding: 1%;
+    color: #535353;
+}
+
+.text-body {
+    text-align: center;
+    margin-top: 3%;
+    color: #535353;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin-left: 25px;
+    margin-top: 15px;
+}
+
+.imgBox {
+    width: 250px;
+    height: 230px;
+    border: #535353 solid 1px;
+    border-radius: 10%;
+    margin-bottom: 2%;
+}
+
+.text-foot {
+    margin-top: 10%;
+    float: left;
+    margin-right: 10%;
+}
+
+.togather {
+    color: #81AE64;
+    margin-bottom: 2%;
+}
+
+.pjIntro {
+    margin-bottom: 4%;
+}
+
+.pjTitle {
+    
+}

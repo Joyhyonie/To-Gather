@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myInfo</title>
+    <script type="text/javascript" src="/src/main/resources/static/user/myPage/js/myInfo.js"></script> 
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/main/resources/static/user/myPage/CSS/myInfo.css" type="text/css">
+</head>
+<body>
+     
+    <div class="wrapper">
+      <div class="aside">
+        
+        <ul>
+            <li><a class="menu-link" href="#myInfo">내 정보</a></li>
+            <br>
+            <li><a class="menu-link" href="#">보유 쿠폰</a></li>
+            <br>
+            <li><a class="menu-link" href="#">좋아요한 프로젝트</a></li>
+            <br>
+            <li><a class="menu-link" href="#">후원한 프로젝트</a></li>
+            <br>
+            <li><a class="menu-link" href="#">나의 프로젝트</a></li>
+            <br>
+            <br>
+            <li><a class="menu-link" href="#">로그아웃</a></li>
+            <br>
+            <li><a class="menu-link" href="#withdrawal">회원탈퇴</a></li>
+        </ul>
+    </div>
+
+
+    <h1 align="center">프로필 사진</h1>
+
+    <div class="profile">
+
+        <form id="thumbnailRegistForm" action="/thumbnail/regist" method="post" enctype="multipart/form-data">
+            <div id="profile-area">
+                    <div id="preview-area">
+                        <img src="/src/main/resources/static/user/myPage/images/정보.png" id="preview-image">
+                    </div>
+                    <input type="file" id="real-file" name="attachProfile" accept="image/gif, image/jpeg, image/png">
+                </div>
+
+
+
+        <button class="btn-profile" type="button" id="update_profile">수정</button>
+        <button class="btn-profile" type="button" id="delete_profile">삭제</button>
+    </div>
+    <br>
+    
+
+    <form action="/member/update" method="post">
+        <table align="center">
+            <tr>
+                <td style="width: 80px">아이디 </td>
+                <td><input class="userId" name="userId" placeholder="hong123@greedy.com"></td>
+                <td><p th:text="${ #authentication.principal.userId }"></p></td>
+            </tr>
+            <tr>
+                <td>이름 </td>
+                <td><input class="userName" name="userName" placeholder="홍길동"></td>
+                <td><p th:text="${ #authentication.principal.userName }"></p></td>
+            </tr>
+
+            <tr>
+                <td>비밀번호 </td>
+                <td><input class="updatePwd" type="button" value="비밀번호변경" id="updatePwd" th:value="${ #authentication.principal.phone }"></td>
+                <td><p th:value="${ #authentication.principal.phone }"></p></td>
+            </tr>
+            <tr>
+                <td>연락처 </td>
+                <td><input class="phone" type="tel" name="phone" placeholder="010-1234-5678" th:value="${ #authentication.principal.phone }"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>주소</td>
+                <td><input class="address1" type="text" name="address1" id="address1" 
+                           th:value="${ #lists.size(address) > 1 ? address[1] : '' }" 
+                           readonly>
+                <td><input class="searchZipCode" type="button" value="검색" id="searchZipCode"></td>
+                    </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>상세주소</td>
+                <td><input class="address2" type="text" name="address2" id="address2" placeholder="상세주소" 
+                           th:value="${ #lists.size(address) > 2 ? address[2] : '' }"></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+
+    
+    <br>
+    
+    <div class="my-Info">
+        <button class="btn-myInfo" type="submit" id="save_Info">저장하기</button>
+    </div>
+</div>
+
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	
+	    const $searchZipCode = document.getElementById("searchZipCode");
+	
+	    $searchZipCode.onclick = function() {
+	
+	        new daum.Postcode({
+	            oncomplete: function(data){
+	                document.getElementById("address1").value = data.address;
+	                document.getElementById("address2").focus();
+	            }
+	        }).open();
+	    }
+
+    </script>
+</body>
+</html>

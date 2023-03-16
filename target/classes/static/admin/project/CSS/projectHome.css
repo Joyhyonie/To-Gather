@@ -1,0 +1,56 @@
+@charset "UTF-8"; 
+
+html {
+    font-size: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* project home ------------------------------------------------------------------------------------- */
+
+.main-nav{
+
+    width: 100%;
+    height: 90px;
+    background-color: antiquewhite;
+}
+
+.side-nav{
+    width: 200px;
+    height: 800px;
+    background-color: azure;
+
+}
+
+.wrapper{
+
+    display: flex;
+    
+             
+}
+
+
+.grid-content {
+    display: grid;
+    max-width: 1100px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-bottom: -50px;
+           
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    gap:30px;
+      
+}
+
+.menu-box {
+    
+    box-sizing: border-box;
+    background-color: #81AE64;
+    width: 220px;
+    height: 220px;   
