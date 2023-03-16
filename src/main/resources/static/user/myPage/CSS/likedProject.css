@@ -12,6 +12,11 @@ body {
     color: #535353;
 }
 
+h1 {
+    font-size: 40px;
+    margin-top: 3px;
+}
+
 
 .aside {
 
@@ -69,3 +74,11 @@ body {
     color: #81AE64;
  }
 
+.arrow {
+    text-align: center;
+}
+
+.arrow img {
+    width: 100px;
+    height: 100px;
+}
