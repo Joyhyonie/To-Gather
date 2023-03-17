@@ -4,57 +4,87 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로젝트 리스트</title>
-    <link rel="stylesheet" href="/src/main/resources/static/admin/project/CSS/projectList.css" type="text/css">
-    <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/admin/project/CSS/projectList.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <title>프로젝트</title>                    
 </head>
 <body>
+    <div class="content">
 
-    <!--<div th:replace="src/main/resources/templates/common/header/adminHeader.html">
-    </div>
-    <div th:replace="src/main/resources/templates/common/sidebar/adminSidebar.html">
-    </div>-->
-
-    
-    <div class="body-content wrapper">
-        
-        <div class="content-table">
-            <table id="table-wrapper">
-                <thead>
-                    <th class="head-title">번호</th>
-                    <th class="head-title">프로젝트명</th>
-                    <th class="head-title">상태</th>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td class="content-text1">001</td>
-                        <td class="content-text1" id="content-text1">숲내음이나는 친환경 다이어리</td>
-                        <td class="content-text2">
-                            <div class="stBtn">심사</div>
-                            <div class="stBtn">진행</div>
-                            <div class="stBtn">반려</div>
-                            <div class="stBtn">마감</div>
-                            <div class="stBtn">중단</div>
-                            <div class="stBtn">후기</div>
-                        </td>
-                    </tr>
-
-                    
-                    
-                    
-                </tbody>
-  
-            </table>
-
-           
-
-
+        <div class="content1">
+            <div class="menu-title">프로젝트</div>
+            <div class="searchbar">
+                <form id="searchForm" action="" method="get">
+                    <select class="sort">
+                        <option value="email">번호</option>
+                        <option value="email">프로젝트명</option>
+                        <option value="email">상태</option>    
+                    </select>
+                    <input type="text" class="searchContent">
+                    <button class="search-button" type="submit"><i class="bi bi-search"></i></button>
+                </form>                  
+            </div>
         </div>
-       
+
+        <div class="content2">
+            <table>
+                <tr>
+                    <th class="table-header">번호</th>
+                    <th class="table-header">프로젝트명</th>
+                    <th class="table-header">상태</th>
+                    
+                </tr>
+                <tr class="table-content">
+                    <td class="table-text1">PJ0000001</td>
+                    <td class="table-text2"><a href="">숲내음이나는 친환경 다이어리</a></td>
+                    <td class="table-text3">
+                        <div class="status-button">
+                            <div class="button1" id="evaluation">심사</div>
+                            <div class="button1" id="start">진행</div>
+                            <div class="button1" id="reject">반려</div>
+                            <div class="button1" id="stop">중단</div>
+                            <div class="button1" id="end">마감</div>
+                            <div class="button1" id="review">후기</div>
+                        </div>
+                    </td>
+                   
+                </tr>
+
+                
+
+
+            </table>
+        </div>
+
+        <div class="button-wrapper">
+            <a class="button-confirm" href=""><p class="button-confirm-text">등록</p></a>
+        </div>
+
+
+
+        <div class="content4">
+            <ul class="pagination">
+                <li class="prev"><a href=""></a></li>
+                <li calss="page1"><a href="">1</a></li>
+                <li class="page2"><a href="">2</a></li>
+                <li class="page3"><a href="">3</a></li>
+                <li class="page4"><a href="">4</a></li>
+                <li class="page5"><a href="">5</a></li>
+                <li class="page6"><a href="">6</a></li>
+                <li class="page7"><a href="">7</a></li>
+                <li class="page8"><a href="">8</a></li>
+                <li class="page9"><a href="">9</a></li>
+                <li class="page10"><a href="">10</a></li>
+                <li class="next"><a href="">></a></li>
+            </ul>
+        </div>
+
+
+
+
     </div>
 
-  
 </body>
 </html>
