@@ -26,7 +26,8 @@ html {
     font-size: 70px;
 }
 
-button {
+#start-project,
+#start-funding {
     border: 5px solid #81AE64;
     padding: 10px 25px;
     margin-right: 30px;
@@ -38,7 +39,8 @@ button {
     text-decoration-line: none;
 }
 
-button:hover {
+#start-project:hover,
+#start-funding:hover {
     cursor: pointer;
     color: white;
     background: #81AE64;
@@ -71,29 +73,22 @@ button:hover {
   
 .btn {
     padding: 10px;
-    background-color: #F8F8F8;
     color: #DEDCDC;
     cursor: pointer;
     border: none;
     margin: 50px;
-    font-size: 50px;
+    font-size: 35px;
+    background-color: #F8F8F8;
 }
 
 .btn:hover {
-    background-color: #F8F8F8;
     color:#979797;
 }
 
-.prev {
+.for-button-location {
     position: absolute;
-    top: 220px;
-    right: 850px;
-}
-
-.next {
-    position: absolute;
-    top: 220px;
-    right: 160px;
+    top: 480px;
+    right: 430px;
 }
 
   
@@ -108,7 +103,6 @@ button:hover {
 .current-slide {
     transform: translateX(0);
 }
-
 
 /* 배너를 제외한 컨텐츠들 */
 

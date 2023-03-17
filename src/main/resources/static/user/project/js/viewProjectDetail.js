@@ -23,5 +23,73 @@ window.onload = function() {
             document.querySelector(activeCont).style.display = 'block';
         });
     }
+
+    /* 프로젝트 이미지 슬라이드 */
+    const slides = document.querySelectorAll('.slide');
+    const slider = document.querySelector('.slider');
+
+    let currentSlide = 0;
+    let slideInterval;
+      
+    function showSlide(n) {
+        if (n < 0) {
+            currentSlide = slides.length - 1;
+        } else if (n >= slides.length) {
+            currentSlide = 0;
+        }
+        for (let i = 0; i < slides.length; i++) {
+            if (i < currentSlide) {
+                slides[i].classList.add('slide-left');
+                slides[i].classList.remove('slide-right', 'current-slide');
+            } else if (i === currentSlide) {
+                slides[i].classList.add('current-slide');
+                slides[i].classList.remove('slide-right', 'slide-left');
+            } else {
+                slides[i].classList.add('slide-right');
+                slides[i].classList.remove('slide-left', 'current-slide');
+            }
+        }
+    }
+      
+    function nextSlide() {
+        currentSlide++;
+        showSlide(currentSlide);
+    }
+
+    slider.addEventListener('mouseover', () => {
+        clearInterval(slideInterval);
+    });
+      
+    slider.addEventListener('mouseout', () => {
+        slideInterval = setInterval(() => {
+          nextSlide();
+        }, 2500);
+    });
+      
+    slideInterval = setInterval(() => {
+        nextSlide();
+    }, 2500);
+
+
+    /* 좋아요 버튼 */
+    const likeBtn = document.querySelector('#like-btn'); /* querySelectorAll을 통해 모든 class=like-btn 가져옴 */
+        
+        let isLiked = false;
+
+        likeBtn.addEventListener('click', like)
+    
+        function like() {
+            if(isLiked) {
+                likeBtn.src = "/src/main/resources/static/user/project/images/like-empty.png";
+                isLiked = false;
+            } else {
+                likeBtn.src = "/src/main/resources/static/user/project/images/like-full.png";
+                isLiked = true;
+            }
+        }
+
+
+    
+
 }
 

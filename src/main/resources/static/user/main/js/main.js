@@ -18,7 +18,7 @@ window.onload = function() {
                 isLiked = true;
             }
         }
-    })
+    });
 
     /* 메인 배너 슬라이드 */
     const slides = document.querySelectorAll('.slide');

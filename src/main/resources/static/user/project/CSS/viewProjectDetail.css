@@ -16,10 +16,10 @@ html {
     grid-template-rows: repeat(7, minmax(10px, auto)); /* 컨텐츠에 맞게 해당 영역 자동으로 늘어남 */
     gap: 20px 40px;
     grid-template-areas: 
-        "image info"
-        "image info"
-        "image info"
-        "image info"
+        "slider info"
+        "slider info"
+        "slider info"
+        "slider info"
         "story-bar info"
         "story-body reward-bar"
         "story-body ."
@@ -29,14 +29,38 @@ html {
 }
 
 /* 대표 사진 */
-.image {
-    grid-area: image;
-
+.slider {
+    grid-area: slider;
+    position: relative;
+    width: 600px;
+    height: 450px;
+    overflow: hidden; /* 튀어나오는 이미지 가리기 */
 }
 
-#main-image {
-    width: 650px;
-    height: 400px;
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+  
+.slide:first-child {
+    position: relative;
+    display: block;
+}
+
+.slide-right {
+    transform: translateX(100%);
+}
+  
+.slide-left {
+    transform: translateX(-100%);
+}
+  
+.current-slide {
+    transform: translateX(0);
 }
 
 /* 프로젝트 정보 */
@@ -145,13 +169,6 @@ html {
     width: 30px;
     height: 30px;
     margin-right: 10px;
-}
-
-#like-empty {
-    display: none; /* 좋아요 여부에 따라 full or empty */
-}
-
-#like-full {
     cursor: pointer;
 }
 
@@ -174,6 +191,49 @@ html {
     width: 30px;
     height: 30px;
     margin-right: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #535353;
+}
+
+/* shareProject 페이지 css */
+.share-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.share-title {
+    font-size: 40px;
+}
+
+.share-wrapper button {
+    border: none;
+    background-color: white;
+}
+
+.share-wrapper img {
+    border-radius: 100%;
+    width: 110px;
+    margin: 10px 5px;
+    cursor: pointer;
+    
+}
+
+.share-wrapper div {
+    transition: all 0.2s ease-in-out;
+}
+
+.share-wrapper div:hover {
+    transform: scale(1.1);
+    opacity: 0.7;
+    color:#000000;
+}
+
+.mini-text {
+    font-size: 20px;
+    text-align: center;
 }
 
 /* 스토리&후기 바 */
@@ -314,6 +374,7 @@ pre {
     align-items: center;
     font-size: 30px;
     padding: 7px;
+    margin-top: -50px;
 }
 
 /* 리워드 선택 바디 */
@@ -330,7 +391,6 @@ pre {
     box-shadow: 5px 5px 5px #eee;
     margin: 0 auto;
     margin-bottom: 30px;
-
 }
 
 .reward-header {
@@ -501,7 +561,7 @@ pre {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: -40px;
+    margin-bottom: -30px;
 }
 
 #flex2 {
@@ -512,7 +572,6 @@ pre {
 
 #user-id {
     font-size: 23px;
-    border-bottom: 3px solid #709053;
 }
 
 #gift {
@@ -522,7 +581,8 @@ pre {
 }
 
 #regist-date {
-    margin-right: 20px;
+    font-size: 20px;
+    margin-right: 35px;
 }
 
 #flex3 {
@@ -546,7 +606,7 @@ pre {
     background-color: #FAFAFA;
     border: none;
     border-radius: 20px;
-    width: 470%;
+    width: 430%;
     height: 30px;
     outline: none;
 }
