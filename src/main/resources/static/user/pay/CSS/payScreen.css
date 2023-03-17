@@ -351,13 +351,17 @@ p {
 }
 
 .btn {
-    width: 200px;
-    height: 200px;
+    /* width: 90px;
+    height: 90px; */
     background-color: white;
+    border-width: 3px;
+    /* border-color:#81AE64; */
+    
 }
 
 .content ul li {
-    display: inline-block;
+    /* position :absolute; */
+    display: inline;
 }
 
 .naverpay {
@@ -366,18 +370,84 @@ p {
 
 .img {
     /* margin-left: 40px; */
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
+    position: relative;
 }
 
 .off {
-    margin-left: 40px;
+    /* margin-left: 40px; */
     display: none;
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
 }
 
 a:link {
     color: black;
     text-decoration: none;
+}
+
+.pay1 {
+    text-align: left;
+    padding-top: 0.9375rem;
+    max-width: 29.375rem;
+}
+
+.credit-card {
+    background: #49545f;
+    color: #fff;
+    position: relative;
+    padding-top: 75%;
+    border-radius: 0.25rem;
+    border: 0.0625rem solid #eee;
+}
+
+.wrapper3 {
+    /* padding: 3%; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+}
+
+.credit-card >.wrapper3 .name {
+    padding: 1.5625rem 1.5625rem 0.625rem 1.5625rem;
+    letter-spacing: .0625rem;
+
+}
+
+.credit-card >.wrapper3 .rect {
+    padding: 1.5625rem 1.5625rem 0.625rem 1.5625rem;
+    letter-spacing: .0625rem;
+}
+
+.credit-card >.wrapper3 .num {
+    padding: 1.5625rem 1.5625rem 0.625rem 1.5625rem;
+    letter-spacing: 0.5rem;
+}
+
+.credit-card >.wrapper3 .date {
+    padding: 1.5625rem 1.5625rem 0.625rem 1.5625rem;
+    letter-spacing: 0.5rem;
+}
+
+.credit-card>.wrapper3 .silver {
+    background-color: white;
+    height: 3.75rem;
+}
+
+.btn3 {
+    float: right;
+    /* margin: 0.3125rem 0; */
+    padding: 0.625rem 0.3125rem;
+    margin-right: 2%;
+    background-color: #81AE64;
+    color:#fff;
+    width: 100px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius:15px;
+    font-family: 'Do Hyeon', sans-serif;
 }
