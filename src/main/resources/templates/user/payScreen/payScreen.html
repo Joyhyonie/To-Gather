@@ -64,9 +64,15 @@
                                                     <input id="selectcoupon" type="checkbox">
                                                     <label for="selectcoupon">사용</label>
                                                     <a href="/src/main/resources/templates/user/payScreen/payCoupon.html" onclick="window.open(this.href, '_blank', 'width=500;, height=500;, toolbars=no, scrollbars=yes'); return false;">변경</a>
+                                                    <div>
+                                                        <span class="cutext"></span>
+                                                        <br>
+                                                        <span class="cuprice"></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <!---->
+                                          
                                             <!---->
                                         </div>
                                     </div>
@@ -272,7 +278,7 @@
                                                             </button>
                                                         </li>
                                                     </ul>
-                                                    <div class="pay1">
+                                                    <div id="pay1">
                                                         <div class="credit-card" data-component-name="componentCreditCard">
                                                             <div class="wrapper3">
                                                                 <div class="name font-md">
@@ -433,11 +439,13 @@
                                                         //         $off[2].style.display = 'none';
                                                         //         $text1[2].style.color = 'black';
                                                         // })
-                                                      
+                                                            const $pay1 = document.getElementById('pay1');
+                                                                console.log($pay1);
                                                             $btn[0].addEventListener('click', function(){    
                                                                 if(state == "off"){
                                                                 $img[0].style.display = 'none';
                                                                 $off[0].style.display = 'block';
+                                                                $btn[0].style.border = " 3px solid green";
                                                                 $text1[0].style.color = 'green';
                                                                 $off[1].style.display = 'none';
                                                                 $img[1].style.display = 'block';
@@ -445,7 +453,9 @@
                                                                 $off[2].style.display = 'none';
                                                                 $img[2].style.display = 'block';
                                                                 $text1[2].style.color = 'black';
-
+                                                                $pay1.style.display = 'none';
+                                                                $btn[1].style.border = " 3px solid black"
+                                                                $btn[2].style.border = " 3px solid black"
                                                                 state="on";
                                                                 state1 = "off";
                                                                 state2 = "off";
@@ -456,11 +466,13 @@
                                                                 $off[1].style.display = 'none';
                                                                 $img[1].style.display = 'block';
                                                                 $text1[1].style.color = 'black';
+                                                                $btn[0].style.border = " 3px solid black"
                                                                 state = "off";
                                                                 }
                                                             });
                                                             $btn[1].addEventListener('click', function(){    
                                                                 if(state1 == "off"){
+                                                                $pay1.style.display = 'block';
                                                                 $img[1].style.display = 'none';
                                                                 $off[1].style.display = 'block';
                                                                 $text1[1].style.color = 'green';
@@ -470,6 +482,9 @@
                                                                 $off[2].style.display = 'none';
                                                                 $img[2].style.display = 'block';
                                                                 $text1[2].style.color = 'black';
+                                                                $btn[1].style.border = " 3px solid green";
+                                                                $btn[0].style.border = " 3px solid black"
+                                                                $btn[2].style.border = " 3px solid black"
                                                                 state = "off";
                                                                 state1="on";
                                                                 state2 = "off";
@@ -480,7 +495,8 @@
                                                                 $off[2].style.display = 'none';
                                                                 $img[2].style.display = 'block';
                                                                 $text1[2].style.color = 'black';
-                                  
+                                                                $pay1.style.display = 'none';
+                                                                $btn[1].style.border = " 3px solid black"
                                                                 state1 = "off";
                                                                 
                                                                 }
@@ -496,6 +512,10 @@
                                                                 $off[0].style.display = 'none';
                                                                 $img[0].style.display = 'block';
                                                                 $text1[0].style.color = 'black';
+                                                                $pay1.style.display = 'none';
+                                                                $btn[2].style.border = " 3px solid green";
+                                                                $btn[0].style.border = " 3px solid black"
+                                                                $btn[1].style.border = " 3px solid black"
                                                                 state = "off";
                                                                 state1="off";
                                                                 state2 = "on";
@@ -503,10 +523,33 @@
                                                                 $off[2].style.display = 'none';
                                                                 $img[2].style.display = 'block';
                                                                 $text1[2].style.color = 'black';
+                                                                $btn[2].style.border = " 3px solid black"
                                                                 state2 = "off";
                                                                 }
                                                             });
-                                                       
-                                                    </script>
+                                                        const $selectCoupon = document.getElementById('selectcoupon');
+                                                        console.log("$selectCoupon");
+                                                        const $cutext = document.getElementsByClassName('cutext')[0];
+                                                        console.log($cutext);
+                                                        const $cuprice = document.getElementsByClassName('cuprice')[0];
+                                                        console.log($cuprice);
+
+                                                        // $selectCoupon.addEventListener('click', function(){
+                                                        // $cuprice.innerHTML = '10,000원';
+                                                        // })
+                                                        $(document).ready(function() {
+                                                            $("#selectcoupon").on('click', function() {
+                                                                if ( $(this).prop('checked') ) {
+                                                                console.log("go");
+                                                                $cutext.innerHTML = "회원가입 축하 쿠폰";
+                                                                $cuprice.innerHTML = "10,000원";
+                                                                        
+                                                        } else {
+                                                            $cutext.innerHTML =  "";
+                                                            $cuprice.innerHTML = "";
+                                                        }
+                                                        });
+                                                    });
+                                                        </script>
 </body>
 </html>

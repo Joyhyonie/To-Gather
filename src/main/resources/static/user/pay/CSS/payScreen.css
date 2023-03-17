@@ -360,13 +360,11 @@ p {
 }
 
 .content ul li {
-    /* position :absolute; */
-    display: inline;
+    /* position :relative; */
+    display: inline-block;
 }
 
-.naverpay {
-    /* background-image: ; */
-}
+
 
 .img {
     /* margin-left: 40px; */
@@ -387,6 +385,7 @@ a:link {
     text-decoration: none;
 }
 
+/* 카드 정보 화면*/
 .pay1 {
     text-align: left;
     padding-top: 0.9375rem;
@@ -450,4 +449,13 @@ a:link {
     cursor: pointer;
     border-radius:15px;
     font-family: 'Do Hyeon', sans-serif;
+}
+
+#pay1 {
+    display: none;
+}
+
+.cutext, .cuprice{
+    font-size: 10px;
+    /* display: none; */
 }
