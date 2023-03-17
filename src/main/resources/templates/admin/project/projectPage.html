@@ -4,19 +4,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>프로젝트 상세페이지</title>
+    <link rel="stylesheet" href="/src/main/resources/static/admin/project/CSS/projectPage.css" type="text/css">
     <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
 </head>
 <body>
 
+    <!--<div th:replace="src/main/resources/templates/common/header/adminHeader.html">
+    </div>
+    <div th:replace="src/main/resources/templates/common/sidebar/adminSidebar.html">
+    </div>-->
 
+  
+    <div class="body-content wrapper">
+        
+        <div class="content-table">
+            <table id="table-wrapper">
+                <thead>
+                    <th class="head-title" colspan="2">항목</th>
+                    <th class="content-text1">내용</th>
+                    <th class="content-text2">비고</th>
                 </thead>
 
                 <tbody>
                     <tr>
+                        <td class="text-title" colspan="2">번호</td>
+                        <td class="content-text1">PJ232222221</td>
+                        <td class="content-text2"></td>
+                    </tr>
 
+                    <tr>
+                        <td class="text-title" rowspan="5">메이커<br>정보</td>
+                        <td class="content-title">이름</td>
+                        <td class="content-text1">기록제작소</td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">email</td>
+                        <td class="content-text1">greedy@gmail.com</td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">휴대전화</td>
+                        <td class="content-text1">010-8888-8888</td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">주소</td>
+                        <td class="content-text1">종로구 555-55</td>
+                        <td class="content-text2"></td>
+                    </tr>
+                    <tr>
+                        <td class="content-title">소개</td>
+                        <td class="content-text1">기록 제작소의 소개입니다.</td>
+                        <td class="content-text2"></td>
+                    </tr>
 
                     <tr>
                         <td class="text-title" rowspan="4">프로젝트<br>정보</td>
@@ -161,11 +205,26 @@
                             <label class="eventDateBox" id="eEndbox">종료일</label>
                             <input type="date" name="endDate">
                         </td>
-
                         <td></td>
                     </tr>
 
                     <tr>
+                        <td class="text-title" colspan="2">오늘의 프로젝트</td>
+                        <td class="mainBannerWrapper">
+                            <input type="radio" name="todayProject" id="yes" value="Y">
+                            <label for="yes" class="content-text1">설정</label>
+                            <input type="radio" name="todayProject" id="no" value="N">
+                            <label for="no" class="content-text1">해제</label>
+                            <label class="eventDateBox">시작일</label>
+                            <input type="date" name="startDate">
+                            <label class="eventDateBox" id="eEndbox">종료일</label>
+                            <input type="date" name="endDate">
+                        </td>
+                        <td></td>
+                    </tr>
+
+
+
 
                    
                 </tbody>
@@ -175,8 +234,14 @@
 
             <div class="button-wrapper">
                 
-
+                    <a class="button-confirm" href=""><p class="button-confirm-text">승인</p></a>
+                    <a class="button-box" href=""><p class="button-text">반려</p></a>
+                    <a class="button-box" href=""><p class="button-text">중단</p></a>
+                    <a class="button-box" href=""><p class="button-text">확인</p></a>
+                    <a class="button-box" href=""><p class="button-text">취소</p></a>
+                  
             </div>
+
 
 
 
