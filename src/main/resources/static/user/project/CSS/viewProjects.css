@@ -43,6 +43,7 @@ flex {
     border: none;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 20px;
+    width: 170px;
 }
 
 .input:focus {

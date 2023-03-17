@@ -51,15 +51,32 @@
 
         <!-- 스토리&후기 바 -->
         <div class="story-bar">
-            <div id="story" class="menu">스토리</div>
-            <div id="review" class="menu">소식ㆍ후기</div>
+            <ul class="menu">
+                <flex>
+                    <li class="is_on">
+                    <a href="#story" class="btn"><span>스토리</span></a>
+                    </li>
+                    <li>
+                    <a href="#review" class="btn"><span>소식ㆍ후기</span></a>
+                    </li>
+                </flex>
+            </ul>
         </div>
 
         <!-- 스토리&후기 바디 -->
         <div class="story-body">
-            <img src="/src/main/resources/static/user/project/images/dummy3.png">
-            <img src="/src/main/resources/static/user/project/images/dummy4.png">
-            <img src="/src/main/resources/static/user/project/images/dummy5.png">
+            <div id="story" class="content">
+                <img src="/src/main/resources/static/user/project/images/dummy3.png">
+                <img src="/src/main/resources/static/user/project/images/dummy4.png">
+                <img src="/src/main/resources/static/user/project/images/dummy5.png">
+            </div>
+            <div id="review" class="content">
+                <p class="no-review">아직 작성된 후기가<br> 존재하지 않습니다.</p>
+                <div class="create-review-box">
+                    <p>이 프로젝트의 Maker이신가요?<br>많은 Supporter분들을 위해 후기를 작성해주세요 :)</p>
+                    <button id="create-review-button">후기 작성하기</button>
+                </div>
+            </div>
         </div>
 
         <!-- 리워드 안내 -->

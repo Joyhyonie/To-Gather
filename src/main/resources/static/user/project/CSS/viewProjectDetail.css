@@ -177,6 +177,11 @@ html {
 }
 
 /* 스토리&후기 바 */
+flex {
+    display: flex;
+    justify-content: space-between;
+}
+
 .story-bar {
     grid-area: story-bar;
     display: flex;
@@ -184,25 +189,29 @@ html {
     align-items: center;
     font-size: 30px;
 }
-
 .menu {
+    text-align: center;
+    padding-left: 0px;
+}
+
+.menu a {
+    text-decoration: none;
+    display: block;
+    color: inherit;
+    width: 325px;
+    padding-bottom: 7px;
+}
+
+li {
+    color: #535353;
+    list-style: none;
     border-bottom: 4px solid #DEDCDC;
 }
 
-#story {
-    width: 50%;
-    padding: 7px;
-}
-
-.menu:hover {
+li:hover,
+.is_on {
     color: #81AE64;
     border-bottom: 4px solid #81AE64;
-    cursor: pointer;
-}
-
-#review {
-    width: 50%;
-    padding: 7px;
 }
 
 /* 스토리&후기 바디 */
@@ -210,6 +219,44 @@ html {
     border: 2px solid #ffffff;
     grid-row: auto;
     grid-area: story-body;
+}
+
+/* 후기가 없을 경우의 바디 */
+.no-review {
+    text-align: center;
+    font-size: 40px;
+    padding: 50px 0px;
+    color: #7A7A7A;
+}
+
+.create-review-box {
+    border: 3px solid #DEDCDC;
+    border-radius: 30px;
+    width: 500px;
+    padding: 30px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.create-review-box p {
+    font-size: 26px;
+}
+
+#create-review-button {
+    font-family: 'Do Hyeon', sans-serif;
+    background-color: #81AE64;
+    color: #ffffff;
+    border: 4px solid #81AE64;
+    border-radius: 20px;
+    font-size: 30px;
+    padding: 5px 30px;
+    margin-top: 10px;
+}
+
+#create-review-button:hover {
+    background-color: #ffffff;
+    color: #81AE64;
+    cursor: pointer;
 }
 
 /* 리워드 안내 */
@@ -341,7 +388,7 @@ pre {
 
 .funding-button {
     padding: 5px 30px;
-    font-size: 25px;
+    font-size: 26px;
     font-family: 'Do Hyeon', sans-serif;
     background-color: #81AE64;
     color: #ffffff;
