@@ -12,6 +12,7 @@
     <script src="/src/main/resources/static/user/project/js/summernote/summernote-lite.js"></script>
     <script src="/src/main/resources/static/user/project/js/summernote/lang/summernote-ko-KR.js"></script>
     <link rel="stylesheet" type="text/css" href="/src/main/resources/static/user/project/CSS//summernote/summernote-lite.css">
+    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
     <title>writeMakerInfo</title>
 </head>
 <body>
@@ -247,66 +248,86 @@
                         <p class="title">* 리워드 배송비</p>
                         <input type="number" name="shippingfee" id="funding-goal" class="input" placeholder="단위 : 원" style="width:180px;">
                     </div>
-                    <div class="reward-box">
-                        <flex class="justify-between">
-                            <p class="title">리워드 1</p>
-                            <flex>
-                            <p class="title" id="remove-reward">리워드 삭제</p>
-                            <p class="title" id="add-reward">리워드 추가</p>
+                    <div class="reward-container">
+                        <div class="reward-box">
+                            <flex class="justify-between">
+                                <p class="title">리워드 1</p>
+                                <flex>
+                                <p class="title" id="remove-reward">리워드 삭제</p>
+                                <p class="title" id="add-reward">리워드 추가</p>
+                                </flex>
                             </flex>
-                        </flex>
-                        <div class="reward-info">
-                            <flex>
+                            <div class="reward-info">
+                                <flex>
+                                    <div>
+                                        <p class="title">* 리워드명</p>
+                                        <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;">
+                                    </div>
+                                    <div>
+                                        <p class="title">* 리워드 금액</p>
+                                        <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:120px;">
+                                    </div>
+                                    <div>
+                                        <p class="title">* 리워드 예상 발송일</p>
+                                        <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:160px;">
+                                    </div>
+                                </flex>
                                 <div>
-                                    <p class="title">* 리워드명</p>
-                                    <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;">
+                                    <p class="title">* 리워드 구성</p>
+                                    <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:700px;">
                                 </div>
-                                <div>
-                                    <p class="title">* 리워드 금액</p>
-                                    <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:120px;">
-                                </div>
-                                <div>
-                                    <p class="title">* 리워드 예상 발송일</p>
-                                    <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:160px;">
-                                </div>
-                            </flex>
-                            <div>
-                                <p class="title">* 리워드 구성</p>
-                                <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:700px;">
                             </div>
                         </div>
-                        
                     </div>
-                    <div class="reward-box">
-                        <flex class="justify-between">
-                            <p class="title">리워드 2</p>
-                            <flex>
-                            <p class="title" id="remove-reward">리워드 삭제</p>
-                            <p class="title" id="add-reward">리워드 추가</p>
-                            </flex>
-                        </flex>
-                        <div class="reward-info">
-                            <flex>
-                                <div>
-                                    <p class="title">* 리워드명</p>
-                                    <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;">
+                    <script>
+                        // JavaScript 코드
+                        const addBtn = document.querySelector('#add-reward');
+                        const removeBtn = document.querySelector('#remove-reward');
+                        const container = document.querySelector('.reward-container');
+                        let rewardCount = 1;
+                    
+                        addBtn.addEventListener('click', () => {
+                            const rewardBox = document.createElement('div');
+                            rewardBox.classList.add('reward-box');
+                            rewardBox.innerHTML = `
+                                <flex class="justify-between">
+                                    <p class="title">리워드 ${++rewardCount}</p>
+                                </flex>
+                                <div class="reward-info">
+                                    <flex>
+                                        <div>
+                                            <p class="title">* 리워드명</p>
+                                            <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;">
+                                        </div>
+                                        <div>
+                                            <p class="title">* 리워드 금액</p>
+                                            <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:120px;">
+                                        </div>
+                                        <div>
+                                            <p class="title">* 리워드 예상 발송일</p>
+                                            <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:160px;">
+                                        </div>
+                                    </flex>
+                                    <div>
+                                        <p class="title">* 리워드 구성</p>
+                                        <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:700px;">
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="title">* 리워드 금액</p>
-                                    <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:120px;">
-                                </div>
-                                <div>
-                                    <p class="title">* 리워드 예상 발송일</p>
-                                    <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:160px;">
-                                </div>
-                            </flex>
-                            <div>
-                                <p class="title">* 리워드 구성</p>
-                                <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:700px;">
-                            </div>
-                        </div>
-                        
-                    </div>
+                            `;
+                            container.appendChild(rewardBox);
+                        });
+                    
+                        removeBtn.addEventListener('click', () => {
+                            const rewardBoxes = document.querySelectorAll('.reward-box');
+                            if (rewardBoxes.length > 1) {
+                                const lastRewardBox = rewardBoxes[rewardBoxes.length - 1];
+                                container.removeChild(lastRewardBox);
+                                rewardCount--;
+                            } else {
+                                alert("리워드는 최소 1개 이상 존재 해야합니다 ☹")
+                            }
+                        });
+                    </script>
 
                 </div>
                 
