@@ -64,7 +64,13 @@ select { /* select 화살표 커스텀 */
     height: 350px;
     margin: 0px 20px;
     margin-bottom: 50px;
+    transition: all 0.2s ease-in-out;
+    box-shadow:3px 3px 2px 1px rgb(238, 238, 238);
     cursor: pointer;
+}
+
+.project-block:hover {
+    transform: scale(1.04);
 }
 
 .project-image {
