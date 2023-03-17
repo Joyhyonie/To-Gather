@@ -185,10 +185,24 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
     margin: 20px 0px; /* 아래 리워드 요소들과 위 요소들과의 간격 */
 }
 
-#remove-reward,
-#add-reward {
+.reward-container {
+    position: relative;
+}
+
+#remove-reward {
+    position: absolute;
+    right: 180px;
     margin-left: 15px;
     cursor: pointer;
+    font-size: 28px;
+}
+
+#add-reward {
+    position: absolute;
+    right: 40px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 28px;
 }
 
 #remove-reward:hover,

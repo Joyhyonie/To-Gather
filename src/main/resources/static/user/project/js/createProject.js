@@ -75,21 +75,4 @@ window.onload = function() {
 
     uploadMainImage.addEventListener('click', ()=> mainPreviewArea.style.display = "block"); /* display:none을 block으로 변경 */
 
-
-    /* 프로젝트 메인 사진의 비율이 다를 경우, alert로 알림 */
-    // const mainPreviewImage = document.querySelector("#main-preview-image");
-
-    // uploadMainImage.addEventListener('click', alertSize);
-
-    // function alertSize() {
-    //     console.log("메롱")
-    //     console.log(mainPreviewImage.width)
-    //     console.log(mainPreviewImage.height)
-    //     if(mainPreviewImage.width != (600) && mainPreviewImage.height != (450)) {
-    //         alert("권장 크기와의 차이로 실제 이미지와 다르게 보일 수 있습니다 😓");
-    //         return;
-    //     }
-    // }
-
-
 }
