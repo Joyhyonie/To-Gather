@@ -11,10 +11,10 @@ window.onload = function() {
     
         function like() {
             if(isLiked) {
-                likeBtn.src = "/src/main/resources/static/user/main/images/like-empty.png";
+                likeBtn.src = "/user/main/images/like-empty.png";
                 isLiked = false;
             } else {
-                likeBtn.src = "/src/main/resources/static/user/main/images/like-full.png"
+                likeBtn.src = "/user/main/images/like-full.png"
                 isLiked = true;
             }
         }

@@ -4,18 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/user/project/CSS/createProject.css">
+    <link rel="stylesheet" type="text/css" href="/user/project/CSS/createProject.css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="/src/main/resources/static/user/project/js/createProject.js"></script> 
-    <script src="/src/main/resources/static/user/project/js/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/user/project/CSS/summernote/summernote-lite.css">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="/src/main/resources/static/user/project/js/summernote/summernote-lite.js"></script>
-    <script src="/src/main/resources/static/user/project/js/summernote/lang/summernote-ko-KR.js"></script>
-    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/user/project/CSS//summernote/summernote-lite.css">
-    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
     <title>createProject</title>
 </head>
 <body>
+	<div th:replace="common/header/userHeader.html"></div>
+    <script type="text/javascript" src="/user/project/js/createProject.js"></script>
+    <script src="/user/project/js/jquery-3.6.3.min.js"></script>
+    <script src="/user/project/js/summernote/summernote-lite.js"></script>
+    <script src="/user/project/js/summernote/lang/summernote-ko-KR.js"></script>
+    
+  
     <!-- 메이커 정보 -->
     <div class="wrapper">
         <!-- step 바 -->
@@ -47,8 +50,9 @@
         </div>
 
         <!-- form box -->
-        <form id="thumbnailRegistForm" action="/thumbnail/regist" method="post" enctype="multipart/form-data"> <!-- file을 보내는 인코딩 방식 -->
+        <form id="projectApplicationForm" action="/project/create" method="post" enctype="multipart/form-data"> <!-- file을 보내는 인코딩 방식 -->
             <!-- step 1. Maker 정보 -->
+            
             <div class="go" id="one"></div>
             <p class="description">Maker의 정보를 입력해주세요 :)</p>
             <div class="box one">
@@ -56,46 +60,46 @@
                 <flex>
                     <div id="profile-area">
                         <div id="preview-area">
-                            <img src="/src/main/resources/static/user/project/images/profile4.png" id="preview-image">
+                            <img src="/user/project/images/profile4.png" id="preview-image">
                         </div>
-                        <label for="attach-profile" class="plus"><img id="plus-image" src="/src/main/resources/static/user/project/images/plus.png"></label>
-                        <input type="file" id="attach-profile" name="attachProfile" accept="image/gif, image/jpeg, image/png" required>
+                        <label for="attach-profile" class="plus"><img id="plus-image" src="/user/project/images/plus.png"></label>
+                        <input type="file" id="attach-profile" name="attachProfile" accept="image/gif, image/jpeg, image/png">
                     </div>
                     
                     <div class="items">
                         <flex>
                             <div>
                                 <p class="title">* 이름</p>
-                                <input type="name" name="name" class="input" maxlength="12" style="width:170px;" required>
+                                <input type="name" name="name" class="input" maxlength="12" style="width:170px;">
                             </div>
                             <div>
                                 <p class="title">* 간략 소개</p>
-                                <input type="address" name="address" class="input"  maxlength="16" style="width:250px;" required>
+                                <input type="address" name="address" class="input"  maxlength="16" style="width:250px;">
                             </div>
                         </flex>
                         <flex>
                             <div>
                                 <p class="title">* 연락처</p>
-                                <input type="tel" name="phone" class="input" placeholder="'-'제외" maxlength="15" style="width:120px;" required>
+                                <input type="tel" name="phone" class="input" placeholder="'-'제외" maxlength="15" style="width:120px;">
                             </div>
                             <div>
                                 <p class="title">* 이메일</p>
-                                <input type="email" name="email" class="input" style="width:230px;" required>
+                                <input type="email" name="email" class="input" style="width:230px;">
                             </div>
                         </flex>
                         <flex>
                             <div>
                                 <p class="title">* 주소</p>
-                                <input type="text" name="address1" id="address1" class="input" placeholder="주소를 검색하시려면 이 곳을 클릭하세요 :)" style="width:320px;" readonly required>
+                                <input type="text" name="address1" id="address1" class="input" placeholder="주소를 검색하시려면 이 곳을 클릭하세요 :)" style="width:320px;" readonly>
                             </div>
                             <div>
                                 <p class="title">* 우편번호</p>
-                                <input type="text" name="zipCode" id="zip-code" class="input" style="width:120px;" readonly required>
+                                <input type="text" name="zipCode" id="zip-code" class="input" style="width:120px;" readonly>
                             </div>
                         </flex>
                         <div>
                             <p class="title">* 상세주소</p>
-                            <input type="text" name="address2" id="address2" class="input" style="width:500px;" required>
+                            <input type="text" name="address2" id="address2" class="input" style="width:500px;">
                         </div>
                         
                     </div>
@@ -110,15 +114,15 @@
                     <flex>
                         <div>
                             <p class="title">* 펀딩 시작일</p>
-                            <input type="date" name="startFunding" class="input" style="width:180px;" required>
+                            <input type="date" name="startFunding" class="input" style="width:180px;">
                         </div>
                         <div>
                             <p class="title">* 펀딩 종료일</p>
-                            <input type="date" name="endFunding" class="input" style="width:180px;" required>
+                            <input type="date" name="endFunding" class="input" style="width:180px;">
                         </div>
                         <div>
                             <p class="title">* 펀딩 목표 금액</p>
-                            <input type="number" name="fundingGoal" id="funding-goal" class="input" placeholder="단위 : 원" style="width:180px;" required>
+                            <input type="number" name="fundingGoal" id="funding-goal" class="input" placeholder="단위 : 원" style="width:180px;">
                         </div>
                     </flex>
                     <flex>
@@ -155,11 +159,11 @@
                     <flex>
                         <div>
                             <p class="title">* 프로젝트 명</p>
-                            <input type="text" name="projectName" id="project-name" class="input" maxlength="16" style="width:300px;" required>
+                            <input type="text" name="projectName" id="project-name" class="input" maxlength="16" style="width:300px;">
                         </div>
                         <div>
                             <p class="title">* 프로젝트 간략 소개</p>
-                            <input type="text" name="projectIntro" id="project-intro" class="input" maxlength="20" style="width:380px;" required>
+                            <input type="text" name="projectIntro" id="project-intro" class="input" maxlength="20" style="width:380px;">
                         </div>
                     </flex>
                     <flex class="bottom-solid">
@@ -168,11 +172,11 @@
                             <p class="gray-text">(권장 비율: 4:3 / 권장 크기: 600*450px / 형식: jpg, png / 최대 크기: 20MB)</p>
                         </div>
                         <label for="main-image" class="upload">파일 올리기</label>
-                        <input type="file" id="main-image" name="mainImage" accept="image/jpg, image/png" required>
+                        <input type="file" id="main-image" name="mainImage" accept="image/jpg, image/png" >
                     </flex>
                     <div class="for-icon">
                         <input class="upload-name" id="main-name" value="파일을 업로드 해주세요 :)" readonly>
-                        <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
+                        <img src="/user/project/images/file-icon.png" class="file-icon">
                     </div>
                     <script>
                         
@@ -192,19 +196,19 @@
                     </flex>
                     <flex>
                         <div class="sub-preview-area">
-                            <img src="/src/main/resources/static/user/project/images/picture.png" class="file-icon">
+                            <img src="/user/project/images/picture.png" class="file-icon">
                             <img class="sub-preview-image">
                         </div>
                         <div class="sub-preview-area">
-                            <img src="/src/main/resources/static/user/project/images/picture.png" class="file-icon">
+                            <img src="/user/project/images/picture.png" class="file-icon">
                             <img class="sub-preview-image">
                         </div>
                         <div class="sub-preview-area">
-                            <img src="/src/main/resources/static/user/project/images/picture.png" class="file-icon">
+                            <img src="/user/project/images/picture.png" class="file-icon">
                             <img class="sub-preview-image">
                         </div>
                         <div class="sub-preview-area">
-                            <img src="/src/main/resources/static/user/project/images/picture.png" class="file-icon">
+                            <img src="/user/project/images/picture.png" class="file-icon">
                             <img class="sub-preview-image">
                         </div>
                     </flex>
@@ -251,7 +255,7 @@
                 <div class="items">
                     <div>
                         <p class="title">* 리워드 배송비</p>
-                        <input type="number" name="shippingfee" id="funding-goal" class="input" placeholder="단위 : 원" style="width:180px;" required>
+                        <input type="number" name="shippingfee" id="funding-goal" class="input" placeholder="단위 : 원" style="width:180px;">
                     </div>
                     <div class="reward-container">
                         <flex class="align-right">
@@ -266,20 +270,20 @@
                                 <flex>
                                     <div>
                                         <p class="title">* 리워드명</p>
-                                        <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;" required>
+                                        <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;">
                                     </div>
                                     <div>
                                         <p class="title">* 리워드 금액</p>
-                                        <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:110px;" required>
+                                        <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:110px;">
                                     </div>
                                     <div>
                                         <p class="title">* 리워드 예상 발송일</p>
-                                        <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:140px;" required>
+                                        <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:140px;">
                                     </div>
                                 </flex>
                                 <div>
                                     <p class="title">* 리워드 구성</p>
-                                    <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:670px;" required>
+                                    <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:670px;">
                                 </div>
                             </div>
                         </div>
@@ -293,7 +297,7 @@
             <div class="box five">
                 <div>
                     <p class="title">* 제목</p>
-                    <input type="text" name="noticeTitle" id="notice-title" class="input" maxlength="20" style="width:830px;" value="리워드 배송 및 환불 정책" required>
+                    <input type="text" name="noticeTitle" id="notice-title" class="input" maxlength="20" style="width:830px;" value="리워드 배송 및 환불 정책">
                 </div>
                 <div>
                     <p class="title">* 내용</p>
@@ -338,11 +342,11 @@
                             <p class="gray-text">(사업자등록증 또는 신분증 사본)</p>
                         </div>
                         <label for="settle-doc" class="upload">파일 올리기</label>
-                        <input type="file" id="settle-doc" name="settleDoc" accept=".pdf required">
+                        <input type="file" id="settle-doc" name="settleDoc" accept=".pdf">
                     </flex>
                     <div class="for-icon">
                         <input class="upload-name doc" id="settle-doc-name" value="파일을 업로드 해주세요 :)" readonly>
-                        <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
+                        <img src="/user/project/images/file-icon.png" class="file-icon">
                     </div>
 
                     <flex class="bottom-solid">
@@ -351,11 +355,11 @@
                             <p class="gray-text">(사업자의 경우 사업자명의 통장, 개인일 경우 개인명의의 통장)</p>
                         </div>
                         <label for="account-doc" class="upload">파일 올리기</label>
-                        <input type="file" id="account-doc" name="accountDoc" accept=".pdf" required>
+                        <input type="file" id="account-doc" name="accountDoc" accept=".pdf">
                     </flex>
                     <div class="for-icon">
                         <input class="upload-name doc" id="account-doc-name" value="파일을 업로드 해주세요 :)" readonly>
-                        <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
+                        <img src="/user/project/images/file-icon.png" class="file-icon">
                     </div>
 
                     <flex class="bottom-solid">
@@ -368,7 +372,7 @@
                     </flex>
                     <div class="for-icon">
                         <input class="upload-name doc" id="etc-doc-name" value="파일을 업로드 해주세요 :)" readonly>
-                        <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
+                        <img src="/user/project/images/file-icon.png" class="file-icon">
                     </div>
                     <br><br>
                     <div class="guide">
@@ -380,10 +384,11 @@
                 
             </div>
 
-            <input type="submit" class="submit" value="프로젝트 최종 제출"></input>
+            <button type="submit" class="submit">프로젝트 최종 제출</button>
         </form>
         
     </div>
+   
     
 </body>
 </html>
