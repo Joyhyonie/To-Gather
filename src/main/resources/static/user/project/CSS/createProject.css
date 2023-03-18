@@ -241,7 +241,7 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
 
 /* -------------------------------------------------------------------- */
 
-/* step 1. Maker 정보 */
+/* 1. Maker 정보 */
 #profile-area {
     position: relative;
     margin-right: 40px;

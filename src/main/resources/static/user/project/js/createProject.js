@@ -1,5 +1,24 @@
 window.onload = function() {
 
+    /* 사이드 바 클릭 시, 클릭 된 step 활성화 */
+    const clickSteps = document.querySelectorAll('.step-subject');
+
+    for (let i = 0; i < clickSteps.length; i++) {
+        clickSteps[i].addEventListener('click', clickedStep);
+    }
+
+    function clickedStep() {
+        const activeStep = document.querySelector('.step-subject.running');
+
+        /* 다른 요소가 activeStep일 때, 나머지 요소들은 running 클래스 제거 */
+        if (activeStep) {
+            activeStep.classList.remove('running');
+        }
+        this.classList.add('running');
+    }
+
+    /* ------------------------------------------------------------------------------------ */
+
     /* Maker 프로필 프리뷰 */
     (function(){
         const previewArea = document.querySelector("#preview-area");
@@ -19,6 +38,7 @@ window.onload = function() {
         }
     })();
 
+    /* ------------------------------------------------------------------------------------ */
 
     /* 주소 검색 */
     const SearchAddress = document.getElementById("address1");
@@ -36,6 +56,8 @@ window.onload = function() {
 		}).open();
 	};
 
+    /* ------------------------------------------------------------------------------------ */
+
     /* 프로젝트 이미지들의 크기를 제한하는 alert */
     const mainImage = document.querySelector("#main-image")
     const uploadName = document.querySelector(".upload-name") /* 20MB보다 큰 이미지는 파일명 변경되지 않도록 하기 위해 추가 */
@@ -49,6 +71,8 @@ window.onload = function() {
             uploadName.value = "파일을 업로드 해주세요 :)";
         }
     };
+
+    /* ------------------------------------------------------------------------------------ */
     
     /* 프로젝트 메인 사진 프리뷰 */
     (function(){
@@ -111,6 +135,7 @@ window.onload = function() {
         }
     })();
 
+    /* ------------------------------------------------------------------------------------ */
 
     /* 리워드 추가/삭제 버튼 기능 */
     const addBtn = document.querySelector('#add-reward');
@@ -160,6 +185,7 @@ window.onload = function() {
         }
     });
 
+    /* ------------------------------------------------------------------------------------ */
 
     /* 정산 확인 시, 세 가지의 서류가 첨부되면 파일명 보여주기 */
     const settleDoc = document.getElementById('settle-doc');
@@ -186,7 +212,8 @@ window.onload = function() {
         etcDocName.value = etcDoc.files[0].name;
     }
     });
-
+    
+    /* ------------------------------------------------------------------------------------ */
 
     /* 프로젝트 최종 버튼 클릭 시, 확인 confirm */
     document.querySelector(".submit").addEventListener('click', () => confirm('제출 후 수정은 불가합니다. 제출 하시겠습니까?'))
