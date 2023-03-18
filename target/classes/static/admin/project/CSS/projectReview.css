@@ -131,7 +131,12 @@ td{
     height: 40px;
     width: 90px;
     font-family: Do Hyeon;
-    
+}
+
+#reviewbox {
+    width:100%;
+    height:700px;
+    border:none;
 }
 
 
