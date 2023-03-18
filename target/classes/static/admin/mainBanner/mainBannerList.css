@@ -181,6 +181,42 @@ table {
 }
 
 
+.button-wrapper{
+    display: flex;
+    justify-content: right;
+}
+
+.button-box{
+    display: grid;
+    background-color: #535353;
+    border-radius: 5px;
+    color:aliceblue;
+    
+}
+
+.button-confirm{
+
+    width: 70px;
+    height: 30px;
+    background-color: #C7E78B;
+    border-radius: 5px;
+    color: #535353;
+    text-align: center;
+    
+ }
+
+.button-confirm-text{
+    display:inline;
+    font-weight: bolder;
+    font-size: small;
+    color:#535353;
+    font-weight: bolder;
+    vertical-align: middle;
+
+    
+}
+
+
 
 
 

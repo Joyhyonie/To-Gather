@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!-- <script type="text/javascript" src="/src/main/resources/static/user/pay/js/payScreen.js"></script> -->
-    
+    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
 </head>
 <body>
     <section id="grid1">
@@ -64,9 +64,15 @@
                                                     <input id="selectcoupon" type="checkbox">
                                                     <label for="selectcoupon">사용</label>
                                                     <a href="/src/main/resources/templates/user/payScreen/payCoupon.html" onclick="window.open(this.href, '_blank', 'width=500;, height=500;, toolbars=no, scrollbars=yes'); return false;">변경</a>
+                                                    <div>
+                                                        <span class="cutext"></span>
+                                                        <br>
+                                                        <span class="cuprice"></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <!---->
+                                          
                                             <!---->
                                         </div>
                                     </div>
@@ -246,10 +252,10 @@
                                                         <ul  class="tight no-scrollbar">
                                                             <li  data-pay="naverpay" class="active">
                                                                 <button class="btn">
-                                                                    <!-- <span > -->
+                                                                    <span >
                                                                         <img class="img" src="/src/main/resources/static/user/pay/images/회색네이버.jpg"></img>
                                                                         <img class="off" src="/src/main/resources/static/user/pay/images/(웅디자인) 네이버 심볼.png"></img>
-                                                                    <!-- </span> -->
+                                                                    </span>
                                                                     <div  class="text1">네이버페이</div>
                                                                 </button>
                                                             </li>
@@ -267,103 +273,40 @@
                                                                     <span>
                                                                         <img class="img" src="/src/main/resources/static/user/pay/images/회색통장.png"></img>
                                                                         <img class="off" src="/src/main/resources/static/user/pay/images/컬러통장.png"></img>
-                                                                </span>
+                                                                    </span>
                                                                 <div  class="text1">계좌이체</div>
                                                             </button>
                                                         </li>
                                                     </ul>
-                                                    <script>
-                                                        // const $img = document.querySelectorAll('.img');
-                                                        // const $off = document.querySelectorAll('.off');
-                                                        // console.log($off);
-                                                        // console.log($img);
-                                                        // console.log($img.classList)
-                                                        // $img.forEach(( img ) => {
-                                                        //     img.addEventListener('click', function(){                                                               
-                                                        //     })
-                                                        // });
-                                                        const $btn = document.querySelectorAll('.btn');
-                                                        const $img = document.querySelectorAll('.img');
-                                                        const $off = document.querySelectorAll('.off');
-                                                        const $text1 = document.getElementsByClassName('text1');
-                                                        console.log($text1);
-                                                        var state = "off";
-                                                        var state1 = "off";
-                                                        var state2 = "off";
-                                                      
-                                                            $btn[0].addEventListener('click', function(){    
-                                                                if(state == "off"){
-                                                                $img[0].style.display = 'none';
-                                                                $off[0].style.display = 'block';
-                                                                $text1[0].style.color = 'green';
-                                                                $off[1].style.display = 'none';
-                                                                $img[1].style.display = 'block';
-                                                                $text1[1].style.color = 'black';
-                                                                $off[2].style.display = 'none';
-                                                                $img[2].style.display = 'block';
-                                                                $text1[2].style.color = 'black';
-                                                                state="on";
-                                                                state1 = "off";
-                                                                state2 = "off";
-                                                                } else {
-                                                                $off[0].style.display = 'none';
-                                                                $img[0].style.display = 'block';
-                                                                $text1[0].style.color = 'black';
-                                                                $off[1].style.display = 'none';
-                                                                $img[1].style.display = 'block';
-                                                                $text1[1].style.color = 'black';
-                                                                state = "off";
-                                                                }
-                                                            });
-                                                            $btn[1].addEventListener('click', function(){    
-                                                                if(state1 == "off"){
-                                                                $img[1].style.display = 'none';
-                                                                $off[1].style.display = 'block';
-                                                                $text1[1].style.color = 'green';
-                                                                $off[0].style.display = 'none';
-                                                                $img[0].style.display = 'block';
-                                                                $text1[0].style.color = 'black';
-                                                                $off[2].style.display = 'none';
-                                                                $img[2].style.display = 'block';
-                                                                $text1[2].style.color = 'black';
-                                                                state = "off";
-                                                                state1="on";
-                                                                state2 = "off";
-                                                                } else {
-                                                                $off[1].style.display = 'none';
-                                                                $img[1].style.display = 'block';
-                                                                $text1[1].style.color = 'black';
-                                                                $off[2].style.display = 'none';
-                                                                $img[2].style.display = 'block';
-                                                                $text1[2].style.color = 'black';
-                                  
-                                                                state1 = "off";
-                                                                
-                                                                }
-                                                            });
-                                                            $btn[2].addEventListener('click', function(){    
-                                                                if(state2 == "off"){
-                                                                $img[2].style.display = 'none';
-                                                                $off[2].style.display = 'block';
-                                                                $text1[2].style.color = 'green';
-                                                                $off[1].style.display = 'none';
-                                                                $img[1].style.display = 'block';
-                                                                $text1[1].style.color = 'black';
-                                                                $off[0].style.display = 'none';
-                                                                $img[0].style.display = 'block';
-                                                                $text1[0].style.color = 'black';
-                                                                state = "off";
-                                                                state1="off";
-                                                                state2 = "on";
-                                                                } else {
-                                                                $off[2].style.display = 'none';
-                                                                $img[2].style.display = 'block';
-                                                                $text1[2].style.color = 'black';
-                                                                state2 = "off";
-                                                                }
-                                                            });
-                                                       
-                                                    </script>
+                                                    <div id="pay1">
+                                                        <div class="credit-card" data-component-name="componentCreditCard">
+                                                            <div class="wrapper3">
+                                                                <div class="name font-md">
+                                                                    <span >하나SK카드</span>
+                                                                </div>
+                                                                <div class="silver">
+
+                                                                </div>
+                                                                <div class="rect font-sm">
+                                                                    <span>등록 완료</span>
+                                                                </div>
+                                                                <div class="num font-lg">
+                                                                    <span>5531 **** **** **81</span>
+                                                                </div>
+                                                                <div class="date">
+                                                                    <span>
+                                                                        <span class="font-sm">VALID THRU </span>
+                                                                        <span class="font-lg">** **</span>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="actions">
+                                                                    <button type="button" class="btn3 btn-outline-light font-sm">직접 입력
+
+                                                                    </button><!---->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <!---->
                                                 </div>
                                             </div>
@@ -440,5 +383,173 @@
         </div>
 
     </section>
+                                                    <script>
+                                                        // const $img = document.querySelectorAll('.img');
+                                                        // const $off = document.querySelectorAll('.off');
+                                                        // console.log($off);
+                                                        // console.log($img);
+                                                        // console.log($img.classList)
+                                                        // $img.forEach(( img ) => {
+                                                        //     img.addEventListener('click', function(){                                                               
+                                                        //     })
+                                                        // });
+                                                        const $btn = document.querySelectorAll('.btn');
+                                                        const $img = document.querySelectorAll('.img');
+                                                        const $off = document.querySelectorAll('.off');
+                                                        const $text1 = document.getElementsByClassName('text1');
+                                                        console.log($text1);
+                                                        var state = "off";
+                                                        var state1 = "off";
+                                                        var state2 = "off";
+
+                                                        // $btn[0].addEventListener('focus', function(){
+                                                        //         console.log("시바")
+                                                        //         $img[0].style.display = 'none';
+                                                        //         $off[0].style.display = 'block';
+                                                        //         $text1[0].style.color = 'green';
+                                                        //         // $btn[0].style.color ="green";
+                                                        // })
+                                                        // $btn[0].addEventListener('blur', function(){
+                                                        //         console.log("날 놔줘")
+                                                        //         $img[0].style.display = 'block';
+                                                        //         $off[0].style.display = 'none';
+                                                        //         $text1[0].style.color = 'black';
+                                                        // })
+                                                        // $btn[1].addEventListener('focus', function(){
+                                                        //         console.log("시바")
+                                                        //         $img[1].style.display = 'none';
+                                                        //         $off[1].style.display = 'block';
+                                                        //         $text1[1].style.color = 'green';
+                                                        // })
+                                                        // $btn[1].addEventListener('blur', function(){
+                                                        //         console.log("날 놔줘")
+                                                        //         $img[1].style.display = 'block';
+                                                        //         $off[1].style.display = 'none';
+                                                        //         $text1[1].style.color = 'black';
+                                                        // })
+                                                        // $btn[2].addEventListener('focus', function(){
+                                                        //         console.log("시바")
+                                                        //         $img[2].style.display = 'none';
+                                                        //         $off[2].style.display = 'block';
+                                                        //         $text1[2].style.color = 'green';
+                                                        // })
+                                                        // $btn[2].addEventListener('blur', function(){
+                                                        //         console.log("날 놔줘")
+                                                        //         $img[2].style.display = 'block';
+                                                        //         $off[2].style.display = 'none';
+                                                        //         $text1[2].style.color = 'black';
+                                                        // })
+                                                            const $pay1 = document.getElementById('pay1');
+                                                                console.log($pay1);
+                                                            $btn[0].addEventListener('click', function(){    
+                                                                if(state == "off"){
+                                                                $img[0].style.display = 'none';
+                                                                $off[0].style.display = 'block';
+                                                                $btn[0].style.border = " 3px solid green";
+                                                                $text1[0].style.color = 'green';
+                                                                $off[1].style.display = 'none';
+                                                                $img[1].style.display = 'block';
+                                                                $text1[1].style.color = 'black';
+                                                                $off[2].style.display = 'none';
+                                                                $img[2].style.display = 'block';
+                                                                $text1[2].style.color = 'black';
+                                                                $pay1.style.display = 'none';
+                                                                $btn[1].style.border = " 3px solid black"
+                                                                $btn[2].style.border = " 3px solid black"
+                                                                state="on";
+                                                                state1 = "off";
+                                                                state2 = "off";
+                                                                } else {
+                                                                $off[0].style.display = 'none';
+                                                                $img[0].style.display = 'block';
+                                                                $text1[0].style.color = 'black';
+                                                                $off[1].style.display = 'none';
+                                                                $img[1].style.display = 'block';
+                                                                $text1[1].style.color = 'black';
+                                                                $btn[0].style.border = " 3px solid black"
+                                                                state = "off";
+                                                                }
+                                                            });
+                                                            $btn[1].addEventListener('click', function(){    
+                                                                if(state1 == "off"){
+                                                                $pay1.style.display = 'block';
+                                                                $img[1].style.display = 'none';
+                                                                $off[1].style.display = 'block';
+                                                                $text1[1].style.color = 'green';
+                                                                $off[0].style.display = 'none';
+                                                                $img[0].style.display = 'block';
+                                                                $text1[0].style.color = 'black';
+                                                                $off[2].style.display = 'none';
+                                                                $img[2].style.display = 'block';
+                                                                $text1[2].style.color = 'black';
+                                                                $btn[1].style.border = " 3px solid green";
+                                                                $btn[0].style.border = " 3px solid black"
+                                                                $btn[2].style.border = " 3px solid black"
+                                                                state = "off";
+                                                                state1="on";
+                                                                state2 = "off";
+                                                                } else {
+                                                                $off[1].style.display = 'none';
+                                                                $img[1].style.display = 'block';
+                                                                $text1[1].style.color = 'black';
+                                                                $off[2].style.display = 'none';
+                                                                $img[2].style.display = 'block';
+                                                                $text1[2].style.color = 'black';
+                                                                $pay1.style.display = 'none';
+                                                                $btn[1].style.border = " 3px solid black"
+                                                                state1 = "off";
+                                                                
+                                                                }
+                                                            });
+                                                            $btn[2].addEventListener('click', function(){    
+                                                                if(state2 == "off"){
+                                                                $img[2].style.display = 'none';
+                                                                $off[2].style.display = 'block';
+                                                                $text1[2].style.color = 'green';
+                                                                $off[1].style.display = 'none';
+                                                                $img[1].style.display = 'block';
+                                                                $text1[1].style.color = 'black';
+                                                                $off[0].style.display = 'none';
+                                                                $img[0].style.display = 'block';
+                                                                $text1[0].style.color = 'black';
+                                                                $pay1.style.display = 'none';
+                                                                $btn[2].style.border = " 3px solid green";
+                                                                $btn[0].style.border = " 3px solid black"
+                                                                $btn[1].style.border = " 3px solid black"
+                                                                state = "off";
+                                                                state1="off";
+                                                                state2 = "on";
+                                                                } else {
+                                                                $off[2].style.display = 'none';
+                                                                $img[2].style.display = 'block';
+                                                                $text1[2].style.color = 'black';
+                                                                $btn[2].style.border = " 3px solid black"
+                                                                state2 = "off";
+                                                                }
+                                                            });
+                                                        const $selectCoupon = document.getElementById('selectcoupon');
+                                                        console.log("$selectCoupon");
+                                                        const $cutext = document.getElementsByClassName('cutext')[0];
+                                                        console.log($cutext);
+                                                        const $cuprice = document.getElementsByClassName('cuprice')[0];
+                                                        console.log($cuprice);
+
+                                                        // $selectCoupon.addEventListener('click', function(){
+                                                        // $cuprice.innerHTML = '10,000원';
+                                                        // })
+                                                        $(document).ready(function() {
+                                                            $("#selectcoupon").on('click', function() {
+                                                                if ( $(this).prop('checked') ) {
+                                                                console.log("go");
+                                                                $cutext.innerHTML = "회원가입 축하 쿠폰";
+                                                                $cuprice.innerHTML = "10,000원";
+                                                                        
+                                                        } else {
+                                                            $cutext.innerHTML =  "";
+                                                            $cuprice.innerHTML = "";
+                                                        }
+                                                        });
+                                                    });
+                                                        </script>
 </body>
 </html>
