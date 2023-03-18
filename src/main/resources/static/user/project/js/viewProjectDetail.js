@@ -80,15 +80,22 @@ window.onload = function() {
     
         function like() {
             if(isLiked) {
-                likeBtn.src = "/src/main/resources/static/user/project/images/like-empty.png";
+                likeBtn.src = "/user/project/images/like-empty.png";
                 isLiked = false;
             } else {
-                likeBtn.src = "/src/main/resources/static/user/project/images/like-full.png";
+                likeBtn.src = "/user/project/images/like-full.png";
                 isLiked = true;
             }
         }
 
-
+	/* 공유하기 버튼 클릭 시, 팝업창 띄우기 */
+	const openPopUp = document.querySelector('#share-box')
+	
+	openPopUp.onclick = function(){
+		let option = "width=500px, height=300px, toolbars=no, scrollbars=no";
+		let openUrl = '/project/share'
+		window.open(openUrl, 'shareProject', option);
+	}
     
 
 }

@@ -13,25 +13,25 @@
 <body>
     <!-- header -->
     <div id="Header">
-        <img onclick="location.href='/'" id="Logo" src="/common/userCommon/images/logo.png">
+        <img id="Logo" src="/common/userCommon/images/logo.png" onclick="location.href='/'">
         <div class="For people">
             <div class="Category">For People</div>
             <div class="Items">
                 <div class="Item">
                     <img src="/common/userCommon/images/education.png" class="Icon">
-                    <button type="button" class="Button" id="Education">교육 프로젝트</button>
+                    <button type="button" class="Button" id="Education" onclick="location.href='/project/education'">교육 프로젝트</button>
                 </div>
                 <div class="Item">
                     <img src="/common/userCommon/images/disaster.png" class="Icon">
-                    <button type="button" class="Button" id="Disaster">자연 재해 지원 프로젝트</button>
+                    <button type="button" class="Button" id="Disaster" onclick="location.href='/project/disaster'">자연 재해 지원 프로젝트</button>
                 </div>
                 <div class="Item">
                     <img src="/common/userCommon/images/environment.png" class="Icon">
-                    <button type="button" class="Button" id="Environment">환경 보호 프로젝트</button>
+                    <button type="button" class="Button" id="Environment" onclick="location.href='/project/environment'">환경 보호 프로젝트</button>
                 </div>
                 <div class="Item">
                     <img src="/common/userCommon/images/medical.png" class="Icon">
-                    <button type="button" class="Button" id="Medical">의료 지원 프로젝트</button>
+                    <button type="button" class="Button" id="Medical" onclick="location.href='/project/medical'">의료 지원 프로젝트</button>
                 </div>
              </div>
         </div>
@@ -40,29 +40,29 @@
             <div class="Items">
                 <div class="Item">
                     <img src="/common/userCommon/images/dog.png" class="Icon">
-                    <button type="button" class="Button" id="Organic">유기 동물 보호 프로젝트</button>
+                    <button type="button" class="Button" id="Organic" onclick="location.href='/project/organic'">유기 동물 보호 프로젝트</button>
                 </div>
                 <div class="Item">
                     <img src="/common/userCommon/images/dolphin.png" class="Icon">
-                    <button type="button" class="Button" id="Wild">야생 동물 보존 프로젝트</button>
+                    <button type="button" class="Button" id="Wild" onclick="location.href='/project/wild'">야생 동물 보존 프로젝트</button>
                 </div>
                 <div class="Item">
                     <img src="/common/userCommon/images/paws.png" class="Icon">
-                    <button type="button" class="Button" id="Pet">반려 동물 케어 프로젝트</button>
+                    <button type="button" class="Button" id="Pet" onclick="location.href='/project/pet'">반려 동물 케어 프로젝트</button>
                 </div>
             </div>
         </div>
         <div class="For manager">
-            <div class="Category"><img id="Manager" src="/common/userCommon/images/manager.png">For Manager</div>
+            <div class="Category"><img id="Manager" src="/common/userCommon/images/manager.png" onclick="location.href='/admin/home'">For Manager</div>
         </div>
         <div id="Container">
         <div class="Search">
             <input type="text" placeholder="제목으로 프로젝트 검색 :)" id="Search-bar">
             <img id="Find" src="/common/userCommon/images/find.png">
         </div>
-        <button type="button" class="UserStatus" id="Log-in">Log In</button>
-        <button type="button" class="UserStatus" id="My-page">My Page</button>
-        <button type="button" id="Start-project">프로젝트 신청</button>
+        <button type="button" class="UserStatus" id="Log-in" onclick="location.href='/user/login'">Log In</button>
+        <button type="button" class="UserStatus" id="My-page" onclick="location.href='/user/mypage'">My Page</button>
+        <button type="button" id="Start-project" onclick="location.href='/project/create'">프로젝트 신청</button>
         </div>
     </div>
 

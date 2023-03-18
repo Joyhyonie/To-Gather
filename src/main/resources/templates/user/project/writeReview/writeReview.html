@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/user/project/CSS/writeReview.css">
+    <link rel="stylesheet" type="text/css" href="/user/project/CSS/writeReview.css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <script src="/src/main/resources/static/user/project/js/jquery-3.6.3.min.js"></script>
-    <script src="/src/main/resources/static/user/project/js/summernote/summernote-lite.js"></script>
-    <script src="/src/main/resources/static/user/project/js/summernote/lang/summernote-ko-KR.js"></script>
-    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/user/project/CSS//summernote/summernote-lite.css">
-    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/user/project/CSS/summernote/summernote-lite.css">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
     <title>writeReview</title>
 </head>
 <body>
+	<div th:replace="common/header/userHeader.html"></div>
+	<script src="/user/project/js/jquery-3.6.3.min.js"></script>
+	<script src="/user/project/js/summernote/summernote-lite.js"></script>
+    <script src="/user/project/js/summernote/lang/summernote-ko-KR.js"></script>
+
     <div class="wrapper">
         <div class="step">
             <span>last step</span>
@@ -45,6 +47,7 @@
             <button class="submit">프로젝트 후기 게시</button>
         </div>
     </div>
+    
     
 </body>
 </html>

@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/user/project/CSS/viewProjectDetail.css">
+    <link rel="stylesheet" type="text/css" href="/user/project/CSS/viewProjectDetail.css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="/src/main/resources/static/user/project/js/viewProjectDetail.js"></script>  
-    <script src="/src/main/resources/static/user/project/js/jquery-3.6.3.min.js"></script>
-    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
     <title>viewProjectDetail</title>
 </head>
 <body>
+	<div th:replace="common/header/userHeader.html"></div>
+	<script type="text/javascript" src="/user/project/js/viewProjectDetail.js"></script> 
+	<script src="/user/project/js/jquery-3.6.3.min.js"></script> 
+
     <div class="wrapper">
         <!-- 대표 사진 -->
         <div class="slider">
-            <img src="/src/main/resources/static/user/project/images/dummy1.png" class="slide current-slide">
-            <img src="/src/main/resources/static/user/project/images/dummy1.png" class="slide slide-right">
-            <img src="/src/main/resources/static/user/project/images/dummy1.png" class="slide slide-right">
-            <img src="/src/main/resources/static/user/project/images/dummy1.png" class="slide slide-right">
+            <img src="/user/project/images/dummy1.png" class="slide current-slide">
+            <img src="/user/project/images/dummy1.png" class="slide slide-right">
+            <img src="/user/project/images/dummy1.png" class="slide slide-right">
+            <img src="/user/project/images/dummy1.png" class="slide slide-right">
         </div>
 
         <!-- 프로젝트 정보 -->
@@ -33,7 +35,7 @@
                 </div>
             </div>
             <div id="maker">
-                <img src="/src/main/resources/static/user/project/images/dummy2.png" id="maker-image">
+                <img src="/user/project/images/dummy2.png" id="maker-image">
                 <div id="maker-info">
                     <p id="maker-name">기록제작소</p>
                     <p id="maker-summary">사회적 기업의 이야기를 전합니다.</p>
@@ -41,15 +43,13 @@
             </div>
             <div id="boxes">
                 <div id="like-box">
-                    <img src="/src/main/resources/static/user/project/images/like-empty.png" id="like-btn" class="like">
+                    <img src="/user/project/images/like-empty.png" id="like-btn" class="like">
                     <p id="like-people"><span>63</span>명이 좋아합니다 :)</p>
                 </div>
-                <a href="/src/main/resources/templates/user/project/viewProjectDetail/shareProject.html" onclick="window.open(this.href, '_blank', 'width=500px, height=300px, toolbars=no, scrollbars=no'); return false">
                 <div id="share-box">
-                    <img src="/src/main/resources/static/user/project/images/share.png" id="share">
+                    <img src="/user/project/images/share.png" id="share">
                     <p>공유하기</p>
                 </div>
-                </a>
             </div>
         </div>
 
@@ -70,15 +70,15 @@
         <!-- 스토리&후기 바디 -->
         <div class="story-body">
             <div id="story" class="content">
-                <img src="/src/main/resources/static/user/project/images/dummy3.png">
-                <img src="/src/main/resources/static/user/project/images/dummy4.png">
-                <img src="/src/main/resources/static/user/project/images/dummy5.png">
+                <img src="/user/project/images/dummy3.png">
+                <img src="/user/project/images/dummy4.png">
+                <img src="/user/project/images/dummy5.png">
             </div>
             <div id="review" class="content">
                 <p class="no-review">아직 작성된 후기가<br> 존재하지 않습니다.</p>
                 <div class="create-review-box">
                     <p>이 프로젝트의 Maker이신가요?<br>많은 Supporter분들을 위해 후기를 작성해주세요 :)</p>
-                    <button id="create-review-button">후기 작성하기</button>
+                    <button id="create-review-button" onclick="location.href='/project/review'">후기 작성하기</button>
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
         <div class="guide">
             <div id="title-box">
                 <p id="guide-title">리워드 배송 및 환불 정책</p>
-                <img src="/src/main/resources/static/user/project/images/polygon.png" id="polygon">
+                <img src="/user/project/images/polygon.png" id="polygon">
             </div>
             <pre id="guide-content">
                 * 리워드 배송 안내
@@ -169,7 +169,7 @@
             <div id="comment-title">총 댓글 기부금 <span id="donation">10,500</span>원</div>
             <div id="comment-body">
                 <div id="comment-container">
-                    <img src="/src/main/resources/static/user/project/images/profile1.png" id="commenter">
+                    <img src="/user/project/images/profile1.png" id="commenter">
                     <textarea id="comment-box" maxlength="500" placeholder="따뜻한 댓글을 작성해주세요! To-Gather가 기부금을 지원합니다 :)"></textarea>
                 </div>
                 <div id="mini-container">
@@ -200,7 +200,7 @@
                     <p id="regist-date">2023년 2월 25일</p>
                 </div>
                 <div id="flex3">
-                    <img src="/src/main/resources/static/user/project/images/profile2.png" id="profiles">
+                    <img src="/user/project/images/profile2.png" id="profiles">
                     <div>
                         <textarea id="comment" readonly>응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!</textarea>
                     </div>
@@ -215,7 +215,7 @@
                     <p id="regist-date">2023년 2월 24일</p>
                 </div>
                 <div id="flex3">
-                    <img src="/src/main/resources/static/user/project/images/profile3.png" id="profiles">
+                    <img src="/user/project/images/profile3.png" id="profiles">
                     <div>
                         <textarea id="comment" readonly>응원 합니다!!!응원 합니다!!!</textarea>
                     </div>
@@ -238,6 +238,6 @@
         </div>
     </div>
 
-    
+    <div th:replace="common/footer/userFooter.html"></div>
 </body>
 </html>

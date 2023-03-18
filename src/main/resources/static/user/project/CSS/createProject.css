@@ -21,7 +21,7 @@ html {
 .steps {
     width: 200px;
     position: fixed;
-    margin-left: -1200px;
+    margin-left: 1200px;
     margin-top: 50px;
 }
 
@@ -51,7 +51,7 @@ html {
 }
 
 .go { 
-    height: 50px; /* 각 step페이지로의 이동을 위한 div의 높이 */
+    height: 100px; /* 각 step페이지로의 이동을 위한 div의 높이 */
 }
 
 /* box */
@@ -59,7 +59,7 @@ html {
     text-align: center;
     color: #81AE64;
     font-size: 28px;
-    margin-left: 250px;
+    margin-left: -300px;
     margin-bottom: 10px;
 }
 
@@ -72,8 +72,8 @@ html {
     box-shadow: 20px 20px #FFF4C9;
     background-color: white;
     padding: 40px;
-    margin-bottom: 150px;
-    margin-left: 15%; /* box 위치 조절 */
+    margin-bottom: 50px;
+    margin-left: -15%; /* box 위치 조절 */
 }
 
 flex {
@@ -229,8 +229,7 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
     border: 5px solid #81AE64;
     padding: 10px 35px;
     border-radius: 20px;
-    margin-left: 500px;
-    margin-bottom: 50px;
+    margin: 50px 0px 100px 200px;
 }
 
 .submit:hover {

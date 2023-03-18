@@ -282,6 +282,10 @@ li:hover,
 }
 
 /* 후기가 없을 경우의 바디 */
+#review {
+	display:none;
+}
+
 .no-review {
     text-align: center;
     font-size: 40px;
