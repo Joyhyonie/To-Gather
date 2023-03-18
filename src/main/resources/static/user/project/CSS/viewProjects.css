@@ -110,7 +110,6 @@ select { /* select 화살표 커스텀 */
 
 .project-info {
     position: absolute;
-    /* border: 1px solid #DEDCDC; */
     bottom: 60px;
     left: 15px;
     width: 195px;
@@ -161,3 +160,26 @@ select { /* select 화살표 커스텀 */
     text-align: right;
     color: #709053;
 }
+
+/* 더보기 기능을 위한 css */
+.more-button {
+    width: 100%;
+    background-color: #f3f3f3;
+    text-align: center;
+    padding: 10px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.more-button:hover {
+    background-color: white;
+}
+
+.loading { /* active가 아닌 프로젝트들은 노출X */
+    display: none;
+}
+
+.loading.active { /* active인 프로젝트들만 노출 */
+    display: block;
+}
+
