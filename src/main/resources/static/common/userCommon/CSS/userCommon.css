@@ -14,7 +14,7 @@ body {
     overflow-y: auto;
 }
 
-#header {
+#Header {
     display: flex;
     position: fixed; 
     width: 100vw;
@@ -22,29 +22,31 @@ body {
     height: 90px;
     background-color: rgb(255, 255, 255);
     box-shadow:3px 3px 2px 1px rgb(222, 222, 222);
+    z-index: 1;
 }
 
 /* logo */
-#logo {
+#Logo {
     margin: 10px 40px;
     margin-left: 30px;
     top: 10%;
     height: 70px;
+    cursor: pointer;
 }
 
 /* category */
-.for {
+.For {
     position: relative;
     background-color: #ffffff;
     font-size: 25px;
     margin: 25px 40px;
     }
 
-.items {
+.Items {
     position: absolute;
     top: 65px;
     left: -90px;
-    width: 290px;
+    width: 300px;
     background-color: #ffffff;
     transition: all 0.4s ease-out; /* 슬라이드 효과 추가 */
     transform: translateY(-5px); /* 초기 위치 설정 */
@@ -52,22 +54,22 @@ body {
     border: none;
 }
 
-.item {
+.Item {
     display: flex; /* icon과 item 수평 정렬 */
-    padding: 10px;
+    padding: 16px;
 }
 
-.for:hover .items {
+.For:hover .Items {
     opacity: 1; /* 요소를 보이게 함 */
     transform: translateY(0); /* 슬라이드 효과 추가 */
     border-top: 5px solid #81AE64;
 }
 
-.for:hover .category {
+.For:hover .Category {
     color: #81AE64;
 }
 
-.button { 
+.Button { 
     background:rgb(255, 255, 255); 
     font-family: 'Do Hyeon', sans-serif;
     color: #535353; 
@@ -76,22 +78,22 @@ body {
     cursor: pointer; 
 }
 
-.button:hover {
+.Button:hover {
     color: #81AE64;
 }
 
-.icon {
+.Icon {
     width: 35px;
     height: 35px;
     margin-right: 20px;
 }
 
-#manager {
+#Manager {
     width: 15px;
     padding-right: 10px;
 }
 
-#container { /* 오른쪽 정렬을 위한 컨테이너 */
+#Container { /* 오른쪽 정렬을 위한 컨테이너 */
     display: flex;
     position: absolute;
     right: 1%;
@@ -100,13 +102,13 @@ body {
 }
 
 /* search bar */
-.search {
+.Search {
     position: relative;
     width: 300px;
     padding-right: 0px;
 }
 
-#search-bar {
+#Search-bar {
     width: 300px;
     border: none;
     background-color: #f5f5f5;
@@ -115,11 +117,11 @@ body {
     font-size: 17px;
 }
 
-#search-bar:focus {
+#Search-bar:focus {
     outline: 2px solid #C7E78B;
 }
   
-#find {
+#Find {
     position : absolute;
     width: 30px;
     height: 30px;
@@ -129,7 +131,7 @@ body {
 }
 
 /* user login & logout & mypage */
-.userStatus {
+.UserStatus {
     font-size: 25px;
     border: none;
     background-color: #ffffff;
@@ -139,16 +141,16 @@ body {
     margin: 0px 30px 5px 50px;
 }
 
-.userStatus:hover {
+.UserStatus:hover {
     color: #81AE64;
 }
 
-#my-page {
+#My-page {
     display: none; /* 추후에 my page는 로그인 시 Log In 대신 보이도록 할 것 */
 }
 
 /* start project */
-#start-project {
+#Start-project {
     border-radius: 15px;
     border: none;
     color: #ffffff;
@@ -159,12 +161,12 @@ body {
     cursor: pointer;
 }
 
-#start-project:hover {
+#Start-project:hover {
     background-color: #C7E78B;
 }
 
 /* to-top button */
-#to-top {
+#To-top {
     position: fixed;
     width: 60px;
     bottom: 2%;
@@ -175,14 +177,14 @@ body {
 /* --------------------------------------------------------------------------- */
 
 /* footer */
-#footer {
+#Footer {
     background-color: rgb(255, 255, 255);
     width: 100vw;
     border-top: 1px solid #DEDCDC;
     padding-bottom: 60px;
 }
 
-#wrapper {
+#Wrapper {
     margin-left: 70px;
     height: 65px;
     width: 1300px;
@@ -190,33 +192,31 @@ body {
     border-bottom: 1px solid #DEDCDC;
 }
 
-#guides {
+#Guides {
     display: flex;
     list-style: none;
     padding-left: 0px;
 }
 
-.guide {
+.Guide {
     margin: 10px 30px;
     font-size: 160%;
 }
 
-.guide:hover {
+.Guide:hover {
     color: #81AE64;
     cursor: pointer;
 }
 
-#footer-logo {
+#Footer-logo {
     margin: 20px 40px;
     margin-left: 70px;
     height: 80px;
 }
 
-#texts {
+#Texts {
     margin-top: 0px;
     margin-left: 70px;
     line-height: 35px;
     font-size: 120%;
 }
-
-

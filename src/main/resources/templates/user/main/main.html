@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/user/main/CSS/main.css">
+    <link rel="stylesheet" type="text/css" href="/user/main/CSS/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="/src/main/resources/static/user//main/js/main.js"></script> 
-    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
     <title>main</title>
 </head>
 <body>
+	<div th:replace="common/header/userHeader.html"></div>
+	<!-- userHeader의 js과 충돌 방지를 위해 script를 head가 아닌 replace의 하단에 선언 -->
+	<script type="text/javascript" src="/user/main/js/main.js"></script> 
+	
+	<div class="fake-header"></div>
+
     <div class="main-banner">
         <div class="banner-leftside">
             <p class="main-text">가치를 나누는 일,<br>함께 한다면<br>어렵지 않아요</p>
@@ -20,11 +26,11 @@
             </div>
         </div>
             <div class="slider">
-                <img src="/src/main/resources/static/user/main/images/dummy2.png" class="slide current-slide">
-                <img src="/src/main/resources/static/user/main/images/dummy3.png" class="slide slide-right">
-                <img src="/src/main/resources/static/user/main/images/dummy4.png" class="slide slide-right">
-                <img src="/src/main/resources/static/user/main/images/dummy5.png" class="slide slide-right">
-                <img src="/src/main/resources/static/user/main/images/dummy6.png" class="slide slide-right">   
+                <img src="/user/main/images/dummy2.png" class="slide current-slide">
+                <img src="/user/main/images/dummy3.png" class="slide slide-right">
+                <img src="/user/main/images/dummy4.png" class="slide slide-right">
+                <img src="/user/main/images/dummy5.png" class="slide slide-right">
+                <img src="/user/main/images/dummy6.png" class="slide slide-right">   
             </div>
             <div class="for-button-location">
                 <button class="btn prev">◀</button>
@@ -36,9 +42,9 @@
     </div>
     <div class="wrapper" id="today">
         <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
+            <img src="/user/main/images/dummy1.png" class="project-image">
             <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
             </div>
             <div class="display-box">
                 <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
@@ -55,9 +61,28 @@
         </div>
 
         <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
+            <img src="/user/main/images/dummy1.png" class="project-image">
             <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
+            </div>
+            <div class="display-box">
+                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
+            </div>
+            <div class="project-info">
+                <p class="maker-name">제주펫</p>
+                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
+            </div>
+            <div class="funding-date"><span>18</span>일 남음</div>
+            <flex>
+                <p class="current-funding"><span>2,888,690</span>원</p>
+                <p class="percent"><span>178</span>%</p>
+            </flex>
+        </div>
+        
+        <div class="project-block">
+            <img src="/user/main/images/dummy1.png" class="project-image">
+            <div class="like-box">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
             </div>
             <div class="display-box">
                 <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
@@ -74,9 +99,9 @@
         </div>
 
         <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
+            <img src="/user/main/images/dummy1.png" class="project-image">
             <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
             </div>
             <div class="display-box">
                 <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
@@ -91,25 +116,7 @@
                 <p class="percent"><span>178</span>%</p>
             </flex>
         </div>
-
-        <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
-            <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
-            </div>
-            <div class="display-box">
-                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
-            </div>
-            <div class="project-info">
-                <p class="maker-name">제주펫</p>
-                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
-            </div>
-            <div class="funding-date"><span>18</span>일 남음</div>
-            <flex>
-                <p class="current-funding"><span>2,888,690</span>원</p>
-                <p class="percent"><span>178</span>%</p>
-            </flex>
-        </div>
+        
     </div>
 
     <!----------------------------------------------------------------------------------------------------------->
@@ -118,9 +125,9 @@
     </div>
     <div class="wrapper" id="popular">
         <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
+            <img src="/user/main/images/dummy1.png" class="project-image">
             <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
             </div>
             <div class="display-box">
                 <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
@@ -137,9 +144,9 @@
         </div>
 
         <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
+            <img src="/user/main/images/dummy1.png" class="project-image">
             <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
             </div>
             <div class="display-box">
                 <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
@@ -154,123 +161,121 @@
                 <p class="percent"><span>178</span>%</p>
             </flex>
         </div>
-
-        <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
-            <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
-            </div>
-            <div class="display-box">
-                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
-            </div>
-            <div class="project-info">
-                <p class="maker-name">제주펫</p>
-                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
-            </div>
-            <div class="funding-date"><span>18</span>일 남음</div>
-            <flex>
-                <p class="current-funding"><span>2,888,690</span>원</p>
-                <p class="percent"><span>178</span>%</p>
-            </flex>
-        </div>
-
-        <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
-            <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
-            </div>
-            <div class="display-box">
-                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
-            </div>
-            <div class="project-info">
-                <p class="maker-name">제주펫</p>
-                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
-            </div>
-            <div class="funding-date"><span>18</span>일 남음</div>
-            <flex>
-                <p class="current-funding"><span>2,888,690</span>원</p>
-                <p class="percent"><span>178</span>%</p>
-            </flex>
-        </div>
-
-        <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
-            <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
-            </div>
-            <div class="display-box">
-                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
-            </div>
-            <div class="project-info">
-                <p class="maker-name">제주펫</p>
-                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
-            </div>
-            <div class="funding-date"><span>18</span>일 남음</div>
-            <flex>
-                <p class="current-funding"><span>2,888,690</span>원</p>
-                <p class="percent"><span>178</span>%</p>
-            </flex>
-        </div>
-
-        <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
-            <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
-            </div>
-            <div class="display-box">
-                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
-            </div>
-            <div class="project-info">
-                <p class="maker-name">제주펫</p>
-                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
-            </div>
-            <div class="funding-date"><span>18</span>일 남음</div>
-            <flex>
-                <p class="current-funding"><span>2,888,690</span>원</p>
-                <p class="percent"><span>178</span>%</p>
-            </flex>
-        </div>
-
-        <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
-            <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
-            </div>
-            <div class="display-box">
-                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
-            </div>
-            <div class="project-info">
-                <p class="maker-name">제주펫</p>
-                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
-            </div>
-            <div class="funding-date"><span>18</span>일 남음</div>
-            <flex>
-                <p class="current-funding"><span>2,888,690</span>원</p>
-                <p class="percent"><span>178</span>%</p>
-            </flex>
-        </div>
-
-        <div class="project-block">
-            <img src="/src/main/resources/static/user/main/images/dummy1.png" class="project-image">
-            <div class="like-box">
-                <img src="/src/main/resources/static/user/main/images/like-empty.png" class="like-btn">
-            </div>
-            <div class="display-box">
-                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
-            </div>
-            <div class="project-info">
-                <p class="maker-name">제주펫</p>
-                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
-            </div>
-            <div class="funding-date"><span>18</span>일 남음</div>
-            <flex>
-                <p class="current-funding"><span>2,888,690</span>원</p>
-                <p class="percent"><span>178</span>%</p>
-            </flex>
-        </div>
-
         
-            
+        <div class="project-block">
+            <img src="/user/main/images/dummy1.png" class="project-image">
+            <div class="like-box">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
+            </div>
+            <div class="display-box">
+                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
+            </div>
+            <div class="project-info">
+                <p class="maker-name">제주펫</p>
+                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
+            </div>
+            <div class="funding-date"><span>18</span>일 남음</div>
+            <flex>
+                <p class="current-funding"><span>2,888,690</span>원</p>
+                <p class="percent"><span>178</span>%</p>
+            </flex>
+        </div>
+
+        <div class="project-block">
+            <img src="/user/main/images/dummy1.png" class="project-image">
+            <div class="like-box">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
+            </div>
+            <div class="display-box">
+                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
+            </div>
+            <div class="project-info">
+                <p class="maker-name">제주펫</p>
+                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
+            </div>
+            <div class="funding-date"><span>18</span>일 남음</div>
+            <flex>
+                <p class="current-funding"><span>2,888,690</span>원</p>
+                <p class="percent"><span>178</span>%</p>
+            </flex>
+        </div>
+        
+        <div class="project-block">
+            <img src="/user/main/images/dummy1.png" class="project-image">
+            <div class="like-box">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
+            </div>
+            <div class="display-box">
+                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
+            </div>
+            <div class="project-info">
+                <p class="maker-name">제주펫</p>
+                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
+            </div>
+            <div class="funding-date"><span>18</span>일 남음</div>
+            <flex>
+                <p class="current-funding"><span>2,888,690</span>원</p>
+                <p class="percent"><span>178</span>%</p>
+            </flex>
+        </div>
+
+        <div class="project-block">
+            <img src="/user/main/images/dummy1.png" class="project-image">
+            <div class="like-box">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
+            </div>
+            <div class="display-box">
+                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
+            </div>
+            <div class="project-info">
+                <p class="maker-name">제주펫</p>
+                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
+            </div>
+            <div class="funding-date"><span>18</span>일 남음</div>
+            <flex>
+                <p class="current-funding"><span>2,888,690</span>원</p>
+                <p class="percent"><span>178</span>%</p>
+            </flex>
+        </div>
+        
+        <div class="project-block">
+            <img src="/user/main/images/dummy1.png" class="project-image">
+            <div class="like-box">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
+            </div>
+            <div class="display-box">
+                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
+            </div>
+            <div class="project-info">
+                <p class="maker-name">제주펫</p>
+                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
+            </div>
+            <div class="funding-date"><span>18</span>일 남음</div>
+            <flex>
+                <p class="current-funding"><span>2,888,690</span>원</p>
+                <p class="percent"><span>178</span>%</p>
+            </flex>
+        </div>
+
+        <div class="project-block">
+            <img src="/user/main/images/dummy1.png" class="project-image">
+            <div class="like-box">
+                <img src="/user/main/images/like-empty.png" class="like-btn">
+            </div>
+            <div class="display-box">
+                <p class="project-summary">제주에 버려지는 유기견들을 위해 도움의 손길을 보내주세요</p>
+            </div>
+            <div class="project-info">
+                <p class="maker-name">제주펫</p>
+                <p class="project-name">제주도 유기견을 돕는 특별한 프로젝트</p>
+            </div>
+            <div class="funding-date"><span>18</span>일 남음</div>
+            <flex>
+                <p class="current-funding"><span>2,888,690</span>원</p>
+                <p class="percent"><span>178</span>%</p>
+            </flex>
+        </div>
+
     </div>
 
     <!--------------------------------------------------------------------------->
@@ -301,5 +306,7 @@
             </div>
         </flex>
     </div>
+    
+    <div th:replace="common/footer/userFooter.html"></div>
 </body>
 </html>
