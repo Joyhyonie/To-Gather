@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/admin/borad/CSS/viewBoardList.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <title>게시판</title>                    
+</head>
+<body>
+
+    <div class="content">
+
+        <div class="content1">
+            <div class="menu-title">게시판</div>
+            <div class="searchbar">
+                <form id="searchForm" action="" method="get">
+                    <select class="sort">
+                        <option value="num">NO.</option>
+                        <option value="sort">분류</option>
+                        <option value="titleContent">제목</option>
+                        <option value="writeDate">작성일</option>
+                    </select>
+                    <input type="text" class="searchContent">
+                    <button class="search-button" type="submit"><i class="bi bi-search"></i></button>
+                </form>                  
+            </div>
+        </div>
+
+        <div class="content2">
+            <table>
+                <tr>
+                    <th class="table-header"><form><input type="checkbox" class="checkbox"/></form></th>
+                    <th class="table-header">NO.</th>
+                    <th class="table-header">분류</th>
+                    <th class="table-header">제목</th>
+                    <th class="table-header">작성일</th>
+                    <th class="table-header">조회수</th>
+                   
+                  
+                </tr>
+                <tr class="table-content">
+                    <td><form><input type="checkbox"/></form></td>
+                    <td>1</td>
+                    <td>FAQ</td>
+                    <td>결제/환불 관련..</td>
+                    <td>2023.02.26</td>
+                    <td>87987</td>
+                </tr>
+                <tr class="table-content">
+                    <td><form><input type="checkbox"/></form></td>
+                    <td>2</td>
+                    <td>NOTICE</td>
+                    <td>[안내]TO-GATHER Social..</td>
+                    <td>2023/02/27</td>
+                    <td>76558</td>
+                    
+                </tr>
+
+            </table>
+        </div>
+
+        <div class="content3">
+            <button class="write">글쓰기</button>
+            <button class="delete">삭제</button>
+        </div>
+
+        <div class="content4">
+            <ul class="pagination">
+                <li class="prev"><a href=""><</a></li>
+                <li calss="page1"><a href="">1</a></li>
+                <li class="page2"><a href="">2</a></li>
+                <li class="page3"><a href="">3</a></li>
+                <li class="page4"><a href="">4</a></li>
+                <li class="page5"><a href="">5</a></li>
+                <li class="page6"><a href="">6</a></li>
+                <li class="page7"><a href="">7</a></li>
+                <li class="page8"><a href="">8</a></li>
+                <li class="page9"><a href="">9</a></li>
+                <li class="page10"><a href="">10</a></li>
+                <li class="next"><a href="">></a></li>
+            </ul>
+        </div>
+
+
+
+
+    </div>
+
+</body>
+</html>
