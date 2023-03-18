@@ -185,10 +185,24 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
     margin: 20px 0px; /* 아래 리워드 요소들과 위 요소들과의 간격 */
 }
 
-#remove-reward,
-#add-reward {
+.reward-container {
+    position: relative;
+}
+
+#remove-reward {
+    position: absolute;
+    right: 180px;
     margin-left: 15px;
     cursor: pointer;
+    font-size: 28px;
+}
+
+#add-reward {
+    position: absolute;
+    right: 40px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 28px;
 }
 
 #remove-reward:hover,
@@ -277,10 +291,25 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
     height: 450px;
     margin-top: 50px;
     margin-left: 150px; /* preview 이미지 가운데 정렬 */
-    display: none;
+    display: none; /* 이미지가 첨부될 때 추가시키기 위해 none */
 }
 
-#main-preview-image {
+.sub-preview-area {
+    position: relative;
+    width: 200px;
+    height: 150px;
+    margin-top: 50px;
+    margin-left: 150px; /* preview 이미지 가운데 정렬 */
+    cursor: pointer;
+    background-color: #F8F8F8;
+}
+
+.sub-preview-area .file-icon {
+    padding: 50px 70px;
+}
+
+#main-preview-image,
+.sub-preview-image {
     position: absolute;
     top: 0;
     left: 0;
@@ -291,9 +320,6 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
     margin: auto;
 }
 
-/* 4. 리워드 설계 */
-
-/* 5. 리워드 안내 */
 /* 스크롤바 설정 */
 #notice-content::-webkit-scrollbar {
     width: 20px;

@@ -11,7 +11,7 @@ html {
     max-width: 1180px; /* 요소들을 다 넣기 위해 80px 늘림 */
     margin: 0 auto; 
     display: flex;
-    justify-content: left; /* 모든 요소 가운데 정렬 */
+    justify-content: left; /* 모든 요소 왼쪽 정렬(새로운 아이템 추가 시, 순서대로 추가될 수 있도록) */
     flex-wrap: wrap; /* wrapper안에서 공간이 없을 시, 아이템 자동 줄바꿈 */
 }
 
@@ -43,6 +43,7 @@ flex {
     border: none;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 20px;
+    width: 170px;
 }
 
 .input:focus {

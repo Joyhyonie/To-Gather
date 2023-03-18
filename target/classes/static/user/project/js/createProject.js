@@ -43,7 +43,7 @@ window.onload = function() {
     mainImage.addEventListener('change', checkSize);
 
     function checkSize() {
-        if(mainImage.files && mainImage.files[0].size > (0.01 * 1024 * 1024)) { /* 추후 (20 * 1024 * 1024) 으로 변경 */
+        if(mainImage.files && mainImage.files[0].size > (20 * 1024 * 1024)) { /* 추후 (20 * 1024 * 1024) 으로 변경 */
             alert("이미지는 20MB 이하의 크기를 가지고 있어야 합니다 😰")
             mainImage.value = null;
             uploadName.value = "파일을 업로드 해주세요 :)";
@@ -52,44 +52,144 @@ window.onload = function() {
     
     /* 프로젝트 메인 사진 프리뷰 */
     (function(){
-        const previewArea = document.querySelector("#main-preview-area");
+        const mainPreviewArea = document.querySelector("#main-preview-area");
 
-        mainImage.addEventListener('change', preview);
+        mainImage.addEventListener('change', mainPreview);
 
-        function preview() {
+        function mainPreview() {
             console.log(this);
             if(this.files && this.files[0]) {
                 const reader = new FileReader();
                 reader.readAsDataURL(this.files[0]);
                 reader.onload = function() {
-                    previewArea.innerHTML = `<img src='${reader.result}' id="main-preview-image">`;
+                    mainPreviewArea.innerHTML = `<img src='${reader.result}' id="main-preview-image">`;
                 }
             }
         }
     })();
 
+    /* 첨부 된 메인 사진 파일명 보여주기 */
+    const mainName = document.querySelector("#main-name");
 
-    /* 프로젝트 메인 사진 첨부 시, 프리뷰 생성 */
+    mainImage.addEventListener('change', function() {
+            if (mainImage.files.length > 0) {
+                mainName.value = mainImage.files[0].name;
+            }
+        });
+
+    /* 프로젝트 메인 사진 첨부 시점에 프리뷰 생성 */
     const mainPreviewArea = document.querySelector("#main-preview-area");
-    const uploadMainImage = document.querySelector("#upload-main-image");
 
-    uploadMainImage.addEventListener('click', ()=> mainPreviewArea.style.display = "block"); /* display:none을 block으로 변경 */
+    mainImage.addEventListener('change', () => { mainPreviewArea.style.display = 'block' });
 
 
-    /* 프로젝트 메인 사진의 비율이 다를 경우, alert로 알림 */
-    // const mainPreviewImage = document.querySelector("#main-preview-image");
+    /* 프로젝트 서브 사진 프리뷰 */
+    (function() {
+        const subPreviewArea = document.querySelectorAll('.sub-preview-area');
+        const subImages = document.querySelectorAll('.sub-image');
 
-    // uploadMainImage.addEventListener('click', alertSize);
+        subPreviewArea.forEach(item => item.addEventListener('click', open));
 
-    // function alertSize() {
-    //     console.log("메롱")
-    //     console.log(mainPreviewImage.width)
-    //     console.log(mainPreviewImage.height)
-    //     if(mainPreviewImage.width != (600) && mainPreviewImage.height != (450)) {
-    //         alert("권장 크기와의 차이로 실제 이미지와 다르게 보일 수 있습니다 😓");
-    //         return;
-    //     }
-    // }
+        subImages.forEach(item => item.addEventListener('change', subPreview));
+
+        function open() {
+            const index = Array.from(subPreviewArea).indexOf(this);
+            subImages[index].click();
+        }
+
+        function subPreview() {
+            const index = Array.from(subImages).indexOf(this);
+
+            if(this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.readAsDataURL(this.files[0]);
+                reader.onload =  function() {
+                    subPreviewArea[index].innerHTML = `<img src='${reader.result}' class="sub-preview-image">`;
+                }
+
+            }
+        }
+    })();
+
+
+    /* 리워드 추가/삭제 버튼 기능 */
+    const addBtn = document.querySelector('#add-reward');
+    const removeBtn = document.querySelector('#remove-reward');
+    const container = document.querySelector('.reward-container');
+    let rewardCount = 1;
+                    
+    addBtn.addEventListener('click', () => {
+        const rewardBox = document.createElement('div');
+        rewardBox.classList.add('reward-box');
+        rewardBox.innerHTML = `
+            <flex class="justify-between">
+                <p class="title">리워드 ${++rewardCount}</p>
+            </flex>
+            <div class="reward-info">
+                <flex>
+                    <div>
+                        <p class="title">* 리워드명</p>
+                        <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;" required>
+                    </div>
+                    <div>
+                        <p class="title">* 리워드 금액</p>
+                        <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:110px;" required>
+                    </div>
+                    <div>
+                        <p class="title">* 리워드 예상 발송일</p>
+                        <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:140px;" required>
+                    </div>
+                </flex>
+                <div>
+                    <p class="title">* 리워드 구성</p>
+                    <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:670px;" required>
+                </div>
+            </div>
+        `;
+        container.appendChild(rewardBox);
+    });
+                    
+    removeBtn.addEventListener('click', () => {
+        const rewardBoxes = document.querySelectorAll('.reward-box');
+        if (rewardBoxes.length > 1) {
+            const lastRewardBox = rewardBoxes[rewardBoxes.length - 1];
+            container.removeChild(lastRewardBox);
+            rewardCount--;
+        } else {
+            alert("리워드는 최소 1개 이상 존재 해야합니다 ☹")
+        }
+    });
+
+
+    /* 정산 확인 시, 세 가지의 서류가 첨부되면 파일명 보여주기 */
+    const settleDoc = document.getElementById('settle-doc');
+    const settleDocName = document.getElementById('settle-doc-name');
+    const accountDoc = document.getElementById('account-doc');
+    const accountDocName = document.getElementById('account-doc-name');
+    const etcDoc = document.getElementById('etc-doc');
+    const etcDocName = document.getElementById('etc-doc-name');
+
+    settleDoc.addEventListener('change', function() {
+    if (settleDoc.files.length > 0) {
+        settleDocName.value = settleDoc.files[0].name;
+    }
+    });
+
+    accountDoc.addEventListener('change', function() {
+    if (accountDoc.files.length > 0) {
+        accountDocName.value = accountDoc.files[0].name;
+    }
+    });
+
+    etcDoc.addEventListener('change', function() {
+    if (etcDoc.files.length > 0) {
+        etcDocName.value = etcDoc.files[0].name;
+    }
+    });
+
+
+    /* 프로젝트 최종 버튼 클릭 시, 확인 confirm */
+    document.querySelector(".submit").addEventListener('click', () => confirm('제출 후 수정은 불가합니다. 제출 하시겠습니까?'))
 
 
 }

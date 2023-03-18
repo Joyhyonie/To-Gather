@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/src/main/resources/static/user/project/CSS/viewProjectDetail.css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="/src/main/resources/static/user/project/js/viewProjectDetail.js"></script> 
+    <script type="text/javascript" src="/src/main/resources/static/user/project/js/viewProjectDetail.js"></script>  
     <script src="/src/main/resources/static/user/project/js/jquery-3.6.3.min.js"></script>
     <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
     <title>viewProjectDetail</title>
@@ -14,8 +14,11 @@
 <body>
     <div class="wrapper">
         <!-- 대표 사진 -->
-        <div class="image">
-            <img src="/src/main/resources/static/user/project/images/dummy1.png" id="main-image">
+        <div class="slider">
+            <img src="/src/main/resources/static/user/project/images/dummy1.png" class="slide current-slide">
+            <img src="/src/main/resources/static/user/project/images/dummy1.png" class="slide slide-right">
+            <img src="/src/main/resources/static/user/project/images/dummy1.png" class="slide slide-right">
+            <img src="/src/main/resources/static/user/project/images/dummy1.png" class="slide slide-right">
         </div>
 
         <!-- 프로젝트 정보 -->
@@ -29,7 +32,7 @@
                 <p id="goal"><span>1,000,000</span>원 목표</p>
                 </div>
             </div>
-            <div id="maker"> <!-- 클릭 시, maker의 이메일로 mailto -->
+            <div id="maker">
                 <img src="/src/main/resources/static/user/project/images/dummy2.png" id="maker-image">
                 <div id="maker-info">
                     <p id="maker-name">기록제작소</p>
@@ -38,28 +41,46 @@
             </div>
             <div id="boxes">
                 <div id="like-box">
-                    <img src="/src/main/resources/static/user/project/images/like-full.png" id="like-full" class="like">
-                    <img src="/src/main/resources/static/user/project/images/like-empty.png" id="like-empty" class="like">
+                    <img src="/src/main/resources/static/user/project/images/like-empty.png" id="like-btn" class="like">
                     <p id="like-people"><span>63</span>명이 좋아합니다 :)</p>
                 </div>
+                <a href="/src/main/resources/templates/user/project/viewProjectDetail/shareProject.html" onclick="window.open(this.href, '_blank', 'width=500px, height=300px, toolbars=no, scrollbars=no'); return false">
                 <div id="share-box">
                     <img src="/src/main/resources/static/user/project/images/share.png" id="share">
                     <p>공유하기</p>
                 </div>
+                </a>
             </div>
         </div>
 
         <!-- 스토리&후기 바 -->
         <div class="story-bar">
-            <div id="story" class="menu">스토리</div>
-            <div id="review" class="menu">소식ㆍ후기</div>
+            <ul class="menu">
+                <flex>
+                    <li class="is_on">
+                    <a href="#story" class="btn"><span>스토리</span></a>
+                    </li>
+                    <li>
+                    <a href="#review" class="btn"><span>소식ㆍ후기</span></a>
+                    </li>
+                </flex>
+            </ul>
         </div>
 
         <!-- 스토리&후기 바디 -->
         <div class="story-body">
-            <img src="/src/main/resources/static/user/project/images/dummy3.png">
-            <img src="/src/main/resources/static/user/project/images/dummy4.png">
-            <img src="/src/main/resources/static/user/project/images/dummy5.png">
+            <div id="story" class="content">
+                <img src="/src/main/resources/static/user/project/images/dummy3.png">
+                <img src="/src/main/resources/static/user/project/images/dummy4.png">
+                <img src="/src/main/resources/static/user/project/images/dummy5.png">
+            </div>
+            <div id="review" class="content">
+                <p class="no-review">아직 작성된 후기가<br> 존재하지 않습니다.</p>
+                <div class="create-review-box">
+                    <p>이 프로젝트의 Maker이신가요?<br>많은 Supporter분들을 위해 후기를 작성해주세요 :)</p>
+                    <button id="create-review-button">후기 작성하기</button>
+                </div>
+            </div>
         </div>
 
         <!-- 리워드 안내 -->

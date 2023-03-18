@@ -13,7 +13,7 @@
     <script src="/src/main/resources/static/user/project/js/summernote/lang/summernote-ko-KR.js"></script>
     <link rel="stylesheet" type="text/css" href="/src/main/resources/static/user/project/CSS//summernote/summernote-lite.css">
     <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
-    <title>writeMakerInfo</title>
+    <title>createProject</title>
 </head>
 <body>
     <!-- 메이커 정보 -->
@@ -22,7 +22,7 @@
         <div class="steps">
             <div class="step">
                 <span>step 1</span>
-                <p class="step-subject running"><a href="#one">Maker 정보</a></p>
+                <p class="step-subject"><a href="#one">Maker 정보</a></p>
             </div>
             <div class="step">
                 <span>step 2</span>
@@ -59,43 +59,43 @@
                             <img src="/src/main/resources/static/user/project/images/profile4.png" id="preview-image">
                         </div>
                         <label for="attach-profile" class="plus"><img id="plus-image" src="/src/main/resources/static/user/project/images/plus.png"></label>
-                        <input type="file" id="attach-profile" name="attachProfile" accept="image/gif, image/jpeg, image/png">
+                        <input type="file" id="attach-profile" name="attachProfile" accept="image/gif, image/jpeg, image/png" required>
                     </div>
                     
                     <div class="items">
                         <flex>
                             <div>
                                 <p class="title">* 이름</p>
-                                <input type="name" name="name" class="input" maxlength="12" style="width:170px;">
+                                <input type="name" name="name" class="input" maxlength="12" style="width:170px;" required>
                             </div>
                             <div>
                                 <p class="title">* 간략 소개</p>
-                                <input type="address" name="address" class="input"  maxlength="16" style="width:250px;">
+                                <input type="address" name="address" class="input"  maxlength="16" style="width:250px;" required>
                             </div>
                         </flex>
                         <flex>
                             <div>
                                 <p class="title">* 연락처</p>
-                                <input type="tel" name="phone" class="input" placeholder="'-'제외" maxlength="15" style="width:120px;">
+                                <input type="tel" name="phone" class="input" placeholder="'-'제외" maxlength="15" style="width:120px;" required>
                             </div>
                             <div>
                                 <p class="title">* 이메일</p>
-                                <input type="email" name="email" class="input" style="width:230px;">
+                                <input type="email" name="email" class="input" style="width:230px;" required>
                             </div>
                         </flex>
                         <flex>
                             <div>
                                 <p class="title">* 주소</p>
-                                <input type="text" name="address1" id="address1" class="input" placeholder="주소를 검색하시려면 이 곳을 클릭하세요 :)" style="width:320px;" readonly>
+                                <input type="text" name="address1" id="address1" class="input" placeholder="주소를 검색하시려면 이 곳을 클릭하세요 :)" style="width:320px;" readonly required>
                             </div>
                             <div>
                                 <p class="title">* 우편번호</p>
-                                <input type="text" name="zipCode" id="zip-code" class="input" style="width:120px;" readonly>
+                                <input type="text" name="zipCode" id="zip-code" class="input" style="width:120px;" readonly required>
                             </div>
                         </flex>
                         <div>
                             <p class="title">* 상세주소</p>
-                            <input type="text" name="address2" id="address2" class="input" style="width:500px;">
+                            <input type="text" name="address2" id="address2" class="input" style="width:500px;" required>
                         </div>
                         
                     </div>
@@ -110,15 +110,15 @@
                     <flex>
                         <div>
                             <p class="title">* 펀딩 시작일</p>
-                            <input type="date" name="startFunding" class="input" style="width:180px;">
+                            <input type="date" name="startFunding" class="input" style="width:180px;" required>
                         </div>
                         <div>
                             <p class="title">* 펀딩 종료일</p>
-                            <input type="date" name="endFunding" class="input" style="width:180px;">
+                            <input type="date" name="endFunding" class="input" style="width:180px;" required>
                         </div>
                         <div>
                             <p class="title">* 펀딩 목표 금액</p>
-                            <input type="number" name="fundingGoal" id="funding-goal" class="input" placeholder="단위 : 원" style="width:180px;">
+                            <input type="number" name="fundingGoal" id="funding-goal" class="input" placeholder="단위 : 원" style="width:180px;" required>
                         </div>
                     </flex>
                     <flex>
@@ -155,11 +155,11 @@
                     <flex>
                         <div>
                             <p class="title">* 프로젝트 명</p>
-                            <input type="text" name="projectName" id="project-name" class="input" maxlength="16" style="width:300px;">
+                            <input type="text" name="projectName" id="project-name" class="input" maxlength="16" style="width:300px;" required>
                         </div>
                         <div>
                             <p class="title">* 프로젝트 간략 소개</p>
-                            <input type="text" name="projectIntro" id="project-intro" class="input" maxlength="20" style="width:380px;">
+                            <input type="text" name="projectIntro" id="project-intro" class="input" maxlength="20" style="width:380px;" required>
                         </div>
                     </flex>
                     <flex class="bottom-solid">
@@ -167,19 +167,15 @@
                             <p class="title">* 프로젝트 대표 사진</p><br>
                             <p class="gray-text">(권장 비율: 4:3 / 권장 크기: 600*450px / 형식: jpg, png / 최대 크기: 20MB)</p>
                         </div>
-                        <label for="main-image" class="upload" id="upload-main-image">파일 올리기</label>
-                        <input type="file" id="main-image" name="mainImage" accept="image/jpg, image/png">
+                        <label for="main-image" class="upload">파일 올리기</label>
+                        <input type="file" id="main-image" name="mainImage" accept="image/jpg, image/png" required>
                     </flex>
                     <div class="for-icon">
                         <input class="upload-name" id="main-name" value="파일을 업로드 해주세요 :)" readonly>
                         <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
                     </div>
                     <script>
-                        /* 첨부 된 메인 사진 파일명을 보여주는 Jquery */
-                        $("#main-image").on('change',function(){
-                            let fileName = $("#main-image").val();
-                            $("#main-name").val(fileName);
-                            });
+                        
                     </script>
                     <div id="main-preview-area">
                         <img id="main-preview-image">
@@ -187,22 +183,31 @@
                     <flex class="bottom-solid">
                         <div>
                             <p class="title">* 프로젝트 서브 사진</p><br>
-                            <p class="gray-text">(프로젝트 대표 사진과 함께 슬라이드 형식으로 노출되며, 총 4장 추가 가능)</p>
+                            <p class="gray-text">(프로젝트 대표 사진과 함께 슬라이드 형식으로 노출되며, 최대 4장 추가 가능)</p>
                         </div>
-                        <label for="sub-image" class="upload" id="upload-sub-image">파일 올리기</label>
-                        <input type="file" id="sub-image" name="subImage" accept="image/jpg, image/png" multiple>
+                        <input type="file" class="sub-image" name="subImage" accept="image/jpg, image/png">
+                        <input type="file" class="sub-image" name="subImage" accept="image/jpg, image/png">
+                        <input type="file" class="sub-image" name="subImage" accept="image/jpg, image/png">
+                        <input type="file" class="sub-image" name="subImage" accept="image/jpg, image/png">
                     </flex>
-                    <div class="for-icon">
-                        <input class="upload-name" id="sub-name" value="파일을 업로드 해주세요 :)" readonly>
-                        <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
-                    </div>
-                    <script>
-                        /* 첨부 된 서브 사진들의 파일명을 보여주는 Jquery */
-                        $("#sub-image").on('change',function(){
-                            let fileName = $("#sub-image").val();
-                            $("#sub-name").val(fileName);
-                            });
-                    </script>
+                    <flex>
+                        <div class="sub-preview-area">
+                            <img src="/src/main/resources/static/user/project/images/picture.png" class="file-icon">
+                            <img class="sub-preview-image">
+                        </div>
+                        <div class="sub-preview-area">
+                            <img src="/src/main/resources/static/user/project/images/picture.png" class="file-icon">
+                            <img class="sub-preview-image">
+                        </div>
+                        <div class="sub-preview-area">
+                            <img src="/src/main/resources/static/user/project/images/picture.png" class="file-icon">
+                            <img class="sub-preview-image">
+                        </div>
+                        <div class="sub-preview-area">
+                            <img src="/src/main/resources/static/user/project/images/picture.png" class="file-icon">
+                            <img class="sub-preview-image">
+                        </div>
+                    </flex>
                     <br><br>
 
                     <!-- 프로젝트 상세 소개 (summernote 에디터) -->
@@ -246,91 +251,40 @@
                 <div class="items">
                     <div>
                         <p class="title">* 리워드 배송비</p>
-                        <input type="number" name="shippingfee" id="funding-goal" class="input" placeholder="단위 : 원" style="width:180px;">
+                        <input type="number" name="shippingfee" id="funding-goal" class="input" placeholder="단위 : 원" style="width:180px;" required>
                     </div>
                     <div class="reward-container">
+                        <flex class="align-right">
+                            <p class="title" id="remove-reward">리워드 삭제</p>
+                            <p class="title" id="add-reward">리워드 추가</p>
+                        </flex>
                         <div class="reward-box">
                             <flex class="justify-between">
                                 <p class="title">리워드 1</p>
-                                <flex>
-                                <p class="title" id="remove-reward">리워드 삭제</p>
-                                <p class="title" id="add-reward">리워드 추가</p>
-                                </flex>
                             </flex>
                             <div class="reward-info">
                                 <flex>
                                     <div>
                                         <p class="title">* 리워드명</p>
-                                        <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;">
+                                        <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;" required>
                                     </div>
                                     <div>
                                         <p class="title">* 리워드 금액</p>
-                                        <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:120px;">
+                                        <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:110px;" required>
                                     </div>
                                     <div>
                                         <p class="title">* 리워드 예상 발송일</p>
-                                        <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:160px;">
+                                        <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:140px;" required>
                                     </div>
                                 </flex>
                                 <div>
                                     <p class="title">* 리워드 구성</p>
-                                    <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:700px;">
+                                    <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:670px;" required>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <script>
-                        // JavaScript 코드
-                        const addBtn = document.querySelector('#add-reward');
-                        const removeBtn = document.querySelector('#remove-reward');
-                        const container = document.querySelector('.reward-container');
-                        let rewardCount = 1;
-                    
-                        addBtn.addEventListener('click', () => {
-                            const rewardBox = document.createElement('div');
-                            rewardBox.classList.add('reward-box');
-                            rewardBox.innerHTML = `
-                                <flex class="justify-between">
-                                    <p class="title">리워드 ${++rewardCount}</p>
-                                </flex>
-                                <div class="reward-info">
-                                    <flex>
-                                        <div>
-                                            <p class="title">* 리워드명</p>
-                                            <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;">
-                                        </div>
-                                        <div>
-                                            <p class="title">* 리워드 금액</p>
-                                            <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:120px;">
-                                        </div>
-                                        <div>
-                                            <p class="title">* 리워드 예상 발송일</p>
-                                            <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:160px;">
-                                        </div>
-                                    </flex>
-                                    <div>
-                                        <p class="title">* 리워드 구성</p>
-                                        <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:700px;">
-                                    </div>
-                                </div>
-                            `;
-                            container.appendChild(rewardBox);
-                        });
-                    
-                        removeBtn.addEventListener('click', () => {
-                            const rewardBoxes = document.querySelectorAll('.reward-box');
-                            if (rewardBoxes.length > 1) {
-                                const lastRewardBox = rewardBoxes[rewardBoxes.length - 1];
-                                container.removeChild(lastRewardBox);
-                                rewardCount--;
-                            } else {
-                                alert("리워드는 최소 1개 이상 존재 해야합니다 ☹")
-                            }
-                        });
-                    </script>
-
                 </div>
-                
             </div>
 
             <!-- step 5. 리워드 안내-->
@@ -339,8 +293,7 @@
             <div class="box five">
                 <div>
                     <p class="title">* 제목</p>
-                    <input type="text" name="noticeTitle" id="notice-title" class="input" maxlength="20" style="width:830px;"
-                            value="리워드 배송 및 환불 정책">
+                    <input type="text" name="noticeTitle" id="notice-title" class="input" maxlength="20" style="width:830px;" value="리워드 배송 및 환불 정책" required>
                 </div>
                 <div>
                     <p class="title">* 내용</p>
@@ -384,11 +337,11 @@
                             <p class="title">* 정산 서류</p><br>
                             <p class="gray-text">(사업자등록증 또는 신분증 사본)</p>
                         </div>
-                        <label for="main-image" class="upload" id="upload-main-image">파일 올리기</label>
-                        <input type="file" id="main-image" name="mainImage" accept="image/jpg, image/png">
+                        <label for="settle-doc" class="upload">파일 올리기</label>
+                        <input type="file" id="settle-doc" name="settleDoc" accept=".pdf required">
                     </flex>
                     <div class="for-icon">
-                        <input class="upload-name" id="settle-doc-name" value="파일을 업로드 해주세요 :)" readonly>
+                        <input class="upload-name doc" id="settle-doc-name" value="파일을 업로드 해주세요 :)" readonly>
                         <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
                     </div>
 
@@ -397,11 +350,11 @@
                             <p class="title">* 통장 사본</p><br>
                             <p class="gray-text">(사업자의 경우 사업자명의 통장, 개인일 경우 개인명의의 통장)</p>
                         </div>
-                        <label for="main-image" class="upload" id="upload-main-image">파일 올리기</label>
-                        <input type="file" id="main-image" name="mainImage" accept="image/jpg, image/png">
+                        <label for="account-doc" class="upload">파일 올리기</label>
+                        <input type="file" id="account-doc" name="accountDoc" accept=".pdf" required>
                     </flex>
                     <div class="for-icon">
-                        <input class="upload-name" id="settle-doc-name" value="파일을 업로드 해주세요 :)" readonly>
+                        <input class="upload-name doc" id="account-doc-name" value="파일을 업로드 해주세요 :)" readonly>
                         <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
                     </div>
 
@@ -410,11 +363,11 @@
                             <p class="title">* 기타 서류</p><br>
                             <p class="gray-text">(프로젝트를 설명한 기타 서류나 리워드의 종류에 따라 To-Gather에서 추가 서류를 요청하는 경우)</p>
                         </div>
-                        <label for="main-image" class="upload" id="upload-main-image">파일 올리기</label>
-                        <input type="file" id="main-image" name="mainImage" accept="image/jpg, image/png">
+                        <label for="etc-doc" class="upload">파일 올리기</label>
+                        <input type="file" id="etc-doc" name="etcDoc" accept=".pdf">
                     </flex>
                     <div class="for-icon">
-                        <input class="upload-name" id="settle-doc-name" value="파일을 업로드 해주세요 :)" readonly>
+                        <input class="upload-name doc" id="etc-doc-name" value="파일을 업로드 해주세요 :)" readonly>
                         <img src="/src/main/resources/static/user/project/images/file-icon.png" class="file-icon">
                     </div>
                     <br><br>
@@ -427,7 +380,7 @@
                 
             </div>
 
-            <button class="submit">프로젝트 최종 제출</button>
+            <input type="submit" class="submit" value="프로젝트 최종 제출"></input>
         </form>
         
     </div>
