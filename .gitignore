@@ -6,3 +6,6 @@
 .settings/org.eclipse.m2e.core.prefs
 .settings/org.springframework.ide.eclipse.prefs
 .settings/org.eclipse.jdt.apt.core.prefs
+/.settings/
+/bin/
+/target/
