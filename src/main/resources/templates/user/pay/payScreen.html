@@ -10,10 +10,13 @@
     <!-- <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css"> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <!-- <script type="text/javascript" src="/src/main/resources/static/user/pay/js/payScreen.js"></script> -->
+    <script type="text/javascript" src="/src/main/resources/static/user/pay/js/payScreen.js"></script>
     <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
 </head>
 <body>
+	
+	<div th:replace="/common/header/userHeader.html"></div>
+	
     <section id="grid1">
 		<div th:replace="header/userHeader.html"></div>
         <div class="item1">
@@ -86,26 +89,6 @@
                                         </div>
                                     </div>
                                     <!---->
-                                    <script>
-                                        function onlyNumber(obj) {
-                                            //숫자 아닌 표현식 찾기
-                                            const regexp = /\D/g;
-                                            //숫자 아니면 공백
-                                            event.target.value = event.target.value.replace(regexp, "");
-                                            /* , 추가 */
-                                            obj.value = comma(uncomma(obj.value));
-                                            function comma(str) {
-                                                str = String(str);
-                                                return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-                                            }
-
-                                            function uncomma(str) {
-                                                str = String(str);
-                                                return str.replace(/[^\d]+/g, '');
-                                            } 
-                                        }
-
-                                    </script>
                                     <!---->
 
                                     <div  class="part paid">
@@ -187,58 +170,7 @@
                                                         </div>
                                                         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
                                                         <script>
-                                                            const $rewradAddress = document.getElementById("rewradAddress");
-                                                            const $outer = document.getElementById("addre");
-                                                            const $new = document.createElement("p");
-                                                            $rewradAddress.onclick = function() {
-                                                                    new daum.Postcode({
-                                                                        oncomplete: function(data) {                                              
-
-            
-                                                                            $rewradAddress.innerHTML = "[" + data.zonecode + "]" + data.address + "<input type='button' value='X' onclick='remove()'>";
-                                                                            $new.innerHTML = "<input type='text' class='detailed-address' placeholder='상세주소 입력' style='text-align: center;'>";
-                                                                            $outer.appendChild($new);   
-                                                                            
-                                                                        }
-                                                                    }).open({
-                                                                        // popupKey: 'popup1'
-                                                                        
-                                                                    });
-                                                                };
-                                                                function remove() {
-                                                                    
-                                                                        $rewradAddress.innerHTML = "주소를 검색하시려면 이곳을 클릭하세요.";
-                                                                        $outer.removeChild($outer.lastChild);
-                                                                        
-                                                                }
-                                                            /* 직접 입력*/
-
-                                                            $(function(){
-                                                                //직접입력 인풋박스 기존에는 숨어있다
-                                                            $("#selboxmemo").hide();
-                                                            $("#rewardOrderFormMemo").change(function() {
-                                                                //직접입력을 누를 때 나타남
-                                                                if($("#rewardOrderFormMemo").val() == "직접 입력") {
-                                                                    $("#selboxMemo").show();
-                                                                }  else {
-                                                                    $("#selboxMemo").hide();
-                                                                }
-                                                            }) 
-                                                        });
                                                         
-                                                        $(function(){
-                                                            //직접입력 인풋박스 기존에는 숨어있다가
-                                                            $("#selboxAddressName").hide();
-                                                            $("#rewardOrderFormAddressName").change(function() {
-                                                                    //직접입력을 누를 때 나타남
-                                                                if($("#rewardOrderFormAddressName").val() == "직접 입력") {
-                                                                    $("#selboxAddressName").show();
-                                                                }  else {
-                                                                    $("#selboxAddressName").hide();
-                                                                }
-                                                            }) 
-                                                            });
-
                                                         </script>
                                                         <!---->
                                                     </div>
@@ -256,7 +188,7 @@
                                                                         <img class="img" src="/src/main/resources/static/user/pay/images/회색네이버.jpg"></img>
                                                                         <img class="off" src="/src/main/resources/static/user/pay/images/(웅디자인) 네이버 심볼.png"></img>
                                                                     </span>
-                                                                    <div  class="text1">네이버페이</div>
+                                                                    <div  class="text1">카카오 페이</div>
                                                                 </button>
                                                             </li>
                                                             <li  data-pay="card" class="">
@@ -334,7 +266,7 @@
                                                                     <span class="float-left">배송비</span>
                                                                 </th>
                                                                 <td >
-                                                                    <span  class="float-right">2,500원</span>
+                                                                    <span  class="float-right" di="rewardPrice">2,500원</span>
                                                                 </td>
                                                             </tr>
                                                             <!---->
@@ -345,11 +277,16 @@
                                                 </div>
                                                 <div  class="subject clearfix">
                                                     <span  class="float-left">최종 금액</span>
-                                                    <span  class="float-right"><b  class="asd">32,500</b>
+                                                    <span  class="float-right"><b  id="finalPrice">32,500</b>
                                                         <span  class="asdf">원</span>
                                                     </span>
                                                 </div>
                                             </div>
+                                            <script>
+
+                                            
+
+                                            </script>
                                             <div  class="guide font-sm">
                                                 <p >목표액 1,000,000원에 미달하여도 진행되는 프로젝트입니다. 결제는 프로젝트 후원 시 바로 진행됩니다.</p>
                                                 <p  class="keep-all">투게더는 플랫폼을 제공하는 중개자로 리워드 제공에 관한 지연, 제품의 하자 등으로 인한 일체의 법적 책임은 프로젝트 진행자에게 있습니다. 하지만 오마이컴퍼니는 진행자와 후원자간의 원활한 의사소통을 위해 최선의 노력을 다하겠습니다.</p>
@@ -383,173 +320,6 @@
         </div>
 
     </section>
-                                                    <script>
-                                                        // const $img = document.querySelectorAll('.img');
-                                                        // const $off = document.querySelectorAll('.off');
-                                                        // console.log($off);
-                                                        // console.log($img);
-                                                        // console.log($img.classList)
-                                                        // $img.forEach(( img ) => {
-                                                        //     img.addEventListener('click', function(){                                                               
-                                                        //     })
-                                                        // });
-                                                        const $btn = document.querySelectorAll('.btn');
-                                                        const $img = document.querySelectorAll('.img');
-                                                        const $off = document.querySelectorAll('.off');
-                                                        const $text1 = document.getElementsByClassName('text1');
-                                                        console.log($text1);
-                                                        var state = "off";
-                                                        var state1 = "off";
-                                                        var state2 = "off";
-
-                                                        // $btn[0].addEventListener('focus', function(){
-                                                        //         console.log("시바")
-                                                        //         $img[0].style.display = 'none';
-                                                        //         $off[0].style.display = 'block';
-                                                        //         $text1[0].style.color = 'green';
-                                                        //         // $btn[0].style.color ="green";
-                                                        // })
-                                                        // $btn[0].addEventListener('blur', function(){
-                                                        //         console.log("날 놔줘")
-                                                        //         $img[0].style.display = 'block';
-                                                        //         $off[0].style.display = 'none';
-                                                        //         $text1[0].style.color = 'black';
-                                                        // })
-                                                        // $btn[1].addEventListener('focus', function(){
-                                                        //         console.log("시바")
-                                                        //         $img[1].style.display = 'none';
-                                                        //         $off[1].style.display = 'block';
-                                                        //         $text1[1].style.color = 'green';
-                                                        // })
-                                                        // $btn[1].addEventListener('blur', function(){
-                                                        //         console.log("날 놔줘")
-                                                        //         $img[1].style.display = 'block';
-                                                        //         $off[1].style.display = 'none';
-                                                        //         $text1[1].style.color = 'black';
-                                                        // })
-                                                        // $btn[2].addEventListener('focus', function(){
-                                                        //         console.log("시바")
-                                                        //         $img[2].style.display = 'none';
-                                                        //         $off[2].style.display = 'block';
-                                                        //         $text1[2].style.color = 'green';
-                                                        // })
-                                                        // $btn[2].addEventListener('blur', function(){
-                                                        //         console.log("날 놔줘")
-                                                        //         $img[2].style.display = 'block';
-                                                        //         $off[2].style.display = 'none';
-                                                        //         $text1[2].style.color = 'black';
-                                                        // })
-                                                            const $pay1 = document.getElementById('pay1');
-                                                                console.log($pay1);
-                                                            $btn[0].addEventListener('click', function(){    
-                                                                if(state == "off"){
-                                                                $img[0].style.display = 'none';
-                                                                $off[0].style.display = 'block';
-                                                                $btn[0].style.border = " 3px solid green";
-                                                                $text1[0].style.color = 'green';
-                                                                $off[1].style.display = 'none';
-                                                                $img[1].style.display = 'block';
-                                                                $text1[1].style.color = 'black';
-                                                                $off[2].style.display = 'none';
-                                                                $img[2].style.display = 'block';
-                                                                $text1[2].style.color = 'black';
-                                                                $pay1.style.display = 'none';
-                                                                $btn[1].style.border = " 3px solid black"
-                                                                $btn[2].style.border = " 3px solid black"
-                                                                state="on";
-                                                                state1 = "off";
-                                                                state2 = "off";
-                                                                } else {
-                                                                $off[0].style.display = 'none';
-                                                                $img[0].style.display = 'block';
-                                                                $text1[0].style.color = 'black';
-                                                                $off[1].style.display = 'none';
-                                                                $img[1].style.display = 'block';
-                                                                $text1[1].style.color = 'black';
-                                                                $btn[0].style.border = " 3px solid black"
-                                                                state = "off";
-                                                                }
-                                                            });
-                                                            $btn[1].addEventListener('click', function(){    
-                                                                if(state1 == "off"){
-                                                                $pay1.style.display = 'block';
-                                                                $img[1].style.display = 'none';
-                                                                $off[1].style.display = 'block';
-                                                                $text1[1].style.color = 'green';
-                                                                $off[0].style.display = 'none';
-                                                                $img[0].style.display = 'block';
-                                                                $text1[0].style.color = 'black';
-                                                                $off[2].style.display = 'none';
-                                                                $img[2].style.display = 'block';
-                                                                $text1[2].style.color = 'black';
-                                                                $btn[1].style.border = " 3px solid green";
-                                                                $btn[0].style.border = " 3px solid black"
-                                                                $btn[2].style.border = " 3px solid black"
-                                                                state = "off";
-                                                                state1="on";
-                                                                state2 = "off";
-                                                                } else {
-                                                                $off[1].style.display = 'none';
-                                                                $img[1].style.display = 'block';
-                                                                $text1[1].style.color = 'black';
-                                                                $off[2].style.display = 'none';
-                                                                $img[2].style.display = 'block';
-                                                                $text1[2].style.color = 'black';
-                                                                $pay1.style.display = 'none';
-                                                                $btn[1].style.border = " 3px solid black"
-                                                                state1 = "off";
-                                                                
-                                                                }
-                                                            });
-                                                            $btn[2].addEventListener('click', function(){    
-                                                                if(state2 == "off"){
-                                                                $img[2].style.display = 'none';
-                                                                $off[2].style.display = 'block';
-                                                                $text1[2].style.color = 'green';
-                                                                $off[1].style.display = 'none';
-                                                                $img[1].style.display = 'block';
-                                                                $text1[1].style.color = 'black';
-                                                                $off[0].style.display = 'none';
-                                                                $img[0].style.display = 'block';
-                                                                $text1[0].style.color = 'black';
-                                                                $pay1.style.display = 'none';
-                                                                $btn[2].style.border = " 3px solid green";
-                                                                $btn[0].style.border = " 3px solid black"
-                                                                $btn[1].style.border = " 3px solid black"
-                                                                state = "off";
-                                                                state1="off";
-                                                                state2 = "on";
-                                                                } else {
-                                                                $off[2].style.display = 'none';
-                                                                $img[2].style.display = 'block';
-                                                                $text1[2].style.color = 'black';
-                                                                $btn[2].style.border = " 3px solid black"
-                                                                state2 = "off";
-                                                                }
-                                                            });
-                                                        const $selectCoupon = document.getElementById('selectcoupon');
-                                                        console.log("$selectCoupon");
-                                                        const $cutext = document.getElementsByClassName('cutext')[0];
-                                                        console.log($cutext);
-                                                        const $cuprice = document.getElementsByClassName('cuprice')[0];
-                                                        console.log($cuprice);
-
-                                                        // $selectCoupon.addEventListener('click', function(){
-                                                        // $cuprice.innerHTML = '10,000원';
-                                                        // })
-                                                        $(document).ready(function() {
-                                                            $("#selectcoupon").on('click', function() {
-                                                                if ( $(this).prop('checked') ) {
-                                                                console.log("go");
-                                                                $cutext.innerHTML = "회원가입 축하 쿠폰";
-                                                                $cuprice.innerHTML = "10,000원";
-                                                                        
-                                                        } else {
-                                                            $cutext.innerHTML =  "";
-                                                            $cuprice.innerHTML = "";
-                                                        }
-                                                        });
-                                                    });
-                                                        </script>
+	<div th:replace="common/footer/userFooter.html"></div>
 </body>
 </html>
