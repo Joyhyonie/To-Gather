@@ -97,6 +97,67 @@ window.onload = function() {
 		window.open(openUrl, 'shareProject', option);
 	}
     
-
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  const $fundingbutton = document.querySelectorAll('.funding-button');
+    
+      for(let i = 0; i < $fundingbutton.length; i++){
+      	$fundingbutton[i].addEventListener('click', function(){
+      	location.href="/user/payScreen"
+        })
+      }
 }
 
