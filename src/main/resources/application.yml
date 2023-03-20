@@ -2,19 +2,28 @@
 server:
   port: 8001
 
-#database config
-spring:
-  datasource:
-      driver-class-name: oracle.jdbc.driver.OracleDriver
-      url: jdbc:oracle:thin:@localhost:1521:xe
-      username: C##TOGATHER
-      password: TOGATHER
-      
 # mybatis config
 mybatis:
   mapper-locations: mappers/**/*.xml
   
-  
+spring:
+# database config
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: C##TOGATHER
+    password: TOGATHER
+# file upload config
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+      location: D:/semi-project/To-Gather_Files/To-Gather/
+
+# image upload directory (이미지를 저장할 경로 설정)
+image:
+  image-dir: src/main/resources/upload/
   
   
   
