@@ -1,9 +1,12 @@
 package com.greedy.togather.user.project.controller;
 
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.greedy.togather.user.project.service.ProjectService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,6 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
+	
+	private final ProjectService projectService;
+	private final MessageSourceAccessor messageSourceAccessor;
+	
+	public ProjectController(ProjectService projectService, MessageSourceAccessor messageSourceAccessor) {
+		this.projectService = projectService;
+		this.messageSourceAccessor = messageSourceAccessor;
+	}
 	
 	/* 카테고리별 프로젝트 페이지로의 이동 */
 	@GetMapping("/education")
@@ -59,9 +70,11 @@ public class ProjectController {
 	@PostMapping("/create")
 	public String createProject() {
 		
+
 		return "redirect:/project/submit";
 	}
 	
+	/* 프로젝트 최종 제출 후 페이지 */
 	@GetMapping("/submit") 
 	public String submitProject() {
 		
