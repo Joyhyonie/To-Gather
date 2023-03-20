@@ -1,7 +1,4 @@
-* {
-    /* display: grid; */
-}
-
+@charset "UTF-8";
 body {
     font-family: 'Do Hyeon', sans-serif;
     font-weight: normal;
@@ -16,16 +13,10 @@ body {
 .text-top {
     position: absolute;
     text-align: center;
-    top:10%;
+    top:15%;
     left: 40%;
 }
 
-p {
-    text-align: center;
-    padding: 1%;
-    color: #535353;
-    position: absolute;
-}
 
 .text-body {
     text-align: center;
@@ -36,12 +27,12 @@ p {
     left: 29%;
 }
 
-img {
+.logo123 {
     width: 200px;
-    height: 200px;
+    height: 100px;
     position: relative;
     margin-left: 25px;
-    margin-top: 15px;
+    margin-top: 350px;
 }
 
 .imgBox {
@@ -54,8 +45,9 @@ img {
 
 .text-foot {
     margin-top: 10%;
-    float: left;
+    /* float: left; */
     margin-right: 10%;
+    margin-bottom: 50px
 }
 
 .togather {
@@ -69,7 +61,7 @@ img {
 
 .center {
     width: 100%;
-    height: 40vh;
+    height: 30vh;
     opacity: 0.15;
 }
 
@@ -80,14 +72,30 @@ img {
 .p1 {
     top: 35%;
     left: 40%;
+    text-align: center;
+    padding: 1%;
+    color: #535353;
+    position: absolute;
 }
 
 .p2 {
     top: 43%;
     left: 40%;
+    text-align: center;
+    padding: 1%;
+    color: #535353;
+    position: absolute;
 }
 
 a {
     color: black;
     text-decoration: none;
+}
+
+.logo4 {
+	width: 200px;
+    height: 200px;
+    position: relative;
+    margin-left: 25px;
+    margin-top: 15px;
 }
