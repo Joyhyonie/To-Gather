@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html 
+		xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/main/resources/static/user/pay/CSS/payComplete.css" type="text/css">
+    <link rel="stylesheet" href="/user/pay/CSS/payComplete.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
     <title>payComplete</title>
 </head>
 <body>
 	
-	<div th:replace="/common/header/userHeader.html"></div>
+	<div th:replace="common/header/userHeader.html"></div>
 	
     <div class="container">
         <div class="outline">
             <div class="first">
-                <img src="/src/main/resources/static/user/login/images/logo.png" class="center"></div>
+                <img src="/user/login/images/logo.png" class="center logo123"></div>
             <div class="text-top">
                 <h1>결제가 완료 되었습니다.</h1>
                 <h3>추가 겨울 따뜻한 마음을 전하세요 !</h3>
@@ -35,13 +36,15 @@
             <div>
                 <div class="imgBox">
                     <a href="../">
-                    <img src="/src/main/resources/static/user/pay/images/v1_649.png">
+                    <img class="logo4" src="/user/pay/images/v1_649.png">
                 </div>
                 <h3 class="pjTitle">우리 아이가 달라졌어요</h3>
                 <h4 class="pjPrice">1,000원</h4></a>
             </div>
         </div>
     </div>
-    <div th:replace="common/footer/userFooter.html"></div>
+    
+    
+    <div th:replace="common/footer/userFooter.html"></div>   	
 </body>
 </html>

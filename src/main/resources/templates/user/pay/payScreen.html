@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>payScreen</title>
-    <link rel="stylesheet" href="/src/main/resources/static/user/pay/CSS/payScreen.css" type="text/css">
-    <!-- <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css"> -->
+    <link rel="stylesheet" href="/user/pay/CSS/payScreen.css" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="/src/main/resources/static/user/pay/js/payScreen.js"></script>
-    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <title>payScreen</title>
 </head>
 <body>
-	
 	<div th:replace="/common/header/userHeader.html"></div>
-	
+    <script type="text/javascript" src="/user/pay/js/payScreen.js"></script>	
     <section id="grid1">
-		<div th:replace="header/userHeader.html"></div>
+    
         <div class="item1">
             <div  data-v-67d79bfc="" class="reward-order-form" data-component-name="pageRewardOrderForm">
                 <div  class="container">
@@ -26,10 +23,10 @@
                         <div  class="outline">
                             <div  class="wrapper">
                                 <a  href="/reward/13401" class="apoint" title="프로젝트 상세로 이동">
-                                    <img class="arrow" src="/src/main/resources/static/user/pay/images/arrow_left_icon.png">
+                                    <img class="arrow" src="/user/pay/images/arrow_left_icon.png">
                                 </a>
                                 <a  href="/reward/13401" class="project-img1" title="프로젝트 조회">
-                                    <img class="pjimg" src="/src/main/resources/static/user/pay/images/화면 캡처 2023-02-27 172655.png" alt="">
+                                    <img class="pjimg" src="/user/pay/images/화면 캡처 2023-02-27 172655.png" alt="">
                                 </a> 
                                 <header class="box-line1">
                                     <a  href="/reward/13401" class="title router-link-active" title="프로젝트 조회">
@@ -66,7 +63,7 @@
                                                 <div class="cucheck">
                                                     <input id="selectcoupon" type="checkbox">
                                                     <label for="selectcoupon">사용</label>
-                                                    <a href="/src/main/resources/templates/user/payScreen/payCoupon.html" onclick="window.open(this.href, '_blank', 'width=500;, height=500;, toolbars=no, scrollbars=yes'); return false;">변경</a>
+                                                    <a href="/user/payScreen/payCoupon.html" onclick="window.open(this.href, '_blank', 'width=500;, height=500;, toolbars=no, scrollbars=yes'); return false;">변경</a>
                                                     <div>
                                                         <span class="cutext"></span>
                                                         <br>
@@ -115,7 +112,7 @@
                                                                     <span  class="color-point"></span><span > 이름</span>
                                                                 </label>
                                                                 <br>
-                                                                <input  type="text" id="pageRewardOrderFormReceiveName" class="font-box" placeholder="ex) 오마이" class="form-control border-focus-point font-sm">
+                                                                <input type="text" id="pageRewardOrderFormReceiveName" class="font-box" placeholder="ex) 오마이">
                                                             </div>
                                                             <div  class="form-group col-md-6 hp">
                                                                 <label  for="pageRewardOrderFormHp" class="subject font-sm">
@@ -123,7 +120,7 @@
                                                                     <span > 휴대전화</span>
                                                                 </label>
                                                                 <br>
-                                                                <input data-v-36cfb067=""  id="pageRewardOrderFormHp" class="font-box" type="tel" placeholder="ex) 01012345678" maxlength="11" class="phone form-control border-focus-point font-sm" data-component-name="componentPhone">
+                                                                <input id="pageRewardOrderFormHp" class="font-box" type="tel" placeholder="ex) 01012345678" maxlength="11">
                                                             </div>
                                                         </div>
                                                         <div  class="row">
@@ -183,28 +180,28 @@
                                                     <div  class="content">
                                                         <ul  class="tight no-scrollbar">
                                                             <li  data-pay="naverpay" class="active">
-                                                                <button class="btn">
+                                                                <button id="1" class="btn" value="kakao">
                                                                     <span >
-                                                                        <img class="img" src="/src/main/resources/static/user/pay/images/회색네이버.jpg"></img>
-                                                                        <img class="off" src="/src/main/resources/static/user/pay/images/(웅디자인) 네이버 심볼.png"></img>
+                                                                        <img class="img" src="/user/pay/images/회색네이버.jpg"></img>
+                                                                        <img class="off" src="/user/pay/images/(웅디자인) 네이버 심볼.png"></img>
                                                                     </span>
                                                                     <div  class="text1">카카오 페이</div>
                                                                 </button>
                                                             </li>
                                                             <li  data-pay="card" class="">
-                                                                <button  class="btn">
+                                                                <button  id="2" class="btn" value="card">
                                                                     <span >
-                                                                        <img class="img" src="/src/main/resources/static/user/pay/images/회색카드.png"></img>
-                                                                        <img class="off" src="/src/main/resources/static/user/pay/images/컬러카드.png"></img>
+                                                                        <img class="img" src="/user/pay/images/회색카드.png"></img>
+                                                                        <img class="off" src="/user/pay/images/컬러카드.png"></img>
                                                                     </span>
                                                                     <div  class="text1">카드</div>
                                                                 </button>
                                                             </li>
                                                             <li  data-pay="real" class="">
-                                                                <button  class="btn">
+                                                                <button id="3" class="btn" value="transfer">
                                                                     <span>
-                                                                        <img class="img" src="/src/main/resources/static/user/pay/images/회색통장.png"></img>
-                                                                        <img class="off" src="/src/main/resources/static/user/pay/images/컬러통장.png"></img>
+                                                                        <img class="img" src="/user/pay/images/회색통장.png"></img>
+                                                                        <img class="off" src="/user/pay/images/컬러통장.png"></img>
                                                                     </span>
                                                                 <div  class="text1">계좌이체</div>
                                                             </button>
@@ -307,7 +304,7 @@
                                             </div>
                                         </div>
                                         <div  class="action">
-                                            <button  class="btn-block btn-point font-lg">
+                                            <button  id="submitPay" class="btn-block btn-point font-lg">
                                                 <span cla="b">후원하기</span>
                                             </button>
                                         </div>
@@ -320,6 +317,6 @@
         </div>
 
     </section>
-	<div th:replace="common/footer/userFooter.html"></div>
+	<div th:replace="/common/footer/userFooter.html"></div>
 </body>
 </html>
