@@ -1,6 +1,7 @@
 package com.greedy.togather.user.project.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -14,5 +15,8 @@ public class RewardDTO {
 	private int rewardPrice;		// 리워드 가격
 	private int rewardFee;			// 리워드 배송비
 	private Date rewardDueDate;		// 리워드 배송예정일
+	private int orderCount;			// COUNT(ORDER_NO) 참여인원(리워드당 주문건수)
+	
+	private List<OrderDTO> orderList; 	// 주문 정보
 	
 }

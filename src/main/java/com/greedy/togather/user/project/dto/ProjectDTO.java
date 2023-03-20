@@ -21,10 +21,13 @@ public class ProjectDTO {
 	private int fundingAchive;		// 펀딩 달성 금액
 	private String projStatus;		// 상태
 	private String projReview;		// 후기 내용
+	private int leftDays;			// TRUNC(FUNDING_END_DATE - SYSDATE) 남은 날짜
+	private int percent;			// TRUNC(FUNDING_ACHIVE / FUNDING_GOAL * 100) 현재 펀딩 달성율
+	private String allImages;		// CONCAT(FILE_PATH, SAVED_FILE_NM) 이미지의 경로+파일명
+	private int totalLikes;			// COUNT(LIKE_NO) 총 좋아요 개수
 	
 	private CategoryDTO category;		// 카테고리 정보
 	private MakerDTO maker;				// 메이커 정보
-	private List<RewardDTO> rewardList;	// 리워드 정보
 	private List<LikeDTO> likeList; 	// 좋아요 정보
-	private List<ReplyDTO> replyList;	// 댓글 정보
+	private List<FileDTO> fileList;		// 이미지 정보
 }
