@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin")
-public class SettleController {
+@RequestMapping("/admin/settle")
+public class AdminSettleController {
 	
-	@GetMapping(value="/settlelist")
+	@GetMapping(value="/list")
 	public String main() {
 		return "admin/settle/settleList";
 	}

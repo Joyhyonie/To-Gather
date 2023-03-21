@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,25 +17,32 @@
     </div>
     
     <div th:replace="common/sidebar/adminSidebar.html">
-    </div>
-    
-    <div class="content">
+    </div> 
 
-        <div class="content1">
-            <div class="menu-title">회원 관리</div>
+    <div class="content">
+	
+	  <div class="content1">
+            <div class="menu-title">회원 관리</div> 
+                    
             <div class="searchbar">
-                <form id="searchForm" action="" method="get">
-                    <select class="sort">
-                        <option value="email">회원번호</option>
-                        <option value="email">아이디</option>
-                        <option value="userNm">이름</option>
-                        <option value="quitYn">탈퇴여부</option>
-                    </select>
-                    <input type="text" class="searchContent">
+                <form id="searchForm" action="/admin/user/list" method="get">
+                    <select id="searchCondition" name="searchCondition" class="sort">
+                        <option value="userNo"
+								th:selected="${ paging.searchCondition eq 'userNo'}">회원번호</option>
+                        <option value="email"
+                        		th:selected="${ paging.searchCondition eq 'email'}">아이디</option>
+                        <option value="userNm"
+                        		th:selected="${ paging.searchCondition eq 'userNm'}">이름</option>
+                        <option value="quitYn"
+                        		th:selected="${ paging.searchCondition eq 'quitYn'}">탈퇴여부</option>
+                    </select>                  
+                    <input type="search" id="searchValue" class="searchContent" name="searchValue"
+                    	   th:value="${ paging.searchValue }">
                     <button class="search-button" type="submit"><i class="bi bi-search"></i></button>
                 </form>                  
             </div>
         </div>
+      
 
         <div class="content2">
             <table>
@@ -49,27 +56,16 @@
                     <th class="table-header">탈퇴여부</th>
                     <th class="table-header">상세정보</th>
                 </tr>
-                <tr class="table-content">
+                <tr th:each="user : ${ userList }" class="table-content">
                     <td><form><input type="checkbox"/></form></td>
-                    <td>us00000002</td>
-                    <td>gildong123@greedy.com</td>
-                    <td>홍길동</td>
-                    <td>2022.12.19</td>
-                    <td>2023.03.15</td>
-                    <td>Y</td>
+                    <td th:text="${ user.userNo }"></td>
+                    <td th:text="${ user.email }"></td>
+                    <td th:text="${ user.userNm }"></td>
+                    <td th:text="${ user.joinDate }"></td>
+                    <td th:text="${ user.quitDate }"></td>
+                    <td th:text="${ user.quitYn }"></td>
                     <td><button class="user-detail">조회</button></td>
                 </tr>
-                <tr class="table-content">
-                    <td><form><input type="checkbox"/></form></td>
-                    <td>us00000003</td>
-                    <td>sinsa12343@greedy.com</td>
-                    <td>신사임당</td>
-                    <td>2021.05.02</td>
-                    <td></td>
-                    <td>N</td>
-                    <td><button class="user-detail">조회</button></td>
-                </tr>
-
             </table>
         </div>
 
@@ -77,27 +73,79 @@
             <button class="user-delete">삭제</button>
         </div>
 
-        <div class="content4">
-            <ul class="pagination">
-                <li class="prev"><a href=""><</a></li>
-                <li calss="page1"><a href="">1</a></li>
-                <li class="page2"><a href="">2</a></li>
-                <li class="page3"><a href="">3</a></li>
-                <li class="page4"><a href="">4</a></li>
-                <li class="page5"><a href="">5</a></li>
-                <li class="page6"><a href="">6</a></li>
-                <li class="page7"><a href="">7</a></li>
-                <li class="page8"><a href="">8</a></li>
-                <li class="page9"><a href="">9</a></li>
-                <li class="page10"><a href="">10</a></li>
-                <li class="next"><a href="">></a></li>
-            </ul>
-        </div>
 
-
+        <div class="content4" id="paging">
+        	<!-- 페이징 바 -->
+			<div id="paging" align="center" style="margin-top: 20px;">
+				<!--  검색어가 있을 때 -->
+				<th:block
+					th:if="${ paging.searchCondition != null and paging.searchValue != null }">
+					<!-- 맨 앞으로 이동 -->
+					<button
+						th:onclick="'location.href=\'/admin/user/list?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
+		
+					<!-- 이전 페이지로 이동 -->
+					<button
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;</button>
+		
+					<!-- 숫자 버튼 -->
+					<th:block
+						th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+						<button
+							th:onclick="'location.href=\'/admin/user/list?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+							th:text="${ page }" th:disabled="${ paging.page eq page }">
+						</button>
+					</th:block>
+		
+					<!-- 다음 페이지로 이동 -->
+					<button
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
+		
+					<!-- 맨 끝으로 이동 -->
+					<button
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;&gt;</button>
+		
+				</th:block>
+				
+				<!--  검색어가 있을 때 -->
+				<th:block
+					th:if="${ paging.searchCondition == null || paging.searchCondition.isEmpty() || paging.searchValue == null || paging.searchValue.isEmpty()}">
+					<!-- 맨 앞으로 이동 -->
+					<button th:onclick="'location.href=\'/admin/user/list?page=1\''"
+					        th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
+		
+					<!-- 이전 페이지로 이동 -->
+					<button
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page - 1}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;</button>
+		
+					<!-- 숫자 버튼 -->
+					<th:block
+						th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+						<button
+							th:onclick="'location.href=\'/admin/user/list?page=' + @{${page}} + '\''"
+							th:text="${ page }" th:disabled="${ paging.page eq page }">
+						</button>
+					</th:block>
+		
+					<!-- 다음 페이지로 이동 -->
+					<button
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page + 1}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
+		
+					<!-- 맨 끝으로 이동 -->
+					<button
+						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.maxPage}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;&gt;</button>
+				</th:block>			     
+		     </div>
+		</div>
 
 
     </div>
-
 </body>
 </html>
