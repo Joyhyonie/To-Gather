@@ -16,6 +16,7 @@ function onlyNumber(obj) {
     }
 }
 
+
 window.onload = function () {
     const $rewradAddress = document.getElementById("rewradAddress");
     const $outer = document.getElementById("addre");
@@ -26,7 +27,7 @@ window.onload = function () {
                 
                 
                 $rewradAddress.innerHTML = "[" + data.zonecode + "]" + data.address + "<input type='button' value='X' onclick='remove1()'>";
-                $new.innerHTML = "<input type='text' class='detailed-address' placeholder='상세주소 입력' style='text-align: center;'>";
+                $new.innerHTML = "<input type='text' id='detailed-address' placeholder='상세주소 입력' style='text-align: center;'>";
                 $outer.appendChild($new);
                 
             }
@@ -164,27 +165,110 @@ $(document).ready(function() {
 });
 });
 
+// $(function(){
+//     $('#submitPay').click(function(){
+//         if(state == "on"){
+//            $.ajax({
+// 			   url:'/pay/kakaopay',
+// 			   dataType: 'json',
+// 			   success:function(data){
+// 				   /*alert(data, tid);*/
+// 					var box = data.next_redirect_pc_url;
+// 					window.open(box);
+				
+// 			   },
+// 			   error:function(error){
+// 				   alert(error, "아");
+// 			   }
+			   
+// 		   });
+//         }
+//     });
+// });
+/* 결제자 번호 */
+// const $supporterPhoneNumber = document.getElementById('supporterPhoneNumber').value;
+/* 주소 + 상세주소*/ 
+// const $countbox = + document.getElementById('countbox').value;
+
 $(function(){
     $('#submitPay').click(function(){
         if(state == "on"){
-           $.ajax({
-			   url:'/pay/kakaopay',
-			   dataType: 'json',
-			   success:function(data){
-				   /*alert(data, tid);*/
-					var box = data.next_redirect_pc_url;
-					window.open(box);
-				
-			   },
-			   error:function(error){
-				   alert(error, "아");
-			   }
-			   
-		   });
+            const $finalPrice = document.getElementById('finalPrice').innerText;
+            const $kakao = document.querySelectorAll('.text1')[0].innerText;
+            const $title = document.getElementById('pjTitle').innerText;
+            const $Date = new Date();
+            const onError = xhr => console.log(xhr);
+            const onSuccess = data => console.log(data);
+            console.log($Date);
+
+            console.log($kakao);
+            console.log("하");
+            console.log($finalPrice);
+            const json = { $title, $kakao, $finalPrice, $Date};
+            console.log(json);
+            IMP.init('imp63382662');
+            IMP.request_pay({
+                pg : "kakaopay", 
+                pay_method : 'card',
+                merchant_uid : 'ka' + new Date().getTime(),
+                name : '결제',
+                amount : $finalPrice,
+                buyer_email : '구매자 이메일',
+                buyer_name : '구매자 이름',
+                buyer_tel : '구매자 번호',
+                buyer_addr : '구매자 주소',
+                buyer_postcode : '구매자 주소',
+                // m_redirect_url : 'redirect url'
+            }, function(rsp) {
+                if ( rsp.success ) {
+                    console.log(rsp);
+                    //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+                    $.ajax({
+                        url: "/pay/order", //cross-domain error가 발생하지 않도록 주의해주세요
+                        type: 'POST',
+                        data: { json,
+                        contentType : 'text',
+                        error : onError,
+                        success : onSuccess
+                            //기타 필요한 데이터가 있으면 추가 전달
+                        }
+                    })
+                    // .done(function(data) {
+                    //     //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+                    //     if ( everythings_fine ) {
+                    //         msg = '결제가 완료되었습니다.';
+                    //         msg += '\n고유ID : ' + rsp.imp_uid;
+                    //         msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+                    //         msg += '\결제 금액 : ' + rsp.paid_amount;
+                    //         msg += '카드 승인번호 : ' + rsp.apply_num;
+                    //         console.log("하");
+                    //         alert(msg);
+                    //     } else {
+                    //         //[3] 아직 제대로 결제가 되지 않았습니다.
+                    //         //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+                    //     }
+                    // });
+                    //성공시 이동할 페이지
+                    // location.href="http://localhost:8001/pay/payComplete";
+                } else {
+                    msg = '결제에 실패하였습니다.';
+                    msg += '에러내용 : ' + rsp.error_msg;
+                    //실패시 이동할 페이지
+                    location.href="http://localhost:8001/pay/payScreen";
+                    alert(error);
+                }
+            });
         }
-    });
+    })
+    
+    
 });
 
+const $rewradAddress1 = document.getElementById('detailed-address').value;
+const $address = $rewradAddress + $rewradAddress1;
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
 
 }
 
@@ -215,4 +299,3 @@ $(function () {
         }
     })
 });
-
