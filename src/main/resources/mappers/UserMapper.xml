@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.user.user.model.dao.UserMapper">
+
+	<resultMap id="loginUserResultMap" type="com.greedy.togather.user.user.model.dto.UserDTO">
+		<id property="userNo" column="USER_NO"/>
+		<result property="email" column="EMAIL"/>
+		<result property="pwd" column="PWD"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="profileNm" column="PROFILE_NM"/>
+		<result property="phone" column="PHONE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="joinDate" column="JOIN_DATE"/>
+		<result property="quitDate" column="QUIT_DATE"/>
+		<result property="quitYn" column="QUIT_YN"/>
+		<result property="userToken" column="USER_TOKEN"/>
+		
+		<collection property="userRole" resultMap="userRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togather.user.user.model.dto.UserRoleDTO" id="userRoleResultMap">
+		<id property="authNo" column="AUTH_NO"/>
+		<id property="userNo" column="USER_NO"/>
+		
+		<association property="auth" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togather.user.user.model.dto.AuthDTO" id="authorityResultMap">
+		<id property="authNo" column="AUTH_NO"/>
+		<result property="authNm" column="AUTH_NM"/>
+		<result property="authInfo" column="AUTH_INFO"/>
+	</resultMap>
+	
+
+	<select id="findByUserId" resultMap="loginUserResultMap">
+	
+		  SELECT
+               A.USER_NO
+		     , A.EMAIL
+             , A.PWD
+		     , A.USER_NM
+		     , A.PROFILE_NM
+		     , A.PHONE
+		     , A.ADDRESS
+		     , A.JOIN_DATE
+		     , A.QUIT_DATE
+		     , A.QUIT_YN
+		     , B.AUTH_NO AUTH_NO
+		     , B.USER_NO USER_NO
+		     , C.AUTH_NO AUTH_NO
+		     , C.AUTH_NM AUTH_NM
+		     , C.AUTH_INFO AUTH_INFO
+          FROM TBL_USER A
+          LEFT JOIN TBL_USER_ROLE B ON (A.USER_NO = B.USER_NO)
+		  LEFT JOIN TBL_AUTH C ON (B.AUTH_NO = C.AUTH_NO)
+         WHERE A.QUIT_YN = 'N'
+           AND A.EMAIL = #{ email }
+           
+	</select>
+	
+	<select id="selectUserById" resultType="string">
+        SELECT
+               EMAIL
+          FROM TBL_USER 
+         WHERE QUIT_YN = 'N'
+           AND EMAIL = #{ email }
+    </select>
+
+    <insert id="insertUser">
+        INSERT
+          INTO TBL_USER 
+        (
+          USER_NO
+        , EMAIL
+        , PWD
+        , USER_NM
+        , PHONE
+        , ADDRESS
+        , JOIN_DATE
+        , QUIT_YN
+        
+        )
+        VALUES
+        (
+          'US'||LPAD(SEQ_USER_NO.NEXTVAL,9, '0')
+        , #{ email }
+        , #{ pwd }
+        , #{ userNm }
+        , #{ phone }
+        , #{ address }
+        , SYSDATE
+        , 'N'
+        
+        )
+	</insert>
+	
+	<insert id="insertUserRole">
+		INSERT
+          INTO TBL_USER_ROLE
+        (
+          USER_NO
+        , AUTH_NO  
+        
+        )
+        VALUES
+        (
+          'US'||LPAD(SEQ_USER_NO.CURRVAL,9, '0')
+        , 'AU01'
+	
+        )
+        
+	</insert>
+	
+	<insert id="insertAuth">
+	INSERT
+		INTO TBL_AUTH
+		(
+		  AUTH_NO  
+		, AUTH_NM
+		, AUTH_INFO
+		
+		)
+		VALUES
+		(
+		  'AU01'
+		, 'ROLE_USER'
+		, '일반회원입니다.'
+		
+		)
+	
+	</insert>
+
+
+    <select id="selectEncryptedPwd" resultType="string">
+        SELECT
+               PWD
+          FROM TBL_USER
+         WHERE QUIT_YN = 'N'
+           AND EMAIL = #{ email }
+	</select>
+	
+	<select id="selectUser">
+		SELECT
+			   USER_NO
+		     , EMAIL
+		     , PWD
+		     , USER_NM
+		     , PROFILE_NM
+		     , PHONE
+		     , ADDRESS
+		     , JOIN_DATE
+		     , QUIT_DATE
+		     , QUIT_YN
+		 FROM  TBL_USER A
+		WHERE  QUIT_YN = 'N'
+		  AND  EMAIL = #{ email }
+	</select>
+
+    <update id="updateUser">
+        UPDATE 
+              TBL_USER 
+          SET PHONE = #{ phone }
+            , ADDRESS = #{ address }
+        WHERE QUIT_YN = 'N'
+          AND USER_NO = #{ userNo }
+    </update>
+    
+    <update id="updatePwd">
+    UPDATE
+    	   TBL_USER
+       SET PWD = #{ pwd }
+     WHERE QUIT_YN = 'N'
+       AND USER_NO = #{ userNo }		
+    
+    </update>
+
+    <update id="deleteUser">
+        UPDATE 
+              TBL_USER 
+          SET QUIT_YN = 'Y'
+        WHERE QUIT_YN = 'N'
+          AND email = #{ email }
+    </update>
+	
+	
+	
+
+
+</mapper>
