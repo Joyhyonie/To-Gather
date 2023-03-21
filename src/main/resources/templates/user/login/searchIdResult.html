@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>searchId_result</title>
-    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/src/main/resources/static/user/login/CSS/searchIdResult.css" type="text/css">
+    <link rel="stylesheet" href="/user/login/CSS/searchIdResult.css" type="text/css">
 </head>
 <body>
-    <div th:replace="header/userHeader.html"></div>
+   <div th:replace="common/header/userHeader.html"></div>
     
     <div class="wrapper">
     <h1 align="center">아이디 찾기 결과</h1>
@@ -26,11 +26,13 @@
     <br>
 
     <div class="searchId-result">
-        <button class="btn-searchId-result" id="login" type="button">로그인 하기</button>
-        <button class="btn-searchId-result" id="searchPwd" type="button">비밀번호 찾기</button>
+        <button class="btn-searchId-result" id="login" type="button" onclick="location.href='/user/login'">로그인 하기</button>
+        <button class="btn-searchId-result" id="searchPwd" type="button" onclick="location.href='/user/searchPwd'">비밀번호 찾기</button>
     </div>
     
-    <div th:replace="footer/userFooter.html"></div>
+  
 </div>
+
+<div th:replace="common/footer/userFooter.html"></div>
 </body>
 </html>
