@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.admin.mainBanner.dao.AdminBannerMapper">
+
+
+	<resultMap id="adminBannerResultMap" type="com.greedy.togather.admin.mainBanner.dto.AdminBannerDTO">
+		<id property="mpCode" column="MP_CODE"/>
+		<result property="projNo" column="PROJ_NO"/>
+		<result property="mpStartDate" column="MP_START_DATE"/>
+		<result property="mpEndDate" column="MP_END_DATE"/>
+		<result property="mpRegDate" column="MP_REG_DATE"/>
+		<result property="mpCategory" column="MP_CATEGORY"/>
+		<result property="mpStatus" column="MP_STATUS"/>
+	</resultMap>
+
+
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+        SELECT 
+        	   COUNT(*)
+          FROM TBL_MAINPAGE A
+          
+          <if test="searchCondition == 'projNo'">
+            JOIN TBL_PROJECT B ON(A.PROJ_NO = B.PROJ_NO)
+        </if>          
+        
+        <where>
+            <if test="searchCondition == 'projNo'">
+                B.PROJ_NO = #{ searchValue }
+            </if>
+            <if test="searchCondition == 'mpStatus'">
+                A.MP_STATUS = #{ searchValue }
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectBannerList" resultMap="adminBannerResultMap">
+        SELECT 
+	           A.PROJ_NO
+	         , A.MP_START_DATE
+	         , A.MP_END_DATE
+	         , A.MP_STATUS
+
+          FROM (SELECT 
+                       ROWNUM RNUM
+                     , B.PROJ_NO
+                     , B.MP_START_DATE
+			         , B.MP_END_DATE
+			         , B.MP_STATUS
+                  FROM (SELECT 
+                  			   C.PROJ_NO
+                             , C.MP_START_DATE
+					         , C.MP_END_DATE
+					         , C.MP_STATUS
+
+                          FROM TBL_MAINPAGE C
+         <if test="searchCondition == 'projNo'">
+            JOIN TBL_PROJECT E ON(C.PROJ_NO = E.PROJ_NO)
+        </if>                
+        <where>
+          <if test="searchCondition == 'projNo'">
+                E.PROJ_NO = #{ searchValue }
+          </if>
+          <if test="searchCondition == 'mpStatus'">
+                C.MP_STATUS = #{ searchValue }
+          </if>
+
+        </where>
+        ORDER BY C.MP_START_DATE DESC
+        ) B
+        <![CDATA[
+                  WHERE ROWNUM <= #{ endRow }
+                  ]]>
+        ) A
+        WHERE A.RNUM >= #{ startRow }
+        ORDER BY 1 DESC
+    </select>
+
+
+</mapper>
