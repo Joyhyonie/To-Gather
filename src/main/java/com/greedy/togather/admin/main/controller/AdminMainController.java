@@ -13,9 +13,4 @@ public class AdminMainController {
 	public String main() {
 		return "admin/main/main";
 	}
-	
-	@PostMapping(value="/")
-	public String redirectMain() {
-		return "redirect:/admin";
-	}
 }
