@@ -88,6 +88,8 @@
 		<result property="replyRegDate" column="REPLY_REG_DATE"/>
 		<result property="donation" column="DONATION"/>
 		<result property="userId" column="USER_ID"/> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalDonation" column="TOTAL_DONATION"/> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalReply" column="TOTAL_REPLY"/> <!-- 쿼리문에서 가공된 데이터 -->
 		
 		<association property="writer" javaType="com.greedy.togather.user.project.dto.ReplyWriterDTO">
 			<id property="userNo" column="USER_NO"/>
@@ -225,14 +227,39 @@
 	    WHERE PROJ_NO = #{ projNo }
 	</select>
 	
-	<!-- 프로젝트 상세 페이지 중, 총기부금&댓글개수 조회 -->
+	<!-- 프로젝트 상세 페이지 중, 총 기부금 & 댓글 개수 조회 -->
 	<select id="selectDonationAndReplyCount" resultMap="replyResultMap">
 		SELECT
-	        SUM(DONATION)
-	    ,   COUNT(REPLY_NO)
+	        SUM(DONATION) AS TOTAL_DONATION
+	    ,   COUNT(REPLY_NO) AS TOTAL_REPLY
 	    FROM TBL_REPLY
 	    WHERE PROJ_NO = #{ projNo }
 	</select>
+	
+	<!-- 댓글 등록 -->
+	<insert id="insertReply">
+		INSERT
+		INTO TBL_REPLY
+		(
+			REPLY_NO
+		,	USER_NO
+		,	PROJ_NO
+		,	REPLY_BODY
+		,	REPLY_REG_DATE
+		,	DONATION
+		)
+		VALUES
+		(
+			'RE'||LPAD(SEQ_REPLY_NO.NEXTVAL, 9, '0')
+		,	#{ userNo } 
+		,	#{ projNo } 
+		,	#{ replyNo } 
+		,	#{ replyBody } 
+		,	SYSDATE
+		,	#{ donation }
+		)
+		
+	</insert>
 	
 	
 	

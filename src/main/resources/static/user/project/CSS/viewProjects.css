@@ -175,11 +175,11 @@ select { /* select 화살표 커스텀 */
     background-color: white;
 }
 
-.loading { /* active가 아닌 프로젝트들은 노출X */
+/* .loading { active가 아닌 프로젝트들은 노출X
     display: none;
 }
 
-.loading.active { /* active인 프로젝트들만 노출 */
+.loading.active { active인 프로젝트들만 노출
     display: block;
-}
+} */
 

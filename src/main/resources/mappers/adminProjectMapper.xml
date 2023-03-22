@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.admin.project.dao.AdminProjectMapper">
+	
+	<resultMap id="adminProjectResultMap" type="com.greedy.togather.admin.project.dto.AdminProjectDTO">
+		<id property="projNo" column="PROJ_NO"/>
+		<result property="categoryNo" column="CATEGOTY_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="projNm" column="PROJ_NM"/>
+		<result property="projSummary" column="PROJ_SUMMARY"/>
+		<result property="projDetail" column="PROJ_DETAIL"/>
+		<result property="projInfo_title" column="PROJ_INFO_TITLE"/>
+		<result property="projInfo_body" column="PROJ_INFO_BODY"/>
+		<result property="fundingStart_date" column="FUNDING_START_DATE"/>
+		<result property="fundingEnd_date" column="FUNDING_END_DATE"/>
+		<result property="fundingGoal" column="FUNDING_GOAL"/>
+		<result property="fundingAchive" column="FUNDING_ACHIVE"/>
+		<result property="projRegDate" column="PROJ_REG_DATE"/>
+		<result property="projRejectDate" column="PROJ_REJECT_DATE"/>
+		<result property="projConfirmDate" column="PROJ_CONFIRM_DATE"/>
+		<result property="projStopDate" column="PROJ_STOP_DATE"/>
+		<result property="projStatus" column="PROJ_STATUS"/>
+		<result property="projReview" column="PROJ_REVIEW"/>
+	</resultMap>
+	
+	
+	
+
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+        SELECT 
+        	   COUNT(*)
+          FROM TBL_PROJECT A
+        
+        <where>
+            <if test="searchCondition == 'projNo'">
+                A.PROJ_NO = #{ searchValue }
+            </if>
+            <if test="searchCondition == 'projNm'">
+                A.PROJ_NM LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'projStatus'">
+                A.PROJ_STATUS LIKE '%' || #{ searchValue } || '%'
+            </if>
+        </where>
+    </select>
+    
+ <select id="selectAdminProjectList" resultMap="adminProjectResultMap">
+        SELECT 
+	           A.PROJ_NO
+	         , A.PROJ_NM
+	         , A.PROJ_STATUS
+
+          FROM (SELECT 
+                       ROWNUM RNUM
+                     , B.PROJ_NO
+                     , B.PROJ_NM
+			         , B.PROJ_STATUS
+                  FROM (SELECT 
+                               C.PROJ_NO
+					         , C.PROJ_NM
+					         , C.PROJ_STATUS
+
+                          FROM TBL_PROJECT C
+        <where>
+            <if test="searchCondition == 'projNo'">
+                PROJ_NO = #{ searchValue }
+            </if>
+            <if test="searchCondition == 'projNm'">
+                PROJ_NM LIKE '%' || #{ searchValue } || '%'            
+            </if>
+            <if test="searchCondition == 'projStatus'">
+                PROJ_STATUS LIKE '%' || #{ searchValue } || '%'
+            </if>
+
+        </where>
+        ORDER BY C.PROJ_NO DESC
+        ) B
+        <![CDATA[
+                  WHERE ROWNUM <= #{ endRow }
+                  ]]>
+        ) A
+        WHERE A.RNUM >= #{ startRow }
+        ORDER BY 1 DESC
+    </select>
+
+    
+    
+    
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
