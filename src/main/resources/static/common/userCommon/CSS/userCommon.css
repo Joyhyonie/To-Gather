@@ -146,10 +146,6 @@ body {
     color: #81AE64;
 }
 
-#My-page {
-    display: none; /* 추후에 my page는 로그인 시 Log In 대신 보이도록 할 것 */
-}
-
 /* start project */
 #Start-project {
     border-radius: 15px;

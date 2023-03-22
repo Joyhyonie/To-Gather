@@ -60,8 +60,13 @@
             <input type="text" placeholder="제목으로 프로젝트 검색 :)" id="Search-bar">
             <img id="Find" src="/common/userCommon/images/find.png">
         </div>
+        
+        <th:block sec:authorize="isAnonymous()">
         <button type="button" class="UserStatus" id="Log-in" onclick="location.href='/user/login'">Log In</button>
-        <button type="button" class="UserStatus" id="My-page" onclick="location.href='/user/mypage'">My Page</button>
+        </th:block>
+        <th:block sec:authorize="isAuthenticated()">
+        <button type="button" class="UserStatus" id="My-page" onclick="location.href='/user/myPage'">My Page</button>
+        </th:block>
         <button type="button" id="Start-project" onclick="location.href='/project/create'">프로젝트 신청</button>
         </div>
     </div>

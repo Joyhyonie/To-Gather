@@ -5,6 +5,8 @@ server:
 # mybatis config
 mybatis:
   mapper-locations: mappers/**/*.xml
+  configuration:
+    jdbc-type-for-null: 'NULL'
   
 spring:
 # database config
@@ -24,6 +26,12 @@ spring:
 # image upload directory (이미지를 저장할 경로 설정)
 image:
   image-dir: src/main/resources/upload/
+  
+# log level
+logging: 
+  level:
+# root - 전역 설정
+    root: info # 기본값
   
   
   
