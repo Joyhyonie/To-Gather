@@ -26,17 +26,8 @@ public class AdminUserController {
 		this.adminUserService = adminUserService;
 	}
 	
-	/* 회원조회 테스트 메소드 */
-	@GetMapping("testlist")
-	public String selectUserTestList(Model model) {
-		
-		List<AdminUserDTO> userList = adminUserService.selectUserTestList();
-		model.addAttribute("userList", userList);
-		log.info("userList : {}", userList);
-		return "admin/user/userTestList";
-	}
 	
-	/* 페이지네이션 조건 메소드 */
+	/* 리스트 페이지 조회 기능(페이징, 검색기능) */
 	@GetMapping("/list")
 	public String selectUserList(@RequestParam(defaultValue="1") int page, 
 			@RequestParam(required=false) String searchCondition, 
@@ -58,6 +49,7 @@ public class AdminUserController {
 		return "admin/user/userList";
 	}
 	
-
+	/* 삭제 기능 (체크박스) */
+	
 	
 }

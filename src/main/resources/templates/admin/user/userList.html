@@ -76,73 +76,71 @@
 
         <div class="content4" id="paging">
         	<!-- 페이징 바 -->
-			<div id="paging" align="center" style="margin-top: 20px;">
 				<!--  검색어가 있을 때 -->
 				<th:block
-					th:if="${ paging.searchCondition != null and paging.searchValue != null }">
+					th:if="${ paging.searchCondition != null and paging.searchValue!= null and !paging.searchValue.isEmpty() }">
 					<!-- 맨 앞으로 이동 -->
-					<button
+					<button class="paging prev2"
 						th:onclick="'location.href=\'/admin/user/list?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
 						th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
 		
 					<!-- 이전 페이지로 이동 -->
-					<button
+					<button class="paging prev1"
 						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
 						th:disabled="${ paging.page <= 1 }">&lt;</button>
 		
 					<!-- 숫자 버튼 -->
-					<th:block
+					<th:block 
 						th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
-						<button
+						<button class="paging numbers"
 							th:onclick="'location.href=\'/admin/user/list?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
 							th:text="${ page }" th:disabled="${ paging.page eq page }">
 						</button>
 					</th:block>
 		
 					<!-- 다음 페이지로 이동 -->
-					<button
+					<button class="paging next1"
 						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
 						th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
 		
 					<!-- 맨 끝으로 이동 -->
-					<button
+					<button class="paging next2"
 						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
 						th:disabled="${ paging.page >= paging.maxPage }">&gt;&gt;</button>
-		
 				</th:block>
 				
-				<!--  검색어가 있을 때 -->
+				<!--  검색어가 없을 때 -->
 				<th:block
 					th:if="${ paging.searchCondition == null || paging.searchCondition.isEmpty() || paging.searchValue == null || paging.searchValue.isEmpty()}">
 					<!-- 맨 앞으로 이동 -->
-					<button th:onclick="'location.href=\'/admin/user/list?page=1\''"
-					        th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
+					<button class="paging prev2" 
+					  	th:onclick="'location.href=\'/admin/user/list?page=1\''"
+					    th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
 		
 					<!-- 이전 페이지로 이동 -->
-					<button
+					<button class="paging prev1"
 						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page - 1}} + '\''"
 						th:disabled="${ paging.page <= 1 }">&lt;</button>
 		
 					<!-- 숫자 버튼 -->
-					<th:block
+					<th:block 
 						th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
-						<button
+						<button class="paging numbers"
 							th:onclick="'location.href=\'/admin/user/list?page=' + @{${page}} + '\''"
 							th:text="${ page }" th:disabled="${ paging.page eq page }">
 						</button>
 					</th:block>
 		
 					<!-- 다음 페이지로 이동 -->
-					<button
+					<button class="paging next1"
 						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.page + 1}} + '\''"
 						th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
 		
 					<!-- 맨 끝으로 이동 -->
-					<button
+					<button class="paging next2"
 						th:onclick="'location.href=\'/admin/user/list?page=' + @{${paging.maxPage}} + '\''"
 						th:disabled="${ paging.page >= paging.maxPage }">&gt;&gt;</button>
 				</th:block>			     
-		     </div>
 		</div>
 
 
