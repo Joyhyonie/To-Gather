@@ -13,7 +13,7 @@ public class MorePagenation {
 		 startRow = (page - 1) * limit + 1;
 	     endRow = startRow + limit - 1;
 		 
-	     MoreSelectCriteria moreSelectCriteria = new MoreSelectCriteria(page, totalCount, limit, startRow, endRow, maxPage);
+	     MoreSelectCriteria moreSelectCriteria = new MoreSelectCriteria(page, totalCount, limit, maxPage, startRow, endRow);
 	     
 	     return moreSelectCriteria;
 	}

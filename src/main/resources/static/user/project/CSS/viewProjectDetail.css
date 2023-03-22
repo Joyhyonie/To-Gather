@@ -460,6 +460,13 @@ pre {
     border-radius: 20px;
 }
 
+.funding-button.close {
+	pointer-events : none;
+	background-color: #DEDCDC;
+    color: #ffffff;
+    border: 4px solid #DEDCDC;
+}
+
 .funding-button:hover {
     background-color: #ffffff;
     color: #81AE64;

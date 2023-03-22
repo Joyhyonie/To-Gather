@@ -25,26 +25,31 @@
 
         <!-- 프로젝트 정보 -->
         <div class="info">
-            <div id="days"><span>21</span>일 남음</div>
-            <h1 id="title">생분해 나무로 만든 숲내음 다이어리</h1>
+        	<th:block th:if="${ detail.leftDays } > 0">
+            	<div id="days"><span th:text="${ detail.leftDays }"></span>일 남음</div>
+            </th:block>
+            <th:block th:if="${ detail.leftDays } <= 0">
+            	<div id="days">마감</div>
+            </th:block>
+            <h1 id="title" th:text="${ detail.projName }"></h1>
             <div id="funding">
-                <p id="amount"><span>2,598,000</span>원</p>
-                <p id="percent"><span>259</span>%</p>
+                <p id="amount"><span th:text="${ #numbers.formatInteger(detail.fundingAchive, 3, 'COMMA') }"></span>원</p>
+                <p id="percent"><span th:text="${ detail.percent }"></span>%</p>
                 <div id="goal-box">
-                <p id="goal"><span>1,000,000</span>원 목표</p>
+                <p id="goal"><span th:text="${ #numbers.formatInteger(detail.fundingGoal, 3, 'COMMA') }"></span>원 목표</p>
                 </div>
             </div>
             <div id="maker">
-                <img src="/user/project/images/dummy2.png" id="maker-image">
+                <img th:if="${ detail.maker.makerProfileName != null }" th:src="${ detail.maker.makerProfileName }" id="maker-image">
                 <div id="maker-info">
-                    <p id="maker-name">기록제작소</p>
-                    <p id="maker-summary">사회적 기업의 이야기를 전합니다.</p>
+                    <p id="maker-name" th:text="${ detail.maker.makerName }"></p>
+                    <p id="maker-summary" th:text="${ detail.maker.makerIntro }"></p>
                 </div>
             </div>
             <div id="boxes">
                 <div id="like-box">
                     <img src="/user/project/images/like-empty.png" id="like-btn" class="like">
-                    <p id="like-people"><span>63</span>명이 좋아합니다 :)</p>
+                    <p id="like-people"><span th:text="${ detail.totalLikes }">63</span>명이 좋아합니다 :)</p>
                 </div>
                 <div id="share-box">
                     <img src="/user/project/images/share.png" id="share">
@@ -69,38 +74,27 @@
 
         <!-- 스토리&후기 바디 -->
         <div class="story-body">
-            <div id="story" class="content">
-                <img src="/user/project/images/dummy3.png">
-                <img src="/user/project/images/dummy4.png">
-                <img src="/user/project/images/dummy5.png">
-            </div>
+            <div th:text="${ detail.projDetail }" id="story" class="content"></div>
             <div id="review" class="content">
-                <p class="no-review">아직 작성된 후기가<br> 존재하지 않습니다.</p>
-                <div class="create-review-box">
-                    <p>이 프로젝트의 Maker이신가요?<br>많은 Supporter분들을 위해 후기를 작성해주세요 :)</p>
-                    <button id="create-review-button" onclick="location.href='/project/review'">후기 작성하기</button>
-                </div>
+            	<th:block th:if="${ detail.projReview == null }">
+		            <p class="no-review">아직 작성된 후기가<br> 존재하지 않습니다.</p>
+		            <div class="create-review-box">
+		                <p>이 프로젝트의 Maker이신가요?<br>많은 Supporter분들을 위해 후기를 작성해주세요 :)</p>
+		                <button id="create-review-button" onclick="location.href='/project/review'">후기 작성하기</button>
+		            </div>
+	            <th:block th:if="${ detail.projReview != null }">
+	            	<div th:text="${ detail.projReview }">뭐임 왜 안나와???</div>
+                </th:block>
             </div>
         </div>
 
         <!-- 리워드 안내 -->
         <div class="guide">
             <div id="title-box">
-                <p id="guide-title">리워드 배송 및 환불 정책</p>
+                <p id="guide-title" th:text="${ detail.projInfoTitle }"></p>
                 <img src="/user/project/images/polygon.png" id="polygon">
             </div>
-            <pre id="guide-content">
-                * 리워드 배송 안내
-                리워드는 프로젝트 종료 후 0월 0일부터 순차적으로 배송될 예정입니다. 
-                배송이 시작되거나, 배송이 늦어지게 되는 경우 모두 따로 안내드릴 예정입니다.
-
-                * 리워드 배송 지연 시
-                펀딩해 주신 Supporter분들께 약속드린 리워드 발송일을 지키기 위해 최선을 다할 것을 약속합니다. 
-                단, 펀딩을 받아야만 생산을 시작할 수 있는 크라우드펀딩 특성과 생산 과정에서의 예상치 못한 상황으로 인해 리워드 발송이 다소 지연될 수 있는 점을 알려드립니다.
-                
-                * 환불 및 교환정책
-                파손, 불량품 수령 시 7일 이내로 교환이 가능하며, 이 경우 발생하는 배송비는 Maker가 부담합니다.
-                Supporter의 배송지 기재 오류, Supporter가 Maker에게 사전 고지 없이 배송지를 수정해 배송사고가 발생할 경우, 재 발송에 따른 배송비 부담은 Supporter에게 있습니다.
+            <pre th:text="${ detail.projInfoBody }" id="guide-content">
             </pre>
         </div>
 
@@ -119,54 +113,34 @@
 
         <!-- 리워드 선택 바디 -->
         <div class="reward-body">
-            <div id="reward-0" class="rewards">
-                <div class="reward-header">
-                    <p class="reward-title"><span id="price">리워드 없이</span> 펀딩</p>
-                    <div id="supporters"><span>10</span>명 참여</div>
-                </div>
-                <h3 id="reward-name">이 프로젝트를<br>리워드 없이 후원합니다 :)</h3>
-                <div id="reward-footer">
-                    <p id="expected"><br><br><span id="date"></span></p>
-                    <button type="button" class="funding-button">후원하기</button>
-                </div>
-            </div>
-            <div id="reward-1" class="rewards">
-                <div class="reward-header">
-                    <p class="reward-title"><span id="price">30,000</span>원 펀딩</p>
-                    <div id="supporters"><span>3</span>명 참여</div>
-                </div>
-                <h3 id="reward-name">함께하는 지구 세트</h3>
-                <div id="reward-content">
-                    <pre>
-                        몸비누, 사이잘삼샤워타올, 대나무칫솔, 산제로틴케이스, 수세미비누받침, 프로듀스백
-                    </pre>
-                </div>
-                <div id="reward-footer">
-                <p id="expected">발송 예정일<br> : <span id="date">2023-03-12</span></p>
-                <button type="button" class="funding-button">후원하기</button>
-                </div>
-            </div>
-            <div id="reward-2" class="rewards">
-                <div class="reward-header">
-                    <p class="reward-title"><span id="price">35,000</span>원 펀딩</p>
-                    <div id="supporters"><span>7</span>명 참여</div>
-                </div>
-                <h3 id="reward-name">산제로 필기구 세트</h3>
-                <div id="reward-content">
-                    <pre>
-                        우드 다이어리, 산제로 샤프
-                    </pre>
-                </div>
-                <div id="reward-footer">
-                <p id="expected">발송 예정일<br> : <span id="date">2023-03-13</span></p>
-                <button type="button" class="funding-button">후원하기</button>
-                </div>
-            </div>
+            <th:block th:each="reward : ${ rewardList }">
+	            <div class="rewards">
+	                <div class="reward-header">
+	                    <p class="reward-title"><span th:text="${ #numbers.formatInteger(reward.rewardPrice, 3, 'COMMA')}" id="price"></span>원 펀딩</p>
+	                    <div id="supporters"><span th:text="${ reward.orderCount }"></span>명 참여</div>
+	                </div>
+	                <h3 th:text="${ reward.rewardName }" id="reward-name"></h3>
+	                <div id="reward-content">
+	                    <pre th:text="${ reward.rewardContent }">
+	                        
+	                    </pre>
+	                </div>
+	                <div id="reward-footer">
+	                <p id="expected">발송 예정일<br> : <span th:text="${ reward.rewardDueDate }" id="date"></span></p>
+	                <th:block th:if="${ detail.leftDays } > 0">
+	                	<button type="button" class="funding-button">후원하기</button>
+	                </th:block>
+	                <th:block th:if="${ detail.leftDays } <= 0">
+	                	<button type="button" class="funding-button close">후원마감</button>
+	                </th:block>
+	                </div>
+	            </div>
+            </th:block>
         </div>
 
         <!-- 댓글 -->
         <div class="comment">
-            <div id="comment-title">총 댓글 기부금 <span id="donation">10,500</span>원</div>
+            <div id="comment-title">총 댓글 기부금 <span th:text="${ #numbers.formatInteger(donationAndReplyCount.totalDonation, 3, 'COMMA') }" id="donation"></span>원</div>
             <div id="comment-body">
                 <div id="comment-container">
                     <img src="/user/project/images/profile1.png" id="commenter">
@@ -190,7 +164,7 @@
                     });
                 </script>
             </div>
-            <div id="comments-count">댓글 <span id="total-count">43</span>개</div>
+            <div id="comments-count">댓글 <span th:text="${ donationAndReplyCount.totalReply }" id="total-count">43</span>개</div>
             <div id="comment-list">
                 <div id="flex1">
                     <div id="flex2">

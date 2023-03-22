@@ -31,7 +31,7 @@ public class ProjectService {
 	public Map<String, Object> selectProjectList(int page, String categoryNo) {
 		
 		/* 전체 게시글 수 확인 (페이징 처리를 위해) */
-		int totalCount = projectMapper.selectProjectsTotalCount();
+		int totalCount = projectMapper.selectProjectsTotalCount(categoryNo);
 		log.info("[ProjectService] totalCount : {}", totalCount);
 		log.info("[ProjectService] categoryNo : {}", categoryNo);
 		
@@ -52,16 +52,39 @@ public class ProjectService {
 	}
 	
 	/* 프로젝트 상세 페이지 조회 */
-	public List<ProjectDTO> selectProjectDetail(String projNo) {
+	public Map<String, Object> selectProjectDetail(String projNo) {
 		
-		return projectMapper.selectProjectDetail(projNo);
+		/* 프로젝트 상세 내용 */
+		ProjectDTO projectDetail = projectMapper.selectProjectDetail(projNo);
+		log.info("[ProjectService] projectDetail : {}", projectDetail);
+		
+		/* 리워드 조회 */
+		List<RewardDTO> rewardList = projectMapper.selectRewardList(projNo);
+		log.info("[ProjectService] rewardList : {}", rewardList);
+		
+		/* 총 기부금 & 댓글 개수 조회 */
+		ReplyDTO donationAndReplyCount = projectMapper.selectDonationAndReplyCount(projNo);
+		log.info("[ProjectService] donationAndReplyCount : {}", donationAndReplyCount);
+		
+		Map<String, Object> allProjectDetails = new HashMap<>();
+		allProjectDetails.put("projectDetail", projectDetail);
+		allProjectDetails.put("rewardList", rewardList);
+		allProjectDetails.put("donationAndReplyCount", donationAndReplyCount);
+		
+		return allProjectDetails;
 	}
 	
-	/* 프로젝트 상세 페이지 중, 리워드 조회 */
-	public List<RewardDTO> selectRewardList(RewardDTO reward) {
-		
-		return projectMapper.selectRewardList(reward);
-	}
+//	/* 프로젝트 상세 페이지 중, 리워드 조회 */
+//	public List<RewardDTO> selectRewardList(RewardDTO reward) {
+//		
+//		return projectMapper.selectRewardList(reward);
+//	}
+//	
+//	/* 프로젝트 상세 페이지 중, 총 기부금 & 댓글 개수 조회 */
+//	public ReplyDTO selectDonationAndReplyCount(String projNo) {
+//		
+//		return projectMapper.selectDonationAndReplyCount(projNo);
+//	}
 	
 	/* 프로젝트 상세 페이지 중, 댓글 */
 	/* 조회 */
@@ -76,11 +99,7 @@ public class ProjectService {
 		projectMapper.insertReply(reply);
 	}
 	
-	/* 프로젝트 상세 페이지 중, 총 기부금 & 댓글 개수 조회 */
-	public ReplyDTO selectDonationAndReplyCount(String projNo) {
-		
-		return projectMapper.selectDonationAndReplyCount(projNo);
-	}
+	
 
 	
 }

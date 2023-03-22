@@ -26,6 +26,7 @@ public class ProjectMapperTests {
 	
 	
 	@Test
+	@Disabled
 	@DisplayName("프로젝트 리스트 조회용 매퍼 테스트")
 	public void selectProjectListTest() {
 		// given
@@ -42,13 +43,12 @@ public class ProjectMapperTests {
 	}
 	
 	@Test
-	@Disabled
 	@DisplayName("프로젝트 상세 페이지 조회용 매퍼 테스트")
 	public void selectProjectDetailTest() {
 		// given
 		
 		// when
-		List<ProjectDTO> projectDetail = projectMapper.selectProjectDetail("PJ000000001"); 
+		ProjectDTO projectDetail = projectMapper.selectProjectDetail("PJ000000001"); 
 		
 		// then
 		assertNotNull(projectDetail);
@@ -56,19 +56,30 @@ public class ProjectMapperTests {
 	}
 	
 	@Test
-	@Disabled
 	@DisplayName("리워드 조회용 매퍼 테스트")
 	public void selectRewardListTest() {
 		// given
-		RewardDTO reward = new RewardDTO();
-		reward.setProjNo("PJ000000001");
 		
 		// when
-		List<RewardDTO> rewardList = projectMapper.selectRewardList(reward);
+		List<RewardDTO> rewardList = projectMapper.selectRewardList("PJ000000001");
 		
 		// then
 		assertNotNull(rewardList);
 		System.out.println(rewardList);
+	}
+	
+	@Test
+	@Disabled
+	@DisplayName("총 기부금 & 댓글 개수 조회용 매퍼 테스트")
+	public void selectDonationAndReplyCountTest() {
+		// given
+		
+		// when
+		ReplyDTO reply = projectMapper.selectDonationAndReplyCount("PJ000000001");
+		
+		// then
+		assertNotNull(reply);
+		System.out.println(reply);
 	}
 	
 	@Test
@@ -86,22 +97,5 @@ public class ProjectMapperTests {
 		assertNotNull(replyList);
 		System.out.println(replyList);
 	}
-	
-	@Test
-	@Disabled
-	@DisplayName("총 기부금 & 댓글 개수 조회용 매퍼 테스트")
-	public void selectDonationAndReplyCountTest() {
-		// given
-		
-		// when
-		ReplyDTO reply = projectMapper.selectDonationAndReplyCount("PJ000000001");
-		
-		// then
-		assertNotNull(reply);
-		System.out.println(reply);
-	}
-	
-	
-	
 
 }
