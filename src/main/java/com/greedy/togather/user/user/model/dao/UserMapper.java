@@ -26,6 +26,10 @@ public interface UserMapper {
 
 	int updatePwd(UserDTO updatePwd);
 
+	String findLoginId(UserDTO user);
+
+	UserDTO searchPwd(UserDTO user);
+
 	
 }
 

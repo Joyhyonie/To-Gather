@@ -1,5 +1,6 @@
 package com.greedy.togather.user.user.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
 	
 	 private final UserMapper mapper;
+	 private final PasswordEncoder passwordEncoder;
 
-	    public UserService(UserMapper mapper) {
+
+	    public UserService(UserMapper mapper, PasswordEncoder passwordEncoder) {
 	        this.mapper = mapper;
+	        this.passwordEncoder = passwordEncoder;
+	        
+	        
 	    }
 
 	    public boolean selectUserById(String userId) {
@@ -82,13 +88,24 @@ public class UserService {
 			if(!(result > 0)) {
 				throw new UserModifyException("비밀번호 변경에 실패하였습니다.");
 			}
+	
+		}
+
+		public String findLoginId(UserDTO user) {
+		
+			log.info("[userService] user : " + user);
 			
-			
+			return mapper.findLoginId(user);
 			
 		}
-	    
-  }
 
-	    
+		public Boolean resetPassword(String phone, String email) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	
+	}
+	
 
 

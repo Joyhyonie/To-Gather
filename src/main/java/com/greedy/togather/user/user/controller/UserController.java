@@ -1,7 +1,12 @@
 package com.greedy.togather.user.user.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,11 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greedy.togather.common.exception.user.UserModifyException;
 import com.greedy.togather.common.exception.user.UserRegistException;
 import com.greedy.togather.common.exception.user.UserRemoveException;
+import com.greedy.togather.user.user.model.dto.MailDto;
 import com.greedy.togather.user.user.model.dto.UserDTO;
 import com.greedy.togather.user.user.service.AuthenticationService;
 import com.greedy.togather.user.user.service.UserService;
@@ -33,17 +40,25 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
 
+	@Value("${image.image-dir}")
+	private String IMAGE_DIR;
+	
 	
 	private final PasswordEncoder passwordEncoder;
     private final MessageSourceAccessor messageSourceAccessor;
     private final UserService userService;
     private final AuthenticationService authenticationService;
+    
 
-    public UserController(MessageSourceAccessor messageSourceAccessor, UserService userService, PasswordEncoder passwordEncoder, AuthenticationService authenticationService) {
+    public UserController(MessageSourceAccessor messageSourceAccessor, UserService userService, PasswordEncoder passwordEncoder, 
+    		AuthenticationService authenticationService) {
         this.messageSourceAccessor = messageSourceAccessor;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationService = authenticationService;
+        
+        
+        
     }
 
     /* 로그인 */
@@ -69,12 +84,21 @@ public class UserController {
 	   return "user/login/searchId";
    }
    
-   /* 아이디 찾기 결과 */
-   @GetMapping("/searchIdResult")
-   public String goSearchIdResult() {
-	   
-	   return "user/login/searchIdResult";
-   }
+
+   /* 비밀번호 찾기 */
+   @PostMapping("/searchPwd")
+   public String resetPassword(@ModelAttribute UserDTO user, RedirectAttributes rttr) {
+      
+	   Boolean result = userService.resetPassword(user.getPhone(), user.getEmail());
+       if(result == true) {
+           rttr.addFlashAttribute("msg", "임시비밀번호를 이메일로 전송했습니다");
+           return "redirect:/user/login";
+       } else {
+           rttr.addFlashAttribute("msg", "비밀번호를 찾지 못했습니다");
+           return "redirect:/user/searchPwd";
+       }
+  
+   } 
    
    /* 비밀번호 찾기 */
    @GetMapping("/searchPwd")
@@ -168,6 +192,7 @@ public class UserController {
     	return "redirect:/";
     }
     
+    /* 회원 정보 수정 시 세션에 저장 된 정보 업데이트 */
     protected Authentication createNewAuthentication(String email) {
     	
     	UserDetails newPrincipal = authenticationService.loadUserByUsername(email);
@@ -177,7 +202,7 @@ public class UserController {
         
     }
     
-    /* 비밀 번호만 변경 
+    /* 비밀 번호만 변경 */
     @PostMapping("/myInfo.pwd")
     public String modifyPwd(@ModelAttribute UserDTO updatePwd, @AuthenticationPrincipal UserDTO loginUser,
     		RedirectAttributes rttr) throws UserModifyException {
@@ -196,7 +221,7 @@ public class UserController {
     	return "redirect:/";
     	
     }
-    */
+   
     
  
     
@@ -251,7 +276,27 @@ public class UserController {
     public String goMyInfoPwd() {
     	
     	return "user/myPage/myInfo.pwd";
+    
     }
+    
+    
+    /* 아이디 찾기 */
+    
+    @PostMapping("/searchId")
+    public String doFindIdSearch(@ModelAttribute UserDTO user, Model model) {
+    log.info("[UserController] user : " + user);
+    String email = userService.findLoginId(user);
+    model.addAttribute("email", email);
+    log.info("[UserController] model : " + model);
+    String result = "";
+    
+    if(email != null) {
+    result = "user/login/searchIdResult";
+    } else {
+    result = "user/login/searchId";
+    }
+    return result;
 
+    }
 
 }
