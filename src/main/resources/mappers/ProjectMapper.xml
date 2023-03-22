@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.user.project.dao.ProjectMapper">
+
+	<!-- 카테고리 선택 or 검색어 입력을 통해 프로젝트 리스트 조회를 위한 resultMap -->
+	<resultMap type="com.greedy.togather.user.project.dto.ProjectDTO" id="viewProjectsResultMap">
+		<id property="projNo" column="PROJ_NO"/>
+		<result property="projName" column="PROJ_NM"/>
+		<result property="projSummary" column="PROJ_SUMMARY"/>
+		<result property="fundingEndDate" column="FUNDING_END_DATE"/>
+		<result property="fundingGoal" column="FUNDING_GOAL"/>
+		<result property="fundingAchive" column="FUNDING_ACHIVE"/>
+		<result property="projStatus" column="PROJ_STATUS"/>
+		<result property="leftDays" column="LEFT_DAYS"/> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="percent" column="PERCENT"/> <!-- 쿼리문에서 가공된 데이터 -->
+		
+		<association property="category" resultMap="categoryResultMap"/>
+		<association property="maker" resultMap="makerResultMap"/>
+		<collection property="likeList" resultMap="likeResultMap"/>
+		<collection property="fileList" resultMap="fileResultMap"/>
+	</resultMap>
+
+	<!-- 프로젝트의 상세 페이지 조회를 위한 resultMap -->
+	<resultMap type="com.greedy.togather.user.project.dto.ProjectDTO" id="viewProjectDetailResultMap">
+		<id property="projNo" column="PROJ_NO"/>
+		<result property="projName" column="PROJ_NM"/>
+		<result property="projDetail" column="PROJ_DETAIL"/>
+		<result property="projInfoTitle" column="PROJ_INFO_TITLE"/>
+		<result property="projInfoBody" column="PROJ_INFO_BODY"/>
+		<result property="fundingEndDate" column="FUNDING_END_DATE"/>
+		<result property="fundingGoal" column="FUNDING_GOAL"/>
+		<result property="fundingAchive" column="FUNDING_ACHIVE"/>
+		<result property="projStatus" column="PROJ_STATUS"/>
+		<result property="projReview" column="PROJ_REVIEW"/>
+		<result property="leftDays" column="LEFT_DAYS"/> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="percent" column="PERCENT"/> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="allImages" column="ALL_IMAGES"/> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalLikes" column="TOTAL_LIKES"/> <!-- 쿼리문에서 가공된 데이터 -->
+		
+		<association property="maker" resultMap="makerResultMap"/>
+		<!-- <collection property="likeList" resultMap="likeResultMap"/> -->
+		<collection property="fileList" resultMap="fileResultMap"/>
+	</resultMap>
+
+	<!-- CategoryDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.CategoryDTO" id="categoryResultMap">
+		<id property="categoryNo" column="CATEGORY_NO"/>
+		<result property="projField" column="PROJ_FIELD"/>
+	</resultMap>
+	
+	<!-- MakerDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.MakerDTO" id="makerResultMap">
+		<id property="projNo" column="PROJ_NO"/>
+		<result property="makerProfileName" column="MAKER_PROFILE_NM"/>
+		<result property="makerName" column="MAKER_NM"/>
+		<result property="maerAddress" column="MAKER_ADDRESS"/>
+		<result property="makerPhone" column="MAKER_PHONE"/>
+		<result property="makerEmail" column="MAKER_EMAIL"/>
+		<result property="makerIntro" column="MAKER_INTRO"/>
+	</resultMap>
+	
+	<!-- LikeDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.LikeDTO" id="likeResultMap">
+		<id property="likeNo" column="LIKE_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="projNo" column="PROJ_NO"/>
+	</resultMap>
+	
+	<!-- RewardDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.RewardDTO" id="rewardResultMap">
+		<id property="rewardNo" column="REWARD_NO"/>
+		<result property="projNo" column="PROJ_NO"/>
+		<result property="rewardName" column="REWARD_NM"/>
+		<result property="rewardContent" column="REWARD_CONTENT"/>
+		<result property="rewardPrice" column="REWARD_PRICE"/>
+		<result property="rewardFee" column="REWARD_FEE"/>
+		<result property="rewardDueDate" column="REWARD_DUE_DATE"/>
+		<result property="orderCount" column="ORDER_COUNT"/> <!-- 쿼리문에서 가공된 데이터 -->
+		
+		<collection property="orderList" resultMap="orderResultMap"/>
+	</resultMap>
+	
+	<!-- ReplyDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.ReplyDTO" id="replyResultMap">
+		<id property="replyNo" column="REPLY_NO"/>
+		<result property="projNo" column="PROJ_NO"/>
+		<result property="replyBody" column="REPLY_BODY"/>
+		<result property="replyRegDate" column="REPLY_REG_DATE"/>
+		<result property="donation" column="DONATION"/>
+		<result property="userId" column="USER_ID"/> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalDonation" column="TOTAL_DONATION"/> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalReply" column="TOTAL_REPLY"/> <!-- 쿼리문에서 가공된 데이터 -->
+		
+		<association property="writer" javaType="com.greedy.togather.user.project.dto.ReplyWriterDTO">
+			<id property="userNo" column="USER_NO"/>
+	        <result property="email" column="EMAIL"/>
+	        <result property="profileName" column="PROFILE_NM"/>
+		</association>
+	</resultMap>
+	
+	<!-- FileDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.FileDTO" id="fileResultMap">
+		<id property="fileNo" column="FILE_NO"/>
+		<result property="projNo" column="PROJ_NO"/>
+		<result property="fileType" column="FILE_TYPE"/>
+		<result property="originalFileName" column="ORIGINAL_FILE_NM"/>
+		<result property="savedFileName" column="SAVED_FILE_NM"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="thumPath" column="THUM_PATH"/>
+	</resultMap>
+	
+	<!-- OrderDTO -->
+	<resultMap type="com.greedy.togather.user.project.dto.OrderDTO" id="orderResultMap">
+		<id property="orderNo" column="ORDER_NO"/>
+		<result property="rewardNo" column="REWARD_NO"/>
+	</resultMap>
+
+	<!-- ========================================================================================================= -->
+	
+	<!-- 페이징 처리를 위한 카테고리별 총 프로젝트 수 -->
+	<select id="selectProjectsTotalCount" resultType="_int">
+		SELECT
+	        COUNT(*)
+	    FROM TBL_PROJECT A
+	    WHERE A.CATEGORY_NO = #{ categoryNo }
+	    AND A.PROJ_STATUS IN ('진행', '심사')
+	</select>
+	
+	<!-- 프로젝트 리스트 조회 -->
+	<select id="selectProjectList" resultMap="viewProjectsResultMap">
+		SELECT 
+	        A.PROJ_NO
+	    ,   D.THUM_PATH
+	    ,   A.PROJ_SUMMARY
+	    ,	A.PROJ_NM
+	    ,	TRUNC(A.FUNDING_END_DATE - SYSDATE) AS LEFT_DAYS
+	    ,   A.FUNDING_ACHIVE
+	    ,	TRUNC(A.FUNDING_ACHIVE / A.FUNDING_GOAL * 100) AS PERCENT
+	    ,	A.PROJ_STATUS
+	    ,   E.MAKER_NM
+	    FROM (
+	        SELECT
+	                ROWNUM RNUM
+	            ,   B.PROJ_NO
+	            ,   B.PROJ_SUMMARY
+	            ,   B.PROJ_NM
+	            ,   B.FUNDING_END_DATE
+	            ,   TRUNC(B.FUNDING_END_DATE - SYSDATE)
+	            ,   B.FUNDING_ACHIVE
+	            ,   B.FUNDING_GOAL
+	            ,   TRUNC(B.FUNDING_ACHIVE / B.FUNDING_GOAL * 100)
+	            ,   B.PROJ_STATUS
+	        FROM (
+	            SELECT
+	                C.PROJ_NO
+	            ,   C.PROJ_SUMMARY
+	            ,   C.PROJ_NM
+	            ,   C.FUNDING_END_DATE
+	            ,   TRUNC(C.FUNDING_END_DATE - SYSDATE)
+	            ,   C.FUNDING_ACHIVE
+	            ,   C.FUNDING_GOAL
+	            ,   TRUNC(C.FUNDING_ACHIVE / C.FUNDING_GOAL * 100)
+	            ,   C.PROJ_STATUS
+	            FROM TBL_PROJECT C
+	            WHERE C.PROJ_STATUS IN ('진행', '마감')
+	            AND C.CATEGORY_NO = #{ categoryNo }
+	            ORDER BY C.PROJ_NO DESC
+	        ) B
+	        <![CDATA[
+	        WHERE ROWNUM <= #{ selectCriteria.endRow }
+	        ]]>
+	    ) A
+	    JOIN TBL_FILE D ON A.PROJ_NO = D.PROJ_NO
+	    JOIN TBL_MAKER E ON A.PROJ_NO = E.PROJ_NO
+	    WHERE A.RNUM >= #{ selectCriteria.startRow }
+	    ORDER BY A.PROJ_NO DESC
+	</select>
+	
+	<!-- 프로젝트 상세 페이지 조회 -->
+	<select id="selectProjectDetail" resultMap="viewProjectDetailResultMap">
+		SELECT
+	        CONCAT(B.FILE_PATH, B.SAVED_FILE_NM) AS ALL_IMAGES
+	    ,   TRUNC(A.FUNDING_END_DATE - SYSDATE) AS LEFT_DAYS
+	    ,   A.PROJ_NM
+	    ,   A.FUNDING_ACHIVE
+	    ,   TRUNC(A.FUNDING_ACHIVE / A.FUNDING_GOAL * 100) AS PERCENT
+	    ,   A.FUNDING_GOAL
+	    ,   C.MAKER_PROFILE_NM
+	    ,   C.MAKER_NM
+	    ,   C.MAKER_INTRO
+	    ,   (SELECT COUNT(LIKE_NO) FROM TBL_LIKE D WHERE D.PROJ_NO = A.PROJ_NO) AS TOTAL_LIKES
+	    ,   A.PROJ_INFO_TITLE
+	    ,   A.PROJ_INFO_BODY
+	    ,   A.PROJ_DETAIL
+	    ,   A.PROJ_REVIEW
+	    FROM TBL_PROJECT A
+	    LEFT JOIN TBL_FILE B ON(A.PROJ_NO = B.PROJ_NO)
+	    LEFT JOIN TBL_MAKER C ON(A.PROJ_NO = C.PROJ_NO)
+	    WHERE A.PROJ_NO = #{ projNo }
+	    AND   B.FILE_TYPE IN ('대표사진', '서브사진')
+	    AND   A.PROJ_STATUS IN ('진행', '마감')
+	</select>
+	
+	<!-- 프로젝트 상세 페이지 중, 리워드 조회 -->
+	<select id="selectRewardList" resultMap="rewardResultMap">
+		SELECT
+	        A.REWARD_NM
+	    ,   A.REWARD_CONTENT
+	    ,   A.REWARD_PRICE
+	    ,   A.REWARD_DUE_DATE
+	    ,   (SELECT COUNT(ORDER_NO) FROM TBL_ORDER B WHERE B.REWARD_NO = A.REWARD_NO)
+	    FROM TBL_REWARD A
+	    WHERE A.PROJ_NO = #{ projNo }
+	</select>
+	
+	<!-- 프로젝트 상세 페이지 중, 댓글 조회 -->
+	<select id="selectReplyList" resultMap="replyResultMap">
+		SELECT
+	        A.REPLY_BODY
+	    ,   A.DONATION
+	    ,   A.REPLY_REG_DATE
+	    ,   B.PROFILE_NM
+	    ,   SUBSTR(B.EMAIL, 1, INSTR(B.EMAIL, '@') -1) AS USER_ID
+	    ,   A.PROJ_NO
+	    FROM TBL_REPLY A
+	    LEFT JOIN TBL_USER B USING(USER_NO)
+	    WHERE PROJ_NO = #{ projNo }
+	</select>
+	
+	<!-- 프로젝트 상세 페이지 중, 총 기부금 & 댓글 개수 조회 -->
+	<select id="selectDonationAndReplyCount" resultMap="replyResultMap">
+		SELECT
+	        SUM(DONATION) AS TOTAL_DONATION
+	    ,   COUNT(REPLY_NO) AS TOTAL_REPLY
+	    FROM TBL_REPLY
+	    WHERE PROJ_NO = #{ projNo }
+	</select>
+	
+	<!-- 댓글 등록 -->
+	<insert id="insertReply">
+		INSERT
+		INTO TBL_REPLY
+		(
+			REPLY_NO
+		,	USER_NO
+		,	PROJ_NO
+		,	REPLY_BODY
+		,	REPLY_REG_DATE
+		,	DONATION
+		)
+		VALUES
+		(
+			'RE'||LPAD(SEQ_REPLY_NO.NEXTVAL, 9, '0')
+		,	#{ userNo } 
+		,	#{ projNo } 
+		,	#{ replyNo } 
+		,	#{ replyBody } 
+		,	SYSDATE
+		,	#{ donation }
+		)
+		
+	</insert>
+	
+	
+	
+
+</mapper>

@@ -2,12 +2,36 @@
 server:
   port: 8001
 
-
 # mybatis config
 mybatis:
   mapper-locations: mappers/**/*.xml
+  configuration:
+    jdbc-type-for-null: 'NULL'
   
+spring:
+# database config
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: C##TOGATHER
+    password: TOGATHER
+# file upload config
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+      location: D:/semi-project/To-Gather_Files/To-Gather/
+
+# image upload directory (이미지를 저장할 경로 설정)
+image:
+  image-dir: src/main/resources/upload/
   
+# log level
+logging: 
+  level:
+# root - 전역 설정
+    root: info # 기본값
   
   
   

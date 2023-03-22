@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/admin/settle/CSS/settleDetail.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <title>settleDetail</title>
+</head>
+<body>
+
+	<div th:replace="common/header/adminHeader.html">
+    </div>
+    
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div>
+    
+    <div class="content">
+
+        <div class="content1">
+            <div class="menu-title">정산관리 > 조회</div>
+        </div>
+
+        <div class="content2">
+            <p>메이커 정보 조회</p>
+            <table>
+                <tr>
+                    <th class="table-header">프로젝트번호</th>
+                    <td class="table-body">PJ00000001</td>
+                    <th class="table-header">프로젝트명</th>
+                    <td colspan="3" class="table-body">생분해 나무로 만든 숲내음 다이어리</td>
+                </tr>
+                <tr>
+                    <th class="table-header">Maker</th>
+                    <td class="table-body">김나무</td>
+                    <th class="table-header">프로젝트 종료일</th>
+                    <td class="table-body">2023.03.01</td>
+                    <th class="table-header">정산일</th>
+                    <td class="table-body">2023.03.14</td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="content3">
+            <p>펀딩 금액 조회</p>
+            <table>
+                <tr class="table-header">
+                    <th>날짜</th>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>결제금액</th>
+                    <th>환불금액</th>
+                    <th>비고</th>
+                </tr>
+                <tr>
+                    <td>2023.03.01</td>
+                    <td>gogil123@naver.com</td>
+                    <td>고길동</td>
+                    <td>25,000</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>2023.03.01</td>
+                    <td>duli123@naver.com</td>
+                    <td>고길동</td>
+                    <td>-</td>
+                    <td>25,000</td>
+                    <td>리워드 불량</td>
+                </tr>
+                <tr>
+                    <td colspan="6"><button type="button">더보기</button></td>
+                </tr>
+                <tr>
+                    <th class="table-header">총 펀딩금액</th>
+                    <td class="table-body">2,598,000</td>
+                    <th class="table-header">총 결제금액</th>
+                    <td class="table-body">2,673,000</td>
+                    <th class="table-header">총 환불금액</th>
+                    <td class="table-body">7,5000</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content4">
+            <p>수수료 조회</p>
+            <table>
+                <tr>
+                    <th class="table-header">운영수수료(7%)</th>
+                    <th class="table-header">결제수수료(3%)</th>
+                    <th class="table-header">총 수수료</th>
+                </tr>
+                <tr>
+                    <td>181,860</td>
+                    <td>77,940</td>
+                    <td>259,800</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content5">
+            <p>정산 금액 조회</p>
+            <table>
+                <tr>
+                    <th class="table-header">정산일</th>
+                    <th class="table-header">총 펀딩금액</th>
+                    <th class="table-header">총 수수료</th>
+                    <th class="table-header">부가세</th>
+                    <th class="table-header">기부금</th>
+                    <th class="table-header">정산금액</th>
+                </tr>
+                <tr>
+                    <td>정산일</td>
+                    <td>총 펀딩금액</td>
+                    <td>총 수수료</td>
+                    <td>부가세</td>
+                    <td>기부금</td>
+                    <td>정산금액</td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="content6">
+            <button class="settle-exit">이전 페이지로</button>
+            <button class="doSettle">정산</button>
+        </div>
+	</div>
+</body>
+</html>
