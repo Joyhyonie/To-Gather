@@ -50,10 +50,7 @@ public class AdminProjectController {
 		return "/admin/project/projectList";
 	}
 	
-	
-	
-	
-	
+
 	
 
 }
