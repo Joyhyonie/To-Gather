@@ -179,8 +179,32 @@
               TBL_USER 
           SET QUIT_YN = 'Y'
         WHERE QUIT_YN = 'N'
-          AND email = #{ email }
+          AND EMAIL = #{ email }
     </update>
+    
+    
+    <select id="findLoginId" resultType="string">
+    
+    SELECT
+    	
+      EMAIL
+      FROM TBL_USER 
+      WHERE QUIT_YN = 'N'
+  AND USER_NM = #{ userNm }
+  AND PHONE = #{ phone }
+    
+    </select>
+    
+      <select id="searchPwd" resultType="string">
+      
+      SELECT
+               * 
+       FROM TBL_USER
+       WHERE QUIT_YN = 'N'
+       AND PHONE = # { phone }
+       AND EMAIL = #{ email } 
+    
+    </select>
 	
 	
 	

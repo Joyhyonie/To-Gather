@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+
 public class AuthenticationService implements UserDetailsService {
 	
 	private final UserMapper mapper;
@@ -41,5 +42,6 @@ public class AuthenticationService implements UserDetailsService {
 	        return user;
 	    }
 
+   }
 
-}
+
