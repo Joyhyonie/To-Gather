@@ -167,33 +167,15 @@ public class ProjectController {
 	@GetMapping("/detail")
 	public String viewProjectDetail(@RequestParam(value="projNo", required=false) String projNo, Model model) {
 		
-		List<ProjectDTO> projectDetail = projectService.selectProjectDetail(projNo);
-		log.info("[ProjectController] projectDetail : {}", projectDetail);
+		/* 프로젝트 상세 내용 조회 */
+		Map<String, Object> allProjectDetails = projectService.selectProjectDetail(projNo);
+		log.info("[ProjectController] allProjectDetails : {}", allProjectDetails);
 		
-		model.addAttribute("detail", projectDetail);
+		model.addAttribute("detail", allProjectDetails.get("projectDetail"));
+		model.addAttribute("rewardList", allProjectDetails.get("rewardList"));
+		model.addAttribute("donationAndReplyCount", allProjectDetails.get("donationAndReplyCount"));
 		
 		return "/user/project/viewProjectDetail/viewProjectDetail";
-	}
-	
-	/* 리워드 조회(반환형?) */
-	@GetMapping("/loadReward")
-	public void viewRewardList(@RequestParam(value="reward", required=false) RewardDTO reward, Model model) {
-		
-		List<RewardDTO> rewardList = projectService.selectRewardList(reward);
-		log.info("[ProjectController] rewardList : {}", rewardList);
-		
-		model.addAttribute("reward", rewardList);
-	}
-	
-	/* 총 기부금 & 댓글 개수 조회 */
-	@GetMapping("/loadDonationAndReplyCount")
-	public void viewDonationAndReplyCount(String projNo, Model model) {
-		
-		ReplyDTO reward = projectService.selectDonationAndReplyCount(projNo);
-		log.info("[ProjectController] reward : {}", reward);
-		
-		model.addAttribute("totalReward", reward);
-		
 	}
 	
 	/* 댓글 조회(비동기통신) */

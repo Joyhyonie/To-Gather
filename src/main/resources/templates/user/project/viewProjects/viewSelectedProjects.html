@@ -12,6 +12,7 @@
 <body>
 	<div th:replace="common/header/userHeader.html"></div>
 	<script type="text/javascript" src="/user/project/js/viewProjects.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	
     <flex class="justify-between">
         <div class="title-box">
@@ -57,29 +58,47 @@
         </div>
     </flex>
     
-    <div class="wrapper" id="more-projects"> <!-- 카테고리 번호에 따른 프로젝트 리스트 조회 -->
-    
-        <div th:each="project : ${ projectList }" th:onclick="|location.href='/project/detail?no=${ project.projNo }'|" class="project-block loading">
-            <th:block th:each=" file : ${ project.fileList }" >
-            	<img th:if="${ file.fileType == '대표사진' }" th:src="${ file.thumPath }" class="project-image">
-            </th:block>
-            <div class="like-box">
-                <img src="/user/main/images/like-empty.png" class="like-btn">
-            </div>
-            <div class="display-box">
-                <p th:text="${ project.projSummary }" class="project-summary"></p>
-            </div>
-            <div class="project-info">
-                <p th:text="${ project.maker.makerName }" class="maker-name"></p>
-                <p th:text="${ project.projName }" class="project-name"></p>
-            </div>
-            <div class="funding-date"><span th:text="${ project.leftDays }"></span>일 남음</div>
-            <flex>
-                <p class="current-funding"><span th:text="${ project.fundingAchive }" ></span>원</p>
-                <p class="percent"><span th:text="${ percent }"></span>%</p>
-            </flex>
-        </div>
+    <div class="wrapper" id="more-projects">
+    	<th:block th:each="project : ${ projectList }">
+	        <div th:data-proj-no="${ project.projNo }" class="project-block loading">
+	            <th:block th:each=" file : ${ project.fileList }" >
+	            	<img th:if="${ file.fileType == '대표사진' }" th:src="${ file.thumPath }" class="project-image">
+	            </th:block>
+	            <div class="like-box">
+	                <img src="/user/main/images/like-empty.png" class="like-btn">
+	            </div>
+	            <div class="display-box">
+	                <p th:text="${ project.projSummary }" class="project-summary"></p>
+	            </div>
+	            <div class="project-info">
+	                <p th:text="${ project.maker.makerName }" class="maker-name"></p>
+	                <p th:text="${ project.projName }" class="project-name"></p>
+	            </div>
+	            <th:block th:if="${ project.leftDays } > 0">
+	            	<div class="funding-date"><span th:text="${ project.leftDays }"></span>일 남음</div>
+	            </th:block>
+	            <th:block th:if="${ project.leftDays } <= 0">
+	            	<div th:text="마감" class="funding-date"></div>
+	            </th:block>
+	            <flex>
+	                <p class="current-funding"><span th:text="${ #numbers.formatInteger(project.fundingAchive, 3, 'COMMA') }" ></span>원</p>
+	                <p class="percent"><span th:text="${ project.percent }"></span>%</p>
+	            </flex>
+	        </div>
+		</th:block>
+		<script>
+			<!-- location.href 이동하고자 하는 곳으로 이동하는 자바스크립트 코드가 필요함 -->
+			const projectBlock = document.querySelectorAll(".project-block");
 
+			projectBlock.forEach(block => {
+			  block.addEventListener("click", (e) => {
+			    const projNo = e.currentTarget.dataset.projNo;
+			    console.log(projNo);
+			    window.location.href = '/project/detail?projNo=' + projNo;
+			  });
+			});
+		</script>
+		
         <div class="project-block loading">
             <img src="/user/main/images/dummy1.png" class="project-image">
             <div class="like-box">
@@ -107,7 +126,6 @@
         	 th:onclick="'location.href=\'/project/' + @{${category}} + '?page=' + ${paging.page + 1} + '\''">more</div> 
     </div>
     
-    <div th:replace="common/footer/userFooter.html"></div>
     
 </body>
 </html>
