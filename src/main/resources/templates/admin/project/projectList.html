@@ -22,7 +22,7 @@
         <div class="content1">
             <div class="menu-title">프로젝트</div>
             <div class="searchbar">
-                <form id="searchForm" action="/admin/project/projectlist" method="get">
+                <form id="searchForm" action="/admin/project/list" method="get">
                     <select class="searchCondition" name="searchCondition">
                         <option value="projNo"
                         		th:selected="${ paging.searchCondition eq 'projNo' }">번호</option>
@@ -82,60 +82,60 @@
 			th:if="${ paging.searchCondition != null and paging.searchValue != null }">
 			<!-- 맨 앞으로 이동 -->
 			<button
-				th:onclick="'location.href=\'/board/list?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''">&lt;&lt;</button>
+				th:onclick="'location.href=\'/admin/project/list?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''">&lt;&lt;</button>
 
 			<!-- 이전 페이지로 이동 -->
 			<button
-				th:onclick="'location.href=\'/board/list?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+				th:onclick="'location.href=\'/admin/project/list?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
 				th:disabled="${ paging.page <= 1 }">&lt;</button>
 
 			<!-- 숫자 버튼 -->
 			<th:block
 				th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
 				<button
-					th:onclick="'location.href=\'/admin/project/projectlist?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+					th:onclick="'location.href=\'/admin/project/list?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
 					th:text="${ page }" th:disabled="${ paging.page eq page }">
 				</button>
 			</th:block>
 
 			<!-- 다음 페이지로 이동 -->
 			<button
-				th:onclick="'location.href=\'/admin/project/projectlist?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+				th:onclick="'location.href=\'/admin/project/list?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
 				th:disabled="${ paging.page >= paging.maxPage }">></button>
 
 			<!-- 맨 끝으로 이동 -->
 			<button
-				th:onclick="'location.href=\'/admin/project/projectlist?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''">>></button>
+				th:onclick="'location.href=\'/admin/project/list?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''">>></button>
 
 		</th:block>
 
 		<th:block
 			th:if="${ paging.searchCondition == null || paging.searchCondition.isEmpty() || paging.searchValue == null || paging.searchValue.isEmpty()}">
 			<!-- 맨 앞으로 이동 -->
-			<button th:onclick="'location.href=\'/admin/project/projectlist?page=1\''">&lt;&lt;</button>
+			<button th:onclick="'location.href=\'/admin/project/list?page=1\''">&lt;&lt;</button>
 
 			<!-- 이전 페이지로 이동 -->
 			<button
-				th:onclick="'location.href=\'/admin/project/projectlist?page=' + @{${paging.page - 1}} + '\''"
+				th:onclick="'location.href=\'/admin/project/list?page=' + @{${paging.page - 1}} + '\''"
 				th:disabled="${ paging.page <= 1 }">&lt;</button>
 
 			<!-- 숫자 버튼 -->
 			<th:block
 				th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
 				<button
-					th:onclick="'location.href=\'/admin/project/projectlist?page=' + @{${page}} + '\''"
+					th:onclick="'location.href=\'/admin/project/list?page=' + @{${page}} + '\''"
 					th:text="${ page }" th:disabled="${ paging.page eq page }">
 				</button>
 			</th:block>
 
 			<!-- 다음 페이지로 이동 -->
 			<button
-				th:onclick="'location.href=\'/admin/project/projectlist?page=' + @{${paging.page + 1}} + '\''"
+				th:onclick="'location.href=\'/admin/project/list?page=' + @{${paging.page + 1}} + '\''"
 				th:disabled="${ paging.page >= paging.maxPage }">></button>
 
 			<!-- 맨 끝으로 이동 -->
 			<button
-				th:onclick="'location.href=\'/admin/project/projectlist?page=' + @{${paging.maxPage}} + '\''">>></button>
+				th:onclick="'location.href=\'/admin/project/list?page=' + @{${paging.maxPage}} + '\''">>></button>
 		</th:block>
 
 	</div>
