@@ -17,6 +17,7 @@ function onlyNumber(obj) {
 }
 
 
+
 window.onload = function () {
     const $rewradAddress = document.getElementById("rewradAddress");
     const $outer = document.getElementById("addre");
@@ -165,34 +166,38 @@ $(document).ready(function() {
 });
 });
 
-// $(function(){
-//     $('#submitPay').click(function(){
-//         if(state == "on"){
-//            $.ajax({
-// 			   url:'/pay/kakaopay',
-// 			   dataType: 'json',
-// 			   success:function(data){
-// 				   /*alert(data, tid);*/
-// 					var box = data.next_redirect_pc_url;
-// 					window.open(box);
-				
-// 			   },
-// 			   error:function(error){
-// 				   alert(error, "아");
-// 			   }
-			   
-// 		   });
-//         }
-//     });
-// });
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+
+
 /* 결제자 번호 */
 // const $supporterPhoneNumber = document.getElementById('supporterPhoneNumber').value;
-/* 주소 + 상세주소*/ 
-// const $countbox = + document.getElementById('countbox').value;
+/* 수령인 이름*/
+const $pageRewardOrderFormReceiveName = document.getElementById('pageRewardOrderFormReceiveName').value; 
+/* 수량 */
+const $countbox = document.getElementById('countbox').value;
+/* 수령인 번호 */ 
+const $pageRewardOrderFormHp = document.getElementById('pageRewardOrderFormHp').value;
+/* 리워드 가격*/ 
+const $rewardPrice = document.getElementById('rewardPrice').innerText;
+console.log($rewardPrice);
+/* 배송비 */  
+const $deliveryPrice = document.getElementById('deliveryPrice').innerText;
+/* 프로젝트 번호 */ 
+const $projNo = document.getElementById('pjNo').innerText;
+/* 리워드 번호 */
+// const $rewardtitle = document.getElementById('rewardtitle').innerText;
+const $reawrdNo = 1;
+/* 유저 번호 임시로 패이오더 DTO에추가 */
+const userNo = 1; 
 
 $(function(){
     $('#submitPay').click(function(){
         if(state == "on"){
+            /* 추가 후원금 */ 
+            const $pageRewardOrderFormAddAmt = document.getElementById('pageRewardOrderFormAddAmt').value;
+            console.log($pageRewardOrderFormAddAmt);
             const $finalPrice = document.getElementById('finalPrice').innerText;
             const $kakao = document.querySelectorAll('.text1')[0].innerText;
             const $title = document.getElementById('pjTitle').innerText;
@@ -204,8 +209,6 @@ $(function(){
             console.log($kakao);
             console.log("하");
             console.log($finalPrice);
-            const json = { $title, $kakao, $finalPrice, $Date};
-            console.log(json);
             IMP.init('imp63382662');
             IMP.request_pay({
                 pg : "kakaopay", 
@@ -213,25 +216,47 @@ $(function(){
                 merchant_uid : 'ka' + new Date().getTime(),
                 name : '결제',
                 amount : $finalPrice,
-                buyer_email : '구매자 이메일',
-                buyer_name : '구매자 이름',
-                buyer_tel : '구매자 번호',
-                buyer_addr : '구매자 주소',
-                buyer_postcode : '구매자 주소',
+                buyer_email : '구매자이메일',
+                buyer_name : '구매자이름',
+                buyer_tel : '구매자번호',
+                buyer_addr : '구매자주소',
+                buyer_postcode : '구매자주소',
                 // m_redirect_url : 'redirect url'
             }, function(rsp) {
                 if ( rsp.success ) {
                     console.log(rsp);
+                    const test = { 
+                        delivery : {recipientNm : rsp.buyer_name, 
+                            recipientAddress : rsp.buyer_postcode, 
+                            recipientPhone : $pageRewardOrderFormHp }
+                        ,
+                        payment : {
+                            payMethod : $kakao },
+                        reward : {projNo : $projNo,
+                            rewardNo : $reawrdNo,
+                        }, 
+                        rewardQuantity : $countbox, 
+                        rewardPrice : $rewardPrice, 
+                        extraReward : $pageRewardOrderFormAddAmt,
+                        deliveryFee : $deliveryPrice, 
+                        dcPrice : $cuprice.innerText, 
+                        payPrice : $finalPrice,
+                        orderDate : $Date,
+                        userNo : userNo
+                    };
+                    const json = JSON.stringify(test);
+                    console.log(json);
                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
                     $.ajax({
-                        url: "/pay/order", //cross-domain error가 발생하지 않도록 주의해주세요
+                        url: "/pay/payComplete", //cross-domain error가 발생하지 않도록 주의해주세요
                         type: 'POST',
-                        data: { json,
-                        contentType : 'text',
+                        data: json,
+                        contentType : 'application/json; charset=UTF-8',
+                        dataType : 'text',
                         error : onError,
                         success : onSuccess
                             //기타 필요한 데이터가 있으면 추가 전달
-                        }
+                        
                     })
                     // .done(function(data) {
                     //     //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
@@ -263,12 +288,10 @@ $(function(){
     
     
 });
-
+/* 주소 + 상세주소*/ 
 const $rewradAddress1 = document.getElementById('detailed-address').value;
 const $address = $rewradAddress + $rewradAddress1;
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-$(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+/* 접근 */ 
 
 }
 
