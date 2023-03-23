@@ -13,8 +13,8 @@ public class AdminUserDTO {
 	private String profileNm;
 	private String phone;
 	private String address;
-	private java.sql.Date joinDate;
-	private java.sql.Date quitDate;
+	private java.util.Date joinDate;
+	private java.util.Date quitDate;
 	private String quitYn;
 	private String userToken;
 	
