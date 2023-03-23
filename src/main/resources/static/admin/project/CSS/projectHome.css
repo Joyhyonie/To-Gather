@@ -82,7 +82,9 @@ img {
     display: flex;
     margin-top: 50px;
     margin-left: 75px;
-    color: aliceblue;
+    width: 70px;
+    height: 70px;
+    color: white;
 }
 
 

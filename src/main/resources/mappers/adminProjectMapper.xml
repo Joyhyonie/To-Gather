@@ -9,10 +9,10 @@
 		<result property="projNm" column="PROJ_NM"/>
 		<result property="projSummary" column="PROJ_SUMMARY"/>
 		<result property="projDetail" column="PROJ_DETAIL"/>
-		<result property="projInfo_title" column="PROJ_INFO_TITLE"/>
-		<result property="projInfo_body" column="PROJ_INFO_BODY"/>
-		<result property="fundingStart_date" column="FUNDING_START_DATE"/>
-		<result property="fundingEnd_date" column="FUNDING_END_DATE"/>
+		<result property="projInfoTitle" column="PROJ_INFO_TITLE"/>
+		<result property="projInfoBody" column="PROJ_INFO_BODY"/>
+		<result property="fundingStartDate" column="FUNDING_START_DATE"/>
+		<result property="fundingEndDate" column="FUNDING_END_DATE"/>
 		<result property="fundingGoal" column="FUNDING_GOAL"/>
 		<result property="fundingAchive" column="FUNDING_ACHIVE"/>
 		<result property="projRegDate" column="PROJ_REG_DATE"/>
@@ -24,8 +24,6 @@
 	</resultMap>
 	
 	
-	
-
 	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
         SELECT 
         	   COUNT(*)
@@ -41,6 +39,10 @@
             <if test="searchCondition == 'projStatus'">
                 A.PROJ_STATUS LIKE '%' || #{ searchValue } || '%'
             </if>
+            <if test="searchCondition == 'projReview'">
+                A.PROJ_REVIEW LIKE '%' || #{ searchValue } || '%'
+            </if>
+            
         </where>
     </select>
     
@@ -49,16 +51,19 @@
 	           A.PROJ_NO
 	         , A.PROJ_NM
 	         , A.PROJ_STATUS
+	         , A.PROJ_REVIEW
 
           FROM (SELECT 
                        ROWNUM RNUM
                      , B.PROJ_NO
                      , B.PROJ_NM
 			         , B.PROJ_STATUS
+			         , B.PROJ_REVIEW
                   FROM (SELECT 
                                C.PROJ_NO
 					         , C.PROJ_NM
 					         , C.PROJ_STATUS
+					         , C.PROJ_REVIEW
 
                           FROM TBL_PROJECT C
         <where>
@@ -71,6 +76,9 @@
             <if test="searchCondition == 'projStatus'">
                 PROJ_STATUS LIKE '%' || #{ searchValue } || '%'
             </if>
+            <if test="searchCondition == 'projReview'">
+                PROJ_REVIEW LIKE '%' || #{ searchValue } || '%'
+            </if>
 
         </where>
         ORDER BY C.PROJ_NO DESC
@@ -82,36 +90,14 @@
         WHERE A.RNUM >= #{ startRow }
         ORDER BY 1 DESC
     </select>
-
+    
+ <select id="adminProjectPage" resultMap="adminProjectResultMap">
+ 
+ 
+ 
+ </select>
     
     
-    
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
