@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.user.pay.dao.PaymentMapper">
+		
+	<insert id="registOrder">
+		INSERT
+		INTO TBL_ORDER A
+		(
+		  A.ORDER_NO
+		, A.USER_NO
+		, A.PROJ_NO
+		, A.REWARD_NO
+		, A.ORDER_DATE
+		, A.REWARD_QUANTITY
+		, A.REWARD_PRICE
+		, A.EXTRA_REWARD
+		, A.DELIVERY_FEE
+		, A.DC_PRICE
+		, A.PAY_PRICE
+		)
+		VALUES
+		(
+		  'OR'||LPAD(SEQ_ORDER_NO.NEXTVAL,9,'0')
+		, #{ userNo }
+		, #{ reward.projNo }
+		, #{ reward.rewardNo }
+		, SYSDATE
+		, #{ rewardQuantity }
+		, #{ rewardPrice }
+		, NULL
+		, #{ deliveryFee }
+		, NULL
+		, #{ payPrice }
+		)
+	</insert>
+	
+	<insert id="registDelivery">
+	INSERT
+	INTO TBL_DELIVERY B
+	(
+	  B.ORDER_NO
+	, B.RECIPIENT_NM
+	, B.RECIPIENT_ADDRESS
+	, B.RECIPIENT_PHONE
+	, B.DELIVERY_NM
+	, B.INVOICE_NO
+	, B.DELIVERY_START_DATE
+	, B.BUY_FIXED_DATE
+	)
+	VALUES
+	(
+	  'OR'||LPAD(SEQ_ORDER_NO.CURRVAL,9,'0')
+	, #{ delivery.recipientNm }
+	, #{ delivery.recipientAddress }
+	, #{ delivery.recipientPhone }
+	, NULL
+	, NULL
+	, NULL
+	, NULL
+	)
+	</insert>
+	
+	<insert id='registPayment'>
+	INSERT
+	INTO TBL_PAYMENT C
+	(
+	  C.PAY_NO
+	, C.ORDER_NO
+	, C.PAY_METHOD
+	, C.PAY_PRICE
+	, C.PAY_DATE
+	)
+	VALUES
+	(
+	  'PY'||LPAD(SEQ_ORDER_NO.NEXTVAL,9,'0')
+	, 'OR'||LPAD(SEQ_ORDER_NO.CURRVAL,9,'0')
+	, #{ payment.payMethod }
+	, #{ payPrice }
+	, SYSDATE
+	)
+	</insert>
+	
+	<update id="updatefundingAchive">
+	UPDATE
+		   TBL_PROJECT
+	   SET FUNDING_ACHIVE = FUNDING_ACHIVE + #{ payPrice }
+	 WHERE PROJ_NO = #{ reward.projNo }
+	</update>
+</mapper>
+
+
+	
