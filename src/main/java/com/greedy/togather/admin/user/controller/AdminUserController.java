@@ -5,15 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
-
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.greedy.togather.admin.user.model.dto.AdminUserDTO;
 import com.greedy.togather.admin.user.model.service.AdminUserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +48,12 @@ public class AdminUserController {
 	}
 	
 	/* 삭제 기능 (체크박스) */
-	
+	@PostMapping("/delete")
+	public String deleteUserList(Model model) {
+		
+		
+		return "redirect:/admin/user/userList";
+	}
 	
 
 }
