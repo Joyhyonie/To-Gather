@@ -13,7 +13,7 @@ public class PaymentDTO {
 	private String orderNo;
 	private String payMethod;
 	private int payPrice;
-	@JsonFormat(pattern = "yyyy-mm-dd")
+//	@JsonFormat(pattern = "yyyy-mm-dd")
 	private Date payDate;
 	
 }
