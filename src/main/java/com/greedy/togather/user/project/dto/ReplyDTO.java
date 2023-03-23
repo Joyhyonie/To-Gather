@@ -2,6 +2,8 @@ package com.greedy.togather.user.project.dto;
 
 import java.sql.Date;
 
+import com.greedy.togather.user.user.model.dto.UserDTO;
+
 import lombok.Data;
 
 @Data
@@ -17,5 +19,5 @@ public class ReplyDTO {
 	private int totalDonation;	// SUM(DONATION) 총 댓글 기부금
 	private int totalReply; 	// COUNT(REPLY_NO) 총 댓글 개수
 	
-	private ReplyWriterDTO writer;	// 댓글 작성자 정보
+	private UserDTO writer;	// 댓글 작성자 정보
 }

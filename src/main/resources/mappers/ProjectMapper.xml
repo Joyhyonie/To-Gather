@@ -92,10 +92,18 @@
 		<result property="totalDonation" column="TOTAL_DONATION"/> <!-- 쿼리문에서 가공된 데이터 -->
 		<result property="totalReply" column="TOTAL_REPLY"/> <!-- 쿼리문에서 가공된 데이터 -->
 		
-		<association property="writer" javaType="com.greedy.togather.user.project.dto.ReplyWriterDTO">
+		<association property="writer" javaType="com.greedy.togather.user.user.model.dto.UserDTO">
 			<id property="userNo" column="USER_NO"/>
-	        <result property="email" column="EMAIL"/>
-	        <result property="profileName" column="PROFILE_NM"/>
+			<result property="email" column="EMAIL"/>
+			<result property="pwd" column="PWD"/>
+			<result property="userNm" column="USER_NM"/>
+			<result property="profileNm" column="PROFILE_NM"/>
+			<result property="phone" column="PHONE"/>
+			<result property="address" column="ADDRESS"/>
+			<result property="joinDate" column="JOIN_DATE"/>
+			<result property="quitDate" column="QUIT_DATE"/>
+			<result property="quitYn" column="QUIT_YN"/>
+			<result property="userToken" column="USER_TOKEN"/>
 		</association>
 	</resultMap>
 	
@@ -210,6 +218,7 @@
 	    WHERE A.PROJ_NO = #{ projNo }
 	    AND   B.FILE_TYPE IN ('대표사진', '서브사진')
 	    AND   A.PROJ_STATUS IN ('진행', '마감')
+	    ORDER BY D.REPLY_NO DESC
 	</select>
 	
 	<!-- 프로젝트 상세 페이지 중, 리워드 조회 -->
@@ -223,6 +232,7 @@
 	    ,   (SELECT COUNT(ORDER_NO) FROM TBL_ORDER B WHERE B.REWARD_NO = A.REWARD_NO) AS ORDER_COUNT
 	    FROM TBL_REWARD A
 	    WHERE A.PROJ_NO = #{ projNo }
+	    ORDER BY A.REWARD_PRICE
 	</select>
 	
 	<!-- 프로젝트 상세 페이지 중, 댓글 조회 -->
@@ -238,6 +248,7 @@
 	    FROM TBL_REPLY A
 	    LEFT JOIN TBL_USER B USING(USER_NO)
 	    WHERE PROJ_NO = #{ projNo }
+	    ORDER BY A.REPLY_NO DESC
 	</select>
 	
 	<!-- 프로젝트 상세 페이지 중, 총 기부금 & 댓글 개수 조회 -->
@@ -264,16 +275,34 @@
 		VALUES
 		(
 			'RE'||LPAD(SEQ_REPLY_NO.NEXTVAL, 9, '0')
-		,	#{ userNo } 
+		,	#{ writer.userNo } 
 		,	#{ projNo } 
 		,	#{ replyBody } 
 		,	SYSDATE
 		,	#{ donation }
 		)
-		
 	</insert>
 	
+	<!-- ========================================================================================================= -->
 	
+	<!-- 메인 배너 조회 -->
 	
-
+	<!-- 오늘의 프로젝트 조회 -->
+	
+	<!-- 인기 프로젝트 조회 -->
+	
+	<!-- ========================================================================================================= -->
+	
+	<!-- 현재 프로젝트를 신청하는 유저의 정보 조회 (이름, 번호, 이메일) -->
+	
+	<!-- TBL_MAKER 정보 등록 -->
+	
+	<!-- TBL_PROJECT 정보 등록 -->
+	
+	<!-- TBL_FILE 정보 등록 -->
+	
+	<!-- TBL_REWARD 정보 등록 -->
+	
+	<!-- 후기 등록 -->
+	
 </mapper>
