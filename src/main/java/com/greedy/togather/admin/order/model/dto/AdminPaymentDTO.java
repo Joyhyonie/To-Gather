@@ -1,4 +1,4 @@
-package com.greedy.togather.admin.user.model.dto;
+package com.greedy.togather.admin.order.model.dto;
 
 import lombok.Data;
 

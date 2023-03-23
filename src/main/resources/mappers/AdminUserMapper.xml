@@ -15,6 +15,8 @@
 		<result property="quitYn" column="QUIT_YN"/>
 		<result property="userToken" column="USER_TOKEN"/>
 	</resultMap>
+	
+	
 
 	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
         SELECT 
@@ -82,12 +84,19 @@
                   
 	</select>
 
-	<delete id="deleteUserList" parameterType="string">
+	<delete id="deleteUserChecked" parameterType="string">
 		DELETE
  		  FROM TBL_USER
-  	     WHERE USER_NO = # { userNo }     
+  	     WHERE USER_NO = #{ userNo }     
 	</delete>
-
+	
+	<select id="selectUserDetail" resultMap="userResultMap">
+		SELECT
+		       
+	
+	
+	</select>
+	
 
 
 

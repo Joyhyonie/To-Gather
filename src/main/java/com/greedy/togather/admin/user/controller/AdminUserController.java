@@ -5,10 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.HashMap;
-
+import java.util.List;
 import java.util.Map;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.greedy.togather.admin.user.model.dto.AdminUserDTO;
 import com.greedy.togather.admin.user.model.service.AdminUserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,11 +51,31 @@ public class AdminUserController {
 	}
 	
 	/* 삭제 기능 (체크박스) */
+	@ResponseBody
 	@PostMapping("/delete")
-	public String deleteUserList(Model model) {
+	public String deleteUserChecked(@RequestParam(value="checkBox[]") List<String> checkList, AdminUserDTO user) {
 		
+		/* 체크된 리스트가 가지고 있는 userNo를 UserDTO에 set한 후에 service 레이어에 보낸다 */ 
 		
+		log.info("[AdminUserController] checkList {}", checkList );
+		
+		for(String checkInfo : checkList) {
+			user.setUserNo(checkInfo);
+			log.info("[AdminUserController] user {}", user);	
+			adminUserService.deleteUserChecked(user);
+		}
+
 		return "redirect:/admin/user/userList";
+	}
+	
+	
+	/* 해당 유저의 상세 조회 페이지 조회 기능 */
+	@GetMapping("/detail")
+	public String selectUserDetail() {
+		
+		
+		
+		return "admin/user/userDetail";
 	}
 	
 
