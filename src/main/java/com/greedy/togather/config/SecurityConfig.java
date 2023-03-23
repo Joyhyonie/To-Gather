@@ -34,7 +34,7 @@ public class SecurityConfig {
 				.csrf()
 					.disable()
 					.authorizeHttpRequests()
-					.antMatchers("/user/mypage" , "/user/project").hasRole("USER")
+					.antMatchers("/user/mypage" ,"/user/project", "/user/project/detail").hasRole("USER")
 					.anyRequest().permitAll()
 				.and()
 					.formLogin()

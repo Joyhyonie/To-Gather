@@ -11,7 +11,6 @@ public class MainPageDTO {
 	private String projNo;		// 프로젝트 번호
 	private Date mpStartDate;	// 시작일
 	private Date mpEndDate;		// 종료일
-	private Date mpRegDate;		// 등록일
 	private String mpCategory;	// 분류
 	private String mpStatus;	// 상태
 	

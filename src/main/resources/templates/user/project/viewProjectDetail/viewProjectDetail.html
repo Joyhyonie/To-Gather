@@ -165,7 +165,7 @@
                     });
                 </script>
             </div>
-            <div id="comments-count">댓글 <span th:text="${ donationAndReplyCount.totalReply }" id="total-count">43</span>개</div>
+            <div id="comments-count">댓글 <span th:text="${ donationAndReplyCount.totalReply }" id="total-count"></span>개</div>
             <div id="comment-wrapper">
 	            <div th:each="reply : ${ detail.replyList }" id="comment-list">
 		            <div id="flex1">
@@ -191,6 +191,7 @@
 					
 					const registComment = document.getElementById("regist-comment");
 					const commentBox = document.getElementById("comment-box");
+					const counter = document.getElementById("counter");
 					
 					registComment.onclick = function(){
 						
@@ -214,11 +215,12 @@
 							/* 수행이 완료되고 나서 실행할 것들 */
 							console.log(data);
 							commentBox.value = '';	// 댓글 입력 창 비우기
+							counter.value= 0;		// 글자 수 다시 0으로 만들기
 							loadReply();			// 댓글 다시 로드하기 (함수 사용)
 						})
 						.catch(error => console.log(error));
 					};
-				};
+				}
 				
 				/* 댓글 조회하기 */
 				function loadReply() {
@@ -243,72 +245,66 @@
 					
 					replyList.forEach(reply => {
 						console.log("호출 되는 중!");
-						const flex1 = document.createElement('div');
-		                const flex2 = document.createElement('div');
-		                const flex3 = document.createElement('div');
-		                const userId = document.createElement('p');
-		                const gift = document.createElement('p');
-		                const registDate = document.createElement('p');
-		                const profileImg = document.createElement('img');
-		                const comment = document.createElement('textarea');
-		                flex1.id = 'flex1';
-		                flex2.id = 'flex2';
-		                flex3.id = 'flex3';
-		                userId.id = 'user-id';
-		                gift.id = 'gift';
-		                registDate.id = 'regist-date';
-		                profileImg.id = 'profiles';
-		                comment.id = 'comment';
-		                
-		                userId.textContent = reply.userId;
-		                flex2.appendChild(userId);
-		                
-		                if (reply.donation == 100) {
+						
+						/* 댓글 하나하나 동적으로 생성 */
+						const commentList = document.createElement('div');
+							const flex1 = document.createElement('div');
+								const flex2 = document.createElement('div');
+									const userId = document.createElement('p');
+									const gift = document.createElement('p');
+								const registDate = document.createElement('p');
+							const flex3 = document.createElement('div');
+								const profiles = document.createElement('img');
+								const divInFlex3 = document.createElement('div');
+									const comment = document.createElement('textarea');
+						
+						commentList.id = 'comment-list';
+						flex1.id = 'flex1';
+					 	flex2.id = 'flex2';
+					    flex3.id = 'flex3';
+					    userId.id = 'user-id';
+					    gift.id = 'gift';
+					    registDate.id = 'regist-date';
+					    profiles.id = 'profiles';
+					    comment.id = 'comment';
+					
+					    commentList.appendChild(flex1);
+					    commentList.appendChild(flex3);
+						flex1.appendChild(flex2);
+						flex1.appendChild(registDate);
+						flex2.appendChild(userId);
+						flex2.appendChild(gift);
+						flex3.appendChild(profiles);
+						flex3.appendChild(divInFlex3);
+						divInFlex3.appendChild(comment);
+						
+						/* 프로필 사진 */
+						profiles.src = '/user/project/images/profile4.png';
+						
+						/* 아이디 */
+						userId.textContent = reply.userId;
+						
+						/* 기부금 */
+						if (reply.donation == 100) {
 		                    gift.textContent = '✨100원';
-		                    flex2.appendChild(gift);
 		                }
-		                
-		                registDate.textContent = reply.replyRegDate;
-		                
-		                flex1.appendChild(flex2);
-		                flex1.appendChild(registDate);
-		                
-		                profileImg.src = '/user/project/images/profile4.png';
-		                
-		                comment.textContent = reply.replyBody;
-		                
-		                comment.readOnly = true;
-		                
-		                flex3.appendChild(profileImg);
-		                flex3.appendChild(comment);
-		                
-		                const commentDiv = document.createElement('div');
-		                /* commentDiv.id = 'flex1'; */
-		                commentDiv.appendChild(flex1);
-		                commentDiv.appendChild(flex3);
-		                
-		                const commentList = document.querySelector("#comment-list");
-		                /* commentList.appendChild(commentDiv); */
+						
+						/* 작성일 */
+						registDate.textContent = reply.replyRegDate;
+						
+						/* 댓글 내용 */
+						comment.textContent = reply.replyBody;
+						comment.readOnly = true;
+						
+						/* 새로 조회한 댓글 리스트 붙여주기 */
+						commentWrapper.appendChild(commentList);
+						
 					});
 				
 				}
 				
 			</script>
 			
-
-            <!-- 댓글 페이징 바 -->
-            <div id="paging-bar">
-                <!-- 이전 페이지로 이동 -->
-                <button class="move">◀</button>
-
-                <!-- 숫자 버튼 -->
-                <div class="move">
-                    <button class="move">1</button><button class="move">2</button><button class="move">3</button>
-                </div>
-
-                <!-- 다음 페이지로 이동 -->
-                <button class="move">▶</button>
-            </div>
         </div>
     </div>
 

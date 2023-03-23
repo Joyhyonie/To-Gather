@@ -1,6 +1,6 @@
 package com.greedy.togather.user.project.controller;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Map;
 
 import org.springframework.context.support.MessageSourceAccessor;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.project.dto.ReplyDTO;
-import com.greedy.togather.user.project.dto.ReplyWriterDTO;
 import com.greedy.togather.user.project.dto.RewardDTO;
 import com.greedy.togather.user.project.service.ProjectService;
+import com.greedy.togather.user.user.model.dto.UserDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -195,13 +195,14 @@ public class ProjectController {
 	/* 댓글 등록(비동기통신) */
 	@PostMapping("/registReply")
 	public ResponseEntity<String> registReply(@RequestBody ReplyDTO registReply,
-			  								  @AuthenticationPrincipal ReplyWriterDTO writer) {
-		log.info("[ProjectController] registReply : {}\", registReply");
+			  								  @AuthenticationPrincipal UserDTO writer) {
+		log.info("[ProjectController] registReply : {}", registReply);
+		log.info("[ProjectController] writer : {}", writer);
 		
 		/* 랜덤 댓글 기부금 설정 */
 		int random = (int)(Math.random() * 3) + 1; 
 		int donation = (random == 1) ? 100 : 0;
-		log.info("[ProjectController] donation : {}\", donation");
+		log.info("[ProjectController] donation : {}", donation);
 		
 		/* registReply에는 projNo, replyBody만 담겨 있는 상태 */
 		registReply.setWriter(writer); 		// 댓글 작성자 = 로그인 유저
@@ -224,8 +225,7 @@ public class ProjectController {
 	@GetMapping("/review")
 	public String goToWriteReview() {
 		
-		
-		
+
 		return "/user/project/writeReview/writeReview";
 	}
 	
