@@ -39,6 +39,7 @@
 		<association property="maker" resultMap="makerResultMap"/>
 		<!-- <collection property="likeList" resultMap="likeResultMap"/> -->
 		<collection property="fileList" resultMap="fileResultMap"/>
+		<collection property="replyList" resultMap="replyResultMap"/>
 	</resultMap>
 
 	<!-- CategoryDTO -->
@@ -82,6 +83,7 @@
 	<!-- ReplyDTO -->
 	<resultMap type="com.greedy.togather.user.project.dto.ReplyDTO" id="replyResultMap">
 		<id property="replyNo" column="REPLY_NO"/>
+		<result property="userNo" column="USER_NO"/>
 		<result property="projNo" column="PROJ_NO"/>
 		<result property="replyBody" column="REPLY_BODY"/>
 		<result property="replyRegDate" column="REPLY_REG_DATE"/>
@@ -194,9 +196,17 @@
 	    ,   A.PROJ_REVIEW
 	    ,   B.SAVED_FILE_NM
 	    ,   B.FILE_PATH
+	    ,   D.REPLY_NO
+        ,   D.REPLY_BODY
+        ,   D.REPLY_REG_DATE
+        ,   D.DONATION
+	    ,   E.PROFILE_NM
+	    ,   SUBSTR(E.EMAIL, 1, INSTR(E.EMAIL, '@') -1) AS USER_ID
 	    FROM TBL_PROJECT A
 	    LEFT JOIN TBL_FILE B ON(A.PROJ_NO = B.PROJ_NO)
 	    LEFT JOIN TBL_MAKER C ON(A.PROJ_NO = C.PROJ_NO)
+	    LEFT JOIN TBL_REPLY D ON(A.PROJ_NO = D.PROJ_NO)
+	    LEFT JOIN TBL_USER E ON(D.USER_NO = E.USER_NO)
 	    WHERE A.PROJ_NO = #{ projNo }
 	    AND   B.FILE_TYPE IN ('대표사진', '서브사진')
 	    AND   A.PROJ_STATUS IN ('진행', '마감')
@@ -218,7 +228,8 @@
 	<!-- 프로젝트 상세 페이지 중, 댓글 조회 -->
 	<select id="selectReplyList" resultMap="replyResultMap">
 		SELECT
-	        A.REPLY_BODY
+			A.REPLY_NO
+	    ,   A.REPLY_BODY
 	    ,   A.DONATION
 	    ,   A.REPLY_REG_DATE
 	    ,   B.PROFILE_NM
@@ -241,21 +252,20 @@
 	<!-- 댓글 등록 -->
 	<insert id="insertReply">
 		INSERT
-		INTO TBL_REPLY
+		INTO TBL_REPLY A
 		(
-			REPLY_NO
-		,	USER_NO
-		,	PROJ_NO
-		,	REPLY_BODY
-		,	REPLY_REG_DATE
-		,	DONATION
+			A.REPLY_NO
+		,	A.USER_NO
+		,	A.PROJ_NO
+		,	A.REPLY_BODY
+		,	A.REPLY_REG_DATE
+		,	A.DONATION
 		)
 		VALUES
 		(
 			'RE'||LPAD(SEQ_REPLY_NO.NEXTVAL, 9, '0')
 		,	#{ userNo } 
 		,	#{ projNo } 
-		,	#{ replyNo } 
 		,	#{ replyBody } 
 		,	SYSDATE
 		,	#{ donation }
