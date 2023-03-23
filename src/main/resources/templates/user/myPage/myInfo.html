@@ -6,13 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>myInfo</title>
-    <script type="text/javascript" src="/src/main/resources/static/user/myPage/js/myInfo.js"></script> 
-    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/src/main/resources/static/user/myPage/CSS/myInfo.css" type="text/css">
+    <link rel="stylesheet" href="/user/myPage/CSS/myInfo.css" type="text/css">
+	<script>
+	    const message = '[[${message}]]';
+	    message && alert(message);
+	</script>
+
 </head>
 <body>
+     <div th:replace="common/header/userHeader.html"></div>
+     <script type="text/javascript" src="/user/myPage/js/myInfo.js"></script>
+     <script type="text/javascript" src="/user/login/js/event.js"></script> 
      
     <div class="wrapper">
       <div class="aside">
@@ -34,8 +41,13 @@
             <li><a class="menu-link" href="#withdrawal">회원탈퇴</a></li>
         </ul>
     </div>
+    
+    <br><br><br><br><br><br><br><br><br><br><br>
 
 
+    
+                    
+                    
     <h1 align="center">프로필 사진</h1>
 
     <div class="profile">
@@ -43,41 +55,39 @@
         <form id="thumbnailRegistForm" action="/thumbnail/regist" method="post" enctype="multipart/form-data">
             <div id="profile-area">
                     <div id="preview-area">
-                        <img src="/src/main/resources/static/user/myPage/images/정보.png" id="preview-image">
+                        <img src="/user/myPage/images/정보.png" id="preview-image">
                     </div>
-                    <input type="file" id="real-file" name="attachProfile" accept="image/gif, image/jpeg, image/png">
+ 						<label for="attach-profile" class="plus"><img id="plus-image" src="/user/project/images/plus.png"></label>
+                        <input type="file" id="attach-profile" name="attachProfile" accept="image/gif, image/jpeg, image/png">
                 </div>
-
-
-
         <button class="btn-profile" type="button" id="update_profile">수정</button>
         <button class="btn-profile" type="button" id="delete_profile">삭제</button>
+    </form>
     </div>
     <br>
     
 
-    <form action="/member/update" method="post">
+    <form action="/user/myInfo" method="post">
         <table align="center">
             <tr>
                 <td style="width: 80px">아이디 </td>
-                <td><input class="userId" name="userId" placeholder="hong123@greedy.com"></td>
-                <td><p th:text="${ #authentication.principal.userId }"></p></td>
+                <td><input class="userId" name="email" th:text="${ #authentication.principal.email }"></td>
+                
             </tr>
             <tr>
                 <td>이름 </td>
-                <td><input class="userName" name="userName" placeholder="홍길동"></td>
-                <td><p th:text="${ #authentication.principal.userName }"></p></td>
+                <td><input class="userName" name="userNm"></td>
+                <td><p th:text="${ #authentication.principal.userNm }"></p></td>
             </tr>
 
             <tr>
                 <td>비밀번호 </td>
-                <td><input class="updatePwd" type="button" value="비밀번호변경" id="updatePwd" th:value="${ #authentication.principal.phone }"></td>
-                <td><p th:value="${ #authentication.principal.phone }"></p></td>
+                <td><input class="updatePwd" type="button" value="비밀번호변경" id="updatePwd" name="pwd"
+                onclick="location.href='/user/myInfo.pwd'"></td>
             </tr>
             <tr>
                 <td>연락처 </td>
-                <td><input class="phone" type="tel" name="phone" placeholder="010-1234-5678" th:value="${ #authentication.principal.phone }"></td>
-                <td></td>
+                <td><input class="phone" type="tel" name="phone" th:value="${ #authentication.principal.phone }"></td>
             </tr>
             <tr>
                 <td>주소</td>
@@ -95,16 +105,16 @@
                 <td></td>
             </tr>
         </table>
-    </form>
 
     
     <br>
     
     <div class="my-Info">
-        <button class="btn-myInfo" type="submit" id="save_Info">저장하기</button>
+        <button class="btn-myInfo" type="submit">저장하기</button>
     </div>
+    </form>
 </div>
-
+<div th:replace="common/footer/userFooter.html"></div>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 	

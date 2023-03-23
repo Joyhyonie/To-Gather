@@ -34,12 +34,12 @@
 		<result property="projReview" column="PROJ_REVIEW"/>
 		<result property="leftDays" column="LEFT_DAYS"/> <!-- 쿼리문에서 가공된 데이터 -->
 		<result property="percent" column="PERCENT"/> <!-- 쿼리문에서 가공된 데이터 -->
-		<result property="allImages" column="ALL_IMAGES"/> <!-- 쿼리문에서 가공된 데이터 -->
 		<result property="totalLikes" column="TOTAL_LIKES"/> <!-- 쿼리문에서 가공된 데이터 -->
 		
 		<association property="maker" resultMap="makerResultMap"/>
 		<!-- <collection property="likeList" resultMap="likeResultMap"/> -->
 		<collection property="fileList" resultMap="fileResultMap"/>
+		<collection property="replyList" resultMap="replyResultMap"/>
 	</resultMap>
 
 	<!-- CategoryDTO -->
@@ -83,11 +83,14 @@
 	<!-- ReplyDTO -->
 	<resultMap type="com.greedy.togather.user.project.dto.ReplyDTO" id="replyResultMap">
 		<id property="replyNo" column="REPLY_NO"/>
+		<result property="userNo" column="USER_NO"/>
 		<result property="projNo" column="PROJ_NO"/>
 		<result property="replyBody" column="REPLY_BODY"/>
 		<result property="replyRegDate" column="REPLY_REG_DATE"/>
 		<result property="donation" column="DONATION"/>
 		<result property="userId" column="USER_ID"/> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalDonation" column="TOTAL_DONATION"/> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalReply" column="TOTAL_REPLY"/> <!-- 쿼리문에서 가공된 데이터 -->
 		
 		<association property="writer" javaType="com.greedy.togather.user.project.dto.ReplyWriterDTO">
 			<id property="userNo" column="USER_NO"/>
@@ -121,7 +124,7 @@
 	        COUNT(*)
 	    FROM TBL_PROJECT A
 	    WHERE A.CATEGORY_NO = #{ categoryNo }
-	    AND A.PROJ_STATUS IN ('진행', '심사')
+	    AND A.PROJ_STATUS IN ('진행', '마감')
 	</select>
 	
 	<!-- 프로젝트 리스트 조회 -->
@@ -168,8 +171,8 @@
 	        WHERE ROWNUM <= #{ selectCriteria.endRow }
 	        ]]>
 	    ) A
-	    JOIN TBL_FILE D ON A.PROJ_NO = D.PROJ_NO
-	    JOIN TBL_MAKER E ON A.PROJ_NO = E.PROJ_NO
+	    LEFT JOIN TBL_FILE D ON A.PROJ_NO = D.PROJ_NO
+	    LEFT JOIN TBL_MAKER E ON A.PROJ_NO = E.PROJ_NO
 	    WHERE A.RNUM >= #{ selectCriteria.startRow }
 	    ORDER BY A.PROJ_NO DESC
 	</select>
@@ -177,12 +180,12 @@
 	<!-- 프로젝트 상세 페이지 조회 -->
 	<select id="selectProjectDetail" resultMap="viewProjectDetailResultMap">
 		SELECT
-	        CONCAT(B.FILE_PATH, B.SAVED_FILE_NM) AS ALL_IMAGES
+			A.PROJ_NO
 	    ,   TRUNC(A.FUNDING_END_DATE - SYSDATE) AS LEFT_DAYS
 	    ,   A.PROJ_NM
 	    ,   A.FUNDING_ACHIVE
 	    ,   TRUNC(A.FUNDING_ACHIVE / A.FUNDING_GOAL * 100) AS PERCENT
-	    ,   A.FUNDING_GOAL
+	    ,   A.FUNDING_GOAL AS
 	    ,   C.MAKER_PROFILE_NM
 	    ,   C.MAKER_NM
 	    ,   C.MAKER_INTRO
@@ -191,9 +194,19 @@
 	    ,   A.PROJ_INFO_BODY
 	    ,   A.PROJ_DETAIL
 	    ,   A.PROJ_REVIEW
+	    ,   B.SAVED_FILE_NM
+	    ,   B.FILE_PATH
+	    ,   D.REPLY_NO
+        ,   D.REPLY_BODY
+        ,   D.REPLY_REG_DATE
+        ,   D.DONATION
+	    ,   E.PROFILE_NM
+	    ,   SUBSTR(E.EMAIL, 1, INSTR(E.EMAIL, '@') -1) AS USER_ID
 	    FROM TBL_PROJECT A
 	    LEFT JOIN TBL_FILE B ON(A.PROJ_NO = B.PROJ_NO)
 	    LEFT JOIN TBL_MAKER C ON(A.PROJ_NO = C.PROJ_NO)
+	    LEFT JOIN TBL_REPLY D ON(A.PROJ_NO = D.PROJ_NO)
+	    LEFT JOIN TBL_USER E ON(D.USER_NO = E.USER_NO)
 	    WHERE A.PROJ_NO = #{ projNo }
 	    AND   B.FILE_TYPE IN ('대표사진', '서브사진')
 	    AND   A.PROJ_STATUS IN ('진행', '마감')
@@ -202,11 +215,12 @@
 	<!-- 프로젝트 상세 페이지 중, 리워드 조회 -->
 	<select id="selectRewardList" resultMap="rewardResultMap">
 		SELECT
-	        A.REWARD_NM
+			A.REWARD_NO
+	    ,   A.REWARD_NM
 	    ,   A.REWARD_CONTENT
 	    ,   A.REWARD_PRICE
 	    ,   A.REWARD_DUE_DATE
-	    ,   (SELECT COUNT(ORDER_NO) FROM TBL_ORDER B WHERE B.REWARD_NO = A.REWARD_NO)
+	    ,   (SELECT COUNT(ORDER_NO) FROM TBL_ORDER B WHERE B.REWARD_NO = A.REWARD_NO) AS ORDER_COUNT
 	    FROM TBL_REWARD A
 	    WHERE A.PROJ_NO = #{ projNo }
 	</select>
@@ -214,7 +228,8 @@
 	<!-- 프로젝트 상세 페이지 중, 댓글 조회 -->
 	<select id="selectReplyList" resultMap="replyResultMap">
 		SELECT
-	        A.REPLY_BODY
+			A.REPLY_NO
+	    ,   A.REPLY_BODY
 	    ,   A.DONATION
 	    ,   A.REPLY_REG_DATE
 	    ,   B.PROFILE_NM
@@ -225,14 +240,38 @@
 	    WHERE PROJ_NO = #{ projNo }
 	</select>
 	
-	<!-- 프로젝트 상세 페이지 중, 총기부금&댓글개수 조회 -->
+	<!-- 프로젝트 상세 페이지 중, 총 기부금 & 댓글 개수 조회 -->
 	<select id="selectDonationAndReplyCount" resultMap="replyResultMap">
 		SELECT
-	        SUM(DONATION)
-	    ,   COUNT(REPLY_NO)
+	        SUM(DONATION) AS TOTAL_DONATION
+	    ,   COUNT(REPLY_NO) AS TOTAL_REPLY
 	    FROM TBL_REPLY
 	    WHERE PROJ_NO = #{ projNo }
 	</select>
+	
+	<!-- 댓글 등록 -->
+	<insert id="insertReply">
+		INSERT
+		INTO TBL_REPLY A
+		(
+			A.REPLY_NO
+		,	A.USER_NO
+		,	A.PROJ_NO
+		,	A.REPLY_BODY
+		,	A.REPLY_REG_DATE
+		,	A.DONATION
+		)
+		VALUES
+		(
+			'RE'||LPAD(SEQ_REPLY_NO.NEXTVAL, 9, '0')
+		,	#{ userNo } 
+		,	#{ projNo } 
+		,	#{ replyBody } 
+		,	SYSDATE
+		,	#{ donation }
+		)
+		
+	</insert>
 	
 	
 	

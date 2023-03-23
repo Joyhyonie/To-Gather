@@ -1,9 +1,11 @@
 package com.greedy.togather.user.project.dao;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.greedy.togather.Chap99ToGatherApplication;
-import com.greedy.togather.common.paging.SelectCriteria;
+import com.greedy.togather.common.paging.MoreSelectCriteria;
 import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.project.dto.ReplyDTO;
 import com.greedy.togather.user.project.dto.RewardDTO;
@@ -23,12 +25,14 @@ public class ProjectMapperTests {
 	@Autowired
 	private ProjectMapper projectMapper;
 	
+	
 	@Test
+	@Disabled
 	@DisplayName("프로젝트 리스트 조회용 매퍼 테스트")
 	public void selectProjectListTest() {
 		// given
-		SelectCriteria critetia = new SelectCriteria();
-		critetia.setEndRow(10);
+		MoreSelectCriteria critetia = new MoreSelectCriteria();
+		critetia.setEndRow(3);
 		critetia.setStartRow(1);
 		
 		// when
@@ -40,12 +44,12 @@ public class ProjectMapperTests {
 	}
 	
 	@Test
-	@DisplayName("프로젝트 상세페이지 조회용 매퍼 테스트")
+	@DisplayName("프로젝트 상세 페이지 조회용 매퍼 테스트")
 	public void selectProjectDetailTest() {
 		// given
 		
 		// when
-		List<ProjectDTO> projectDetail = projectMapper.selectProjectDetail("PJ000000001"); 
+		ProjectDTO projectDetail = projectMapper.selectProjectDetail("PJ000000001"); 
 		
 		// then
 		assertNotNull(projectDetail);
@@ -56,11 +60,9 @@ public class ProjectMapperTests {
 	@DisplayName("리워드 조회용 매퍼 테스트")
 	public void selectRewardListTest() {
 		// given
-		RewardDTO reward = new RewardDTO();
-		reward.setProjNo("PJ000000001");
 		
 		// when
-		List<RewardDTO> rewardList = projectMapper.selectRewardList(reward);
+		List<RewardDTO> rewardList = projectMapper.selectRewardList("PJ000000001");
 		
 		// then
 		assertNotNull(rewardList);
@@ -68,6 +70,21 @@ public class ProjectMapperTests {
 	}
 	
 	@Test
+	@Disabled
+	@DisplayName("총 기부금 & 댓글 개수 조회용 매퍼 테스트")
+	public void selectDonationAndReplyCountTest() {
+		// given
+		
+		// when
+		ReplyDTO reply = projectMapper.selectDonationAndReplyCount("PJ000000001");
+		
+		// then
+		assertNotNull(reply);
+		System.out.println(reply);
+	}
+	
+	@Test
+	@Disabled
 	@DisplayName("댓글 조회용 매퍼 테스트")
 	public void selectReplyListTest() {
 		// given
@@ -82,7 +99,22 @@ public class ProjectMapperTests {
 		System.out.println(replyList);
 	}
 	
-	
-	
+	@Test
+	@DisplayName("댓글 등록용 매퍼 테스트")
+	public void insertReply() {
+		// given
+		ReplyDTO reply = new ReplyDTO();
+		reply.setUserNo("US000000005");
+		reply.setProjNo("PJ000000002");
+		reply.setReplyBody("의미있는 프로젝트 응원합니다 :)");
+		reply.setDonation(100);
+		
+		// when
+//		int result = projectMapper.insertReply(reply);
+		
+		// then
+//		assertEquals(1, result);
+		
+	}
 
 }

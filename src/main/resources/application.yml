@@ -5,6 +5,8 @@ server:
 # mybatis config
 mybatis:
   mapper-locations: mappers/**/*.xml
+  configuration:
+    jdbc-type-for-null: 'NULL'
   
 spring:
 # database config
@@ -13,6 +15,15 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver
     username: C##TOGATHER
     password: TOGATHER
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: com.greedy.to.gather@gmail.com
+    password: xnrpej0609
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+    
 # file upload config
   servlet:
     multipart:
@@ -20,13 +31,18 @@ spring:
       max-file-size: 20MB
       max-request-size: 20MB
       location: D:/semi-project/To-Gather_Files/To-Gather/
+      
 
 # image upload directory (이미지를 저장할 경로 설정)
 image:
   image-dir: src/main/resources/upload/
+
   
+# log level
+logging: 
+  level:
+# root - 전역 설정
+    root: info # 기본값
   
-  
-  
-  
+ 
   

@@ -54,7 +54,8 @@ body {
     background-color: #C7E78B;
 }
 
-.email {
+.email,
+.pwd{
     border-radius: 30px;
     border: 2px solid #F8F8F8;
     background-color: #F8F8F8;
@@ -66,17 +67,6 @@ body {
     
 }
 
-.pwd {
-    border-radius: 30px;
-    border: 2px solid #F8F8F8;
-    background-color: #F8F8F8;
-    padding: 10px 30px;
-    border: 1px solid #709053;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 18px;
-    text-align: center;
-   
-}
 
 .email:focus {
     border: 2px solid #709053;
@@ -90,7 +80,7 @@ body {
 
 .email-login {
 
-    display: flex;
+    text-align: center;
     justify-content: center;
     align-items: center;
 }

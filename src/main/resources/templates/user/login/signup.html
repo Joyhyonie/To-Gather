@@ -5,41 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signup</title>
-    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
-    <script type="text/javascript" src="/src/main/resources/static/user/login/js/signup.js"></script> 
-    <link rel="stylesheet" href="/src/main/resources/static/user/login/CSS/signup.css" type="text/css">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+    <link rel="stylesheet" href="/user/login/CSS/signup.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+	
+	<script>
+	    const message = '[[${message}]]';
+	    message && alert(message);
+	</script>
+
 </head>
 <body>
-
-	<div th:replace="header/userHeader.html"></div>
-
+<div th:replace="common/header/userHeader.html"></div>
+  <script type="text/javascript" src="/user/login/js/event.js"></script> 
+	
     <div class="wrapper">
     <h1 align="center">간편 가입하기</h1>
        
     <h1 align="center">회원가입</h1>
    
-    <form action="/member/regist" method="post">
+    <form action="/user/signup" method="post">
         <table style="margin: 0 auto">
             <tr>
                 <td style="width: 110px">* 아이디(이메일) </td>
-                <td><input class="userId" type="text" maxlength="13" name="userId" id="userId" required placeholder="아이디를 입력해주세요."></td>
+                <td><input class="userId" type="text" maxlength="50" name="email" id="email" required placeholder="아이디를 입력해주세요."></td>
                 <td style="width: 100px"><input class="btn-id" type="button" value="중복확인" id="duplicationCheck"></td>
             </tr>
 
             <tr>
                 <td>* 이름 </td>
-                <td><input class="userName" type="name" name="username" required placeholder="이름을 입력해주세요."></td>
+                <td><input class="userName" type="text" name="userNm" required placeholder="이름을 입력해주세요."></td>
             </tr>
             <tr>
                 <td>* 비밀번호</td>
-                <td><input  class="userPwd" type="password" maxlength="13" name="userPwd" required placeholder="비밀번호를 입력해주세요."></td>
+                <td><input  class="userPwd" type="password" maxlength="13" id="userPwd" name="pwd" required placeholder="비밀번호를 입력해주세요."></td>
                 <td></td>
             </tr>
             <tr>
                 <td>* 비밀번호확인</td>
-                <td><input class="userPwd2" type="password" maxlength="13" name="userPwd2" required placeholder="비밀번호 재확인"></td>
+                <td><input class="userPwd2" type="password" maxlength="13" id="userPwd2" name="userPwd2" required placeholder="비밀번호 재확인"></td>
                 <td></td>
             </tr>
 
@@ -62,7 +67,7 @@
             </tr>
         </table>
         <br>
-    </form>
+ 
    
        <br>
        <br>
@@ -81,10 +86,12 @@
        <br>
        <br>
        <div align="center">
-        <input class="btn-sign_up" type="submit" value="가입하기">
+        <input id="signup" class="btn-sign_up" type="submit" value="가입하기">
     </div>
-</div>    
-  <div th:replace="footer/userFooter.html"></div>
+</div>   
+</form>
+
+<div th:replace="common/footer/userFooter.html"></div>
 
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

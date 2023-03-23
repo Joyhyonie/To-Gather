@@ -6,13 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>withdrawal</title>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/src/main/resources/static/user/myPage/CSS/withdrawal.css" type="text/css">
+    <link rel="stylesheet" href="/user/myPage/CSS/withdrawal.css" type="text/css">
+	
+	<script>
+	    const message = '[[${message}]]';
+	    message && alert(message);
+	</script>
+
+
 </head>
 <body>
-    <div th:replace="header/userHeader.html"></div>
-    
+   
+    <div th:replace="common/header/userHeader.html"></div>
+    <script type="text/javascript" src="/user/login/js/event.js"></script>
+     
     <div class="wrapper">
     <div class="aside">
         <ul>
@@ -48,15 +57,17 @@
         <li>- 회원님께서 남기신 게시글, 댓글 및 펀딩한 프로젝트 투자(참여) 목록 등 투자 이력은 삭제 되지 않습니다.</li>
     </ul> 
     </div>
-        
+    
+     
     <br>
     <div class="withdrawal">
-        <button class="btn-withdrawal" type="button" id="deleteMember">탈퇴하기</button>
+        <button class="btn-withdrawal" type="button" id="deleteUser">탈퇴하기</button>
         <button class="btn-withdrawal" type="button" id="cancel">취소</button>
     </div>
+   
 </div>
-
-<div th:replace="footer/userFooter.html"></div>   
+<div th:replace="common/footer/userFooter.html"></div>
+  
 
 </body>
 </html>
