@@ -1,11 +1,12 @@
 package com.greedy.togather.user.project.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.greedy.togather.Chap99ToGatherApplication;
-import com.greedy.togather.common.paging.MoreSelectCriteria;
-import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.project.dto.ReplyDTO;
-import com.greedy.togather.user.project.dto.RewardDTO;
 
 @SpringBootTest
 @ContextConfiguration(classes = {Chap99ToGatherApplication.class})
@@ -56,38 +54,6 @@ public class ProjectServiceTests {
 		
 	}
 	
-//	@Test
-//	@Disabled
-//	@DisplayName("리워드 조회용 서비스 테스트")
-//	public void selectRewardListTest() {
-//		
-//		// given
-//		RewardDTO reward = new RewardDTO();
-//		reward.setProjNo("PJ000000001");
-//		
-//		// when
-//		List<RewardDTO> rewardList = projectService.selectRewardList(reward);
-//						
-//		// then
-//		assertNotNull(rewardList);
-//		System.out.println(rewardList);
-//	}
-//	
-//	@Test
-//	@Disabled
-//	@DisplayName("총 기부금 & 댓글 개수 조회용 서비스 테스트")
-//	public void selectDonationAndReplyCountTest() {
-//		
-//		// given
-//		
-//		// when
-//		ReplyDTO reply = projectService.selectDonationAndReplyCount("PJ000000001");
-//		
-//		// then
-//		assertNotNull(reply);
-//		System.out.println(reply);
-//	}
-	
 	@Test
 	@DisplayName("댓글 조회용 서비스 테스트")
 	public void selectReplyListTest() {
@@ -105,7 +71,40 @@ public class ProjectServiceTests {
 		System.out.println(replyList);
 	}
 	
+	@Test
+	@DisplayName("댓글 등록용 서비스 성공 테스트")
+	public void SuccessInsertReply() {
+		// given
+		ReplyDTO reply = new ReplyDTO();
+		reply.setUserNo("US000000004");
+		reply.setProjNo("PJ000000002");
+		reply.setReplyBody("우와 엄청나네요!! 지인들에게 공유하겠습니다 응원해요!!");
+		reply.setDonation(0);
+		
+		// when
+//		int result = projectService.insertReply(reply);
+		
+		// then
+//		assertEquals(1, result);
+		
+	}
 	
+	@Test
+	@DisplayName("댓글 등록용 서비스 실패 테스트")
+	public void FailInsertReply() {
+		// given
+		ReplyDTO reply = new ReplyDTO();
+		reply.setUserNo("US000000004"); 
+		reply.setProjNo(null); /* 회원번호에 null 입력하여 예외 발생 */
+		reply.setReplyBody("이 댓글은 등록이 되면 안됩니다 ^^");
+		reply.setDonation(0);
+		
+		// when
+		
+		// then
+		assertThrows(Exception.class, () -> projectService.insertReply(reply));
+		
+	}
 	
 
 }

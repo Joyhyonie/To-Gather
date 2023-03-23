@@ -82,7 +82,8 @@
 		                <p>이 프로젝트의 Maker이신가요?<br>많은 Supporter분들을 위해 후기를 작성해주세요 :)</p>
 		                <button id="create-review-button" onclick="location.href='/project/review'">후기 작성하기</button>
 		            </div>
-	            <th:block th:if="${ detail.projReview != null }">
+		        </th:block>
+	            <th:block th:unless="${ detail.projReview == null }">
 	            	<div th:text="${ detail.projReview }">뭐임 왜 안나와???</div>
                 </th:block>
             </div>
@@ -165,36 +166,135 @@
                 </script>
             </div>
             <div id="comments-count">댓글 <span th:text="${ donationAndReplyCount.totalReply }" id="total-count">43</span>개</div>
-            <div id="comment-list">
-                <div id="flex1">
-                    <div id="flex2">
-                    <p id="user-id">greedy123</p>
-                    <p id="gift">✨100원</p>
-                    </div>
-                    <p id="regist-date">2023년 2월 25일</p>
-                </div>
-                <div id="flex3">
-                    <img src="/user/project/images/profile2.png" id="profiles">
-                    <div>
-                        <textarea id="comment" readonly>응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!응원 합니다!!!</textarea>
-                    </div>
-                </div>
-            </div>
-            <div id="comment-list">
-                <div id="flex1">
-                    <div id="flex2">
-                    <p id="user-id">imYourJoy</p>
-                    <p id="gift"></p>
-                    </div>
-                    <p id="regist-date">2023년 2월 24일</p>
-                </div>
-                <div id="flex3">
-                    <img src="/user/project/images/profile3.png" id="profiles">
-                    <div>
-                        <textarea id="comment" readonly>응원 합니다!!!응원 합니다!!!</textarea>
-                    </div>
-                </div>
-            </div>
+            <div id="comment-wrapper">
+	            <div th:each="reply : ${ detail.replyList }" id="comment-list">
+		            <div id="flex1">
+		                <div id="flex2">
+		                <p th:text="${ reply.userId }" id="user-id"></p>
+		                <th:block th:if="${ reply.donation == 100 }">
+		               		<p id="gift">✨100원</p>
+		                </th:block>
+		                </div>
+		                <p th:text="${ reply.replyRegDate }" id="regist-date"></p>
+		            </div>
+		            <div id="flex3">
+		                <img src="/user/project/images/profile4.png" id="profiles">
+		                <div>
+		                    <textarea th:text="${ reply.replyBody }" id="comment" readonly></textarea>
+		                </div>
+		            </div>
+	            </div>
+			</div>
+			<script>
+				/* 댓글 등록하기 */
+				if(document.getElementById("regist-comment")) {
+					
+					const registComment = document.getElementById("regist-comment");
+					const commentBox = document.getElementById("comment-box");
+					
+					registComment.onclick = function(){
+						
+						/* 프로젝트 번호와 댓글 내용 변수에 담기 */
+						const projNo = '[[${ detail.projNo }]]';
+						const replyBody = commentBox.value;
+						
+						/* 비동기 통신 */
+						fetch("/project/registReply", {
+							method : 'POST',
+							headers : {
+								'Content-Type' : 'application/json;charset=UTF-8'
+							},
+							body : JSON.stringify({
+								/* ReplyDTO의 필드명: 변수명 (자동으로 ReplyDTO 타입으로 받을 수 있도록) */
+								projNo: projNo, 
+								replyBody: replyBody
+							})
+						})
+						.then(data => {
+							/* 수행이 완료되고 나서 실행할 것들 */
+							console.log(data);
+							commentBox.value = '';	// 댓글 입력 창 비우기
+							loadReply();			// 댓글 다시 로드하기 (함수 사용)
+						})
+						.catch(error => console.log(error));
+					};
+				};
+				
+				/* 댓글 조회하기 */
+				function loadReply() {
+					
+					const projNo = '[[${ detail.projNo }]]';
+					
+					/* get방식 요청 */
+					fetch("/project/loadReply?projNo=" + projNo )
+					.then(result => result.json())
+					.then(data => {
+						console.log(data);
+						viewAllReply(data); /* 등록된 댓글을 포함한 최신 댓글 조회 */
+					})
+					.catch(error => console.log(error));
+				};
+				
+				/* 등록된 댓글을 포함한 최신 댓글 조회 */
+				function viewAllReply(replyList) { /* 배열 형태로 replyList 전달 받음 */
+					
+					const commentWrapper = document.querySelector("#comment-wrapper");
+					commentWrapper.innerHTML = ""; /* 원래 있던 내용 삭제 */
+					
+					replyList.forEach(reply => {
+						console.log("호출 되는 중!");
+						const flex1 = document.createElement('div');
+		                const flex2 = document.createElement('div');
+		                const flex3 = document.createElement('div');
+		                const userId = document.createElement('p');
+		                const gift = document.createElement('p');
+		                const registDate = document.createElement('p');
+		                const profileImg = document.createElement('img');
+		                const comment = document.createElement('textarea');
+		                flex1.id = 'flex1';
+		                flex2.id = 'flex2';
+		                flex3.id = 'flex3';
+		                userId.id = 'user-id';
+		                gift.id = 'gift';
+		                registDate.id = 'regist-date';
+		                profileImg.id = 'profiles';
+		                comment.id = 'comment';
+		                
+		                userId.textContent = reply.userId;
+		                flex2.appendChild(userId);
+		                
+		                if (reply.donation == 100) {
+		                    gift.textContent = '✨100원';
+		                    flex2.appendChild(gift);
+		                }
+		                
+		                registDate.textContent = reply.replyRegDate;
+		                
+		                flex1.appendChild(flex2);
+		                flex1.appendChild(registDate);
+		                
+		                profileImg.src = '/user/project/images/profile4.png';
+		                
+		                comment.textContent = reply.replyBody;
+		                
+		                comment.readOnly = true;
+		                
+		                flex3.appendChild(profileImg);
+		                flex3.appendChild(comment);
+		                
+		                const commentDiv = document.createElement('div');
+		                /* commentDiv.id = 'flex1'; */
+		                commentDiv.appendChild(flex1);
+		                commentDiv.appendChild(flex3);
+		                
+		                const commentList = document.querySelector("#comment-list");
+		                /* commentList.appendChild(commentDiv); */
+					});
+				
+				}
+				
+			</script>
+			
 
             <!-- 댓글 페이징 바 -->
             <div id="paging-bar">

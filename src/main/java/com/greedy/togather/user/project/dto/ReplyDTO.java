@@ -8,6 +8,7 @@ import lombok.Data;
 public class ReplyDTO {
 	
 	private String replyNo;		// 댓글 번호
+	private String userNo;		// 회원 번호
 	private String projNo;		// 프로젝트 번호
 	private String replyBody;	// 댓글 내용
 	private Date replyRegDate;	// 작성일

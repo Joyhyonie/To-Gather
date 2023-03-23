@@ -74,18 +74,6 @@ public class ProjectService {
 		return allProjectDetails;
 	}
 	
-//	/* 프로젝트 상세 페이지 중, 리워드 조회 */
-//	public List<RewardDTO> selectRewardList(RewardDTO reward) {
-//		
-//		return projectMapper.selectRewardList(reward);
-//	}
-//	
-//	/* 프로젝트 상세 페이지 중, 총 기부금 & 댓글 개수 조회 */
-//	public ReplyDTO selectDonationAndReplyCount(String projNo) {
-//		
-//		return projectMapper.selectDonationAndReplyCount(projNo);
-//	}
-	
 	/* 프로젝트 상세 페이지 중, 댓글 */
 	/* 조회 */
 	public List<ReplyDTO> selectReplyList(ReplyDTO reply) {

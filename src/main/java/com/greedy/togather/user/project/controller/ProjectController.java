@@ -180,12 +180,14 @@ public class ProjectController {
 	
 	/* 댓글 조회(비동기통신) */
 	@GetMapping("/loadReply")
-	public ResponseEntity<List<ReplyDTO>> viewReplyList(ReplyDTO loadReply) {
+	public ResponseEntity<List<ReplyDTO>> viewReplyList(ReplyDTO loadReply, Model model) {
 		
 		log.info("[ProjectController] loadReply : {}", loadReply);
 		
 		List<ReplyDTO> replyList = projectService.selectReplyList(loadReply);
 		log.info("[ProjectController] replyList : {}", replyList); /* 조회된 최신 댓글 확인 */
+		
+		model.addAttribute("replyList", replyList);
 		
 		return ResponseEntity.ok(replyList);
 	}
@@ -194,9 +196,12 @@ public class ProjectController {
 	@PostMapping("/registReply")
 	public ResponseEntity<String> registReply(@RequestBody ReplyDTO registReply,
 			  								  @AuthenticationPrincipal ReplyWriterDTO writer) {
+		log.info("[ProjectController] registReply : {}\", registReply");
+		
 		/* 랜덤 댓글 기부금 설정 */
 		int random = (int)(Math.random() * 3) + 1; 
 		int donation = (random == 1) ? 100 : 0;
+		log.info("[ProjectController] donation : {}\", donation");
 		
 		/* registReply에는 projNo, replyBody만 담겨 있는 상태 */
 		registReply.setWriter(writer); 		// 댓글 작성자 = 로그인 유저

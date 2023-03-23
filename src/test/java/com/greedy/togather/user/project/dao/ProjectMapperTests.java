@@ -1,5 +1,6 @@
 package com.greedy.togather.user.project.dao;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
@@ -96,6 +97,24 @@ public class ProjectMapperTests {
 		// then
 		assertNotNull(replyList);
 		System.out.println(replyList);
+	}
+	
+	@Test
+	@DisplayName("댓글 등록용 매퍼 테스트")
+	public void insertReply() {
+		// given
+		ReplyDTO reply = new ReplyDTO();
+		reply.setUserNo("US000000005");
+		reply.setProjNo("PJ000000002");
+		reply.setReplyBody("의미있는 프로젝트 응원합니다 :)");
+		reply.setDonation(100);
+		
+		// when
+//		int result = projectMapper.insertReply(reply);
+		
+		// then
+//		assertEquals(1, result);
+		
 	}
 
 }

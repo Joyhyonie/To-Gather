@@ -34,4 +34,5 @@ public class ProjectDTO {
 	private MakerDTO maker;				// 메이커 정보
 	private List<LikeDTO> likeList; 	// 좋아요 정보
 	private List<FileDTO> fileList;		// 이미지 정보
+	private List<ReplyDTO> replyList; 	// 댓글 정보
 }
