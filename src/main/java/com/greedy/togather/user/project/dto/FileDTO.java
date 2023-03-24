@@ -12,4 +12,5 @@ public class FileDTO {
 	private String savedFileName;		// 저장 파일명
 	private String filePath;			// 파일 경로
 	private String thumPath;			// 썸네일 경로
+	
 }

@@ -1,8 +1,13 @@
 package com.greedy.togather.user.project.controller;
 
-import java.util.List; 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,7 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.greedy.togather.user.project.dto.FileDTO;
+import com.greedy.togather.user.project.dto.MakerDTO;
 import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.project.dto.ReplyDTO;
 import com.greedy.togather.user.project.dto.RewardDTO;
@@ -21,11 +30,16 @@ import com.greedy.togather.user.project.service.ProjectService;
 import com.greedy.togather.user.user.model.dto.UserDTO;
 
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 
 @Slf4j
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
+	
+	/* @Value : application.yml 파일의 키 값으로 디렉토리 읽어옴 (넘어온 이미지 파일을 저장하기 위한 필드) */
+	@Value("${image.image-dir}")
+	private String IMAGE_DIR;
 	
 	private final ProjectService projectService;
 	private final MessageSourceAccessor messageSourceAccessor;
@@ -148,10 +162,136 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/create")
-	public String createProject() {
+	public String createProject(ProjectDTO project, MakerDTO maker, RewardDTO reward,
+								@AuthenticationPrincipal UserDTO writer, RedirectAttributes rttr,
+								MultipartFile makerProfile, MultipartFile mainImage, List<MultipartFile> subImage, 
+								MultipartFile settleDoc, MultipartFile accountDoc, MultipartFile etcDoc) {
 		
-	
+		log.info("[ProjectController] project : {}", project);
+		log.info("[ProjectController] maker : {}", maker);
+		log.info("[ProjectController] reward : {}", reward);
+		log.info("[ProjectController] writer : {}", writer);
+		log.info("[ProjectController] makerProfile : {}", makerProfile);
+		log.info("[ProjectController] mainImage : {}", mainImage);
+		log.info("[ProjectController] subImage : {}", subImage);
+		log.info("[ProjectController] settleDoc : {}", settleDoc);
+		log.info("[ProjectController] accountDoc : {}", accountDoc);
+		log.info("[ProjectController] etcDoc : {}", etcDoc);
+		
+		/* 프로젝트 신청 시, 저장될 경로 분리 */
+		String fileUploadDir = IMAGE_DIR + "original";			// 프로젝트 관련 이미지, 서류들
+		String makerProfileDir = IMAGE_DIR + "makerProfile";	// maker의 프로필 사진
+		String documentDir = IMAGE_DIR + "document";			// 정산과 관련된 서류들
+		
+		File dir1 = new File(fileUploadDir);
+		File dir2 = new File(makerProfileDir);
+		File dir3 = new File(documentDir);
+		
+		log.info("[ProjectController] dir1 : {}", dir1);
+		log.info("[ProjectController] dir2 : {}", dir2);
+		log.info("[ProjectController] dir3 : {}", dir3);
+		
+		
+		/* 디렉토리가 없을 경우 생성 */
+		if(!dir1.exists() || !dir2.exists() || !dir3.exists()) {
+			dir1.mkdirs();
+			dir2.mkdirs();
+			dir3.mkdirs();
+		}
+		
+		/* 아래의 processedFile() 메소드 호출하여 가공 */
+		FileDTO processedMakerProfile = processedFile(makerProfile, makerProfileDir, "메이커프로필");
+		FileDTO processedMainImage = processedFile(mainImage, fileUploadDir, "대표사진");
+		FileDTO processedSettleDoc = processedFile(settleDoc, documentDir, "정산서류");
+		FileDTO processedAccountDoc = processedFile(accountDoc, documentDir, "통장사본");
+		FileDTO processedEtcDoc = processedFile(etcDoc, documentDir, "기타서류");
+		/* List형태인 subImage는 반복문을 통해 하나씩 호출 */
+		List<FileDTO> processedSubImageList = new ArrayList<>();
+		for(int i = 0; i < subImage.size(); i++) {
+			FileDTO processedSubImage = processedFile(subImage.get(i), fileUploadDir, "서브사진");
+			log.info("[ProjectController] processedSubImage : {}", processedSubImage);
+			processedSubImageList.add(processedSubImage);
+		}
+		
+		log.info("[ProjectController] processedMakerProfile : {}", processedMakerProfile);
+		log.info("[ProjectController] processedMainImage : {}", processedMainImage);
+		log.info("[ProjectController] processedSettleDoc : {}", processedSettleDoc);
+		log.info("[ProjectController] processedAccountDoc : {}", processedAccountDoc);
+		log.info("[ProjectController] processedEtcDoc : {}", processedEtcDoc);
+		
+		/* DB와의 연결 */
+		maker.setMakerProfileName(processedMakerProfile); /* 얘도 project에 담아서 보내야할듯? */
+		project.setWriter(writer);
+		project.setMainImage(processedMainImage);
+		project.setSubImageList(processedSubImageList);
+		project.setSettleDoc(processedSettleDoc);
+		project.setAccountDoc(processedAccountDoc);
+		project.setEtcDoc(processedEtcDoc);
+		
+		/* 저장한 값 Service에 보내기 */
+		projectService.createProject(project, maker, reward);
+		
 		return "redirect:/project/submit";
+	}
+	
+	/* 멀티파트 파일과 저장 경로를 매개변수로 하고 FileDTO로 가공해서 반환 해주는 메소드 */
+	public FileDTO processedFile(MultipartFile file, String filePath, String fileType) {
+		
+		/* 대표사진 가공 시, 저장될 썸네일 경로 설정 */
+		String thumbnailDir = IMAGE_DIR + "thumbnail";
+		File dir4 = new File(thumbnailDir);
+		log.info("[ProjectController] dir4 : {}", dir4);
+		
+		/* 디렉토리가 없을 경우 생성 */
+		if(!dir4.exists()) {
+			dir4.mkdirs();
+		}
+		
+		FileDTO fileInfo = null;
+		
+		try {
+			/* 첨부파일이 있는 경우에만 로직 수행 */
+			if(file.getSize() > 0) {
+							
+				String originalFileName = file.getOriginalFilename();
+				log.info("[ProjectController] originalFileName : {}", originalFileName);
+							
+				/* SavedFileName을 만들기 위해 첨부파일의 확장자 떼내기 */
+				String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+				String savedFileName = UUID.randomUUID().toString() + ext;
+									
+				log.info("[ProjectController] savedFileName : {}", savedFileName);
+						
+				/* 서버의 설정 디렉토리에 파일 저장 (예외처리) */
+				file.transferTo(new File(filePath + "/" + savedFileName));
+							
+				/* DB에 저장할 파일의 정보 처리 */
+				fileInfo = new FileDTO();
+				fileInfo.setOriginalFileName(originalFileName);
+				fileInfo.setSavedFileName(savedFileName);
+				fileInfo.setFilePath(filePath);
+				fileInfo.setFileType(fileType);
+						
+				if(fileType.equals("대표사진")) {
+						Thumbnails.of(filePath + "/" + savedFileName)
+						.size(220, 165)
+						.toFile(thumbnailDir + "/thumbnail_" + savedFileName);
+						fileInfo.setThumPath("/upload/thumbnail/thumbnail_" + savedFileName);
+				}
+			}
+			
+		} catch (IOException e) {
+					
+				/* 실패 시 이미 저장 된 파일 삭제 */
+				File deleteFile = new File(fileInfo.getFilePath() + "/" + fileInfo.getSavedFileName());
+				File deleteThumbnail = new File(thumbnailDir + "/thumbnail_" + fileInfo.getSavedFileName());
+						
+				deleteFile.delete();
+				deleteThumbnail.delete();
+			}
+		
+		/* originalFileName, savedFileName, filePath, fileType, thumPath 담아 리턴 */
+		return fileInfo;	
 	}
 	
 	/* 프로젝트 최종 제출 후 페이지 */

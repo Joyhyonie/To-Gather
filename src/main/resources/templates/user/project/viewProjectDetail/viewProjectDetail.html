@@ -49,7 +49,7 @@
             <div id="boxes">
                 <div id="like-box">
                     <img src="/user/project/images/like-empty.png" id="like-btn" class="like">
-                    <p id="like-people"><span th:text="${ detail.totalLikes }">63</span>명이 좋아합니다 :)</p>
+                    <p id="like-people"><span th:text="${ detail.totalLikes }"></span>명이 좋아합니다 :)</p>
                 </div>
                 <div id="share-box">
                     <img src="/user/project/images/share.png" id="share">
@@ -84,7 +84,7 @@
 		            </div>
 		        </th:block>
 	            <th:block th:unless="${ detail.projReview == null }">
-	            	<div th:text="${ detail.projReview }">뭐임 왜 안나와???</div>
+	            	<div th:text="${ detail.projReview }"></div>
                 </th:block>
             </div>
         </div>
@@ -141,7 +141,12 @@
 
         <!-- 댓글 -->
         <div class="comment">
-            <div id="comment-title">총 댓글 기부금 <span th:text="${ #numbers.formatInteger(donationAndReplyCount.totalDonation, 3, 'COMMA') }" id="donation"></span>원</div>
+        	<th:block th:if="${ donationAndReplyCount.totalDonation != 0 }">
+            	<div id="comment-title">총 댓글 기부금 <span th:text="${ #numbers.formatInteger(donationAndReplyCount.totalDonation, 3, 'COMMA') }" id="donation"></span>원</div>
+            </th:block>
+            <th:block th:unless="${ donationAndReplyCount.totalDonation != 0 }">
+            	<div id="comment-title">총 댓글 기부금 <span th:text="${ donationAndReplyCount.totalDonation }" id="donation"></span>원</div>
+            </th:block>
             <div id="comment-body">
                 <div id="comment-container">
                     <img src="/user/project/images/profile1.png" id="commenter">
@@ -163,6 +168,11 @@
                             alert('댓글은 500자까지 입력 가능합니다 :)');
                         };
                     });
+                    
+                    /* 등록 버튼 누르면 counter 초기화 */
+                    $('#regist-comment').click(function (e) {
+                    	$('#counter').text(0);
+                    })
                 </script>
             </div>
             <div id="comments-count">댓글 <span th:text="${ donationAndReplyCount.totalReply }" id="total-count"></span>개</div>

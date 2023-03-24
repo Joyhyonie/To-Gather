@@ -51,12 +51,13 @@
 	<!-- MakerDTO -->
 	<resultMap type="com.greedy.togather.user.project.dto.MakerDTO" id="makerResultMap">
 		<id property="projNo" column="PROJ_NO"/>
-		<result property="makerProfileName" column="MAKER_PROFILE_NM"/>
 		<result property="makerName" column="MAKER_NM"/>
 		<result property="maerAddress" column="MAKER_ADDRESS"/>
 		<result property="makerPhone" column="MAKER_PHONE"/>
 		<result property="makerEmail" column="MAKER_EMAIL"/>
 		<result property="makerIntro" column="MAKER_INTRO"/>
+		
+		<association property="makerProfileName" resultMap="fileResultMap"/>
 	</resultMap>
 	
 	<!-- LikeDTO -->
