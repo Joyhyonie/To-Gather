@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.greedy.togather.common.paging.MorePagenation;
 import com.greedy.togather.common.paging.MoreSelectCriteria;
 import com.greedy.togather.user.project.dao.ProjectMapper;
+import com.greedy.togather.user.project.dto.FileDTO;
+import com.greedy.togather.user.project.dto.MakerDTO;
 import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.project.dto.ReplyDTO;
 import com.greedy.togather.user.project.dto.RewardDTO;
@@ -86,8 +88,29 @@ public class ProjectService {
 		
 		projectMapper.insertReply(reply);
 	}
-	
-	
 
+	/* 프로젝트 신청 페이지 */
+	public void createProject(ProjectDTO project, MakerDTO maker, RewardDTO reward) {
+		
+		/* 각 테이블에 데이터 저장 */
+		projectMapper.insertProjectInfo(project);
+		
+		projectMapper.insertMainImage(project.getMainImage());
+		
+		for(FileDTO file : project.getSubImageList()) {
+			projectMapper.insertSubImage(file);
+		}
+
+		projectMapper.insertSettleDoc(project.getSettleDoc()); 
+		
+		projectMapper.insertAccountDoc(project.getAccountDoc());
+		
+		projectMapper.insertEtcDoc(project.getEtcDoc());
+		
+		projectMapper.insertMakerInfo(maker);		
+		
+		projectMapper.insertRewardInfo(reward);
+		
+	}
 	
 }
