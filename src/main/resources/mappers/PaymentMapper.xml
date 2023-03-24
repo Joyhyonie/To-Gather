@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.greedy.togather.user.pay.dao.PaymentMapper">
-		
+	
+	<resultMap id="payOrderResultMap" type="com.greedy.togather.user.pay.dto.PaymentDTO">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="payMethod" column="PAY_METHOD"/>
+		<result property="payPrice" column="PAY_PRICE"/>
+		<result property="payDate" column="PAY_DATE"/>
+<!-- 		<result property="projName" column="PROJ_NM"/> -->
+	</resultMap>
+	
+	<select id="selectPayment" resultMap="payOrderResultMap">
+	SELECT *
+	  FROM (
+	        SELECT *
+	          FROM TBL_PAYMENT
+	
+	         ORDER BY PAY_NO DESC
+	        ) 
+	 WHERE ROWNUM = 1
+	</select>
+	
 	<insert id="registOrder">
 		INSERT
 		INTO TBL_ORDER A
@@ -69,6 +89,7 @@
 	, C.PAY_METHOD
 	, C.PAY_PRICE
 	, C.PAY_DATE
+	, C.PROJ_NM
 	)
 	VALUES
 	(
@@ -77,6 +98,7 @@
 	, #{ payment.payMethod }
 	, #{ payPrice }
 	, SYSDATE
+	, NULL
 	)
 	</insert>
 	

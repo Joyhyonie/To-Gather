@@ -1,10 +1,14 @@
 package com.greedy.togather.user.pay.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.greedy.togather.user.pay.dao.PaymentMapper;
 import com.greedy.togather.user.pay.dto.PayOrderDTO;
+import com.greedy.togather.user.pay.dto.PaymentDTO;
 
 @Service
 @Transactional
@@ -40,6 +44,33 @@ public class PaymentService {
 		int result4 = paymentMapper.updatefundingAchive(order);
 	}
 
+//	public String selectPayment(PaymentDTO payment) {
+//		
+//		String result5 = paymentMapper.selectPayment(payment);
+//		
+//		return paymentMapper.selectPayment(payment);
+//	}
+
+	public Map<String, Object> slectPayment(String payNo) {
+		
+		PaymentDTO payment = paymentMapper.selectPayment(payNo);
+		
+		Map<String, Object> paymentList = new HashMap<>();
+		
+		paymentList.put("payment", payment);
+				
+		return  paymentList;
+	}
+
+
+		
+
+	
+
+
+	 
+		
+	
 }
 
 
