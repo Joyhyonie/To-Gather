@@ -1,15 +1,25 @@
 package com.greedy.togather.user.pay.service;
 
+
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.greedy.togather.user.pay.controller.PayController;
 import com.greedy.togather.user.pay.dao.PaymentMapper;
 import com.greedy.togather.user.pay.dto.PayOrderDTO;
 import com.greedy.togather.user.pay.dto.PaymentDTO;
+import com.greedy.togather.user.project.dto.ProjectDTO;
+import com.greedy.togather.user.project.dto.ReplyDTO;
+import com.greedy.togather.user.project.dto.RewardDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class PaymentService {
@@ -60,6 +70,22 @@ public class PaymentService {
 		paymentList.put("payment", payment);
 				
 		return  paymentList;
+	}
+
+	public Map<String, Object> searchPayScreen(String projNo) {
+		
+		ProjectDTO projectDetails = paymentMapper.selectProjectDetail(projNo);
+		log.info("[PaymentService] projectDetail : {}", projectDetails);
+		
+		/* 리워드 조회 */
+		List<RewardDTO> rewardLists = paymentMapper.selectRewardList(projNo);
+		log.info("[PaymentService] rewardList : {}", rewardLists);
+		
+		Map<String, Object> payScreenDetails = new HashMap<>();
+		payScreenDetails.put("projectDetail", projectDetails);
+		payScreenDetails.put("rewardList", rewardLists);
+		
+		return payScreenDetails;
 	}
 
 

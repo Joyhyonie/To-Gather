@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.greedy.togather.user.pay.dto.PayOrderDTO;
 import com.greedy.togather.user.pay.dto.PaymentDTO;
+import com.greedy.togather.user.project.dto.ProjectDTO;
+import com.greedy.togather.user.project.dto.RewardDTO;
 
 @Mapper
 public interface PaymentMapper {
@@ -21,5 +23,9 @@ public interface PaymentMapper {
 	int updatefundingAchive(PayOrderDTO order);
 
 	PaymentDTO selectPayment(String payNo);
+
+	ProjectDTO selectProjectDetail(String projNo);
+
+	List<RewardDTO> selectRewardList(String projNo);
 
 }

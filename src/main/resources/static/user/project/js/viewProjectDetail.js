@@ -154,10 +154,11 @@ window.onload = function() {
 	  
 	  const $fundingbutton = document.querySelectorAll('.funding-button');
     
-      for(let i = 0; i < $fundingbutton.length; i++){
-      	$fundingbutton[i].addEventListener('click', function(){
-      	location.href="/user/payScreen"
-        })
-      }
+    //   for(let i = 0; i < $fundingbutton.length; i++){
+    //   	$fundingbutton[i].addEventListener('click', function(){
+    //   	location.href="/pay/payScreen?"
+    //     })
+    //   }
+    console.log($fundingbutton);
 }
 

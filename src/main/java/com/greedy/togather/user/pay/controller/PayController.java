@@ -29,7 +29,15 @@ public class PayController {
 	}
 	
 	@GetMapping("/payScreen")
-	public String payScreen() {
+	public String payScreen(@RequestParam (value="projNo", required=false) String projNo, Model model) {
+			
+			/* 프로젝트 상세 내용 조회 */
+			Map<String, Object> payScreenDetails = paymentService.searchPayScreen(projNo);
+			log.info("[PayController] payScreenDetails : {}", payScreenDetails);
+			
+			model.addAttribute("payD", payScreenDetails.get("projectDetails"));
+			model.addAttribute("rewardL", payScreenDetails.get("rewardLists"));
+			
 		
 		return "/user/pay/payScreen";
 	}
@@ -58,6 +66,5 @@ public class PayController {
 		
 		return orderList;
 	}
-	
-	
+		
 }

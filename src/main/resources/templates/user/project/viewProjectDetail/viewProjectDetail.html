@@ -12,7 +12,8 @@
 <body>
 	<div th:replace="common/header/userHeader.html"></div>
 	<script type="text/javascript" src="/user/project/js/viewProjectDetail.js"></script> 
-	<script src="/user/project/js/jquery-3.6.3.min.js"></script> 
+	<script src="/user/project/js/jquery-3.6.3.min.js"></script>
+	 
 
     <div class="wrapper">
         <!-- 대표 사진 -->
@@ -129,7 +130,7 @@
 	                <div id="reward-footer">
 	                <p id="expected">발송 예정일<br> : <span th:text="${ reward.rewardDueDate }" id="date"></span></p>
 	                <th:block th:if="${ detail.leftDays } > 0">
-	                	<button type="button" class="funding-button">후원하기</button>
+	                	<button type="button" class="funding-button" th:onclick="|location.href='@{/pay/payScreen?(projNo=${detail.projNo},reward=${reward.rewardNo})}'|">후원하기</button>
 	                </th:block>
 	                <th:block th:if="${ detail.leftDays } <= 0">
 	                	<button type="button" class="funding-button close">후원마감</button>
@@ -138,7 +139,7 @@
 	            </div>
             </th:block>
         </div>
-
+		
         <!-- 댓글 -->
         <div class="comment">
             <div id="comment-title">총 댓글 기부금 <span th:text="${ #numbers.formatInteger(donationAndReplyCount.totalDonation, 3, 'COMMA') }" id="donation"></span>원</div>
