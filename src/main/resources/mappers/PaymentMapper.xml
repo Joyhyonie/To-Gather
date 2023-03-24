@@ -8,17 +8,18 @@
 		<result property="payMethod" column="PAY_METHOD"/>
 		<result property="payPrice" column="PAY_PRICE"/>
 		<result property="payDate" column="PAY_DATE"/>
+<!-- 		<result property="projName" column="PROJ_NM"/> -->
 	</resultMap>
 	
 	<select id="selectPayment" resultMap="payOrderResultMap">
-	SELECT
-		   A.PAY_NO
-		 , A.ORDER_NO
-		 , A.PAY_METHOD
-		 , A.PAY_PRICE
-		 , A.PAY_DATE
-	  FROM TBL_PAYMENT A
-	 ORDER BY ROWID DESC LIMIT 1;
+	SELECT *
+	  FROM (
+	        SELECT *
+	          FROM TBL_PAYMENT
+	
+	         ORDER BY PAY_NO DESC
+	        ) 
+	 WHERE ROWNUM = 1
 	</select>
 	
 	<insert id="registOrder">
@@ -88,6 +89,7 @@
 	, C.PAY_METHOD
 	, C.PAY_PRICE
 	, C.PAY_DATE
+	, C.PROJ_NM
 	)
 	VALUES
 	(
@@ -96,6 +98,7 @@
 	, #{ payment.payMethod }
 	, #{ payPrice }
 	, SYSDATE
+	, NULL
 	)
 	</insert>
 	

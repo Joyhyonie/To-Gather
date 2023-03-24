@@ -1,5 +1,7 @@
 package com.greedy.togather.user.pay.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.greedy.togather.user.pay.dto.PayOrderDTO;
@@ -18,6 +20,6 @@ public interface PaymentMapper {
 
 	int updatefundingAchive(PayOrderDTO order);
 
-	String selectPayment(PaymentDTO payment);
+	PaymentDTO selectPayment(String payNo);
 
 }

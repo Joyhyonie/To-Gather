@@ -1,5 +1,7 @@
 package com.greedy.togather.user.pay.controller;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,24 +35,28 @@ public class PayController {
 	}
 	
 	@GetMapping("/payComplete")
-	public String payComplete() { 
+	public String payComplete(@RequestParam(value="payNo", required=false) String payNo, Model model) { 
 		
+		Map<String, Object> paymentList = paymentService.slectPayment(payNo);
+		model.addAttribute("order", paymentList.get("payment"));
 		
 		return "/user/pay/payComplete";
 	}
 	
 	@PostMapping("/payComplete")
-	public @ResponseBody String postPayComplete(/* @RequestBody Map<String, String> requestMap */@RequestBody PayOrderDTO order) {
+	public @ResponseBody PayOrderDTO postPayComplete(/* @RequestBody Map<String, String> requestMap */@RequestBody PayOrderDTO order) {
 		
 
 		log.info("order : {}",order);
+		
+		PayOrderDTO orderList = order;
 		
 		paymentService.registOrder(order);
 		paymentService.registDelivery(order);
 		paymentService.registPayment(order);
 		paymentService.updatefundingAchive(order);
 		
-		return "success";
+		return orderList;
 	}
 	
 	

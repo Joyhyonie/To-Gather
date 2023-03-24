@@ -1,5 +1,6 @@
 package com.greedy.togather.user.pay.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -43,12 +44,28 @@ public class PaymentService {
 		int result4 = paymentMapper.updatefundingAchive(order);
 	}
 
-	public String selectPayment(PaymentDTO payment) {
+//	public String selectPayment(PaymentDTO payment) {
+//		
+//		String result5 = paymentMapper.selectPayment(payment);
+//		
+//		return paymentMapper.selectPayment(payment);
+//	}
+
+	public Map<String, Object> slectPayment(String payNo) {
 		
-		String result5 = paymentMapper.selectPayment(payment);
+		PaymentDTO payment = paymentMapper.selectPayment(payNo);
 		
-		return paymentMapper.selectPayment(payment);
+		Map<String, Object> paymentList = new HashMap<>();
+		
+		paymentList.put("payment", payment);
+				
+		return  paymentList;
 	}
+
+
+		
+
+	
 
 
 	 
