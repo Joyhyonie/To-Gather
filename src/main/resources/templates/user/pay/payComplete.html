@@ -23,8 +23,8 @@
                 <h3>추가 겨울 따뜻한 마음을 전하세요 !</h3>
             </div>
             <div>
-                <p class="p1">네이버 페이로 1,000원 결제 완료하였습니다.</p>
-                <p class="p2">결제 완료 시간 2023-03-01-23:10:03</p>
+                <p class="p1" th:text="${payMethod} + '로 ' + ${ payPrice } + '원 결제 하셨습니다.' "></p>
+                <p class="p2" th:text="'결제 완료 시간 ' + ${ orderDate }"></p>
             </div>
             <div class="text-body">
                 <h1 class="togather">To-Gather와 함께 동행해주세여 감사해요!</h1>
