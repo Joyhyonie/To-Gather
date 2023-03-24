@@ -5,20 +5,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="_csrf" th:content="${_csrf.token}">
-    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <!-- <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"> -->
     <link rel="stylesheet" href="/user/pay/CSS/payScreen.css" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
     <title>payScreen</title>
+    <!-- <script>
+        const message = '[[${message}]]';
+        message && alert(message);
+    </script> -->
 </head>
 <body>
+    
+    <th:block sec:authorize="isAnonymous()">
+        <SCript>
+            location.href="http://localhost:8001/user/login";
+        </SCript>
+    </th:block>
+<th:block sec:authorize="isAuthenticated()">
 	<div th:replace="/common/header/userHeader.html"></div>
     <script type="text/javascript" src="/user/pay/js/payScreen.js"></script>	
     <section id="grid1">
-    
+        <div hidden id="pjNo">PJ000000001</div>
         <div class="item1">
             <div  data-v-67d79bfc="" class="reward-order-form" data-component-name="pageRewardOrderForm">
                 <div  class="container">
@@ -48,7 +59,7 @@
                                             <div  class="amount">
                                                 <div  class="price">
                                                     <span  class="pPrice" style="color: darkgray;">참여 금액:</span>
-                                                    <b  class="font-lg">30,000</b>
+                                                    <b  class="font-lg" id="rewardPrice">30000</b>
                                                     <span >원</span>
                                                 </div>
                                                 <div  class="count">
@@ -57,7 +68,7 @@
                                                 </div>
                                             </div>
                                             <div  class="reward-title">
-                                                <div >새싹삼 20 뿌리 + 꿀스틱 5개 증정</div>
+                                                <div id="rewardtitle">새싹삼 20 뿌리 + 꿀스틱 5개 증정</div>
                                             </div>
                                             <div class="cubox">
                                                 <div class="cuuse">
@@ -188,7 +199,7 @@
                                                                         <img class="img" src="/user/pay/images/회색네이버.jpg"></img>
                                                                         <img class="off" src="/user/pay/images/(웅디자인) 네이버 심볼.png"></img>
                                                                     </span>
-                                                                    <div  class="text1">카카오 페이</div>
+                                                                    <div  class="text1">카카오페이</div>
                                                                 </button>
                                                             </li>
                                                             <li  data-pay="card" class="">
@@ -266,7 +277,10 @@
                                                                     <span class="float-left">배송비</span>
                                                                 </th>
                                                                 <td >
-                                                                    <span  class="float-right" di="rewardPrice">2,500원</span>
+                                                                    <span  class="float-right"><b id="deliveryPrice">2500</b>
+                                                                        <span>원</span>
+                                                                    </span>
+                                                                    
                                                                 </td>
                                                             </tr>
                                                             <!---->
@@ -305,7 +319,7 @@
                                             </div>
                                         </div>
                                         <div  class="action">
-                                            <button  id="submitPay" class="btn-block btn-point font-lg">
+                                            <button  id="submitPay" onclick="aass();" class="btn-block btn-point font-lg">
                                                 <span cla="b">후원하기</span>
                                             </button>
                                         </div>
@@ -314,10 +328,14 @@
                             </div>
                         </div>
                     </div>
+                    <script>
 
+    
+                    </script>
         </div>
 
     </section>
 	<div th:replace="/common/footer/userFooter.html"></div>
+</th:block>
 </body>
 </html>

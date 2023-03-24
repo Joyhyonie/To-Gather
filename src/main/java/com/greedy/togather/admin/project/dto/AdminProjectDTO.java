@@ -13,10 +13,10 @@ public class AdminProjectDTO {
 	private String projNm;
 	private String projSummary;
 	private String projDetail;
-	private String projInfo_title;
-	private String projInfo_body;
-	private Date fundingStart_date;
-	private Date fundingEnd_date;
+	private String projInfoTitle;
+	private String projInfoBody;
+	private Date fundingStartDate;
+	private Date fundingEndDate;
 	private int fundingGoal;
 	private int fundingAchive;
 	private Date projRegDate;

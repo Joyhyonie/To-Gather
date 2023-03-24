@@ -15,6 +15,8 @@ public interface AdminUserMapper {
 
 		List<AdminUserDTO> selectUserList(SelectCriteria selectCriteria);
 
+		void deleteUserChecked(AdminUserDTO user);
+
 
 
 	}

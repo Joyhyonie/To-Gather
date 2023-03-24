@@ -1,13 +1,19 @@
 package com.greedy.togather.user.pay.controller;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.greedy.togather.user.pay.dto.OrderDTO1;
+import com.greedy.togather.user.pay.dto.PayOrderDTO;
+//import com.greedy.togather.user.pay.service.PaymentService;
+import com.greedy.togather.user.pay.service.PaymentService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,6 +22,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/pay")
 public class PayController {
 	
+	private final PaymentService paymentService;
+	
+	public PayController(PaymentService paymentService) {
+		this.paymentService = paymentService;
+	}
+	
 	@GetMapping("/payScreen")
 	public String payScreen() {
 		
@@ -23,18 +35,28 @@ public class PayController {
 	}
 	
 	@GetMapping("/payComplete")
-	public String payComplete() {
+	public String payComplete(@RequestParam(value="payNo", required=false) String payNo, Model model) { 
+		
+		Map<String, Object> paymentList = paymentService.slectPayment(payNo);
+		model.addAttribute("order", paymentList.get("payment"));
 		
 		return "/user/pay/payComplete";
 	}
 	
-	@PostMapping("/order")
-	public @ResponseBody String postPayComplete(@ModelAttribute OrderDTO1 order) {
+	@PostMapping("/payComplete")
+	public @ResponseBody PayOrderDTO postPayComplete(/* @RequestBody Map<String, String> requestMap */@RequestBody PayOrderDTO order) {
 		
+
+		log.info("order : {}",order);
 		
+		PayOrderDTO orderList = order;
 		
+		paymentService.registOrder(order);
+		paymentService.registDelivery(order);
+		paymentService.registPayment(order);
+		paymentService.updatefundingAchive(order);
 		
-		return "redirect:/pay/payComplete";
+		return orderList;
 	}
 	
 	

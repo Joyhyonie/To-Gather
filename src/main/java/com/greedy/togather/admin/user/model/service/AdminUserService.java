@@ -47,6 +47,11 @@ public class AdminUserService {
 		return userListAndPaging;
 	}
 
+	public void deleteUserChecked(AdminUserDTO user) {
+
+		adminUserMapper.deleteUserChecked(user);
+	}
+
 
 
 

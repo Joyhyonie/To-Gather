@@ -1,21 +1,20 @@
-package com.greedy.togather.user.pay.dto;
-
-import java.sql.Date;
+package com.greedy.togather.admin.order.model.dto;
 
 import lombok.Data;
 
 @Data
-public class OrderDTO1 {
-	
+public class AdminOrderDTO {
+
 	private String orderNo;
-	private String userNO;
-	private String projNo;
 	private String rewardNo;
-	private Date orderDate;
+	private String projNo;
+	private String userNo;
+	private java.util.Date orderDate;
 	private int rewardQuantity;
 	private int rewardPrice;
 	private int extraReward;
 	private int deliveryFee;
 	private int dcPrice;
 	private int payPrice;
+	
 }

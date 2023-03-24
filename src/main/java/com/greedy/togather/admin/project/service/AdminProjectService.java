@@ -49,11 +49,12 @@ public class AdminProjectService{
 		boardAndPaging.put("paging", selectCriteria);
 		boardAndPaging.put("adminProjectList", adminProjectList);
 		
-		
-		
-		
 		return boardAndPaging;
 	}
+	
+	
+
+
 
 
 	
