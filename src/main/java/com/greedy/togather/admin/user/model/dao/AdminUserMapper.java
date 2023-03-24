@@ -17,6 +17,8 @@ public interface AdminUserMapper {
 
 		void deleteUserChecked(AdminUserDTO user);
 
+		AdminUserDTO selectUserDetail(String userNo);
+
 
 
 	}

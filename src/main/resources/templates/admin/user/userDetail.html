@@ -30,23 +30,23 @@
             <table>
                 <tr>
                     <th class="table-header">아이디</th>
-                    <td colspan="3" class="table-body"> 이메일</td>
+                    <td colspan="3" class="table-body"><input type="email" th:value="${ user.email }"/></td>
 
                 </tr>
                 <tr>
                     <th class="table-header">이름</th>
-                    <td colspan="3" class="table-body">홍길동</td>
+                    <td colspan="3" class="table-body"><input type="text" th:value="${ user.userNm}" readonly="readonly"/></td>
                 </tr>
                 <tr>
                     <th class="table-header">휴대폰번호</th>
                     <td colspan="3" class="table-body">
-                        <input type="text" class="inputbox box1">
+                        <input type="text" class="inputbox box1" th:value="${ user.phone }">
                     </td>
                 </tr>
                 <tr>
                     <th class="table-header">주소</th>
                     <td colspan="3" class="table-body">
-                        <input type="text" class="inputbox box2"><button type="button">검색</button><br>
+                        <input type="text" class="inputbox box2" th:value="${ user.address }"><button type="button">검색</button><br>
                         <input type="text" class="inputbox box3">
                     </td>
                 </tr>
@@ -65,9 +65,9 @@
                 </tr>
                 <tr>
                     <th class="table-header">가입일</th>
-                    <td class="table-body">2022.12.19</td>
+                    <td class="table-body" th:text="${ #dates.format(user.joinDate, 'yyyy-MM-dd') }"></td>
                     <th class="table-header">탈퇴일</th>
-                    <td class="table-body">2023.03.15</td>
+                    <td class="table-body" th:text="${ #dates.format(user.quitDate, 'yyyy-MM-dd') }"></td>
                 </tr>
             </table>
         </div>
@@ -75,41 +75,26 @@
         <div class="content3">
             <p>펀딩 내역 조회</p>
             <table>
-                <tr class="table-header">
+                <tr class="table-header" >
                     <th>NO.</th>
-                    <th>날짜</th>
                     <th>프로젝트명</th>
-                    <th>수량</th>
-                    <th>결제 금액</th>
+                    <th>리워드명</th>
+                    <th>수량<th>
+                    <th>결제일자</th>
+                    <th>결제금액</th>
+                    <th>환불일자</th>
                     <th>환불금액</th>
                     <th>환불사유</th>
                 </tr>
-                <tr class="table-content">
-                    <td>1</td>
-                    <td>날짜</td>
-                    <td>프로젝트명</td>
-                    <td>수량</td>
-                    <td>결제금액</td>
-                    <td>환불금액</td>
-                    <td>환불사유</td>
-                </tr>
-                <tr class="table-content">
-                    <td>2</td>
-                    <td>날짜</td>
-                    <td>프로젝트명</td>
-                    <td>수량</td>
-                    <td>결제금액</td>
-                    <td>환불금액</td>
-                    <td>환불사유</td>
-                </tr>
-                <tr class="table-content">
-                    <td>3</td>
-                    <td>날짜</td>
-                    <td>프로젝트명</td>
-                    <td>수량</td>
-                    <td>결제금액</td>
-                    <td>환불금액</td>
-                    <td>환불사유</td>
+                <tr class="table-content" th:each="{funding : fundingList}">
+                    <td th:text="${ funding.payNo }"></td>
+                    <td th:text="${ funding.projNm }"></td>
+                    <td th:text="${ funding.rewardQuantity }"></td>
+                    <td th:text="${ funding.payDate }"></td>
+                    <td th:text="${ funding.payPrice }"></td>
+                    <td th:text="${ funding.refundDate }"></td>
+                    <td th:text="${ funding.refundPrice }"></td>
+                    <td th:text="${ funding.refundReason }"></td>
                 </tr>
             </table>
         </div>
@@ -126,10 +111,10 @@
                 </tr>
                 <tr class="table-content">
                     <th class="total">합계</th>
-                    <td>건수</td>
-                    <td>결제금액</td>
-                    <td>환불금액</td>
-                    <td>총펀딩금액</td>
+                    <td th:text="${ "></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </table>
         </div>

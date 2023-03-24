@@ -52,6 +52,12 @@ public class AdminUserService {
 		adminUserMapper.deleteUserChecked(user);
 	}
 
+	public AdminUserDTO selectUserDetail(String userNo) {
+		
+		return adminUserMapper.selectUserDetail(userNo);
+	}
+
+
 
 
 

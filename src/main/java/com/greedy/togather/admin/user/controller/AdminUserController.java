@@ -1,13 +1,15 @@
 package com.greedy.togather.admin.user.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -61,7 +63,8 @@ public class AdminUserController {
 		
 		for(String checkInfo : checkList) {
 			user.setUserNo(checkInfo);
-			log.info("[AdminUserController] user {}", user);	
+			log.info("[AdminUserController] user {}", user);
+			
 			adminUserService.deleteUserChecked(user);
 		}
 
@@ -70,10 +73,21 @@ public class AdminUserController {
 	
 	
 	/* 해당 유저의 상세 조회 페이지 조회 기능 */
-	@GetMapping("/detail")
-	public String selectUserDetail() {
+	@GetMapping("/detail/{userNo}")
+	public String selectUserDetail(@PathVariable("userNo") String userNo, Model model) {
+		
+		log.info("[AdminUserController] userNo : {}", userNo);
+		
+		/* 유저 정보 조회*/
+		AdminUserDTO userDetail = adminUserService.selectUserDetail(userNo);
+		log.info("[AdminUserController] userDetail : {}", userDetail);
+		
+		/* 펀딩 내역 조회*/
+		Admin
 		
 		
+		
+		model.addAttribute("user", userDetail);
 		
 		return "admin/user/userDetail";
 	}

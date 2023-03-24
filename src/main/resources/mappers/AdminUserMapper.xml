@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.greedy.togather.admin.user.model.dao.AdminUserMapper">
 
-	<resultMap id="userResultMap" type="com.greedy.togather.admin.user.model.dto.AdminUserDTO">
+	<resultMap type="com.greedy.togather.admin.user.model.dto.AdminUserDTO" id="userResultMap" >
 		<id property="userNo" column="USER_NO"/>
 		<result property="email" column="EMAIL"/>
 		<result property="pwd" column="PWD"/>
@@ -14,9 +14,39 @@
 		<result property="quitDate" column="QUIT_DATE"/>
 		<result property="quitYn" column="QUIT_YN"/>
 		<result property="userToken" column="USER_TOKEN"/>
+		
+		<collection property="orderList" resultMap="orderResultMap"/>
+
 	</resultMap>
 	
 	
+	<resultMap type="com.greedy.togatger.admin.order.model.dto.AdminPaymentDTO" id="paymentResultMap">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="payMethod" column="PAY_METHOD"/>
+		<result property="payPrice" column="PAY_PRICE"/>
+		<result property="payDate" column="PAY_DATE"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togatger.admin.order.model.dto.AdminRefundDTO" id="refundResultMap">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="refundDate" column="REFUND_DATE"/>
+		<result property="refundPrice" column="REFUND_PRICE"/>
+		<result property="refundReason" column="REFUND_REASON"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togatger.admin.project.model.dto.AdminProjectDTO" id="projectResultMap">
+		<id property="projNo" column="PROJ_NO"/>
+		<result property="projNm" column="PROJ_NM"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togatger.admin.user.model.dto.AdminTotalFundingDTO" id="totalFundingResultMap">
+		<id property="userNo" column="USER_NO"/>
+	    <result property="payCount" column="COUNT(PY.PAY_NO)"/>
+	    <result property="totalPay" column="SUM(PY.PAY_PRICE)"/>
+	    <result property="totalRefund" column="SUM(RF.REFUND_PRICE)"/>
+	    <result property="totalFunding" column="SUM(PY.PAY_PRICE - RF.REFUND_PRICE)"/>
+	</resultMap>
 
 	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
         SELECT 
@@ -90,17 +120,88 @@
   	     WHERE USER_NO = #{ userNo }     
 	</delete>
 	
+	<!-- userDetail 페이지 시작 -->
 	<select id="selectUserDetail" resultMap="userResultMap">
 		SELECT
-		       
-	
-	
+			   US.EMAIL
+			 , US.USER_NM
+			 , US.PHONE
+			 , US.ADDRESS
+			 , US.JOIN_DATE
+			 , US.QUIT_DATE  
+		  FROM TBL_USER US
+  	     WHERE US.USER_NO = #{ userNo }     
 	</select>
-	
+
+    <select id="selectUserDetailPay" resultMap="userResultMap">
+		SELECT
+		       S2.PAY_NO
+		     , PJ.PROJ_NM
+		     , RW.REWARD_NM
+		     , O.REWARD_QUANTITY
+		     , S2.PAY_DATE
+		     , S2.PAY_PRICE
+		     , S2.REFUND_DATE
+		     , S2.REFUND_PRICE
+		     , S2.REFUND_REASON
+		 FROM (SELECT
+			          ROWNUM RNUM
+			        , S1.PAY_NO  
+			        , S1.ORDER_NO
+			        , S1.PAY_DATE
+			        , S1.PAY_PRICE
+			        , S1.REFUND_DATE
+			        , S1.REFUND_PRICE
+			        , S1.REFUND_REASON
+			  	 FROM (SELECT
+						       PY.PAY_NO
+						     , PY.ORDER_NO  
+						     , PY.PAY_DATE
+						     , PY.PAY_PRICE
+						     , RF.REFUND_DATE
+						     , RF.REFUND_PRICE
+						     , RF.REFUND_REASON
+	                      FROM TBL_PAYMENT PY
+				          LEFT JOIN TBL_REFUND RF ON (PY.PAY_NO = RF.PAY_NO)
+						  ORDER BY PY.PAY_NO DESC) S1
+			<!-- 	<![CDATA[ ROWNUM <= ${ endRow } ]]> -->
+				)S2
+		LEFT JOIN TBL_ORDER O ON (O.ORDER_NO = S2.ORDER_NO)
+		LEFT JOIN TBL_REWARD RW ON (O.REWARD_NO = RW.REWARD_NO)
+		LEFT JOIN TBL_PROJECT PJ ON (RW.PROJ_NO = PJ.PROJ_NO)
+		LEFT JOIN TBL_USER US ON (US.USER_NO = PJ.USER_NO)
+		WHERE US.USER_NO = ${ userNo }
+	    <!--  WHERE RNUM >= #{ startRow }  -->
+	    <!--  대대적 수정이 필요 ... -->
+	</select>
 
 
+    <select id="selectUserDetailTotal">
+    SELECT
+	       US.USER_NO
+	     , COUNT(PY.PAY_NO)
+	     , SUM(PY.PAY_PRICE)
+	     , SUM(RF.REFUND_PRICE)
+	     , SUM(PY.PAY_PRICE - RF.REFUND_PRICE)
+		  FROM TBL_USER US
+	  LEFT JOIN TBL_ORDER O ON (US.USER_NO = O.USER_NO)
+	  LEFT JOIN TBL_PAYMENT PY ON (O.ORDER_NO = PY.ORDER_NO)
+	  LEFT JOIN TBL_REFUND RF ON (PY.PAY_NO = RF.PAY_NO)
+	  GROUP BY US.USER_NO; 
+    </select>
 
 
+	<select id="updateUserDetail">
+		SELECT
+			   US.EMAIL
+			 , US.USER_NM
+			 , US.PHONE
+			 , US.ADDRESS
+			 , US.JOIN_DATE
+			 , US.QUIT_DATE  
+		  FROM TBL_USER US
+  	     WHERE US.USER_NO = #{ userNo }     
+	</select>
 
 
 
