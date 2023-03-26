@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,10 +18,9 @@
     <div class="wrapper">
         <!-- 대표 사진 -->
         <div class="slider">
-            <img src="/user/project/images/dummy1.png" class="slide current-slide">
-            <img src="/user/project/images/dummy1.png" class="slide slide-right">
-            <img src="/user/project/images/dummy1.png" class="slide slide-right">
-            <img src="/user/project/images/dummy1.png" class="slide slide-right">
+        	<th:block th:each=" file : ${ detail.fileList }">
+            		<img th:src="${ file.filePath + file.savedFileName }" class="slide"> <!-- th:data-proj-no="${ mainProj.projNo }" -->
+		    </th:block>
         </div>
 
         <!-- 프로젝트 정보 -->
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div id="maker">
-                <img id="maker-image"><!-- th:src="${ detail.makerProfile.filePath + detail.makerProfile.savedFileName }" -->
+                	<img id="maker-image" th:src="${ detail.maker.makerProfileName }">
                 <div id="maker-info">
                     <p id="maker-name" th:text="${ detail.maker.makerName }"></p>
                     <p id="maker-summary" th:text="${ detail.maker.makerIntro }"></p>
@@ -74,7 +74,7 @@
 
         <!-- 스토리&후기 바디 -->
         <div class="story-body">
-            <div th:text="${ detail.projDetail }" id="story" class="content"></div>
+            <div th:utext="${ detail.projDetail }" id="story" class="content"></div>
             <div id="review" class="content">
             	<th:block th:if="${ detail.projReview == null }">
 		            <p class="no-review">아직 작성된 후기가<br> 존재하지 않습니다.</p>
@@ -84,7 +84,7 @@
 		            </div>
 		        </th:block>
 	            <th:block th:unless="${ detail.projReview == null }">
-	            	<div th:text="${ detail.projReview }"></div>
+	            	<div th:utext="${ detail.projReview }"></div>
                 </th:block>
             </div>
         </div>
@@ -149,7 +149,13 @@
             </th:block>
             <div id="comment-body">
                 <div id="comment-container">
-                    <img src="/user/project/images/profile1.png" id="commenter">
+                	<th:block sec:authorize="isAnonymous()">
+                	<img th:src="'/user/project/images/profile4.png'" id="commenter">
+                	</th:block>
+                	<th:block sec:authorize="isAuthenticated()">
+                    <img th:src="${ #authentication.principal.profileNm == null? '/user/project/images/profile4.png' : #authentication.principal.profileNm}" id="commenter">
+                    </th:block>
+                    
                     <textarea id="comment-box" maxlength="500" placeholder="따뜻한 댓글을 작성해주세요! To-Gather가 기부금을 지원합니다 :)"></textarea>
                 </div>
                 <div id="mini-container">
@@ -188,7 +194,7 @@
 		                <p th:text="${ reply.replyRegDate }" id="regist-date"></p>
 		            </div>
 		            <div id="flex3">
-		                <img src="/user/project/images/profile4.png" id="profiles">
+		               		<img th:src="${ reply.writer.profileNm == null ? '/user/project/images/profile4.png' : reply.writer.profileNm }" id="profiles">
 		                <div>
 		                    <textarea th:text="${ reply.replyBody }" id="comment" readonly></textarea>
 		                </div>

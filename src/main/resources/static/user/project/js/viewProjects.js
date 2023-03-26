@@ -22,6 +22,19 @@ window.onload = function() {
 
     /* ----------------------------------------------------------------------------------------- */
     
+    /* location.href 이동하고자 하는 곳으로 이동하는 자바스크립트 코드가 필요함 */
+	const projectBlock = document.querySelectorAll(".project-block");
+
+	projectBlock.forEach(block => {
+			block.addEventListener("click", (e) => {
+			const projNo = e.currentTarget.dataset.projNo;
+			console.log(projNo);
+			window.location.href = '/project/detail?projNo=' + projNo;
+		});
+	});
+			
+	/* ----------------------------------------------------------------------------------------- */
+    
     /* 더보기 페이징 기능 */
 //    load('#more-projects', '8'); /* 기본 첫 화면에서 노출 될 프로젝트의 갯수 지정 */
 

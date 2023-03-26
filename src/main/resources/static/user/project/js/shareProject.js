@@ -7,7 +7,7 @@ window.onload = function () {
 
         /* 트위터 */
         shareTwitter.addEventListener('click', () => {
-            const sendText = '생분해 나무로 만든 숲내음 다이어리';
+            const sendText = '트위터로 공유합니다 :)';
             const pageUrl = 'https://www.ohmycompany.com/reward/12675';
             window.open(`https://twitter.com/intent/tweet?text=${sendText}&url=${pageUrl}`);
         });
@@ -29,7 +29,7 @@ window.onload = function () {
         /* 카카오스토리 */
         shareKaStory.addEventListener('click', () => {
             Kakao.Story.share({
-                url: 'https://www.ohmycompany.com/reward/12675',
+                url: '카카오스토리로 공유합니다 :)',
                 text: '생분해 나무로 만든 숲내음 다이어리'
             })
         });

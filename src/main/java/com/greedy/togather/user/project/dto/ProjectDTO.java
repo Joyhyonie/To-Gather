@@ -14,6 +14,7 @@ import lombok.Data;
 public class ProjectDTO {
 	
 	private String projNo;			// 프로젝트번호
+	private String categoryNo;		// 카테고리번호
 	private String userNo;			// 회원번호
 	private String projName;		// 프로젝트명
 	private String projSummary;		// 프로젝트 간략 소개
@@ -39,10 +40,10 @@ public class ProjectDTO {
 	private UserDTO writer;				// 프로젝트 작성자 정보 
 	private MainPageDTO mainPage;		// 메인 페이지 정보
 	
-	private FileDTO makerProfile;			// 메이커 프로필
-	private FileDTO mainImage;				// 대표 사진
-	private List<FileDTO> subImageList;		// 서브 사진(List)
-	private FileDTO settleDoc;				// 정산 서류
-	private FileDTO accountDoc;				// 통장 사본
-	private FileDTO etcDoc;					// 기타 서류
+	private FileDTO processedMakerProfile;			// 메이커 프로필
+	private FileDTO processedMainImage;				// 대표 사진
+	private List<FileDTO> processedSubImageList;	// 서브 사진(List)
+	private FileDTO processedSettleDoc;				// 정산 서류
+	private FileDTO processedAccountDoc;			// 통장 사본
+	private FileDTO processedEtcDoc;				// 기타 서류
 }
