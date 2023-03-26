@@ -35,8 +35,17 @@ public interface ProjectMapper {
 	void insertReply(ReplyDTO reply);
 	
 	/* 프로젝트 신청 */
+	/* TBL_MAKER에 메이커 정보 등록 */
+	void insertMakerInfo(MakerDTO maker);
+	
 	/* TBL_PROJECT에 정보 등록 */
 	void insertProjectInfo(ProjectDTO project);
+	
+	/* TBL_REWARD에 정보 등록 */
+	void insertRewardInfo(List<RewardDTO> reward);
+	
+	/* TBL_FILE에 메이커 프로필 등록 */
+	void insertMakerProfile(FileDTO makerProfile);
 	
 	/* TBL_FILE에 메인 이미지 등록 */
 	void insertMainImage(FileDTO mainImage);
@@ -47,17 +56,20 @@ public interface ProjectMapper {
 	/* TBL_FILE에 정산서류 등록 */
 	void insertSettleDoc(FileDTO settleDoc);
 	
-	/* TBL_FILE에 메인 이미지 등록 */
+	/* TBL_FILE에 통장 사본 등록 */
 	void insertAccountDoc(FileDTO accountDoc);
 	
-	/* TBL_FILE에 메인 이미지 등록 */
+	/* TBL_FILE에 기타 서류 등록 */
 	void insertEtcDoc(FileDTO etcDoc);
 	
-	/* TBL_PROJECT에 정보 등록 */
-	void insertMakerInfo(MakerDTO maker);
 	
-	/* TBL_PROJECT에 정보 등록 */
-	void insertRewardInfo(RewardDTO reward);
+	/* 프로젝트 후기 등록 */
+	
+	
+	
+	
+	
+	
 	
 	
 	

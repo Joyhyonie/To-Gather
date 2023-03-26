@@ -1,6 +1,6 @@
 package com.greedy.togather.user.project.service;
 
-import java.util.HashMap; 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -90,10 +90,12 @@ public class ProjectService {
 	}
 
 	/* 프로젝트 신청 페이지 */
-	public void createProject(ProjectDTO project, MakerDTO maker, RewardDTO reward) {
+	public void createProject(ProjectDTO project, MakerDTO maker, List<RewardDTO> reward) {
 		
 		/* 각 테이블에 데이터 저장 */
 		projectMapper.insertProjectInfo(project);
+		
+		projectMapper.insertMakerProfile(project.getMakerProfile());
 		
 		projectMapper.insertMainImage(project.getMainImage());
 		

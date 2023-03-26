@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div id="maker">
-                <img th:if="${ detail.maker.makerProfileName != null }" th:src="${ detail.maker.makerProfileName }" id="maker-image">
+                <img id="maker-image"><!-- th:src="${ detail.makerProfile.filePath + detail.makerProfile.savedFileName }" -->
                 <div id="maker-info">
                     <p id="maker-name" th:text="${ detail.maker.makerName }"></p>
                     <p id="maker-summary" th:text="${ detail.maker.makerIntro }"></p>
