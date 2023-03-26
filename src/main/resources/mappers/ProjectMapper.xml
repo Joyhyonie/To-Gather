@@ -52,6 +52,7 @@
 	<!-- MakerDTO -->
 	<resultMap type="com.greedy.togather.user.project.dto.MakerDTO" id="makerResultMap">
 		<id property="projNo" column="PROJ_NO" />
+		<result property="makerProfileName" column="MAKER_PROFILE_NM"/>
 		<result property="makerName" column="MAKER_NM" />
 		<result property="maerAddress" column="MAKER_ADDRESS" />
 		<result property="makerPhone" column="MAKER_PHONE" />
@@ -207,6 +208,7 @@
 		, B.SAVED_FILE_NM
 		, B.FILE_PATH
 		, D.REPLY_NO
+		, D.USER_NO
 		, D.REPLY_BODY
 		, D.REPLY_REG_DATE
 		, D.DONATION
@@ -220,7 +222,7 @@
 		LEFT JOIN TBL_USER E ON(D.USER_NO = E.USER_NO)
 		WHERE A.PROJ_NO = #{ projNo }
 		AND A.PROJ_STATUS IN ('진행', '마감')
-		ORDER BY D.REPLY_NO DESC
+		ORDER BY D.REPLY_NO DESC, B.FILE_NO
 	</select>
 
 	<!-- 프로젝트 상세 페이지 중, 리워드 조회 -->
@@ -242,6 +244,7 @@
 	<select id="selectReplyList" resultMap="replyResultMap">
 		SELECT
 		A.REPLY_NO
+		, A.USER_NO
 		, A.REPLY_BODY
 		, A.DONATION
 		, A.REPLY_REG_DATE
@@ -249,7 +252,7 @@
 		, SUBSTR(B.EMAIL, 1, INSTR(B.EMAIL, '@') -1) AS USER_ID
 		, A.PROJ_NO
 		FROM TBL_REPLY A
-		LEFT JOIN TBL_USER B USING(USER_NO)
+		LEFT JOIN TBL_USER B ON(A.USER_NO = B.USER_NO)
 		WHERE PROJ_NO = #{ projNo }
 		ORDER BY A.REPLY_NO DESC
 	</select>
@@ -289,20 +292,13 @@
 
 	<!-- ========================================================================================================= -->
 
-	<!-- 메인 배너 조회 -->
-
-	<!-- 오늘의 프로젝트 조회 -->
-
-	<!-- 인기 프로젝트 조회 -->
-
-	<!-- ========================================================================================================= -->
-
 	<!-- TBL_MAKER 정보 등록 -->
 	<insert id="insertMakerInfo">
 		INSERT
 	    INTO TBL_MAKER
 	    (
 	        PROJ_NO
+	    ,	MAKER_PROFILE_NM
 	    ,   MAKER_NM
 	    ,   MAKER_ADDRESS
 	    ,   MAKER_PHONE
@@ -312,6 +308,7 @@
 	    VALUES
 	    (
 	        'PJ'||LPAD(SEQ_PROJ_NO.CURRVAL, 9, '0')
+	    ,	#{ makerProfileName }
 	    ,   #{ makerName }
 	    ,   #{ makerAddress }
 	    ,   #{ makerPhone }
@@ -341,7 +338,7 @@
 	    VALUES
 	    (
 	        'PJ'||LPAD(SEQ_PROJ_NO.NEXTVAL, 9, '0')
-	    ,   #{ category.categoryNo }
+	    ,   #{ categoryNo }
 	    ,   #{ writer.userNo }
 	    ,   #{ projName }
 	    ,   #{ projSummary }
@@ -394,7 +391,7 @@
 	    ,   FILE_PATH
 	    ,   THUM_PATH
 	    )
-	    VALUE 
+	    VALUES
 	    (
 	        'AT'||LPAD(SEQ_REWARD_NO.NEXTVAL, 9, '0')
 	    ,   'PJ'||LPAD(SEQ_PROJ_NO.CURRVAL, 9, '0')
@@ -419,7 +416,7 @@
 	    ,   FILE_PATH
 	    ,   THUM_PATH
 	    )
-	    VALUE 
+	    VALUES
 	    (
 	        'AT'||LPAD(SEQ_REWARD_NO.NEXTVAL, 9, '0')
 	    ,   'PJ'||LPAD(SEQ_PROJ_NO.CURRVAL, 9, '0')
@@ -444,7 +441,7 @@
 	    ,   FILE_PATH
 	    ,   THUM_PATH
 	    )
-	    VALUE 
+	    VALUES
 	    (
 	        'AT'||LPAD(SEQ_REWARD_NO.NEXTVAL, 9, '0')
 	    ,   'PJ'||LPAD(SEQ_PROJ_NO.CURRVAL, 9, '0')
@@ -469,7 +466,7 @@
 	    ,   FILE_PATH
 	    ,   THUM_PATH
 	    )
-	    VALUE 
+	    VALUES
 	    (
 	        'AT'||LPAD(SEQ_REWARD_NO.NEXTVAL, 9, '0')
 	    ,   'PJ'||LPAD(SEQ_PROJ_NO.CURRVAL, 9, '0')
@@ -494,7 +491,7 @@
 	    ,   FILE_PATH
 	    ,   THUM_PATH
 	    )
-	    VALUE 
+	    VALUES
 	    (
 	        'AT'||LPAD(SEQ_REWARD_NO.NEXTVAL, 9, '0')
 	    ,   'PJ'||LPAD(SEQ_PROJ_NO.CURRVAL, 9, '0')
@@ -519,7 +516,7 @@
 	    ,   FILE_PATH
 	    ,   THUM_PATH
 	    )
-	    VALUE 
+	    VALUES
 	    (
 	        'AT'||LPAD(SEQ_REWARD_NO.NEXTVAL, 9, '0')
 	    ,   'PJ'||LPAD(SEQ_PROJ_NO.CURRVAL, 9, '0')

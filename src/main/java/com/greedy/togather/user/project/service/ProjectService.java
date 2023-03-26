@@ -95,19 +95,19 @@ public class ProjectService {
 		/* 각 테이블에 데이터 저장 */
 		projectMapper.insertProjectInfo(project);
 		
-		projectMapper.insertMakerProfile(project.getMakerProfile());
+		projectMapper.insertMakerProfile(project.getProcessedMakerProfile());
 		
-		projectMapper.insertMainImage(project.getMainImage());
+		projectMapper.insertMainImage(project.getProcessedMainImage());
 		
-		for(FileDTO file : project.getSubImageList()) {
+		for(FileDTO file : project.getProcessedSubImageList()) {
 			projectMapper.insertSubImage(file);
 		}
 
-		projectMapper.insertSettleDoc(project.getSettleDoc()); 
+		projectMapper.insertSettleDoc(project.getProcessedSettleDoc()); 
 		
-		projectMapper.insertAccountDoc(project.getAccountDoc());
+		projectMapper.insertAccountDoc(project.getProcessedAccountDoc());
 		
-		projectMapper.insertEtcDoc(project.getEtcDoc());
+		projectMapper.insertEtcDoc(project.getProcessedEtcDoc());
 		
 		projectMapper.insertMakerInfo(maker);		
 		

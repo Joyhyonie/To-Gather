@@ -52,9 +52,11 @@
                 </div>
             </div>
         </div>
+        <th:block sec:authorize="hasRole('ADMIN')">
         <div class="For manager">
             <div class="Category" onclick="location.href='/admin'"><img id="Manager" src="/common/userCommon/images/manager.png">For Manager</div>
         </div>
+        </th:block>
         <div id="Container">
         <div class="Search">
             <input type="text" placeholder="제목으로 프로젝트 검색 :)" id="Search-bar">

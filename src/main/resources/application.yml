@@ -1,6 +1,6 @@
 # server config
 server:
-  port: 8001
+  port: 8002
 
 # mybatis config
 mybatis:
@@ -23,6 +23,9 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
+  mvc:
+    converters:
+      preferred-json-mapper: gson
     
 # file upload config
   servlet:

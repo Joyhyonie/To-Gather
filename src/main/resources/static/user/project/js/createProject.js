@@ -214,6 +214,30 @@ window.onload = function() {
     });
     
     /* ------------------------------------------------------------------------------------ */
+    
+    /* 사용자가 입력한 목표 금액에 따른 정산 예상 금액 계산해주기 */
+    const fundingGoalInput = document.getElementById('funding-goal');
+	const settleGoal = document.getElementById('settle-goal');
+	const settleManageFee = document.getElementById('settle-manage-fee');
+	const settlePayFee = document.getElementById('settle-pay-fee');
+	const settleTax = document.getElementById('settle-tax');
+	const settleTotal = document.getElementById('settle-total');
+	
+	fundingGoalInput.addEventListener('input', (event) => {
+		const value = parseInt(event.target.value);
+	    const manageFee = Math.round(value * 0.07);
+	    const payFee = Math.round(value * 0.03);
+	    const tax = Math.round(value * 0.01);
+	    const total = value - manageFee - payFee - tax;
+	          
+	    settleGoal.textContent = `${value.toLocaleString()}`;
+	    settleManageFee.textContent = `${manageFee.toLocaleString()}`;
+	    settlePayFee.textContent = `${payFee.toLocaleString()}`;
+	    settleTax.textContent = `${tax.toLocaleString()}`;
+	    settleTotal.textContent = `${total.toLocaleString()}`;
+	});
+    
+    /* ------------------------------------------------------------------------------------ */
 
     /* 프로젝트 최종 버튼 클릭 시, 확인 confirm */
     document.querySelector(".submit").addEventListener('click', () => confirm('제출 후 수정은 불가합니다. 제출 하시겠습니까?'))

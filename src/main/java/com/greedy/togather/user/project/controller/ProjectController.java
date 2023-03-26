@@ -14,10 +14,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -162,19 +164,19 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/create")
-	public String createProject(ProjectDTO project, MakerDTO maker, List<RewardDTO> reward,
+	public String createProject(ProjectDTO project, MakerDTO maker, ArrayList<RewardDTO> reward,
 								@AuthenticationPrincipal UserDTO writer, RedirectAttributes rttr,
-								MultipartFile makerProfile, MultipartFile mainImage, List<MultipartFile> subImage, 
+								MultipartFile makerProfile, MultipartFile mainImage,  List<MultipartFile> subImageList, 
 								MultipartFile settleDoc, MultipartFile accountDoc, MultipartFile etcDoc,
 								@RequestParam String zipCode, @RequestParam String address1, @RequestParam String address2) {
 		
 		log.info("[ProjectController] project : {}", project);
 		log.info("[ProjectController] maker : {}", maker);
-		log.info("[ProjectController] reward : {}", reward);
+		log.info("[ProjectController] reward : {}", reward); // [] 빈 배열 출력
 		log.info("[ProjectController] writer : {}", writer);
 		log.info("[ProjectController] makerProfile : {}", makerProfile);
 		log.info("[ProjectController] mainImage : {}", mainImage);
-		log.info("[ProjectController] subImage : {}", subImage);
+		log.info("[ProjectController] subImage : {}", subImageList);
 		log.info("[ProjectController] settleDoc : {}", settleDoc);
 		log.info("[ProjectController] accountDoc : {}", accountDoc);
 		log.info("[ProjectController] etcDoc : {}", etcDoc);
@@ -185,6 +187,7 @@ public class ProjectController {
 		/* 주소 가공 */
 		String address = zipCode + "$" + address1 + "$" + address2;
     	maker.setMakerAddress(address);
+    	log.info("[ProjectController] address : {}", address);
 		
 		/* 프로젝트 신청 시, 저장될 경로 분리 */
 		String fileUploadDir = IMAGE_DIR + "original";			// 프로젝트 관련 이미지, 서류들
@@ -215,26 +218,30 @@ public class ProjectController {
 		FileDTO processedEtcDoc = processedFile(etcDoc, documentDir, "기타서류");
 		/* List형태인 subImage는 반복문을 통해 하나씩 호출 */
 		List<FileDTO> processedSubImageList = new ArrayList<>();
-		for(int i = 0; i < subImage.size(); i++) {
-			FileDTO processedSubImage = processedFile(subImage.get(i), fileUploadDir, "서브사진");
-			log.info("[ProjectController] processedSubImage : {}", processedSubImage);
+		for(int i = 0; i < subImageList.size(); i++) {
+			FileDTO processedSubImage = processedFile(subImageList.get(i), fileUploadDir, "서브사진");
+			log.info("[ProjectController] processedSubImage : {}", processedSubImage); /* 첫 번째 서브사진 제외하고 모두 null */
 			processedSubImageList.add(processedSubImage);
 		}
 		
-		log.info("[ProjectController] processedMakerProfile : {}", processedMakerProfile);
+		log.info("[ProjectController] processedMakerProfile : {}", processedMakerProfile); 
 		log.info("[ProjectController] processedMainImage : {}", processedMainImage);
-		log.info("[ProjectController] processedSettleDoc : {}", processedSettleDoc);
-		log.info("[ProjectController] processedAccountDoc : {}", processedAccountDoc);
+		log.info("[ProjectController] processedSettleDoc : {}", processedSettleDoc); 	/* null */
+		log.info("[ProjectController] processedAccountDoc : {}", processedAccountDoc); 	/* null */
+		log.info("[ProjectController] processedEtcDoc : {}", processedEtcDoc); 			/* null */
+		
+		/* 메이커 프로필은 TBL_MAKER에도 저장 */
+		maker.setMakerProfileName(processedMakerProfile.getFilePath() + "/" + processedMakerProfile.getSavedFileName());
 		log.info("[ProjectController] processedEtcDoc : {}", processedEtcDoc);
 		
 		/* DB와의 연결 */
 		project.setWriter(writer);
-		project.setMakerProfile(processedMakerProfile);
-		project.setMainImage(processedMainImage);
-		project.setSubImageList(processedSubImageList);
-		project.setSettleDoc(processedSettleDoc);
-		project.setAccountDoc(processedAccountDoc);
-		project.setEtcDoc(processedEtcDoc);
+		project.setProcessedMakerProfile(processedMakerProfile);
+		project.setProcessedMainImage(processedMainImage);
+		project.setProcessedSubImageList(processedSubImageList);
+		project.setProcessedSettleDoc(processedSettleDoc);
+		project.setProcessedAccountDoc(processedAccountDoc);
+		project.setProcessedEtcDoc(processedEtcDoc);
 		
 		/* 저장한 값 Service에 보내기 */
 		projectService.createProject(project, maker, reward);
@@ -248,7 +255,6 @@ public class ProjectController {
 		/* 대표사진 가공 시, 저장될 썸네일 경로 설정 */
 		String thumbnailDir = IMAGE_DIR + "thumbnail";
 		File dir4 = new File(thumbnailDir);
-		log.info("[ProjectController] dir4 : {}", dir4);
 		
 		/* 디렉토리가 없을 경우 생성 */
 		if(!dir4.exists()) {
@@ -280,24 +286,26 @@ public class ProjectController {
 				fileInfo.setFilePath(filePath);
 				fileInfo.setFileType(fileType);
 						
-				if(fileType.equals("대표사진")) {
+				if(fileType.equals("대표사진")) { /* 작동하지않음 */
 						Thumbnails.of(filePath + "/" + savedFileName)
 						.size(220, 165)
 						.toFile(thumbnailDir + "/thumbnail_" + savedFileName);
 						fileInfo.setThumPath("/upload/thumbnail/thumbnail_" + savedFileName);
+						log.info("[ProjectController] 대표사진만 로그 출력 : {}", fileType);
 				}
 			}
 			
 		} catch (IOException e) {
 					
-				/* 실패 시 이미 저장 된 파일 삭제 */
-				File deleteFile = new File(fileInfo.getFilePath() + "/" + fileInfo.getSavedFileName());
-				File deleteThumbnail = new File(thumbnailDir + "/thumbnail_" + fileInfo.getSavedFileName());
-						
-				deleteFile.delete();
-				deleteThumbnail.delete();
+//				/* 실패 시 이미 저장 된 파일 삭제 */
+//				File deleteFile = new File(fileInfo.getFilePath() + "/" + fileInfo.getSavedFileName());
+//				File deleteThumbnail = new File(thumbnailDir + "/thumbnail_" + fileInfo.getSavedFileName());
+//						
+//				deleteFile.delete();
+//				deleteThumbnail.delete();
 			}
 		
+		log.info("[ProjectController] fileInfo : {}", fileInfo); /* document 파일만 null로 출력 */
 		/* originalFileName, savedFileName, filePath, fileType, thumPath 담아 리턴 */
 		return fileInfo;	
 	}
