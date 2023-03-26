@@ -284,6 +284,8 @@ $(function(){
                     alert(error);
                 }
             });
+
+        
         }
     })
     
@@ -293,8 +295,34 @@ $(function(){
 const $rewradAddress1 = document.getElementById('detailed-address').value;
 const $address = $rewradAddress + $rewradAddress1;
 /* 접근 */ 
+const $refund = document.getElementById('refund');
+$refund.addEventListener('click', cancel())
 
-}
+const $payNo = document.getElementById('payNo').innerText;
+const $rePrice = document.getElementById('rePrice').innerText;
+
+
+function cancel(){
+    jQuery.ajax({
+        "url": "/pay/cancel", 
+        "type": "POST",
+        "contentType": "application/json; charset = utf-8",
+        "data": JSON.stringify({
+          "merchant_uid": $payNo, // 예: ORD20180131-0000011
+          "cancel_request_amount": $rePrice, // 환불금액
+          "reason": "테스트 결제 환불", // 환불사유
+        //   // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+        //   "refund_holder": "홍길동", 
+        //   // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+        //   "refund_bank": "49", 
+        //   // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+        //   "refund_account": "56211105948400" 
+        }),
+        "dataType": "json",
+        success : function payCancel()
+      });
+    }
+};
 
 /* 직접 입력*/
 
@@ -323,3 +351,5 @@ $(function () {
         }
     })
 });
+
+

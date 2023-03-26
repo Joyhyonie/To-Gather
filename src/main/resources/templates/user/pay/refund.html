@@ -5,9 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/main/resources/static/user/pay/CSS/refund.css" type="text/css"> 
+    <link rel="stylesheet" href="/src/main/resources/static/user/pay/CSS/refund.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
+    <link rel="stylesheet" href="/user/pay/CSS/payScreen.css" type="text/css">
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
     <title>refund</title>
 </head>
 <body>
@@ -33,9 +39,16 @@
             <h3>신중하게 고민하고 결정해주세요</h3>
         </div>
         <div class="body-foot">
-            <input class="btn mbtn" type="button" value="환불 신청">
+            <input id="refund" class="btn mbtn" type="button" value="환불 신청">
             <input class="btn" type="button" value="닫기">
         </div>
     </div>
+
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+ 
+
 </body>
 </html>

@@ -72,30 +72,34 @@ public class PaymentService {
 		return  paymentList;
 	}
 
-	public Map<String, Object> searchPayScreen(String projNo) {
+	public Map<String, Object> searchPayScreen(String projNo, String rewardNo) {
 		
-		ProjectDTO projectDetails = paymentMapper.selectProjectDetail(projNo);
-		log.info("[PaymentService] projectDetail : {}", projectDetails);
-		
-		/* 리워드 조회 */
-		List<RewardDTO> rewardLists = paymentMapper.selectRewardList(projNo);
-		log.info("[PaymentService] rewardList : {}", rewardLists);
+		ProjectDTO projectNo = paymentMapper.selectProjectDetail(projNo);
+		RewardDTO reward = paymentMapper.selectRewardList(rewardNo);
 		
 		Map<String, Object> payScreenDetails = new HashMap<>();
-		payScreenDetails.put("projectDetail", projectDetails);
-		payScreenDetails.put("rewardList", rewardLists);
+		payScreenDetails.put("projectNo", projectNo);
+		payScreenDetails.put("reward", reward);
 		
 		return payScreenDetails;
 	}
 
-
-		
-
+//	public Map<String, Object> searchPayScreen(Map<String, Object> payScreenDetails) {
+//		
+//		ProjectDTO projectDetails = paymentMapper.selectProjectDetail(payScreenDetails);
+//		log.info("[PaymentService] projectDetail : {}", projectDetails);
+//		
+//		/* 리워드 조회 */
+//		List<RewardDTO> rewardLists = paymentMapper.selectRewardList(payScreenDetails);
+//		log.info("[PaymentService] rewardList : {}", rewardLists);
+//		
+//		Map<String, Object> payScreenDetails = new HashMap<>();
+//		payScreenDetails.put("projectDetail", projectDetails);
+//		payScreenDetails.put("rewardList", rewardLists);
+//		
+//		return payScreenDetails;
+//	}
 	
-
-
-	 
-		
 	
 }
 

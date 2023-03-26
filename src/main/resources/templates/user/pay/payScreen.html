@@ -20,16 +20,16 @@
 </head>
 <body>
     
-    <th:block sec:authorize="isAnonymous()">
+    <!-- <th:block sec:authorize="isAnonymous()">
         <SCript>
             location.href="http://localhost:8001/user/login";
         </SCript>
-    </th:block>
-<th:block sec:authorize="isAuthenticated()">
+    </th:block> -->
+<!-- <th:block sec:authorize="isAuthenticated()"> -->
 	<div th:replace="/common/header/userHeader.html"></div>
     <script type="text/javascript" src="/user/pay/js/payScreen.js"></script>	
     <section id="grid1">
-        <div hidden id="pjNo" th:text="${ payD?.projNo }"></div>
+        <div hidden id="pjNo" th:text="${ payD.projNo }"></div>
         <div class="item1">
             <div  data-v-67d79bfc="" class="reward-order-form" data-component-name="pageRewardOrderForm">
                 <div  class="container">
@@ -44,10 +44,10 @@
                                 </a> 
                                 <header class="box-line1">
                                     <a  href="/reward/13401" class="title router-link-active" title="프로젝트 조회">
-                                        <span id="pjTitle" th:text="${ payD?.projName }"></span>
+                                        <span id="pjTitle" th:text="${ payD.projName }"></span>
                                     </a>
                                     <div  class="maker-name">
-                                        <span th:text="${ payD?.maker?.makerName }"></span>
+                                        <span th:text="${ payD.maker.makerName }"></span>
                                     </div>
                                 </header>
                                 <div  class="parts">
@@ -59,7 +59,7 @@
                                             <div  class="amount">
                                                 <div  class="price">
                                                     <span  class="pPrice" style="color: darkgray;">참여 금액:</span>
-                                                    <b  class="font-lg" id="rewardPrice" th:text="${ rewardL?.rewardPrice }"></b>
+                                                    <b  class="font-lg" id="rewardPrice" th:text="${ rewardL.rewardPrice }"></b>
                                                     <span >원</span>
                                                 </div>
                                                 <div  class="count">
@@ -68,7 +68,7 @@
                                                 </div>
                                             </div>
                                             <div  class="reward-title">
-                                                <div id="rewardtitle" th:text="${ rewardL?.rewardName }"></div>
+                                                <div id="rewardtitle" th:text="${ rewardL.rewardName }">4</div>
                                             </div>
                                             <div class="cubox">
                                                 <div class="cuuse">
@@ -335,7 +335,7 @@
         </div>
 
     </section>
-	<div th:replace="/common/footer/userFooter.html"></div>
+	<!-- <div th:replace="/common/footer/userFooter.html"></div> -->
 </th:block>
 </body>
 </html>

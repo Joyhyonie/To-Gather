@@ -1,6 +1,7 @@
 package com.greedy.togather.user.pay.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -26,6 +27,6 @@ public interface PaymentMapper {
 
 	ProjectDTO selectProjectDetail(String projNo);
 
-	List<RewardDTO> selectRewardList(String projNo);
+	RewardDTO selectRewardList(String rewardNo);
 
 }

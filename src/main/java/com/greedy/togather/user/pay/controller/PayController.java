@@ -1,5 +1,8 @@
 package com.greedy.togather.user.pay.controller;
 
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.greedy.togather.user.pay.dto.PayOrderDTO;
+import com.greedy.togather.user.pay.dto.PaymentDTO;
 //import com.greedy.togather.user.pay.service.PaymentService;
 import com.greedy.togather.user.pay.service.PaymentService;
 
@@ -28,16 +32,30 @@ public class PayController {
 		this.paymentService = paymentService;
 	}
 	
+	
 	@GetMapping("/payScreen")
-	public String payScreen(@RequestParam (value="projNo", required=false) String projNo, Model model) {
+	public String payScreen(/*@RequestBody Map<String, Object> reqMap*/@RequestParam("projNo") String projNo, @RequestParam("rewardNo") String rewardNo, Model model) {
+			//@RequestParam("projNo") String projNo, @RequestParam("rewardNo") String rewardNo, 
 			
+//			ModelAndView model = new  ModelAndView();
+			
+//			System.out.println("size >>> " + reqMap.size());//2 이상
+//			System.out.println("projNo 1>>>" + reqMap.get("projNo"));// prjoNO=
+//			System.out.println("rewardNo >>> " + reqMap.get("rewardNo")); // rewardNo = 
 			/* 프로젝트 상세 내용 조회 */
-			Map<String, Object> payScreenDetails = paymentService.searchPayScreen(projNo);
+			Map<String, Object> payScreenDetails = paymentService.searchPayScreen(projNo, rewardNo);		
 			log.info("[PayController] payScreenDetails : {}", payScreenDetails);
+//			Map<String, Object> payScreenDetails = paymentService.searchPayScreen(rewardNo);
 			
-			model.addAttribute("payD", payScreenDetails.get("projectDetails"));
-			model.addAttribute("rewardL", payScreenDetails.get("rewardLists"));
+			System.out.println(rewardNo);
+			System.out.println(projNo);
 			
+			
+			model.addAttribute("payD", payScreenDetails.get("projectNo"));
+			model.addAttribute("rewardL", payScreenDetails.get("reward"));
+			
+			//model.addAllObjects(payScreenDetails);
+//			model.setViewName("/user/pay/payScreen");
 		
 		return "/user/pay/payScreen";
 	}
@@ -55,7 +73,7 @@ public class PayController {
 	public @ResponseBody PayOrderDTO postPayComplete(/* @RequestBody Map<String, String> requestMap */@RequestBody PayOrderDTO order) {
 		
 
-		log.info("order : {}",order);
+//		log.info("order : {}",order);
 		
 		PayOrderDTO orderList = order;
 		
@@ -66,5 +84,13 @@ public class PayController {
 		
 		return orderList;
 	}
+	
+	@PostMapping("/cancel")
+	public @ResponseBody String payCancel(@RequestParam(value= "payNo") String payNo) {
 		
+		
+		
+		return "";
+	}
+	
 }

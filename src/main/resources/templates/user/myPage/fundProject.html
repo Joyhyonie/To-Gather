@@ -8,6 +8,12 @@
     <link rel="icon" type="image/x-icon" href="/src/main/resources/static/common/userCommon/images/favicon.ico">
     <link rel="stylesheet" href="/src/main/resources/static/user/myPage/CSS/fundProject.css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/user/pay/CSS/payScreen.css" type="text/css">
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -34,11 +40,13 @@
             <table class="fund">
                 <caption><strong>후원 중인 프로젝트</strong></caption>
                 <tr clas="table-header">
+                    <th hidden id="payNo"></th>
                     <th>프로젝트</th>
                     <th>상품 정보</th>
                     <th>주문 일자</th>
                     <th>주문 번호</th>
-                    <th>주문 금액(수량)</th>
+                    <th>주문 금액</th>
+                    <th>수량</th>
                     <th>배송 상태</th>
                     <th>주문 상태</th>
                 </tr>
@@ -47,7 +55,8 @@
                     <td>리워드 상품</td>
                     <td>2023.03.01</td>
                     <td>2023030100001</td>
-                    <td>32,000(2개)</td>
+                    <td>32000</td>
+                    <td>2</td>
                     <td>배송중</td>
                     <td><button class="btn">배송 조회</button><button class="btn">환불 신청</button></td>
                 </tr>
@@ -65,7 +74,8 @@
                     <td>리워드 상품</td>
                     <td>2023.03.01</td>
                     <td>2023030100001</td>
-                    <td>32,000(2개)</td>
+                    <td>32,000</td>
+                    <td>2</td>
                     <td>배송중</td>
                     <td><button class="btn">배송 조회</button><button class="btn">환불 신청</button></td>
                 </tr>
