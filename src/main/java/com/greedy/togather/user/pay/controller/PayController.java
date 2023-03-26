@@ -86,10 +86,11 @@ public class PayController {
 	}
 	
 	@PostMapping("/cancel")
-	public @ResponseBody String payCancel(@RequestParam(value= "payNo") String payNo) {
+	public @ResponseBody String payCancel(@RequestParam(value= "payNo") String payNo, Model model) {
 		
-		
-		
+		Map<String, Object> paymentList = paymentService.slectPayment(payNo);
+		model.addAttribute("order", paymentList.get("payment"));
+						
 		return "";
 	}
 	
