@@ -162,10 +162,11 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/create")
-	public String createProject(ProjectDTO project, MakerDTO maker, RewardDTO reward,
+	public String createProject(ProjectDTO project, MakerDTO maker, List<RewardDTO> reward,
 								@AuthenticationPrincipal UserDTO writer, RedirectAttributes rttr,
 								MultipartFile makerProfile, MultipartFile mainImage, List<MultipartFile> subImage, 
-								MultipartFile settleDoc, MultipartFile accountDoc, MultipartFile etcDoc) {
+								MultipartFile settleDoc, MultipartFile accountDoc, MultipartFile etcDoc,
+								@RequestParam String zipCode, @RequestParam String address1, @RequestParam String address2) {
 		
 		log.info("[ProjectController] project : {}", project);
 		log.info("[ProjectController] maker : {}", maker);
@@ -177,6 +178,13 @@ public class ProjectController {
 		log.info("[ProjectController] settleDoc : {}", settleDoc);
 		log.info("[ProjectController] accountDoc : {}", accountDoc);
 		log.info("[ProjectController] etcDoc : {}", etcDoc);
+		log.info("[ProjectController] zipCode : {}", zipCode);
+		log.info("[ProjectController] address1 : {}", address1);
+		log.info("[ProjectController] address2 : {}", address2);
+		
+		/* 주소 가공 */
+		String address = zipCode + "$" + address1 + "$" + address2;
+    	maker.setMakerAddress(address);
 		
 		/* 프로젝트 신청 시, 저장될 경로 분리 */
 		String fileUploadDir = IMAGE_DIR + "original";			// 프로젝트 관련 이미지, 서류들
@@ -220,8 +228,8 @@ public class ProjectController {
 		log.info("[ProjectController] processedEtcDoc : {}", processedEtcDoc);
 		
 		/* DB와의 연결 */
-		maker.setMakerProfileName(processedMakerProfile); /* 얘도 project에 담아서 보내야할듯? */
 		project.setWriter(writer);
+		project.setMakerProfile(processedMakerProfile);
 		project.setMainImage(processedMainImage);
 		project.setSubImageList(processedSubImageList);
 		project.setSettleDoc(processedSettleDoc);

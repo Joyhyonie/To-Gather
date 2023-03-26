@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.greedy.togather.user.main.dto.MainPageDTO;
 import com.greedy.togather.user.user.model.dto.UserDTO;
 
 import lombok.Data;
@@ -36,7 +37,9 @@ public class ProjectDTO {
 	private List<FileDTO> fileList;		// 이미지 정보
 	private List<RewardDTO> rewardList;	// 리워드 정보
 	private UserDTO writer;				// 프로젝트 작성자 정보 
+	private MainPageDTO mainPage;		// 메인 페이지 정보
 	
+	private FileDTO makerProfile;			// 메이커 프로필
 	private FileDTO mainImage;				// 대표 사진
 	private List<FileDTO> subImageList;		// 서브 사진(List)
 	private FileDTO settleDoc;				// 정산 서류

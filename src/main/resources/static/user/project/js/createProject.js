@@ -162,12 +162,12 @@ window.onload = function() {
                     </div>
                     <div>
                         <p class="title">* 리워드 예상 발송일</p>
-                        <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:140px;" required>
+                        <input type="date" name="rewardDueDate" id="expected-shipping" class="input" style="width:140px;" required>
                     </div>
                 </flex>
                 <div>
                     <p class="title">* 리워드 구성</p>
-                    <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:670px;" required>
+                    <input type="text" name="rewardContent" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:670px;" required>
                 </div>
             </div>
         `;
