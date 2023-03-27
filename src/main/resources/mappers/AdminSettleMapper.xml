@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.togather.admin.settle.model.dao.AdminSettleMapper">
+
+	<resultMap id="settleResultMap" type="com.greedy.togather.admin.settle.model.dto.AdminSettleDTO">
+		<id property="settleNo" column="SETTLE_NO"/>
+		<result property="projNo" column="PROJ_NO"/>
+		<result property="totalFundingPrice" column="TOTAL_FUNDING_PRICE"/>
+		<result property="totalFee" column="TOTAL_FEE"/>
+		<result property="vat" column="VAT"/>
+		<result property="donation" column="DONATION"/>
+		<result property="finalPrice" column="FINAL_PRICE"/>
+		<result property="settleDate" column="SETTLE_DATE"/>
+		<result property="settleStatus" column="SETTLE_STATUS"/>
+		
+		<association property="proj" resultMap="projResultMap"/>
+	</resultMap>
+	
+	<resultMap id="projResultMap" type="com.greedy.togather.admin.project.dto.AdminProjectDTO">
+		<id property="projNo" column="PROJ_NO"/>
+		<result property="categoryNo" column="CATEGORY_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="projNm" column="PROJ_NM"/>
+		<result property="projSummary" column="PROJ_SUMMARY"/>
+		<result property="projInfoTitle" column="PROJ_INFO_TITLE"/>
+		<result property="projInfoBody" column="PROJ_INFO_BODY"/>
+		<result property="fundingStartDate" column="FUNDING_START_DATE"/>
+		<result property="fundingEndDate" column="FINDING_END_DATE"/>
+		<result property="fundingGoal" column="FUNDING_GOAL"/>
+		<result property="fundingAchive" column="FUNDING_ACHIVE"/>
+		<result property="projRegDate" column="PROJ_REG_DATE"/>
+		<result property="projRejectDate" column="PROJ_REJECT_DATE"/>
+		<result property="projConfirmDate" column="PROJ_CONFIRM_DATE"/>
+		<result property="projStopDate" column="PROJ_STOP_DATE"/>
+		<result property="projStatus" column="PROJ_STATUS"/>
+		<result property="projReview" column="PROJ_REVIEW"/>
+	</resultMap>
+	
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+        SELECT 
+        	   COUNT(*)
+          FROM TBL_SETTLE SE
+          JOIN TBL_PROJECT PJ ON (SE.PROJ_NO = PJ.PROJ_NO)
+          		<where>
+	            <if test="searchCondition == 'projNo'">
+                 	PJ.PROJ_NO LIKE '%' || #{ searchValue } || '%'
+            	</if>
+	            <if test="searchCondition == 'projNm'">
+	                PJ.PROJ_NM LIKE '%' || #{ searchValue } || '%'
+	            </if>
+	            <if test="searchCondition == 'settleDate'">
+	                SE.SETTLE_DATE LIKE '%' || #{ searchValue } || '%'
+	            </if>
+	            <if test="searchCondition == 'settleStatus'">
+	                SE.SETTLE_STATUS = #{ searchValue }
+	            </if>
+	            </where>
+    </select>
+    
+	<select id="selectSettleList" resultMap="settleResultMap">
+		SELECT
+			   S2.SETTLE_NO
+		     , S2.PROJ_NO
+		     , S2.PROJ_NM
+		     , S2.SETTLE_DATE
+		     , S2.SETTLE_STATUS
+		  FROM (SELECT
+		               ROWNUM RNUM
+		             , S1.SETTLE_NO
+		             , S1.PROJ_NO
+		             , S1.PROJ_NM
+		             , S1.SETTLE_DATE
+		             , S1.SETTLE_STATUS
+		          FROM (SELECT
+		          			   SE.SETTLE_NO	
+		                     , PJ.PROJ_NO
+		                     , PJ.PROJ_NM
+		                     , SE.SETTLE_DATE
+		                     , SE.SETTLE_STATUS
+		                  FROM TBL_SETTLE SE
+		                  JOIN TBL_PROJECT PJ ON (SE.PROJ_NO = PJ.PROJ_NO)
+		                <where>
+			            <if test="searchCondition == 'projNo'">
+		                 	PJ.PROJ_NO LIKE '%' || #{ searchValue } || '%'
+		            	</if>
+			            <if test="searchCondition == 'projNm'">
+			                PJ.PROJ_NM LIKE '%' || #{ searchValue } || '%'
+			            </if>
+			            <if test="searchCondition == 'settleDate'">
+			                SE.SETTLE_DATE LIKE '%' || #{ searchValue } || '%'
+			            </if>
+			            <if test="searchCondition == 'settleStatus'">
+			                SE.SETTLE_STATUS = #{ searchValue }
+			            </if>
+			            </where>
+			            ORDER BY SE.SETTLE_NO DESC) S1
+		          <![CDATA[ WHERE ROWNUM <= #{ endRow } ]]>
+		        )S2
+		        WHERE RNUM >= #{ startRow }   
+	</select>
+
+	<delete id="deleteSettleChecked" parameterType="string">
+		DELETE
+ 		  FROM TBL_SETTLE 
+  	     WHERE PROJ_NO = #{ PROJ_NO }     
+	</delete>
+</mapper>
