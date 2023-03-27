@@ -119,6 +119,8 @@
 	    <![CDATA[
 	    WHERE ROWNUM <= 8 ]]>
 	    AND B.FILE_TYPE = '대표사진'
+	    AND A.PROJ_STATUS = '진행'
+	    ORDER BY (SELECT COUNT(LIKE_NO) FROM TBL_LIKE D WHERE D.PROJ_NO =  A.PROJ_NO) DESC
 	</select>
 
 </mapper>

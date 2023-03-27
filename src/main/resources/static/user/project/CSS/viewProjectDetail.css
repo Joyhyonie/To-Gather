@@ -262,13 +262,13 @@ flex {
     padding-bottom: 7px;
 }
 
-li {
+.menu-bar {
     color: #535353;
     list-style: none;
     border-bottom: 4px solid #DEDCDC;
 }
 
-li:hover,
+.menu-bar:hover,
 .is_on {
     color: #81AE64;
     border-bottom: 4px solid #81AE64;

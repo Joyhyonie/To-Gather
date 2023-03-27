@@ -90,10 +90,16 @@ public class ProjectService {
 	}
 
 	/* 프로젝트 신청 페이지 */
-	public void createProject(ProjectDTO project, MakerDTO maker, List<RewardDTO> reward) {
+	public void createProject(ProjectDTO project, MakerDTO maker) {
 		
 		/* 각 테이블에 데이터 저장 */
 		projectMapper.insertProjectInfo(project);
+		
+		projectMapper.insertMakerInfo(maker);		
+		
+		for(RewardDTO reward : project.getRewardList()) {
+			projectMapper.insertRewardInfo(reward);
+		}
 		
 		projectMapper.insertMakerProfile(project.getProcessedMakerProfile());
 		
@@ -108,10 +114,6 @@ public class ProjectService {
 		projectMapper.insertAccountDoc(project.getProcessedAccountDoc());
 		
 		projectMapper.insertEtcDoc(project.getProcessedEtcDoc());
-		
-		projectMapper.insertMakerInfo(maker);		
-		
-		projectMapper.insertRewardInfo(reward);
 		
 	}
 	

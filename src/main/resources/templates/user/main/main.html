@@ -60,7 +60,7 @@
 	            </div>
 	            <div class="funding-date"><span th:text="${ todayProj.leftDays }"></span>일 남음</div>
 	            <flex>
-	                <p class="current-funding"><span th:text="${ #numbers.formatInteger(todayProj.fundingAchive, 3, 'COMMA') }" ></span>원</p>
+	                <p class="current-funding"><span th:text="${ todayProj.fundingAchive == 0 ? '0' : #numbers.formatInteger(todayProj.fundingAchive, 3, 'COMMA') }" ></span>원</p>
 	                <p class="percent"><span th:text="${ todayProj.percent }"></span>%</p>
 	            </flex>
 	        </div>
@@ -91,7 +91,7 @@
 	            </div>
 	            <div class="funding-date"><span th:text="${ popularProj.leftDays }"></span>일 남음</div>
 	            <flex>
-	                <p class="current-funding"><span th:text="${ #numbers.formatInteger(popularProj.fundingAchive, 3, 'COMMA') }" ></span>원</p>
+	                <p class="current-funding"><span th:text="${ popularProj.fundingAchive == 0 ? '0' : #numbers.formatInteger(popularProj.fundingAchive, 3, 'COMMA') }" ></span>원</p>
 	                <p class="percent"><span th:text="${ popularProj.percent }"></span>%</p>
 	            </flex>
 	        </div>

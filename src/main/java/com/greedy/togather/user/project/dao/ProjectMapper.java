@@ -35,14 +35,14 @@ public interface ProjectMapper {
 	void insertReply(ReplyDTO reply);
 	
 	/* 프로젝트 신청 */
-	/* TBL_MAKER에 메이커 정보 등록 */
-	void insertMakerInfo(MakerDTO maker);
-	
 	/* TBL_PROJECT에 정보 등록 */
 	void insertProjectInfo(ProjectDTO project);
 	
+	/* TBL_MAKER에 메이커 정보 등록 */
+	void insertMakerInfo(MakerDTO maker);
+	
 	/* TBL_REWARD에 정보 등록 */
-	void insertRewardInfo(List<RewardDTO> reward);
+	void insertRewardInfo(RewardDTO reward);
 	
 	/* TBL_FILE에 메이커 프로필 등록 */
 	void insertMakerProfile(FileDTO makerProfile);

@@ -169,7 +169,7 @@
                     <flex>
                         <div>
                             <p class="title">* 프로젝트 명</p>
-                            <input type="text" name="projName" id="project-name" class="input" maxlength="16" style="width:300px;" required>
+                            <input type="text" name="projName" id="project-name" class="input" maxlength="24" style="width:300px;" required>
                         </div>
                         <div>
                             <p class="title">* 프로젝트 간략 소개</p>
@@ -238,38 +238,9 @@
                                 focus: false,               // 에디터 로딩후 포커스를 맞출지 여부
                                 lang: "ko-KR",				// 한글 설정
                                 placeholder: 'To-Gather와 함께 할 프로젝트를 소개해주세요! :)',
-                                spellCheck: false,
-                                /* 이미지 업로드 */
-                                callbacks: { 
-                                	onImageUpload: function(files) {
-                                		uploadSummernoteImageFile(files[0], this);
-                                	}
-                                }
+                                spellCheck: false
+                                
                             });
-                        	
-                            function uploadSummernoteImageFile(file, editor) {
-                                data = new FormData();
-                                data.append("file", file);
-                                $.ajax({
-                                    data : data,
-                                    type : "POST",
-                                    url : "/uploadSummernoteImageFile",
-                                    contentType : false,
-                                    processData : false,
-                                    success : function(data) {
-                                        /* 항상 업로드 된 파일의 url이 있어야 함 */
-                                        $(editor).summernote('insertImage', data.url);
-                                    }
-                                });
-                            }
-                            
-                            /* 이미지 파일을 drag & drop으로 업로드 하기 위한 코드 */
-                            $("div.note-editable").on('drop',function(e){
-						         for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
-						         	uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
-						         }
-						        e.preventDefault();
-						   })
                         
                         });
                     </script>
@@ -296,7 +267,7 @@
                 <div class="items">
                     <div>
                         <p class="title">* 리워드 배송비</p>
-                        <input type="number" name="rewardFee" id="shipping-fee" class="input" placeholder="단위 : 원" style="width:180px;" required>
+                        <input type="number" name="rewardList[0].rewardFee" id="shipping-fee" class="input" placeholder="단위 : 원" style="width:180px;" required>
                     </div>
                     <div class="reward-container">
                         <flex class="align-right">
@@ -311,20 +282,20 @@
                                 <flex>
                                     <div>
                                         <p class="title">* 리워드명</p>
-                                        <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;" required>
+                                        <input type="text" name="rewardList[0].rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;" required>
                                     </div>
                                     <div>
                                         <p class="title">* 리워드 금액</p>
-                                        <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:110px;" required>
+                                        <input type="number" name="rewardList[0].rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:110px;" required>
                                     </div>
                                     <div>
                                         <p class="title">* 리워드 예상 발송일</p>
-                                        <input type="date" name="rewardDueDate" id="expected-shipping" class="input" style="width:140px;" required>
+                                        <input type="date" name="rewardList[0].rewardDueDate" id="expected-shipping" class="input" style="width:140px;" required>
                                     </div>
                                 </flex>
                                 <div>
                                     <p class="title">* 리워드 구성</p>
-                                    <input type="text" name="rewardContent" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:670px;" required>
+                                    <input type="text" name="rewardList[0].rewardContent" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:670px;" required>
                                 </div>
                             </div>
                         </div>
@@ -409,7 +380,7 @@
                             <p class="gray-text">(프로젝트를 설명한 기타 서류나 리워드의 종류에 따라 To-Gather에서 추가 서류를 요청하는 경우)</p>
                         </div>
                         <label for="etc-doc" class="upload">파일 올리기</label>
-                        <input type="file" id="etc-doc" name="etcDoc" accept=".pdf">
+                        <input type="file" id="etc-doc" name="etcDoc" accept=".pdf" required>
                     </flex>
                     <div class="for-icon">
                         <input class="upload-name doc" id="etc-doc-name" value="파일을 업로드 해주세요 :)" readonly>
