@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.greedy.togather.admin.user.model.dto.AdminFundingDTO;
 import com.greedy.togather.admin.user.model.dto.AdminUserDTO;
 import com.greedy.togather.admin.user.model.service.AdminUserService;
 
@@ -59,7 +60,7 @@ public class AdminUserController {
 		
 		/* 체크된 리스트가 가지고 있는 userNo를 UserDTO에 set한 후에 service 레이어에 보낸다 */ 
 		
-		log.info("[AdminUserController] checkList {}", checkList );
+		log.info("[AdminUserController] checkList {}", checkList);
 		
 		for(String checkInfo : checkList) {
 			user.setUserNo(checkInfo);
@@ -83,14 +84,28 @@ public class AdminUserController {
 		log.info("[AdminUserController] userDetail : {}", userDetail);
 		
 		/* 펀딩 내역 조회*/
-		Admin
+		List<AdminFundingDTO> fundingDetail = adminUserService.selectFundingDetail(userNo);
+		log.info("[AdminUserController] fundingDetail : {}", fundingDetail);
 		
+		/* 펀딩 합계 */
+		int totalPay = 0;
+		int totalRefund = 0;
 		
+		for(AdminFundingDTO funding : fundingDetail) {
+			totalPay += funding.getPay().getPayPrice();
+			totalRefund += funding.getPay().getRefund().getRefundPrice();
+		}
 		
 		model.addAttribute("user", userDetail);
+		model.addAttribute("fundingList", fundingDetail);
+		model.addAttribute("totalPay", totalPay);
+		model.addAttribute("totalRefund", totalRefund);
 		
 		return "admin/user/userDetail";
 	}
+	
+
+	
 	
 
 }

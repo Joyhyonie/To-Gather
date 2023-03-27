@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <title>userDetail</title>
 </head>
 <body>
@@ -26,16 +27,17 @@
         </div>
 
         <div class="content2">
-            <p>회원 정보 조회</p>
+           <p>회원 정보 조회</p>
+            <form action="/user/detail/update" method="post">
             <table>
                 <tr>
                     <th class="table-header">아이디</th>
-                    <td colspan="3" class="table-body"><input type="email" th:value="${ user.email }"/></td>
+                    <td colspan="3" class="table-body" th:text="${ user.email }"></td>
 
                 </tr>
                 <tr>
-                    <th class="table-header">이름</th>
-                    <td colspan="3" class="table-body"><input type="text" th:value="${ user.userNm}" readonly="readonly"/></td>
+                    <th class="table-header" >이름</th>
+                    <td colspan="3" class="table-body" th:text="${ user.userNm }"></td>
                 </tr>
                 <tr>
                     <th class="table-header">휴대폰번호</th>
@@ -46,21 +48,9 @@
                 <tr>
                     <th class="table-header">주소</th>
                     <td colspan="3" class="table-body">
-                        <input type="text" class="inputbox box2" th:value="${ user.address }"><button type="button">검색</button><br>
+                        <input type="text" class="inputbox box2" th:value="${ user.address }">
+                        <input type="button" value="검색" id="addressBtn"><br>
                         <input type="text" class="inputbox box3">
-                    </td>
-                </tr>
-                <tr class="table-profile">
-                    <th class="table-header">프로필 사진</th>
-                    <td colspan="3" class="table-body profile">
-                        <div class="profile-area"><i class="bi bi-person-circle"></i></div>
-                        <div class="none-display">
-                            <input type="file" name="attachProfile" accept="image/gif,image/jpeg,image/png"> 
-                        </div>
-                        <div>
-                            <button type="button" class="update-button">수정</button>
-                            <button type="button" class="delete-button">삭제</button>
-                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -70,31 +60,31 @@
                     <td class="table-body" th:text="${ #dates.format(user.quitDate, 'yyyy-MM-dd') }"></td>
                 </tr>
             </table>
+            </form>
         </div>
 
         <div class="content3">
             <p>펀딩 내역 조회</p>
             <table>
                 <tr class="table-header" >
-                    <th>NO.</th>
+                    <th>결제번호</th>
                     <th>프로젝트명</th>
                     <th>리워드명</th>
-                    <th>수량<th>
                     <th>결제일자</th>
                     <th>결제금액</th>
                     <th>환불일자</th>
                     <th>환불금액</th>
                     <th>환불사유</th>
                 </tr>
-                <tr class="table-content" th:each="{funding : fundingList}">
-                    <td th:text="${ funding.payNo }"></td>
-                    <td th:text="${ funding.projNm }"></td>
-                    <td th:text="${ funding.rewardQuantity }"></td>
-                    <td th:text="${ funding.payDate }"></td>
-                    <td th:text="${ funding.payPrice }"></td>
-                    <td th:text="${ funding.refundDate }"></td>
-                    <td th:text="${ funding.refundPrice }"></td>
-                    <td th:text="${ funding.refundReason }"></td>
+                <tr class="table-content" th:each="funding : ${fundingList}">
+                    <td th:text="${ funding.pay.payNo }"></td>
+                    <td th:text="${ funding.proj.projNm }"></td>
+                    <td th:text="${ funding.reward.rewardNm }"></td>
+                    <td th:text="${ #dates.format(funding.pay.payDate, 'yyyy-MM-dd') }"></td>
+                    <td th:text="${ #numbers.formatInteger(funding.pay.payPrice, 3, 'COMMA') }"></td>
+                    <td th:text="${ #dates.format(funding.pay.refund.refundDate, 'yyyy-MM-dd') }"></td>
+                    <td th:text="${ #numbers.formatInteger(funding.pay.refund.refundPrice, 3, 'COMMA') }"></td>
+                    <td th:text="${ funding.pay.refund.refundReason }"></td>
                 </tr>
             </table>
         </div>
@@ -104,24 +94,24 @@
             <table>
                 <tr>
                     <th class="table-header">&nbsp;</th>
-                    <th class="table-header">건수</th>
+                    <th class="table-header">결제 건수</th>
                     <th class="table-header">결제 금액</th>
                     <th class="table-header">환불 금액</th>
                     <th class="table-header">총 펀딩 금액</th>
                 </tr>
                 <tr class="table-content">
                     <th class="total">합계</th>
-                    <td th:text="${ "></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td th:text="${ #lists.size(fundingList) }"></td>
+                    <td th:text="${ #numbers.formatInteger(totalPay, 3, 'COMMA') }"></td>
+                    <td th:text="${ #numbers.formatInteger(totalRefund, 3, 'COMMA') }"></td>
+                    <td th:text="${ #numbers.formatInteger((totalPay - totalRefund), 3, 'COMMA') }"></td>
                 </tr>
             </table>
         </div>
 
         <div class="content5">
             <button class="user-cancel">취소</button>
-            <button class="user-update">수정</button>
+            <button type="button" class="user-update">수정</button>
         </div>
 
         
@@ -129,7 +119,23 @@
 
 
 
-
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	
+	    const $searchZipCode = document.getElementById("#addressBtn");
+	
+	    $searchZipCode.onclick = function() {
+	
+	        new daum.Postcode({
+	            oncomplete: function(data){
+	                document.getElementById("zipCode").value = data.zonecode;
+	                document.getElementById("address1").value = data.address;
+	                document.getElementById("address2").focus();
+	            }
+	        }).open();
+	    }
+	
+	</script>
 
 
 
