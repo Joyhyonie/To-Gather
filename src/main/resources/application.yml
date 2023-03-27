@@ -1,6 +1,6 @@
 # server config
 server:
-  port: 8002
+  port: 8001
 
 # mybatis config
 mybatis:
@@ -23,9 +23,6 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
-  mvc:
-    converters:
-      preferred-json-mapper: gson
     
 # file upload config
   servlet:
@@ -33,7 +30,7 @@ spring:
       enabled: true
       max-file-size: 20MB
       max-request-size: 20MB
-      location: D:/semi-project/To-Gather_Files/To-Gather/
+      location: D:/semi-project/To-Gather_Files/To-Gather_2/ # 경로 반드시 확인
       
 
 # image upload directory (이미지를 저장할 경로 설정)

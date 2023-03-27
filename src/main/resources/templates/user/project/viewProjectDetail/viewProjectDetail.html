@@ -19,7 +19,7 @@
         <!-- 대표 사진 -->
         <div class="slider">
         	<th:block th:each=" file : ${ detail.fileList }">
-            		<img th:src="${ file.filePath + file.savedFileName }" class="slide"> <!-- th:data-proj-no="${ mainProj.projNo }" -->
+            		<img th:src="${ file.filePath + file.savedFileName }" class="slide">
 		    </th:block>
         </div>
 
@@ -33,7 +33,7 @@
             </th:block>
             <h1 id="title" th:text="${ detail.projName }"></h1>
             <div id="funding">
-                <p id="amount"><span th:text="${ #numbers.formatInteger(detail.fundingAchive, 3, 'COMMA') }"></span>원</p>
+            	<p id="amount" th:text="${detail.fundingAchive == 0 ? '0원' : #numbers.formatInteger(detail.fundingAchive, 3, 'COMMA') + '원'}"></p>
                 <p id="percent"><span th:text="${ detail.percent }"></span>%</p>
                 <div id="goal-box">
                 <p id="goal"><span th:text="${ #numbers.formatInteger(detail.fundingGoal, 3, 'COMMA') }"></span>원 목표</p>
@@ -62,10 +62,10 @@
         <div class="story-bar">
             <ul class="menu">
                 <flex>
-                    <li class="is_on">
+                    <li class="menu-bar is_on">
                     <a href="#story" class="btn"><span>스토리</span></a>
                     </li>
-                    <li>
+                    <li class="menu-bar">
                     <a href="#review" class="btn"><span>소식ㆍ후기</span></a>
                     </li>
                 </flex>
@@ -295,7 +295,11 @@
 						divInFlex3.appendChild(comment);
 						
 						/* 프로필 사진 */
-						profiles.src = '/user/project/images/profile4.png';
+						if(reply.writer.profileNm == null) {
+							profiles.src = '/user/project/images/profile4.png';
+						} else {
+							profiles.src = reply.writer.profileNm;
+						}
 						
 						/* 아이디 */
 						userId.textContent = reply.userId;

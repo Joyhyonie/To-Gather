@@ -164,15 +164,14 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/create")
-	public String createProject(ProjectDTO project, MakerDTO maker, ArrayList<RewardDTO> reward,
-								@AuthenticationPrincipal UserDTO writer, RedirectAttributes rttr,
+	public String createProject(ProjectDTO project, MakerDTO maker, @AuthenticationPrincipal UserDTO writer, RedirectAttributes rttr,
 								MultipartFile makerProfile, MultipartFile mainImage,  List<MultipartFile> subImageList, 
 								MultipartFile settleDoc, MultipartFile accountDoc, MultipartFile etcDoc,
 								@RequestParam String zipCode, @RequestParam String address1, @RequestParam String address2) {
 		
 		log.info("[ProjectController] project : {}", project);
 		log.info("[ProjectController] maker : {}", maker);
-		log.info("[ProjectController] reward : {}", reward); // [] 빈 배열 출력
+		log.info("[ProjectController] rewardList : {}", project.getRewardList());
 		log.info("[ProjectController] writer : {}", writer);
 		log.info("[ProjectController] makerProfile : {}", makerProfile);
 		log.info("[ProjectController] mainImage : {}", mainImage);
@@ -218,21 +217,27 @@ public class ProjectController {
 		FileDTO processedEtcDoc = processedFile(etcDoc, documentDir, "기타서류");
 		/* List형태인 subImage는 반복문을 통해 하나씩 호출 */
 		List<FileDTO> processedSubImageList = new ArrayList<>();
+		
 		for(int i = 0; i < subImageList.size(); i++) {
 			FileDTO processedSubImage = processedFile(subImageList.get(i), fileUploadDir, "서브사진");
-			log.info("[ProjectController] processedSubImage : {}", processedSubImage); /* 첫 번째 서브사진 제외하고 모두 null */
-			processedSubImageList.add(processedSubImage);
+			log.info("[ProjectController] processedSubImage : {}", processedSubImage); 
+			/* processedSubImage가 null이 아닐 때만 담기도록 조건문 설정 (호출한 뒤 반환받은 fileInfo가 null이라는 것은 이미지 첨부가 되지 않았음을 의미 - 서브사진은 nullable) */
+			if(processedSubImage != null) {
+				log.info("[ProjectController] processedSubImage : {}", processedSubImage); 
+				processedSubImageList.add(processedSubImage);
+			}
 		}
 		
 		log.info("[ProjectController] processedMakerProfile : {}", processedMakerProfile); 
 		log.info("[ProjectController] processedMainImage : {}", processedMainImage);
-		log.info("[ProjectController] processedSettleDoc : {}", processedSettleDoc); 	/* null */
-		log.info("[ProjectController] processedAccountDoc : {}", processedAccountDoc); 	/* null */
-		log.info("[ProjectController] processedEtcDoc : {}", processedEtcDoc); 			/* null */
+		log.info("[ProjectController] processedSettleDoc : {}", processedSettleDoc); 
+		log.info("[ProjectController] processedAccountDoc : {}", processedAccountDoc); 
+		log.info("[ProjectController] processedEtcDoc : {}", processedEtcDoc); 	
+		log.info("[ProjectController] processedSubImageList : {}", processedSubImageList); 
 		
 		/* 메이커 프로필은 TBL_MAKER에도 저장 */
-		maker.setMakerProfileName(processedMakerProfile.getFilePath() + "/" + processedMakerProfile.getSavedFileName());
-		log.info("[ProjectController] processedEtcDoc : {}", processedEtcDoc);
+		maker.setMakerProfileName("/upload/makerProfile/" + processedMakerProfile.getSavedFileName());
+		log.info("[ProjectController] maker.getMakerProfileName() : {}", maker.getMakerProfileName());
 		
 		/* DB와의 연결 */
 		project.setWriter(writer);
@@ -242,9 +247,10 @@ public class ProjectController {
 		project.setProcessedSettleDoc(processedSettleDoc);
 		project.setProcessedAccountDoc(processedAccountDoc);
 		project.setProcessedEtcDoc(processedEtcDoc);
+
 		
 		/* 저장한 값 Service에 보내기 */
-		projectService.createProject(project, maker, reward);
+		projectService.createProject(project, maker);
 		
 		return "redirect:/project/submit";
 	}
@@ -283,29 +289,39 @@ public class ProjectController {
 				fileInfo = new FileDTO();
 				fileInfo.setOriginalFileName(originalFileName);
 				fileInfo.setSavedFileName(savedFileName);
-				fileInfo.setFilePath(filePath);
 				fileInfo.setFileType(fileType);
 						
-				if(fileType.equals("대표사진")) { /* 작동하지않음 */
-						Thumbnails.of(filePath + "/" + savedFileName)
-						.size(220, 165)
-						.toFile(thumbnailDir + "/thumbnail_" + savedFileName);
-						fileInfo.setThumPath("/upload/thumbnail/thumbnail_" + savedFileName);
-						log.info("[ProjectController] 대표사진만 로그 출력 : {}", fileType);
+				if(fileType.equals("대표사진")) {
+					fileInfo.setFilePath("/upload/original/");
+					/* 썸네일 처리 */
+					Thumbnails.of(filePath + "/" + savedFileName)
+					.size(220, 165)
+					.toFile(thumbnailDir + "/thumbnail_" + savedFileName);
+					fileInfo.setThumPath("/upload/thumbnail/thumbnail_" + savedFileName);
+					
+				} else if(fileType.equals("서브사진")) {
+					fileInfo.setFilePath("/upload/original/");
+					
+				} else if(fileType.equals("정산서류") || fileType.equals("통장사본") || fileType.equals("기타서류")) {
+					fileInfo.setFilePath("/upload/document/");
+					
+				} else if(fileType.equals("메이커프로필")) {
+					fileInfo.setFilePath("/upload/makerProfile/");
 				}
 			}
 			
 		} catch (IOException e) {
+			e.printStackTrace();
 					
-//				/* 실패 시 이미 저장 된 파일 삭제 */
-//				File deleteFile = new File(fileInfo.getFilePath() + "/" + fileInfo.getSavedFileName());
-//				File deleteThumbnail = new File(thumbnailDir + "/thumbnail_" + fileInfo.getSavedFileName());
-//						
-//				deleteFile.delete();
-//				deleteThumbnail.delete();
+				/* 실패 시 이미 저장 된 파일 삭제 */
+				File deleteFile = new File(fileInfo.getFilePath() + "/" + fileInfo.getSavedFileName());
+				File deleteThumbnail = new File(thumbnailDir + "/thumbnail_" + fileInfo.getSavedFileName());
+						
+				deleteFile.delete();
+				deleteThumbnail.delete();
 			}
 		
-		log.info("[ProjectController] fileInfo : {}", fileInfo); /* document 파일만 null로 출력 */
+		log.info("[ProjectController] fileInfo : {}", fileInfo);
 		/* originalFileName, savedFileName, filePath, fileType, thumPath 담아 리턴 */
 		return fileInfo;	
 	}
@@ -331,7 +347,7 @@ public class ProjectController {
 		model.addAttribute("rewardList", allProjectDetails.get("rewardList"));
 		model.addAttribute("donationAndReplyCount", allProjectDetails.get("donationAndReplyCount"));
 		
-		return "/user/project/viewProjectDetail/viewProjectDetail";
+		return "user/project/viewProjectDetail/viewProjectDetail";
 	}
 	
 	/* 댓글 조회(비동기통신) */
@@ -356,7 +372,7 @@ public class ProjectController {
 		log.info("[ProjectController] writer : {}", writer);
 		
 		/* 랜덤 댓글 기부금 설정 */
-		int random = (int)(Math.random() * 3) + 1; 
+		int random = (int)(Math.random() * 2) + 1; 
 		int donation = (random == 1) ? 100 : 0;
 		log.info("[ProjectController] donation : {}", donation);
 		

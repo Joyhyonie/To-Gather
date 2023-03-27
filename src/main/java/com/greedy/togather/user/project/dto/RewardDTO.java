@@ -3,9 +3,13 @@ package com.greedy.togather.user.project.dto;
 import java.sql.Date;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RewardDTO {
 	
 	private String rewardNo;		// 리워드 번호

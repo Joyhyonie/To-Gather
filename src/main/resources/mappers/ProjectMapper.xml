@@ -85,7 +85,7 @@
 	<resultMap type="com.greedy.togather.user.project.dto.ReplyDTO" id="replyResultMap">
 		<id property="replyNo" column="REPLY_NO" />
 		<result property="userNo" column="USER_NO" />
-		<result property="projNo" column="PROJ_NO" />
+		<!-- <result property="projNo" column="PROJ_NO" /> --> <!-- 댓글이 없을 경우, 페이지가 로드되지 않으므로 주석처리 -->
 		<result property="replyBody" column="REPLY_BODY" />
 		<result property="replyRegDate" column="REPLY_REG_DATE" />
 		<result property="donation" column="DONATION" />
@@ -292,31 +292,6 @@
 
 	<!-- ========================================================================================================= -->
 
-	<!-- TBL_MAKER 정보 등록 -->
-	<insert id="insertMakerInfo">
-		INSERT
-	    INTO TBL_MAKER
-	    (
-	        PROJ_NO
-	    ,	MAKER_PROFILE_NM
-	    ,   MAKER_NM
-	    ,   MAKER_ADDRESS
-	    ,   MAKER_PHONE
-	    ,   MAKER_EMAIL
-	    ,   MAKER_INTRO
-	    )
-	    VALUES
-	    (
-	        'PJ'||LPAD(SEQ_PROJ_NO.CURRVAL, 9, '0')
-	    ,	#{ makerProfileName }
-	    ,   #{ makerName }
-	    ,   #{ makerAddress }
-	    ,   #{ makerPhone }
-	    ,   #{ makerEmail }
-	    ,   #{ makerIntro }
-	    )
-	</insert>
-
 	<!-- TBL_PROJECT 정보 등록 -->
 	<insert id="insertProjectInfo">
 		INSERT
@@ -352,10 +327,35 @@
 	    )
 	</insert>
 	
+	<!-- TBL_MAKER 정보 등록 -->
+	<insert id="insertMakerInfo">
+		INSERT
+	    INTO TBL_MAKER
+	    (
+	        PROJ_NO
+	    ,	MAKER_PROFILE_NM
+	    ,   MAKER_NM
+	    ,   MAKER_ADDRESS
+	    ,   MAKER_PHONE
+	    ,   MAKER_EMAIL
+	    ,   MAKER_INTRO
+	    )
+	    VALUES
+	    (
+	        'PJ'||LPAD(SEQ_PROJ_NO.CURRVAL, 9, '0')
+	    ,	#{ makerProfileName }
+	    ,   #{ makerName }
+	    ,   #{ makerAddress }
+	    ,   #{ makerPhone }
+	    ,   #{ makerEmail }
+	    ,   #{ makerIntro }
+	    )
+	</insert>
+	
 	<!-- TBL_REWARD 정보 등록 -->
 	<insert id="insertRewardInfo">
 		INSERT
-	    INTO TBL_PROJECT
+	    INTO TBL_REWARD
 	    (
 	        REWARD_NO
 	    ,   PROJ_NO

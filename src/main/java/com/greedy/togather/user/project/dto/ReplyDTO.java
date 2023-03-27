@@ -2,6 +2,7 @@ package com.greedy.togather.user.project.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.greedy.togather.user.user.model.dto.UserDTO;
 
 import lombok.Data;
@@ -13,6 +14,7 @@ public class ReplyDTO {
 	private String userNo;		// 회원 번호
 	private String projNo;		// 프로젝트 번호
 	private String replyBody;	// 댓글 내용
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date replyRegDate;	// 작성일
 	private int donation;		// 기부금
 	private String userId;		// SUBSTR(EMAIL, 1, INSTR(EMAIL, '@') -1) 회원 아이디
