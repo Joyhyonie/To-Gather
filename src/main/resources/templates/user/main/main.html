@@ -48,9 +48,6 @@
 	            <th:block th:each=" file : ${ todayProj.fileList }" >
 	            	<img th:if="${ file.fileType == '대표사진' }" th:src="${ file.thumPath }" class="project-image">
 	            </th:block>
-	            <div class="like-box">
-	                <img src="/user/main/images/like-empty.png" class="like-btn">
-	            </div>
 	            <div class="display-box">
 	                <p th:text="${ todayProj.projSummary }" class="project-summary"></p>
 	            </div>
@@ -79,9 +76,6 @@
 	            <th:block th:each=" file : ${ popularProj.fileList }" >
 	            	<img th:if="${ file.fileType == '대표사진' }" th:src="${ file.thumPath }" class="project-image">
 	            </th:block>
-	            <div class="like-box">
-	                <img src="/user/main/images/like-empty.png" class="like-btn">
-	            </div>
 	            <div class="display-box">
 	                <p th:text="${ popularProj.projSummary }" class="project-summary"></p>
 	            </div>

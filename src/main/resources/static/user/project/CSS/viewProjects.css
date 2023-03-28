@@ -83,7 +83,7 @@ select { /* select 화살표 커스텀 */
     left: 15px;
 }
 
-.like-box {
+#like-box {
     position: absolute;
     width: 30px;
     height: 30px;

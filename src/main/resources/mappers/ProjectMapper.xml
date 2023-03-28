@@ -14,6 +14,7 @@
 		<result property="projStatus" column="PROJ_STATUS" />
 		<result property="leftDays" column="LEFT_DAYS" /> <!-- 쿼리문에서 가공된 데이터 -->
 		<result property="percent" column="PERCENT" /> <!-- 쿼리문에서 가공된 데이터 -->
+		<result property="totalLikes" column="TOTAL_LIKES" /> <!-- 쿼리문에서 가공된 데이터 -->
 
 		<association property="category" resultMap="categoryResultMap" />
 		<association property="maker" resultMap="makerResultMap" />
@@ -65,6 +66,10 @@
 		<id property="likeNo" column="LIKE_NO" />
 		<result property="userNo" column="USER_NO" />
 		<result property="projNo" column="PROJ_NO" />
+		
+		<collection property="user" javaType="com.greedy.togather.user.user.model.dto.UserDTO">
+			<id property="userNo" column="USER_NO" />
+		</collection>
 	</resultMap>
 
 	<!-- RewardDTO -->
@@ -127,63 +132,26 @@
 
 	<!-- ========================================================================================================= -->
 
-	<!-- 페이징 처리를 위한 카테고리별 총 프로젝트 수 -->
-	<select id="selectProjectsTotalCount" resultType="_int">
-		SELECT
-		COUNT(*)
-		FROM TBL_PROJECT A
-		WHERE A.CATEGORY_NO = #{ categoryNo }
-		AND A.PROJ_STATUS IN ('진행', '마감')
-	</select>
-
 	<!-- 프로젝트 리스트 조회 -->
 	<select id="selectProjectList" resultMap="viewProjectsResultMap">
 		SELECT
-		A.PROJ_NO
-		, D.THUM_PATH
-		, A.PROJ_SUMMARY
-		, A.PROJ_NM
-		, TRUNC(A.FUNDING_END_DATE - SYSDATE) AS LEFT_DAYS
-		, A.FUNDING_ACHIVE
-		, TRUNC(A.FUNDING_ACHIVE / A.FUNDING_GOAL * 100) AS PERCENT
-		, A.PROJ_STATUS
-		, E.MAKER_NM
-		FROM (
-		SELECT
-		ROWNUM RNUM
-		, B.PROJ_NO
-		, B.PROJ_SUMMARY
-		, B.PROJ_NM
-		, B.FUNDING_END_DATE
-		, TRUNC(B.FUNDING_END_DATE - SYSDATE)
-		, B.FUNDING_ACHIVE
-		, B.FUNDING_GOAL
-		, TRUNC(B.FUNDING_ACHIVE / B.FUNDING_GOAL * 100)
-		, B.PROJ_STATUS
-		FROM (
-		SELECT
-		C.PROJ_NO
-		, C.PROJ_SUMMARY
-		, C.PROJ_NM
-		, C.FUNDING_END_DATE
-		, TRUNC(C.FUNDING_END_DATE - SYSDATE)
-		, C.FUNDING_ACHIVE
-		, C.FUNDING_GOAL
-		, TRUNC(C.FUNDING_ACHIVE / C.FUNDING_GOAL * 100)
-		, C.PROJ_STATUS
-		FROM TBL_PROJECT C
-		WHERE C.PROJ_STATUS IN ('진행', '마감')
-		AND C.CATEGORY_NO = #{ categoryNo }
-		ORDER BY C.PROJ_NO DESC
-		) B
-	        <![CDATA[
-	        WHERE ROWNUM <= #{ selectCriteria.endRow }
-	        ]]>
-		) A
-		LEFT JOIN TBL_FILE D ON A.PROJ_NO = D.PROJ_NO
-		LEFT JOIN TBL_MAKER E ON A.PROJ_NO = E.PROJ_NO
-		WHERE A.RNUM >= #{ selectCriteria.startRow }
-		ORDER BY A.PROJ_NO DESC
+	      A.PROJ_NO
+	    , B.THUM_PATH
+	    , A.PROJ_SUMMARY
+	    , A.PROJ_NM
+	    , TRUNC(A.FUNDING_END_DATE - SYSDATE) AS LEFT_DAYS
+	    , A.FUNDING_ACHIVE
+	    , TRUNC(A.FUNDING_ACHIVE / A.FUNDING_GOAL * 100) AS PERCENT
+	    , A.PROJ_STATUS
+	    , C.MAKER_NM
+	    , (SELECT COUNT(LIKE_NO) FROM TBL_LIKE D WHERE D.PROJ_NO = A.PROJ_NO) AS TOTAL_LIKES
+	    FROM TBL_PROJECT A
+	    LEFT JOIN TBL_FILE B ON A.PROJ_NO = B.PROJ_NO
+	    LEFT JOIN TBL_MAKER C ON A.PROJ_NO = C.PROJ_NO
+	    WHERE A.PROJ_STATUS IN ('진행', '마감')
+	    AND A.CATEGORY_NO = #{ categoryNo }
+	    ORDER BY A.PROJ_NO DESC 
+
 	</select>
 
 	<!-- 프로젝트 상세 페이지 조회 -->
@@ -258,8 +226,7 @@
 	</select>
 
 	<!-- 프로젝트 상세 페이지 중, 총 기부금 & 댓글 개수 조회 -->
-	<select id="selectDonationAndReplyCount"
-		resultMap="replyResultMap">
+	<select id="selectDonationAndReplyCount" resultMap="replyResultMap">
 		SELECT
 		SUM(DONATION) AS TOTAL_DONATION
 		, COUNT(REPLY_NO) AS TOTAL_REPLY
@@ -532,7 +499,52 @@
 	
 	<!-- 후기 등록 -->
 	<insert id="">
-	
+		
 	</insert>
+	
+	<!-- ========================================================================================================= -->
+	
+	<!-- 현재 사용자가 해당 프로젝트를 좋아요 했는지 조회 (첫 로드 시)-->
+	<select id="loadIsLiked" resultType="_int">
+		SELECT
+	        COUNT(*)
+	    FROM TBL_LIKE
+	    WHERE USER_NO = #{ user.userNo }
+	    AND PROJ_NO = #{ projNo }
+	</select>
+	
+	<!-- 현재 사용자가 해당 프로젝트를 좋아요 했는지 조회 (비동기 요청 시)-->
+	<select id="isLikedByUser" resultType="_int">
+		SELECT
+	        COUNT(*)
+	    FROM TBL_LIKE
+	    WHERE USER_NO = #{ user.userNo }
+	    AND PROJ_NO = #{ projNo }
+	</select>
+	
+	<!-- 좋아요 추가 -->
+	<insert id="insertProjectLike">
+		INSERT
+	    INTO TBL_LIKE
+	    (
+	        LIKE_NO
+	    ,   USER_NO
+	    ,   PROJ_NO
+	    )
+	    VALUES
+	    (
+	        'LI'||LPAD(SEQ_REWARD_NO.NEXTVAL, 9, '0')
+	    ,   #{ user.userNo }
+	    ,   #{ projNo }
+	    )
+	</insert>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="deleteProjectLike">
+		DELETE
+	    FROM TBL_LIKE
+	    WHERE USER_NO = #{ user.userNo }
+	    AND PROJ_NO = #{ projNo }
+	</delete>
 
 </mapper>
