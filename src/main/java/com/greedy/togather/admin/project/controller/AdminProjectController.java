@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -68,12 +69,88 @@ public class AdminProjectController {
 	}
 	
 	@GetMapping("/page")
-	public String adminProjectPage(@RequestParam("projNo") String projNo, Model model) {
+	public String adminProjectPage(@RequestParam(value="projNo", required=false) String projNo,
+			Model model) {
 		
-		model.addAttribute("projNo", projNo);
 		
-		return "/admin/project/projectlist";
+		Map<String, Object> adminProjectAll = adminProjectService.readProjectPage(projNo); 
+		log.info("[AdminProjectController] adminProjectAll : {}", adminProjectAll);
+		
+		model.addAttribute("adminPage", adminProjectAll.get("adminProjectPage"));
+		model.addAttribute("adminReward", adminProjectAll.get("adminRewardList"));
+		model.addAttribute("adminFile", adminProjectAll.get("adminFileList"));
+		log.info("[AdminProjectController] adminProjectAll : {}", adminProjectAll.get("adminRewardList"));
+		log.info("[AdminProjectController] adminProjectAll : {}", adminProjectAll.get("adminFileList"));
+
+		
+		return "admin/project/projectPage";
 	}
+	
+	@GetMapping("/review")
+	public String adminProjectReview(@RequestParam(value="projNo", required=false) String projNo, Model model) {
+		
+		Map<String, Object> adminProjectAll = adminProjectService.readProjectPage(projNo); 
+		log.info("[AdminProjectController] Review : {}", adminProjectAll);
+		
+		model.addAttribute("adminPage", adminProjectAll.get("adminProjectPage"));
+		log.info("[AdminProjectController] Review : {}", adminProjectAll.get("adminProjectPage"));
+		
+		return "admin/project/projectReview";
+	}
+	
+	
+	
+	/* 프로젝트 상태 변경 */
+	
+	@GetMapping("/confirm")
+	public String updateConfirm(@RequestParam(value="projNo", required=false) String projNo) {
+	
+		//confirm 
+		adminProjectService.updateConfirm(projNo);
+		
+		return "admin/project/projectPage";
+		
+	}
+	
+	@GetMapping("/reject")
+	public String updateReject(@RequestParam(value="projNo", required=false) String projNo) {
+	
+		//reject
+		adminProjectService.updateReject(projNo);
+		
+		return "admin/project/projectPage";
+		
+	}
+	
+	@GetMapping("/stop")
+	public String updateStop(@RequestParam(value="projNo", required=false) String projNo) {
+	
+		//reject
+		adminProjectService.updateStop(projNo);
+		
+		return "admin/project/projectPage";
+		
+	}
+	
+
+	
+	
+	
+
+	
+	
+	
+	
+	/*@GetMapping("/approval/{projNo}")
+	public String updateConfirm(@PathVariable("projNo") String projNo) {
+	
+		//confirm 
+		adminProjectService.updateConfirm(projNo);
+		
+		return "admin/project/projectPage";
+		
+	}*/
+	
 	
 
 

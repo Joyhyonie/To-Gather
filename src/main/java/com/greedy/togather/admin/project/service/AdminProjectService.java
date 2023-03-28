@@ -10,7 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.greedy.togather.admin.project.common.Pagenation;
 import com.greedy.togather.admin.project.common.SelectCriteria;
 import com.greedy.togather.admin.project.dao.AdminProjectMapper;
+import com.greedy.togather.admin.project.dto.AdminFileDTO;
 import com.greedy.togather.admin.project.dto.AdminProjectDTO;
+import com.greedy.togather.admin.project.dto.AdminProjectPageDTO;
+import com.greedy.togather.admin.project.dto.AdminRewardDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,18 +54,45 @@ public class AdminProjectService{
 		
 		return boardAndPaging;
 	}
-	
-	
+
+	public Map<String, Object> readProjectPage(String projNo) {
+		
+		AdminProjectPageDTO adminProjectPage = adminProjectMapper.readProjectPage(projNo);
+		log.info("[AdminProjectService] adminprojectpage : {}", adminProjectPage);
+		                                                          
+		List<AdminRewardDTO> adminRewardList = adminProjectMapper.readProjectPageReward(projNo);
+		log.info("[AdminProjectService] adminprojectpage : {}", adminRewardList);
+		
+		List<AdminFileDTO> adminFileList = adminProjectMapper.adminReadFile(projNo);
+		log.info("[AdminProjectService] adminReadFile : {}", adminFileList);
+		
+		Map<String, Object> adminProjectAll = new HashMap<>();
+		adminProjectAll.put("adminProjectPage", adminProjectPage);
+		adminProjectAll.put("adminRewardList", adminRewardList);
+		adminProjectAll.put("adminFileList", adminFileList);
+
+		log.info("[AdminProjectService] adminProjectAll : {}", adminProjectAll);
+		
+		
+		return adminProjectAll;
+	}
+
+	public void updateConfirm(String projNo) {
+		
+		adminProjectMapper.updateConfirm(projNo);
+		
+	}
+
+	public void updateReject(String projNo) {
+		adminProjectMapper.updateReject(projNo);
+		
+	}
+
+	public void updateStop(String projNo) {
+		adminProjectMapper.updateStop(projNo);
+		
+	}
 
 
 
-
-	
-	
-
-
-	
-
-	
-	
 }
