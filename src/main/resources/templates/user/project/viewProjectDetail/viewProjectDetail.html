@@ -47,8 +47,8 @@
                 </div>
             </div>
             <div id="boxes">
-                <div id="like-box">
-                    <img src="/user/project/images/like-empty.png" id="like-btn" class="like">
+                <div id="like-box" th:data-proj-no="${ detail.projNo }">
+                    <img th:src="${ loadIsLiked == 1 ? '/user/project/images/like-full.png' : '/user/project/images/like-empty.png'}" id="like-btn" class="like">
                     <p id="like-people"><span th:text="${ detail.totalLikes }"></span>명이 좋아합니다 :)</p>
                 </div>
                 <div id="share-box">
@@ -153,7 +153,7 @@
                 	<img th:src="'/user/project/images/profile4.png'" id="commenter">
                 	</th:block>
                 	<th:block sec:authorize="isAuthenticated()">
-                    <img th:src="${ #authentication.principal.profileNm == null? '/user/project/images/profile4.png' : #authentication.principal.profileNm}" id="commenter">
+                    <img th:src="${ #authentication.principal.profileNm == null? '/user/project/images/profile4.png' : #authentication.principal.profileNm }" id="commenter">
                     </th:block>
                     
                     <textarea id="comment-box" maxlength="500" placeholder="따뜻한 댓글을 작성해주세요! To-Gather가 기부금을 지원합니다 :)"></textarea>
@@ -264,15 +264,15 @@
 						
 						/* 댓글 하나하나 동적으로 생성 */
 						const commentList = document.createElement('div');
-							const flex1 = document.createElement('div');
-								const flex2 = document.createElement('div');
-									const userId = document.createElement('p');
-									const gift = document.createElement('p');
-								const registDate = document.createElement('p');
-							const flex3 = document.createElement('div');
-								const profiles = document.createElement('img');
-								const divInFlex3 = document.createElement('div');
-									const comment = document.createElement('textarea');
+						const flex1 = document.createElement('div');
+						const flex2 = document.createElement('div');
+						const userId = document.createElement('p');
+						const gift = document.createElement('p');
+						const registDate = document.createElement('p');
+						const flex3 = document.createElement('div');
+						const profiles = document.createElement('img');
+						const divInFlex3 = document.createElement('div');
+						const comment = document.createElement('textarea');
 						
 						commentList.id = 'comment-list';
 						flex1.id = 'flex1';
@@ -323,6 +323,36 @@
 				
 				}
 				
+				/* 좋아요 기능 */
+				$(document).ready(function() {
+					  // 좋아요 버튼 클릭 시
+					  $('#like-btn').on('click', function() {
+					    let projNo = $('#like-box').data('proj-no');
+					    let data = { projNo: projNo };
+					    /* LikeDTO의 필드명: 변수명 (자동으로 LikeDTO 타입으로 받을 수 있도록) */
+						console.log(projNo);
+					    $.ajax({
+					      type: 'POST',
+					      url: '/project/like',
+					      data: JSON.stringify(data),
+					      contentType: 'application/json;charset=UTF-8',
+					      success: function(result) {
+					    	  console.log(result);
+					        if (result === 'liked') {
+					          $('#like-btn').attr('src', '/user/project/images/like-full.png');
+					          $('#like-people').html('<span>' + (parseInt($('#like-people span').text()) + 1) + '</span>명이 좋아합니다 :)');
+					        } else {
+					          $('#like-btn').attr('src', '/user/project/images/like-empty.png');
+					          $('#like-people').html('<span>' + (parseInt($('#like-people span').text()) - 1) + '</span>명이 좋아합니다 :)');
+					        }
+					      },
+					      error: function(xhr, status, error) {
+					        alert('에러 발생!');
+					        console.log(xhr.responseText);
+					      }
+					    });
+					  });
+				});
 			</script>
 			
         </div>

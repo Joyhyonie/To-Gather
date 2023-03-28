@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.greedy.togather.common.paging.MoreSelectCriteria;
 import com.greedy.togather.user.project.dto.FileDTO;
+import com.greedy.togather.user.project.dto.LikeDTO;
 import com.greedy.togather.user.project.dto.MakerDTO;
 import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.project.dto.ReplyDTO;
@@ -18,7 +19,7 @@ public interface ProjectMapper {
 
 	/* 프로젝트 리스트 조회 */
 	int selectProjectsTotalCount(String categoryNo); /* 페이징 처리를 위한 카테고리별 총 프로젝트 수 */
-	List<ProjectDTO> selectProjectList(MoreSelectCriteria selectCriteria, String categoryNo);
+	List<ProjectDTO> selectProjectList(String categoryNo);
 	
 	/* 프로젝트 상세 페이지 */
 	/* 전체 화면 조회 */
@@ -64,6 +65,16 @@ public interface ProjectMapper {
 	
 	
 	/* 프로젝트 후기 등록 */
+	
+	
+	/* 좋아요 기능 */
+	int loadIsLiked(LikeDTO likeProject);
+	
+	int isLikedByUser(LikeDTO likeProject);
+	
+	void insertProjectLike(LikeDTO likeProject);
+	
+	void deleteProjectLike(LikeDTO likeProject);
 	
 	
 	

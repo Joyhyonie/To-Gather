@@ -72,7 +72,7 @@ window.onload = function() {
 
 
     /* 좋아요 버튼 */
-    const likeBtn = document.querySelector('#like-btn'); /* querySelectorAll을 통해 모든 class=like-btn 가져옴 */
+/*    const likeBtn = document.querySelector('#like-btn');  querySelectorAll을 통해 모든 class=like-btn 가져옴 
         
         let isLiked = false;
 
@@ -87,7 +87,7 @@ window.onload = function() {
                 isLiked = true;
             }
         }
-
+*/
 	/* 공유하기 버튼 클릭 시, 팝업창 띄우기 */
 	const openPopUp = document.querySelector('#share-box')
 	

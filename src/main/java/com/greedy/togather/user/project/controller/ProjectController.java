@@ -14,20 +14,18 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greedy.togather.user.project.dto.FileDTO;
+import com.greedy.togather.user.project.dto.LikeDTO;
 import com.greedy.togather.user.project.dto.MakerDTO;
 import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.project.dto.ReplyDTO;
-import com.greedy.togather.user.project.dto.RewardDTO;
 import com.greedy.togather.user.project.service.ProjectService;
 import com.greedy.togather.user.user.model.dto.UserDTO;
 
@@ -51,105 +49,104 @@ public class ProjectController {
 		this.messageSourceAccessor = messageSourceAccessor;
 	}
 	
+	/* 검색한 키워드를 조회한 페이지로의 이동 */
+	@GetMapping("/")
+	public String goSearchedProject() {
+		
+		
+		return IMAGE_DIR;
+	}
+	
+	
 	/* 카테고리별 프로젝트 페이지로의 이동 */
 	@GetMapping("/education")
-	public String goEducation(@RequestParam(defaultValue="1") int page, Model model) {
+	public String goEducation(Model model) {
 		
 		String categoryCode ="CA001";
 		String category = "education";
 		
-		Map<String, Object> projectListAndPaging = projectService.selectProjectList(page, categoryCode);
-		model.addAttribute("paging", projectListAndPaging.get("paging"));
-		model.addAttribute("projectList", projectListAndPaging.get("projectList"));
+		Map<String, Object> allProjectList = projectService.selectProjectList(categoryCode);
+		model.addAttribute("projectList", allProjectList.get("projectList"));
 		model.addAttribute("category", category);
-		
-		log.info("[ProjectController] page : {}", page);
-		log.info("[ProjectController] projectListAndPaging : {}", projectListAndPaging);
 		
 		return "user/project/viewProjects/viewSelectedProjects";
 	}
 	
 	@GetMapping("/disaster")
-	public String goDisaster(@RequestParam(defaultValue="1") int page, Model model) {
+	public String goDisaster(Model model) {
 		
 		String categoryCode ="CA002";
 		String category = "disaster";
 		
-		Map<String, Object> projectListAndPaging = projectService.selectProjectList(page, categoryCode);
-		model.addAttribute("paging", projectListAndPaging.get("paging"));
-		model.addAttribute("projectList", projectListAndPaging.get("projectList"));
+		Map<String, Object> allProjectList = projectService.selectProjectList(categoryCode);
+		model.addAttribute("projectList", allProjectList.get("projectList"));
 		model.addAttribute("category", category);
 		
 		return "user/project/viewProjects/viewSelectedProjects";
 	}
 	
 	@GetMapping("/environment")
-	public String goEnvironment(@RequestParam(defaultValue="1") int page, Model model) {
+	public String goEnvironment(Model model) {
 		
 		String categoryCode ="CA003";
 		String category = "environment";
 		
-		Map<String, Object> projectListAndPaging = projectService.selectProjectList(page, categoryCode);
-		model.addAttribute("paging", projectListAndPaging.get("paging"));
-		model.addAttribute("projectList", projectListAndPaging.get("projectList"));
+		Map<String, Object> allProjectList = projectService.selectProjectList(categoryCode);
+		model.addAttribute("projectList", allProjectList.get("projectList"));
 		model.addAttribute("category", category);
 		
 		return "user/project/viewProjects/viewSelectedProjects";
 	}
 	
 	@GetMapping("/medical")
-	public String goMedical(@RequestParam(defaultValue="1") int page, Model model) {
+	public String goMedical(Model model) {
 		
 		String categoryCode ="CA004";
 		String category = "medical";
 		
-		Map<String, Object> projectListAndPaging = projectService.selectProjectList(page, categoryCode);
-		model.addAttribute("paging", projectListAndPaging.get("paging"));
-		model.addAttribute("projectList", projectListAndPaging.get("projectList"));
+		Map<String, Object> allProjectList = projectService.selectProjectList(categoryCode);
+		model.addAttribute("projectList", allProjectList.get("projectList"));
 		model.addAttribute("category", category);
 		
 		return "user/project/viewProjects/viewSelectedProjects";
 	}
 	
 	@GetMapping("/organic")
-	public String goOrganic(@RequestParam(defaultValue="1") int page, Model model) {	
+	public String goOrganic(Model model) {	
 		
 		String categoryCode ="CA005";
 		String category = "organic";
 		
-		Map<String, Object> projectListAndPaging = projectService.selectProjectList(page, categoryCode);
-		model.addAttribute("paging", projectListAndPaging.get("paging"));
-		model.addAttribute("projectList", projectListAndPaging.get("projectList"));
+		Map<String, Object> allProjectList = projectService.selectProjectList(categoryCode);
+		model.addAttribute("projectList", allProjectList.get("projectList"));
 		model.addAttribute("category", category);
 		
 		return "user/project/viewProjects/viewSelectedProjects";
 	}
 	
 	@GetMapping("/wild")
-	public String goWild(@RequestParam(defaultValue="1") int page, Model model) {	
+	public String goWild(Model model) {	
 		
 		String categoryCode ="CA006";
 		String category = "wild";
 		
-		Map<String, Object> projectListAndPaging = projectService.selectProjectList(page, categoryCode);
-		model.addAttribute("paging", projectListAndPaging.get("paging"));
-		model.addAttribute("projectList", projectListAndPaging.get("projectList"));
+		Map<String, Object> allProjectList = projectService.selectProjectList(categoryCode);
+		model.addAttribute("projectList", allProjectList.get("projectList"));
 		model.addAttribute("category", category);
 		
 		return "user/project/viewProjects/viewSelectedProjects";
 	}
 	
 	@GetMapping("/pet")
-	public String goPet(@RequestParam(defaultValue="1") int page, Model model) {	
+	public String goPet(Model model) {	
 		
 		String categoryCode ="CA007";
 		String category = "pet";
 		
-		Map<String, Object> projectListAndPaging = projectService.selectProjectList(page, categoryCode);
-		model.addAttribute("paging", projectListAndPaging.get("paging"));
-		model.addAttribute("projectList", projectListAndPaging.get("projectList"));
+		Map<String, Object> allProjectList = projectService.selectProjectList(categoryCode);
+		model.addAttribute("projectList", allProjectList.get("projectList"));
 		model.addAttribute("category", category);
-		
+
 		return "user/project/viewProjects/viewSelectedProjects";
 	}
 	
@@ -337,15 +334,24 @@ public class ProjectController {
 	
 	/* 프로젝트 상세 페이지 */
 	@GetMapping("/detail")
-	public String viewProjectDetail(@RequestParam(value="projNo", required=false) String projNo, Model model) {
+	public String viewProjectDetail(@RequestParam(value="projNo", required=false) String projNo, LikeDTO likeProject, 
+									@AuthenticationPrincipal UserDTO user, Model model) {
+		
+		/* 현재 로그인 유저가 해당 프로젝트를 좋아요 했는가? */
+		likeProject.setUser(user);
+		likeProject.setProjNo(projNo);
 		
 		/* 프로젝트 상세 내용 조회 */
-		Map<String, Object> allProjectDetails = projectService.selectProjectDetail(projNo);
+		Map<String, Object> allProjectDetails = projectService.selectProjectDetail(projNo, likeProject);
 		log.info("[ProjectController] allProjectDetails : {}", allProjectDetails);
 		
 		model.addAttribute("detail", allProjectDetails.get("projectDetail"));
 		model.addAttribute("rewardList", allProjectDetails.get("rewardList"));
 		model.addAttribute("donationAndReplyCount", allProjectDetails.get("donationAndReplyCount"));
+		model.addAttribute("loadIsLiked", allProjectDetails.get("loadIsLiked"));
+		
+	    log.info("[ProjectController] 프로젝트 상세 페이지의 loadIsLiked : {}", allProjectDetails.get("loadIsLiked"));
+
 		
 		return "user/project/viewProjectDetail/viewProjectDetail";
 	}
@@ -400,6 +406,48 @@ public class ProjectController {
 
 		return "/user/project/writeReview/writeReview";
 	}
+	
+	/* ------------------------------------------------------------------------------------------------------ */
+	
+	/* 프로젝트 좋아요 */
+	@PostMapping("/like")
+	public ResponseEntity<String> likeProject(@RequestBody LikeDTO likeProject, @AuthenticationPrincipal UserDTO user, Model model) {
+		
+		/* likeProject에는 projNo만 담겨있는 상태 */
+		likeProject.setUser(user); // 좋아요한 유저 = 로그인 유저
+	    
+	    int isLiked = projectService.isLikedByUser(likeProject);
+	    log.info("[ProjectController] 프로젝트 좋아요의 isLiked : {}", isLiked);
+	    
+	    String result = null;
+	    
+	    if(isLiked == 1) { /* 이미 좋아요가 되어있을 경우 */
+	        result = "unliked";
+	    } else { /* 좋아요가 되어있지 않은 경우 */
+	    	result = "liked";
+	    }
+	    log.info("[ProjectController] 프로젝트 좋아요의 result : {}", result);
+	    return ResponseEntity.ok(result);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }
