@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.greedy.togather.user.user.model.dao.UserMapper">
 
-	<resultMap id="loginUserResultMap" type="com.greedy.togather.user.user.model.dto.UserDTO">
+	<resultMap type="com.greedy.togather.user.user.model.dto.UserDTO" id="loginUserResultMap">
+	
 		<id property="userNo" column="USER_NO"/>
 		<result property="email" column="EMAIL"/>
 		<result property="pwd" column="PWD"/>
@@ -15,14 +16,16 @@
 		<result property="quitYn" column="QUIT_YN"/>
 		<result property="userToken" column="USER_TOKEN"/>
 		
-		<collection property="userRole" resultMap="userRoleResultMap"/>
+		<collection property="userRole" resultMap="userRoleResultMap"/>	
 	</resultMap>
 	
 	<resultMap type="com.greedy.togather.user.user.model.dto.UserRoleDTO" id="userRoleResultMap">
+	
 		<id property="authNo" column="AUTH_NO"/>
 		<id property="userNo" column="USER_NO"/>
 		
 		<association property="auth" resultMap="authorityResultMap"/>
+		
 	</resultMap>
 	
 	<resultMap type="com.greedy.togather.user.user.model.dto.AuthDTO" id="authorityResultMap">
@@ -31,6 +34,60 @@
 		<result property="authInfo" column="AUTH_INFO"/>
 	</resultMap>
 	
+	<resultMap type="com.greedy.togather.user.project.dto.ProjectDTO" id="likeResultMap">
+
+	 	<id property="projNo" column="PROJ_NO"/>
+	    <result property="categoryNo" column="CATEGORY_NO"/>
+	    <result property="userNo" column="USER_NO"/>
+	    <result property="projName" column="PROJ_NM"/>
+	    <result property="projSummary" column="PROJ_SUMMARY"/>
+	    <result property="projDetail" column="PROJ_DETAIL"/>
+	    <result property="projInfoTitle" column="PROJ_INFO_TITLE"/>
+	    <result property="projInfoBody" column="PROJ_INFO_BODY"/>
+	    <result property="fundingEndDate" column="FUNDING_END_DATE"/>
+	    <result property="fundingGoal" column="FUNDING_GOAL"/>
+	    <result property="fundingAchive" column="FUNDING_ACHIVE"/>
+	    <result property="projStatus" column="PROJ_STATUS"/>
+	    <result property="projReview" column="PROJ_REVIEW"/>
+	    <result property="leftDays" column="LEFT_DAYS"/> 
+	    <result property="percent" column="PERCENT"/>
+	    <result property="totalLikes" column="TOTAL_LIKES"/>
+
+	  <association property="likeDTO" javaType="com.greedy.togather.user.project.dto.LikeDTO">
+		<id property="likeNo" column="LIKE_NO"/>
+	  	<result property="userNo" column="USER_NO"/>
+	  	<result property="projNo" column="PROJ_NO"/>
+	  </association>
+	  
+	  <association property="userDTO" javaType="com.greedy.togather.user.user.model.dto.UserDTO">
+	    <id property="userNo" column="USER_NO"/>
+	    <result property="email" column="EMAIL"/>
+	    <result property="pwd" column="PWD"/>
+	    <result property="userNm" column="USER_NM"/>
+	    <result property="profileNm" column="PROFILE_NM"/>
+	    <result property="phone" column="PHONE"/>
+	    <result property="address" column="ADDRESS"/>
+	    <result property="joinDate" column="JOIN_DATE"/>
+	    <result property="quitDate" column="QUIT_DATE"/>
+	    <result property="quitYn" column="QUIT_YN"/>
+	    <result property="userToken" column="USER_TOKEN"/>
+	  </association>
+	  
+	  <association property="fileDTO" javaType="com.greedy.togather.user.project.dto.FileDTO">
+	  	<id property="fileNo" column="FILE_NO"/>
+	  	<result property="projNo" column="PROJ_NO"/>
+	  	<result property="fileType" column="FILE_TYPE"/>
+	  	<result property="originalFileName" column="ORIGINAL_FILE_NM"/>
+	  	<result property="savedFileName" column="SAVED_FILE_NM"/>
+	  	<result property="filePath" column="FILE_PATH"/>
+	  	<result property="thumPath" column="THUM_PATH"/>
+	 </association>
+	  
+	</resultMap> 
+	
+
+
+
 
 	<select id="findByUserId" resultMap="loginUserResultMap">
 	
@@ -170,7 +227,7 @@
     	   TBL_USER
        SET PWD = #{ pwd }
      WHERE QUIT_YN = 'N'
-       AND USER_NO = #{ userNo }		
+       AND USER_NO = #{ userNo }	
     
     </update>
 
@@ -195,18 +252,60 @@
     
     </select>
     
-      <select id="searchPwd" resultType="string">
-      
-      SELECT
-               * 
-       FROM TBL_USER
-       WHERE QUIT_YN = 'N'
-       AND PHONE = # { phone }
-       AND EMAIL = #{ email } 
-    
-    </select>
+
+	<update id="updatePT">
+    UPDATE 
+    		TBL_USER 	
+    SET PWD = #{pwd}
+    WHERE EMAIL = #{email}
+	</update>
+
+	<select id="UserByEmail" resultMap="loginUserResultMap">
+    SELECT *
+    FROM TBL_USER
+    WHERE EMAIL = #{email}
+	</select>
+	
+	<update id="registThumb">
+	
+		UPDATE
+			  TBL_USER 
+			 SET PROFILE_NM = #{ profileNm }
+			 WHERE QUIT_YN = 'N'
+			 AND USER_NO = #{ userNo }
+		
+		
+	</update>
+	
+	<update id="deleteThumb">
+	
+	 UPDATE 
+	 	    TBL_USER
+	  SET PROFILE_NM = NULL		
+      WHERE QUIT_YN = 'N'
+      AND EMAIL = #{ email }
+	
+	</update>
 	
 	
+	<select id="selectLikeProject" resultMap="likeResultMap">
+
+	SELECT
+       A.PROJ_NO
+     , A.USER_NO
+     , A.PROJ_NM
+     , A.PROJ_SUMMARY
+     , B.LIKE_NO
+     , D.FILE_NO
+     , D.SAVED_FILE_NM
+     , D.FILE_PATH
+     FROM TBL_PROJECT A
+     LEFT JOIN TBL_LIKE B ON(A.PROJ_NO = B.PROJ_NO)
+     LEFT JOIN TBL_USER C ON(A.USER_NO = C.USER_NO)
+     LEFT JOIN TBL_FILE D ON(A.PROJ_NO = D.PROJ_NO)
+     WHERE B.USER_NO = #{ userNo }
+	
+	</select>
 	
 
 

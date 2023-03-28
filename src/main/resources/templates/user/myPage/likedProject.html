@@ -34,17 +34,34 @@
             </ul>
         </div>
         <h1>좋아요한 프로젝트</h1>
+        
+			<table>
+			  <thead>
+			    <tr>
+			      <th>프로젝트 번호</th>
+			      <th>프로젝트 이름</th>
+			      <th>프로젝트 설명</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			   	  <tr th:each="like : ${ likedProjectList }">
+				  <td th:text="${like.projNo}"></td>
+			      <td th:text="${like.projName}"></td>
+			      <td th:text="${like.projSummary}"></td>
+			      <td th:text="${like.fileDTO}"></td>
+			    </tr>
+			  </tbody>
+			</table>
 
         <div class="grid">
             <div class="item">
                 <!-- 해당 프로젝트 상세보기로 이동하는 링크-->
                 <a href="http://www.naver.com"><img src="/user/myPage/images/환경.png" alt="환경"></a>
-
                 <p>프로젝트1</p>
             </div>
 
             <div class="item">
-
+					
                 <a href="http://www.naver.com"><img src="/user/myPage/images/페트병.jpg" alt="페트병 사용"></a>
 
                 <p>프로젝트2</p>
@@ -69,7 +86,7 @@
             </div>
 
             <div class="item">
-
+            
                 <a href="http://www.naver.com"><img src="/user/myPage/images/기부.jpg" alt="기부"></a>
                 <p>프로젝트6</p>
             </div>
