@@ -15,6 +15,7 @@ img {
 /* project page ------------------------------------------------------------------------------------- */
 
 
+
 .wrapper{
 
     display: flex;
@@ -37,10 +38,7 @@ img {
 .button-wrapper{
     display: flex;
     gap: 10px;
-
     margin-left: 510px;
-
-
     margin-top: 30px;
     margin-bottom: 100px;
     
@@ -48,7 +46,33 @@ img {
 
 .button-box{
     display: grid;
+    width: 130px;
+    height: 40px;
+    background-color: #535353;
+    border-radius: 5px;
+    color:aliceblue;
+}
 
+.button-box1{
+    display: grid;
+    width: 130px;
+    height: 40px;
+    background-color: #535353;
+    border-radius: 5px;
+    color:aliceblue;
+}
+
+.button-box2{
+    display: grid;
+    width: 130px;
+    height: 40px;
+    background-color: #535353;
+    border-radius: 5px;
+    color:aliceblue;
+}
+
+.button-box3{
+    display: grid;
     width: 130px;
     height: 40px;
     background-color: #535353;
@@ -168,9 +192,11 @@ td{
 
 #reviewbox {
     width:100%;
-    height:700px;
+    height:95px;
     border:none;
 }
+
+
 
 
 
