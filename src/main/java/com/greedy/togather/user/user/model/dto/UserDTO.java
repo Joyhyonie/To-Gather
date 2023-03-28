@@ -26,6 +26,7 @@ public class UserDTO implements UserDetails {
 	private Date quitDate;							
 	private String quitYn;		
 	private String userToken;
+	private String confrimCode;
 	private List<UserRoleDTO> userRole;
 	
 	

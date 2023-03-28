@@ -1,12 +1,12 @@
 package com.greedy.togather.user.user.controller;
 
-import java.util.HashMap;
+import java.io.File;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,14 +22,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greedy.togather.common.exception.user.UserModifyException;
 import com.greedy.togather.common.exception.user.UserRegistException;
 import com.greedy.togather.common.exception.user.UserRemoveException;
-import com.greedy.togather.user.user.model.dto.MailDto;
+import com.greedy.togather.user.project.dto.FileDTO;
 import com.greedy.togather.user.user.model.dto.UserDTO;
 import com.greedy.togather.user.user.service.AuthenticationService;
+import com.greedy.togather.user.user.service.MailService;
 import com.greedy.togather.user.user.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,25 +41,24 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/user")
 public class UserController {
 
-
+	
 	@Value("${image.image-dir}")
 	private String IMAGE_DIR;
-	
 	
 	private final PasswordEncoder passwordEncoder;
     private final MessageSourceAccessor messageSourceAccessor;
     private final UserService userService;
     private final AuthenticationService authenticationService;
-    
+    private final MailService mailService;
+  
 
     public UserController(MessageSourceAccessor messageSourceAccessor, UserService userService, PasswordEncoder passwordEncoder, 
-    		AuthenticationService authenticationService) {
+    		AuthenticationService authenticationService, MailService mailService) {
         this.messageSourceAccessor = messageSourceAccessor;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationService = authenticationService;
-        
-        
+        this.mailService = mailService;
         
     }
 
@@ -84,21 +85,28 @@ public class UserController {
 	   return "user/login/searchId";
    }
    
+	 
+   
+   /* 이메일 전송 */
+   @PostMapping("/mailsend")
+   @ResponseBody
+   String mailConfirm(@ModelAttribute UserDTO user, @RequestParam(value="phone", required=false) String phone, @RequestParam(value="emailId", required=false) String emailId) throws Exception {
 
-   /* 비밀번호 찾기 */
-   @PostMapping("/searchPwd")
-   public String resetPassword(@ModelAttribute UserDTO user, RedirectAttributes rttr) {
-      
-	   Boolean result = userService.resetPassword(user.getPhone(), user.getEmail());
-       if(result == true) {
-           rttr.addFlashAttribute("msg", "임시비밀번호를 이메일로 전송했습니다");
-           return "redirect:/user/login";
-       } else {
-           rttr.addFlashAttribute("msg", "비밀번호를 찾지 못했습니다");
-           return "redirect:/user/searchPwd";
-       }
-  
-   } 
+       String ph = phone;
+       String email = emailId;
+       log.info("[UserController] email : {}", email);
+
+       String tempPwd = mailService.sendSimpleMessage(email); // 임시 비밀번호 발급
+
+       // DB에 임시 비밀번호 저장
+       UserDTO tempUser = userService.getUserByEmail(email);
+       tempUser.setPwd(passwordEncoder.encode(tempPwd)); // 비밀번호 인코딩
+       userService.modifyTpwd(tempUser);
+
+       return tempPwd; // 클라이언트에게 발급된 임시 비밀번호 반환
+   }
+	
+	
    
    /* 비밀번호 찾기 */
    @GetMapping("/searchPwd")
@@ -165,6 +173,7 @@ public class UserController {
     	
     	model.addAttribute("address", address);
     	
+    	
     	return "user/myPage/myInfo";
     }
     
@@ -191,6 +200,28 @@ public class UserController {
     	
     	return "redirect:/";
     }
+
+    
+    /* 비밀 번호만 변경 */
+    @PostMapping("/myInfo.pwd")
+    public String modifyPwd(@ModelAttribute UserDTO updatePwd,
+    		@AuthenticationPrincipal UserDTO loginUser, RedirectAttributes rttr) throws UserModifyException {
+
+    	String encodedPwd = passwordEncoder.encode(updatePwd.getPwd());
+        updatePwd.setPwd(encodedPwd);
+        updatePwd.setUserNo(loginUser.getUserNo());
+    	
+    	log.info("[UserController] modifyPwd request User : {}", updatePwd);
+    	
+    	userService.modifyPwd(updatePwd);
+ 
+    	SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(loginUser.getEmail()));
+    	
+    	rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("user.pwd"));
+    	
+    	return "redirect:/";
+    	
+    }
     
     /* 회원 정보 수정 시 세션에 저장 된 정보 업데이트 */
     protected Authentication createNewAuthentication(String email) {
@@ -202,29 +233,7 @@ public class UserController {
         
     }
     
-    /* 비밀 번호만 변경 */
-    @PostMapping("/myInfo.pwd")
-    public String modifyPwd(@ModelAttribute UserDTO updatePwd, @AuthenticationPrincipal UserDTO loginUser,
-    		RedirectAttributes rttr) throws UserModifyException {
-    	
-    	updatePwd.setPwd(passwordEncoder.encode(updatePwd.getPwd()));
-    	updatePwd.setUserNo(loginUser.getPwd());
-    	
-    	log.info("[UserController] modifyPwd request User : {}", updatePwd);
-    	
-    	userService.modifyPwd(updatePwd);
- 
-    	SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(loginUser.getPwd()));
-    	
-    	rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("user.pwd"));
-    	
-    	return "redirect:/";
-    	
-    }
-   
-    
- 
-    
+
     /* 회원 탈퇴 페이지 */
     @GetMapping("/withdrawal")
     public String goWithDrawal() {
@@ -253,13 +262,108 @@ public class UserController {
     	
     	return "user/myPage/myPage";
     }
-  
-    /* 좋아요한 프로젝트 */
+    
+    
+    /* 프로필 사진 등록 */
+    @PostMapping("/thumbnail/regist")
+    public String registProfile(MultipartFile profileImage,
+                                @AuthenticationPrincipal UserDTO user, 
+                                RedirectAttributes rttr) {
+
+        log.info("[ProfileController] profileImage request : {}", profileImage);
+        
+        String fileUploadDir = IMAGE_DIR + "userProfile";
+       
+        File dir = new File(fileUploadDir);
+        
+        log.info("[ProfileController] dir : {}", dir);
+
+        /* 디렉토리가 없을 경우 생성한다. */
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        
+        try {
+        	
+            /* 첨부파일이 실제로 있는 경우에만 로직 수행 */
+        	
+            if (profileImage.getSize() > 0) {
+
+                String originalFileName = profileImage.getOriginalFilename();
+                log.info("[ProfileController] originalFileName : {}", originalFileName);
+
+                String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+                String savedFileName = UUID.randomUUID().toString() + ext;
+
+                log.info("[ProfileController] savedFileName : {}", savedFileName);
+
+                /* 서버의 설정 디렉토리에 파일 저장하기 */
+                profileImage.transferTo(new File(fileUploadDir + "/" + savedFileName));
+
+                /* DB에 저장할 파일의 정보 처리 */
+                FileDTO profile = new FileDTO();
+                profile.setOriginalFileName(originalFileName);
+                profile.setSavedFileName(savedFileName);
+                profile.setFilePath("/upload/userProfile/");
+
+                user.setProfileNm(fileUploadDir + "/" + savedFileName); // 유저 정보에 파일 정보를 저장
+                log.info("[ProfileController] user.getProfileNm() : {}", user.getProfileNm());
+
+                userService.registThumb(user);
+            }
+
+            rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("user.profile.regist"));
+
+        } catch (Exception e) {
+            e.printStackTrace();            
+            /* 실패 시 이미 저장 된 파일을 삭제한다. */
+            if (user.getProfileNm() != null) {
+                File deleteFile = new File(user.getProfileNm() + "/" + user.getProfileNm());
+                deleteFile.delete();
+            }
+        }
+
+        return "redirect:/";
+    }
+    
+    
+    /* 프로필 사진 삭제 */
+    @PostMapping("/thumbnail/delete")
+    public String deleteProfile(@AuthenticationPrincipal UserDTO user) {
+
+        try {
+            String profileNm = user.getProfileNm();
+            
+            if (profileNm != null) {
+                /* 서버에 저장된 파일 삭제 */
+                File deleteFile = new File(profileNm);
+                deleteFile.delete();
+                
+                /* DB에서 파일 정보 삭제 */
+                
+                userService.deleteThumb(user);
+                
+                user.setProfileNm(null);
+                
+                
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();            
+        }
+
+        return "redirect:/user/myInfo";
+    }
+
+    
+    /* 좋아요한 프로젝트 
     @GetMapping("/likedProject")
     public String goLikedProject() {
     	
     	return "user/myPage/likedProject";
     }
+    
+    */
     
     /* 나의 프로젝트 */
     @GetMapping("/myProject")
@@ -268,8 +372,6 @@ public class UserController {
     	return "user/myPage/myProject";
     }
    
-    
-    
     
     /* 내 정보 비밀번호 변경 */
     @GetMapping("/myInfo.pwd")
@@ -284,19 +386,49 @@ public class UserController {
     
     @PostMapping("/searchId")
     public String doFindIdSearch(@ModelAttribute UserDTO user, Model model) {
-    log.info("[UserController] user : " + user);
-    String email = userService.findLoginId(user);
-    model.addAttribute("email", email);
-    log.info("[UserController] model : " + model);
-    String result = "";
+        log.info("[UserController] user : " + user);
+        String email = userService.findLoginId(user);
+        
+        String[] emailSplit = email.split("@");
+        String id = emailSplit[0];
+        String domain = emailSplit[1];
+        
+        int idLength = id.length();
+        String maskedId = id.substring(0, idLength/2 - 1) + "**" + id.substring(idLength/2 + 1);
+   
+        String maskedEmail = maskedId + "@" + domain;
+        
+        model.addAttribute("email", maskedEmail);
+        log.info("[UserController] model : " + model);
+        
+        String result = "";
+        if (email != null) {
+            result = "user/login/searchIdResult";
+        } else {
+            result = "user/login/searchId";
+        }
+        return result;
+    }
+ 
+
+    /* 좋아요한 프로젝트 조회하기 */
+    @GetMapping("/likedProject")
     
-    if(email != null) {
-    result = "user/login/searchIdResult";
-    } else {
-    result = "user/login/searchId";
+    public String likedProject(/*@RequestParam String userNo, Model model*/
+    		@AuthenticationPrincipal UserDTO loginUser, 
+    		@RequestParam(value="userNo", required=false) String userNo, Model model) {
+        
+        Map<String, Object> likedProjectList = userService.selectLikeProject(userNo);
+        
+        log.info("likedProjectList : {}" + likedProjectList); 
+        
+        log.info(userNo);
+        
+        model.addAttribute("likedProjectList", likedProjectList.get("likeProjectList"));
+    
+        return "user/myPage/likedProject";
     }
-    return result;
+ }
+    
+  
 
-    }
-
-}
