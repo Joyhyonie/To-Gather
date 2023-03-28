@@ -7,10 +7,13 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.greedy.togather.admin.settle.model.dto.AdminFundingDTO;
 
 import com.greedy.togather.admin.settle.model.dto.AdminSettleDTO;
 import com.greedy.togather.admin.settle.model.service.AdminSettleService;
@@ -68,4 +71,50 @@ public class AdminSettleController {
 
 		return "redirect:/admin/settle/settleList";
 	}
+	
+	/* 해당 프로젝트 정산 상세 페이지 조회 기능 */
+	@GetMapping("/detail/{settleNo}")
+	public String selectSettleDetail(@PathVariable("settleNo") String settleNo, Model model) {
+		
+		log.info("[AdminSettleController] settleNo : {}", settleNo);
+		
+		/* 프로젝트 정보 조회*/
+		AdminSettleDTO projInfo = adminSettleService.selectProjInfo(settleNo);
+		log.info("[AdminSettleController] projInfo : {}", projInfo);
+		
+
+		/* 펀딩 내역 조회*/
+		String projNo = projInfo.getProjNo();
+		log.info("[AdminSettleController] projInfo.ProjNo : {}", projInfo.getProjNo());
+		
+		List<AdminFundingDTO> fundingInfo = adminSettleService.selectFundingInfo(projNo);
+		log.info("[AdminSettleController] fundingInfo : {}", fundingInfo);
+
+		/* 총 펀딩 금액 계산 */
+		int totalPay = 0; // 총 결제금액
+		int totalRefund = 0; // 총 환불 금액
+		
+		for(AdminFundingDTO funding : fundingInfo) {
+			totalPay += funding.getPay().getPayPrice();
+			totalRefund += funding.getPay().getRefund().getRefundPrice();
+			
+		}
+		
+		int totalFunding = totalPay - totalRefund; // 총 펀딩금액
+		int mnCharge = (int) (totalFunding * 0.07); // 운영 수수료
+		int payCharge = (int) (totalFunding * 0.03); // 결제 수수료
+		
+		
+		model.addAttribute("projInfo", projInfo);
+		model.addAttribute("fundingInfo", fundingInfo);
+		model.addAttribute("totalPay", totalPay);
+		model.addAttribute("totalRefund", totalRefund);
+		model.addAttribute("totalFunding", totalFunding);
+		model.addAttribute("mnCharge", mnCharge);
+		model.addAttribute("payCharge", payCharge);
+
+		return "admin/settle/settleDetail";
+	}
+	
+
 }

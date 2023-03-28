@@ -1,7 +1,6 @@
 package com.greedy.togather.admin.user.model.dto;
 
 
-
 import com.greedy.togather.admin.order.model.dto.AdminPaymentDTO;
 import com.greedy.togather.admin.order.model.dto.AdminRewardDTO;
 import com.greedy.togather.admin.project.dto.AdminProjectDTO;
@@ -17,7 +16,6 @@ public class AdminFundingDTO {
 	private AdminPaymentDTO pay;
 	private AdminProjectDTO proj;
 	private AdminRewardDTO reward;
-
 
 
 }

@@ -28,6 +28,7 @@ p {
     text-align: left;
     margin-bottom: 5px;
     padding-left: 10px;
+    
 }
 
 /* content1 */
@@ -35,6 +36,7 @@ p {
     color: #355d3b;
     font-size: 24px;
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 
@@ -139,13 +141,21 @@ table td {
     flex-direction: row-reverse;
     height: 30px;
     padding: 0 10px;
+
 }
+
 
 .content5 button{
     border: 0px;
     border-radius: 8px;
     width: 70px;
     height: 30px;
-    background-color: #c7e78e;
+    background-color: #81ae64;
+    color: #ffffff;
     margin-left: 10px;
+    cursor: pointer;
+}
+
+.content5 button:hover{
+	background-color: #c7e78e;
 }
