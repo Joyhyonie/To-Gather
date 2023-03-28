@@ -20,16 +20,19 @@
 </head>
 <body>
     
-    <!-- <th:block sec:authorize="isAnonymous()">
+    <th:block sec:authorize="isAnonymous()">
         <SCript>
             location.href="http://localhost:8001/user/login";
         </SCript>
-    </th:block> -->
-<!-- <th:block sec:authorize="isAuthenticated()"> -->
+    </th:block>
+ <th:block sec:authorize="isAuthenticated()">
 	<div th:replace="/common/header/userHeader.html"></div>
     <script type="text/javascript" src="/user/pay/js/payScreen.js"></script>	
     <section id="grid1">
         <div hidden id="pjNo" th:text="${ payD.projNo }"></div>
+        <div hidden id="rewardNo" th:text="${ reward.rewardNo }"></div>
+        <div hidden id="userNo" th:text="${ #authentication.principal.userNo }"></div>
+        <div hidden id="uneremail" th:text="${ #authentication.principal.email }"></div>
         <div class="item1">
             <div  data-v-67d79bfc="" class="reward-order-form" data-component-name="pageRewardOrderForm">
                 <div  class="container">
@@ -59,7 +62,7 @@
                                             <div  class="amount">
                                                 <div  class="price">
                                                     <span  class="pPrice" style="color: darkgray;">참여 금액:</span>
-                                                    <b  class="font-lg" id="rewardPrice" th:text="${ rewardL.rewardPrice }"></b>
+                                                    <b  class="font-lg" id="rewardPrice" th:text="${ reward.rewardPrice }"></b>
                                                     <span >원</span>
                                                 </div>
                                                 <div  class="count">
@@ -68,7 +71,7 @@
                                                 </div>
                                             </div>
                                             <div  class="reward-title">
-                                                <div id="rewardtitle" th:text="${ rewardL.rewardName }">4</div>
+                                                <div id="rewardtitle" th:text="${ reward.rewardName }">4</div>
                                             </div>
                                             <div class="cubox">
                                                 <div class="cuuse">
@@ -86,7 +89,7 @@
                                                 </div>
                                             </div>
                                             <!---->
-                                          
+                                           
                                             <!---->
                                         </div>
                                     </div>
@@ -110,7 +113,7 @@
                                             </div>
                                             <div  class="content3">
                                                 <div  class="form-group mb-0">
-                                                    <input data-v-36cfb067=""  id="supporterPhoneNumber" type="tel" placeholder="ex) 01012345678" maxlength="11" class="control-supporter-phone" readonly>
+                                                    <input data-v-36cfb067=""  id="supporterPhoneNumber" type="tel" placeholder="ex) 01012345678" maxlength="11" class="control-supporter-phone" readonly th:value="${ #authentication.principal.phone }">
                                                 </div>
                                             </div>
                                         </div>
@@ -126,7 +129,7 @@
                                                                     <span  class="color-point"></span><span > 이름</span>
                                                                 </label>
                                                                 <br>
-                                                                <input type="text" id="pageRewardOrderFormReceiveName" class="font-box" placeholder="ex) 오마이">
+                                                            <input type="text" id="pageRewardOrderFormReceiveName" class="font-box" placeholder="ex) 오마이" th:value="${ #authentication.principal.userNm }">
                                                             </div>
                                                             <div  class="form-group col-md-6 hp">
                                                                 <label  for="pageRewardOrderFormHp" class="subject font-sm">
@@ -134,7 +137,7 @@
                                                                     <span > 휴대전화</span>
                                                                 </label>
                                                                 <br>
-                                                                <input id="pageRewardOrderFormHp" class="font-box" type="tel" placeholder="ex) 01012345678" maxlength="11">
+                                                                <input id="pageRewardOrderFormHp" class="font-box" type="tel" placeholder="ex) 01012345678" maxlength="11" th:value="${ #authentication.principal.phone }">
                                                             </div>
                                                         </div>
                                                         <div  class="row">
@@ -181,7 +184,10 @@
                                                         </div>
                                                         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
                                                         <script>
-                                                            
+                                                            const $projNo1 = document.getElementById('pjNo').innerText;
+                                                            console.log($projNo1);
+                                                            const $uneremail = document.getElementById('uneremail').innerText;
+                                                            console.log($uneremail);
                                                         </script>
                                                         <!---->
                                                     </div>
@@ -222,7 +228,7 @@
                                                         </li>
                                                     </ul>
                                                     <div id="pay1">
-                                                        <div class="credit-card" data-component-name="componentCreditCard">
+                                                        <!-- <div class="credit-card" data-component-name="componentCreditCard">
                                                             <div class="wrapper3">
                                                                 <div class="name font-md">
                                                                     <span >하나SK카드</span>
@@ -245,10 +251,10 @@
                                                                 <div class="actions">
                                                                     <button type="button" class="btn3 btn-outline-light font-sm">직접 입력
 
-                                                                    </button><!---->
+                                                                    </button>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <!---->
                                                 </div>
@@ -269,7 +275,9 @@
                                                                     <span class="float-left">후원금</span>
                                                                 </th>
                                                                 <td >
-                                                                    <span  class="float-right">30,000원</span>
+                                                                    <span  class="float-right"><b th:text="${ reward.rewardPrice }"></b>
+                                                                        <span>원</span>
+                                                                    </span>
                                                                 </td>
                                                             </tr>
                                                             <tr >
@@ -289,15 +297,17 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
+                                                
                                                 <div  class="subject clearfix">
                                                     <span  class="float-left">최종 금액</span>
-                                                    <span  class="float-right"><b  id="finalPrice">10</b>
+                                                    <span  class="float-right"><b  id="finalPrice" th:text="${ reward.rewardPrice+2500 }"></b>
                                                         <span  class="asdf">원</span>
                                                     </span>
                                                 </div>
                                             </div>
                                             <script>
-                                            
+                                            //   console.log($pjNo);
+                                            // th:text="${ reward.rewardPrice+2500+ } "
                                             </script>
                                             <div  class="guide font-sm">
                                                 <p >목표액 1,000,000원에 미달하여도 진행되는 프로젝트입니다. 결제는 프로젝트 후원 시 바로 진행됩니다.</p>
@@ -319,7 +329,7 @@
                                             </div>
                                         </div>
                                         <div  class="action">
-                                            <button  id="submitPay" onclick="aass();" class="btn-block btn-point font-lg">
+                                            <button  id="submitPay" class="btn-block btn-point font-lg">
                                                 <span cla="b">후원하기</span>
                                             </button>
                                         </div>
@@ -335,7 +345,7 @@
         </div>
 
     </section>
-	<!-- <div th:replace="/common/footer/userFooter.html"></div> -->
+<div th:replace="/common/footer/userFooter.html"></div>
 </th:block>
 </body>
 </html>

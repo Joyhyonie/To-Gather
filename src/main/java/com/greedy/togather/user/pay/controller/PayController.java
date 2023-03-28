@@ -1,10 +1,11 @@
 package com.greedy.togather.user.pay.controller;
 
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 
 import java.util.Map;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import com.greedy.togather.user.pay.dto.PayOrderDTO;
 import com.greedy.togather.user.pay.dto.PaymentDTO;
 //import com.greedy.togather.user.pay.service.PaymentService;
 import com.greedy.togather.user.pay.service.PaymentService;
+import com.greedy.togather.user.user.model.dto.UserDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,16 +45,16 @@ public class PayController {
 //			System.out.println("projNo 1>>>" + reqMap.get("projNo"));// prjoNO=
 //			System.out.println("rewardNo >>> " + reqMap.get("rewardNo")); // rewardNo = 
 			/* 프로젝트 상세 내용 조회 */
-			Map<String, Object> payScreenDetails = paymentService.searchPayScreen(projNo, rewardNo);		
+			Map<String, Object> payScreenDetails = paymentService.searchPayScreen(projNo);		
 			log.info("[PayController] payScreenDetails : {}", payScreenDetails);
-//			Map<String, Object> payScreenDetails = paymentService.searchPayScreen(rewardNo);
+			Map<String, Object> payScreenReward = paymentService.searchRewardScreen(rewardNo);
 			
-			System.out.println(rewardNo);
-			System.out.println(projNo);
+			log.info(rewardNo);
+			log.info(projNo);
 			
 			
 			model.addAttribute("payD", payScreenDetails.get("projectNo"));
-			model.addAttribute("rewardL", payScreenDetails.get("reward"));
+			model.addAttribute("reward", payScreenReward.get("reward"));
 			
 			//model.addAllObjects(payScreenDetails);
 //			model.setViewName("/user/pay/payScreen");
@@ -64,13 +66,14 @@ public class PayController {
 	public String payComplete(@RequestParam(value="payNo", required=false) String payNo, Model model) { 
 		
 		Map<String, Object> paymentList = paymentService.slectPayment(payNo);
+		log.info("paymentList : {}" + paymentList);
 		model.addAttribute("order", paymentList.get("payment"));
 		
 		return "/user/pay/payComplete";
 	}
 	
 	@PostMapping("/payComplete")
-	public @ResponseBody PayOrderDTO postPayComplete(/* @RequestBody Map<String, String> requestMap */@RequestBody PayOrderDTO order) {
+	public @ResponseBody String postPayComplete(/* @RequestBody Map<String, String> requestMap */@RequestBody PayOrderDTO order) {
 		
 
 //		log.info("order : {}",order);
@@ -82,15 +85,47 @@ public class PayController {
 		paymentService.registPayment(order);
 		paymentService.updatefundingAchive(order);
 		
-		return orderList;
+		String api_key = "4472688766767282";
+		String api_secret = "uVesZr8wTfgxjSI8vfCN61pqnRsyMdmru5w81ZiHhdMH2TMv0qllSYW81Pi8sqeQKEBbIoZNZ4yOerY6";
+		
+		
+		
+		return "/pay/payComplete";
 	}
 	
-	@PostMapping("/cancel")
-	public @ResponseBody String payCancel(@RequestParam(value= "payNo") String payNo, Model model) {
+	@GetMapping("/cancel")
+	public String Cancel(@RequestParam(value="orderNo") String orderNo, @RequestParam(value="userNo") String userNo, Model model) {
 		
-		Map<String, Object> paymentList = paymentService.slectPayment(payNo);
-		model.addAttribute("order", paymentList.get("payment"));
+		Map<String, Object> rePaymentList = paymentService.slectPaymentFefund(orderNo);
+		log.info("orderNo : {} " + orderNo);
+		log.info("cancel : {}" + rePaymentList);
+		model.addAttribute("cancel", rePaymentList.get("rePayment"));
+		
 						
+		return "/user/pay/refund";
+	}
+	
+	@GetMapping("/payFund")
+	public String payFund(/*@RequestParam String userNo, Model model*/@AuthenticationPrincipal UserDTO loginUser, @RequestParam(value="userNo", required=false) String userNo, Model model) {
+		
+		Map<String, Object> fundList = paymentService.slectFund(userNo);
+		log.info("fundList : {}" + fundList); 
+		Map<String, Object> refundList = paymentService.selectRefund(userNo);
+		log.info(userNo);
+		
+		model.addAttribute("fundList", fundList.get("fundNo"));
+		model.addAttribute("refundList", refundList.get("refund"));
+		log.info("refundList : {} " + refundList);
+		
+		return "/user/myPage/fundProject";
+	}
+	
+	@PostMapping("/payCancel")
+	public @ResponseBody String payCancel(@RequestBody PaymentDTO cancel) {
+		
+		System.out.println("dddd");
+		
+		
 		return "";
 	}
 	

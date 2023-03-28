@@ -3,7 +3,7 @@ package com.greedy.togather.user.pay.dto;
 import java.io.Serializable;
 import java.sql.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.project.dto.RewardDTO;
 
 import lombok.Data;
@@ -25,4 +25,5 @@ public class PayOrderDTO implements Serializable{
 	private RewardDTO reward;
 	private DeliveryDTO delivery;
 	private PaymentDTO payment;
+	private ProjectDTO project;
 }

@@ -8,7 +8,7 @@
 		<result property="payMethod" column="PAY_METHOD"/>
 		<result property="payPrice" column="PAY_PRICE"/>
 		<result property="payDate" column="PAY_DATE"/>
-<!-- 		<result property="projName" column="PROJ_NM"/> -->
+ 		<!-- <association property="projName" resultMap="viewProjectDetailResultMap"/> -->
 	</resultMap>
 	
 	<!-- 카테고리 선택 or 검색어 입력을 통해 프로젝트 리스트 조회를 위한 resultMap -->
@@ -133,6 +133,48 @@
 		<result property="rewardNo" column="REWARD_NO"/>
 	</resultMap>
 	
+	<!-- PayOrderDTO -->
+	<resultMap type="com.greedy.togather.user.pay.dto.PayOrderDTO" id="PayOrderMentResultMap">
+		<id property="orderNo" column="ORDER_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="orderDate" column="ORDER_DATE"/>
+		<result property="rewardQuantity" column="REWARD_QUANTITY"/>
+		<result property="rewardPrice" column="REWARD_PRICE"/>
+		<result property="extraReward" column="EXTRA_REWARD"/>
+		<result property="deliveryFee" column="DELIVERY_FEE"/>
+		<result property="dcPrice" column="DC_PRICE"/>
+		<result property="payPrice" column="PAY_PRICE"/>
+		
+		<association property="reward" resultMap="rewardResultMap"/>
+		<association property="project" resultMap="viewProjectDetailResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.greedy.togather.user.pay.dto.RefundDTO" id="RefundDTOResultMap">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="refundDate" column="REFUND_DATE"/>
+		<result property="refundPrice" column="REFUND_PRICE"/>
+		<result property="refundReason" column="REFUND_REASON"/>
+		
+		<association property="userNo" resultMap="loginUserResultMap"/>
+		<association property="orderNo" resultMap="PayOrderMentResultMap"/>
+		<association property="projNo" resultMap="viewProjectDetailResultMap"/>
+		<association property="projName" resultMap="viewProjectDetailResultMap"/>
+	</resultMap>
+	
+		<resultMap id="loginUserResultMap" type="com.greedy.togather.user.user.model.dto.UserDTO">
+		<id property="userNo" column="USER_NO"/>
+		<result property="email" column="EMAIL"/>
+		<result property="pwd" column="PWD"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="profileNm" column="PROFILE_NM"/>
+		<result property="phone" column="PHONE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="joinDate" column="JOIN_DATE"/>
+		<result property="quitDate" column="QUIT_DATE"/>
+		<result property="quitYn" column="QUIT_YN"/>
+		<result property="userToken" column="USER_TOKEN"/>
+	</resultMap>
+	
 		<select id="selectProjectDetail" resultMap="viewProjectDetailResultMap">
 		SELECT
 			A.PROJ_NO
@@ -177,20 +219,9 @@
 	    ,   A.REWARD_DUE_DATE
 	    ,   (SELECT COUNT(ORDER_NO) FROM TBL_ORDER B WHERE B.REWARD_NO = A.REWARD_NO) AS ORDER_COUNT
 	    FROM TBL_REWARD A
-	    WHERE A.PROJ_NO = #{ projNo }
-	      AND A.REWARD_NO = #{ rewardNo }
-	    ORDER BY A.REWARD_PRICE
-	</select>
-	
-	<select id="selectPayment" resultMap="payOrderResultMap">
-	SELECT *
-	  FROM (
-	        SELECT *
-	          FROM TBL_PAYMENT
-	
-	         ORDER BY PAY_NO DESC
-	        ) 
-	 WHERE ROWNUM = 1
+	   WHERE A.REWARD_NO = #{ rewardNo }
+	    <!-- WHERE A.PROJ_NO = #{ projNo } -->
+	    <!-- ORDER BY A.REWARD_PRICE -->
 	</select>
 	
 	<insert id="registOrder">
@@ -263,7 +294,7 @@
 	)
 	VALUES
 	(
-	  'PY'||LPAD(SEQ_ORDER_NO.NEXTVAL,9,'0')
+	  'PY'||LPAD(SEQ_PAY_NO.NEXTVAL,9,'0')
 	, 'OR'||LPAD(SEQ_ORDER_NO.CURRVAL,9,'0')
 	, #{ payment.payMethod }
 	, #{ payPrice }
@@ -277,6 +308,79 @@
 	   SET FUNDING_ACHIVE = FUNDING_ACHIVE + #{ payPrice }
 	 WHERE PROJ_NO = #{ reward.projNo }
 	</update>
+	
+	<select id="selectPayment" resultMap="payOrderResultMap">
+	SELECT *
+	  FROM (
+	        SELECT *
+	          FROM TBL_PAYMENT
+	         ORDER BY PAY_NO DESC
+	        ) 
+	 WHERE ROWNUM = 1
+	</select>
+	
+	<select id="selectFund" resultMap="PayOrderMentResultMap">
+	SELECT DISTINCT
+		   A.ORDER_NO
+		 , A.USER_NO
+		 , A.ORDER_DATE
+		 , A.REWARD_QUANTITY
+		 , A.REWARD_PRICE
+		 , A.EXTRA_REWARD
+		 , A.DELIVERY_FEE
+		 , A.DC_PRICE
+		 , A.PAY_PRICE
+		 , B.PROJ_NO
+		 , B.REWARD_NM
+		 , C.PROJ_NM
+	  FROM TBL_ORDER A
+	  LEFT JOIN TBL_REWARD B ON(A.PROJ_NO = B.PROJ_NO)
+	  LEFT JOIN TBL_PROJECT C ON (B.PROJ_NO = C.PROJ_NO)
+	 WHERE A.USER_NO = #{ userNo }
+	ORDER BY A.ORDER_DATE DESC
+	</select>
+	
+	<select id="slectPaymentFefund" resultMap="PayOrderMentResultMap">
+    SELECT DISTINCT
+		   A.ORDER_NO
+		 , A.USER_NO
+		 , A.ORDER_DATE
+		 , A.REWARD_QUANTITY
+		 , A.REWARD_PRICE
+		 , A.EXTRA_REWARD
+		 , A.DELIVERY_FEE
+		 , A.DC_PRICE
+		 , A.PAY_PRICE
+		 , B.PROJ_NO
+		 , B.REWARD_NM
+		 , C.PROJ_NM
+	  FROM TBL_ORDER A
+LEFT OUTER JOIN TBL_REWARD B ON(A.PROJ_NO = B.PROJ_NO)
+LEFT OUTER JOIN TBL_PROJECT C ON (B.PROJ_NO = C.PROJ_NO)
+LEFT OUTER JOIN TBL_PAYMENT D ON (A.ORDER_NO = D.ORDER_NO)
+LEFT OUTER JOIN TBL_REFUND E ON (D.PAY_NO = E.PAY_NO)
+     WHERE E.PAY_NO NOT IN D.PAY_NO
+	   AND A.USER_NO = #{ userNo }
+ ORDER BY A.ORDER_DATE DESC
+	</select>	
+	<select id="selectRefund" resultMap="RefundDTOResultMap">
+	SELECT
+		   A.PAY_NO
+		 , A.REFUND_DATE
+		 , A.REFUND_PRICE
+		 , A.REFUND_REASON
+		 , C.USER_NO
+		 , D.ORDER_NO
+		 , E.PROJ_NO
+		 , E.PROJ_NM
+      FROM TBL_REFUND A
+      FULL OUTER JOIN TBL_PAYMENT B ON(A.PAY_NO = B.PAY_NO)
+      FULL OUTER JOIN TBL_ORDER D ON(B.ORDER_NO = D.ORDER_NO)
+      FULL JOIN TBL_ORDER C ON(D.ORDER_NO = C.ORDER_NO)
+      FULL OUTER JOIN TBL_PROJECT E ON(C.PROJ_NO = E.PROJ_NO)
+     WHERE C.USER_NO = #{ userNo }
+    ORDER BY A.REFUND_DATE DESC
+	</select>
 </mapper>
 
 

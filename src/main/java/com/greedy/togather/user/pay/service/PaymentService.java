@@ -9,12 +9,11 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.greedy.togather.user.pay.controller.PayController;
 import com.greedy.togather.user.pay.dao.PaymentMapper;
 import com.greedy.togather.user.pay.dto.PayOrderDTO;
 import com.greedy.togather.user.pay.dto.PaymentDTO;
+import com.greedy.togather.user.pay.dto.RefundDTO;
 import com.greedy.togather.user.project.dto.ProjectDTO;
-import com.greedy.togather.user.project.dto.ReplyDTO;
 import com.greedy.togather.user.project.dto.RewardDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -72,17 +71,60 @@ public class PaymentService {
 		return  paymentList;
 	}
 
-	public Map<String, Object> searchPayScreen(String projNo, String rewardNo) {
+	public Map<String, Object> searchPayScreen(String projNo) {
 		
 		ProjectDTO projectNo = paymentMapper.selectProjectDetail(projNo);
-		RewardDTO reward = paymentMapper.selectRewardList(rewardNo);
+//		RewardDTO reward = paymentMapper.selectRewardList(rewardNo);
 		
 		Map<String, Object> payScreenDetails = new HashMap<>();
 		payScreenDetails.put("projectNo", projectNo);
-		payScreenDetails.put("reward", reward);
+//		payScreenDetails.put("reward", reward);
 		
 		return payScreenDetails;
 	}
+
+	public Map<String, Object> searchRewardScreen(String rewardNo) {
+		RewardDTO reward = paymentMapper.selectRewardList(rewardNo);
+		Map<String, Object> payScreenDetails = new HashMap<>();
+		payScreenDetails.put("reward", reward);
+		return payScreenDetails;
+	}
+
+	public Map<String, Object> slectFund(String No) {
+		
+		List<PayOrderDTO> fundNo = paymentMapper.selectFund(No);
+		
+		Map<String, Object> fundList = new HashMap<>();
+		fundList.put("fundNo", fundNo);
+		
+		return fundList;
+	}
+
+	public Map<String, Object> slectPaymentFefund(String orderNo) {
+		
+		List<PayOrderDTO> rePayment = paymentMapper.slectPaymentFefund(orderNo);
+		
+		log.info("orderNo ::::::::::::" + orderNo);
+		System.out.println(rePayment);
+		
+		Map<String, Object> rePaymentList = new HashMap<>(); 
+		rePaymentList.put("rePayment", rePayment);
+		
+		return rePaymentList;
+	}
+
+	public Map<String, Object> selectRefund(String userNo) {
+		
+		List<RefundDTO> refund = paymentMapper.selectRefund(userNo);
+		
+		Map<String, Object> refundList = new HashMap<>();
+		
+		refundList.put("refund", refund);
+		
+		return refundList;
+	}
+
+
 
 //	public Map<String, Object> searchPayScreen(Map<String, Object> payScreenDetails) {
 //		
