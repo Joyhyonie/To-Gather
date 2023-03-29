@@ -81,9 +81,13 @@
                     <td th:text="${ funding.proj.projNm }"></td>
                     <td th:text="${ funding.reward.rewardNm }"></td>
                     <td th:text="${ #dates.format(funding.pay.payDate, 'yyyy-MM-dd') }"></td>
-                    <td th:text="${ #numbers.formatInteger(funding.pay.payPrice, 3, 'COMMA') }"></td>
+                    <td>
+                    	<span th:if="${funding.pay.payPrice != 0 }" th:text="${ #numbers.formatInteger(funding.pay.payPrice, 0, 'COMMA') }"></span>
+                    </td>
                     <td th:text="${ #dates.format(funding.pay.refund.refundDate, 'yyyy-MM-dd') }"></td>
-                    <td th:text="${ #numbers.formatInteger(funding.pay.refund.refundPrice, 3, 'COMMA') }"></td>
+                    <td>
+                    	<span th:if="${funding.pay.refund.refundPrice != 0 }" th:text="${ #numbers.formatInteger(funding.pay.refund.refundPrice, 0, 'COMMA') }"></span>
+                    </td>
                     <td th:text="${ funding.pay.refund.refundReason }"></td>
                 </tr>
             </table>
@@ -99,23 +103,26 @@
                     <th class="table-header">환불 금액</th>
                     <th class="table-header">총 펀딩 금액</th>
                 </tr>
-                <tr class="table-content">
+                <tr class="table-cont ent">
                     <th class="total">합계</th>
                     <td th:text="${ #lists.size(fundingList) }"></td>
-                    <td th:text="${ #numbers.formatInteger(totalPay, 3, 'COMMA') }"></td>
-                    <td th:text="${ #numbers.formatInteger(totalRefund, 3, 'COMMA') }"></td>
-                    <td th:text="${ #numbers.formatInteger((totalPay - totalRefund), 3, 'COMMA') }"></td>
-                </tr>
+                    <td>
+                    	<span th:if="${totalPay != 0 }" th:text="${ #numbers.formatInteger(totalPay, 0, 'COMMA') }"></span>
+                    </td>
+                    <td>
+                    	<span th:if="${totalRefund != 0 }" th:text="${ #numbers.formatInteger(totalRefund, 0, 'COMMA') }"></span>
+                    </td>
+                    <td>
+                    	<span th:if="${(totalPay - totalRefund) != 0 }" th:text="${ #numbers.formatInteger((totalPay - totalRefund), 0, 'COMMA') }"></span>
+                    </td>
+                </tr> 
             </table>
         </div>
 
         <div class="content5">
-            <button class="user-cancel">취소</button>
+            <button type="button" class="user-cancel">취소</button>
             <button type="button" class="user-update">수정</button>
         </div>
-
-        
-
 
 
 

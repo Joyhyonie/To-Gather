@@ -5,7 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.greedy.togather.admin.settle.model.dto.AdminFundingDTO;
+import com.greedy.togather.admin.settle.model.dto.AdminProjectDTO;
 import com.greedy.togather.admin.settle.model.dto.AdminSettleDTO;
+
 import com.greedy.togather.common.paging.SelectCriteria;
 
 @Mapper
@@ -16,5 +19,15 @@ public interface AdminSettleMapper {
 	List<AdminSettleDTO> selectSettleList(SelectCriteria selectCriteria);
 
 	void deleteSettleChecked(AdminSettleDTO settle);
+
+	AdminSettleDTO selectProjInfo(String settleNo);
+
+	List<AdminFundingDTO> selectFundingInfo(String projNo);
+
+	void doSettle(String projNo);
+
+	List<AdminProjectDTO> selectEndProject();
+
+	void insertTblSettle(String projNo);
 
 }

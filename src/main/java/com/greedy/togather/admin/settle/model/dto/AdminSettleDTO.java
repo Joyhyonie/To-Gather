@@ -1,7 +1,5 @@
 package com.greedy.togather.admin.settle.model.dto;
 
-import com.greedy.togather.admin.project.dto.AdminProjectDTO;
-
 import lombok.Data;
 
 @Data
@@ -18,5 +16,4 @@ public class AdminSettleDTO {
 	private String settleStatus;
 	
 	private AdminProjectDTO proj;
-	
 }

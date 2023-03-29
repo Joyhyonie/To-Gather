@@ -189,7 +189,7 @@
 
 <!--     <select id="selectTotalFundingDetail" resultMap="totalFundingResultMap">
 	     SELECT
-		       COUNT(PY.PAY_NO) PAY_COUNT
+		       COUNT(PY.PAY_NO) PAY_COUNT       
 		     , SUM(PY.PAY_PRICE) TOTAL_PAY
 		     , SUM(RF.REFUND_PRICE) TOTAL_REFUND
 		     , SUM(PY.PAY_PRICE - RF.REFUND_PRICE) TOTAL_FUNDING
