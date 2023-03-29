@@ -1,5 +1,21 @@
-
-
+var rmaksenj;
+var rlqhsrkqt
+var notNaN;
+var countbox;
+var plus
+function rhqgkrl(){
+    rlqhsrkqt = parseFloat(document.getElementById('rmaksenj').textContent);
+    const $countbox = document.getElementById('countbox');
+    countbox = $countbox.value
+    console.log(rlqhsrkqt);
+    if(plus !== undefined){
+        document.getElementById('finalPrice').innerHTML = rlqhsrkqt * countbox + parseFloat(plus) + 2500;
+    } else {
+        document.getElementById('finalPrice').innerHTML = rlqhsrkqt * countbox + 2500;
+    }
+    console.log(countbox);
+    console.log(plus);
+}
 function onlyNumber(obj) {
     //숫자 아닌 표현식 찾기
     const regexp = /\D/g;
@@ -19,19 +35,34 @@ function onlyNumber(obj) {
     const rrrrr = event.target.value; 
     console.log(rrrrr);
     
-    const plus = rrrrr.replace(/,/g,"");
-    
+    plus = rrrrr.replace(/,/g,"");
+    console.log(countbox);
     // const aaaa = rrrrr+$rewardPrice;
     console.log(plus);
     // console.log( reward.rewardPrice );
-    
-    var rmaksenj = parseFloat(document.getElementById('rmaksenj').textContent) + parseFloat(plus);
+    if(countbox == undefined){
+        rmaksenj = parseFloat(document.getElementById('rmaksenj').textContent) + parseFloat(plus);
+        notNaN = parseFloat(document.getElementById('rmaksenj').textContent) + 2500
+    } else {
+        rmaksenj = parseFloat(document.getElementById('rmaksenj').textContent) * countbox + parseFloat(plus);
+        notNaN = parseFloat(document.getElementById('rmaksenj').textContent) * countbox + 2500
+    }
+    console.log(rlqhsrkqt);
     console.log(rmaksenj);
-    document.getElementById('finalPrice').innerHTML=rmaksenj +2500;
+    if( rmaksenj >= 0 ){
+        document.getElementById('finalPrice').innerHTML= 2500+rmaksenj;
+    } else if(!(rmaksenj >= 0)){
+        document.getElementById('finalPrice').innerHTML=notNaN;
+    }
     
-    
+
 }
 window.onload = function () {
+
+    const $countbox = document.getElementById('countbox');    
+    $countbox.addEventListener('input', rhqgkrl);
+
+
     const $rewradAddress = document.getElementById("rewradAddress");
     const $outer = document.getElementById("addre");
     const $new = document.createElement("p");
@@ -56,13 +87,7 @@ window.onload = function () {
             $new.remove();
         }
     };
-    
-$countbox.addEventListener('input', function(){
-    
-    var countbox = $countbox.value
-    console.log(countbox);
-    document.getElementById('finalPrice').innerHTML= rmaksenj;
-});
+
     
     const $btn = document.querySelectorAll('.btn');
     const $img = document.querySelectorAll('.img');
@@ -168,7 +193,7 @@ const $cutext = document.getElementsByClassName('cutext')[0];
 
 const $cuprice = document.getElementsByClassName('cuprice')[0];
 
-const $countbox = document.getElementById('countbox');
+
 
 
 
@@ -219,10 +244,17 @@ const $card = '카드';
 // location.href='/pay/payScreen?projNo=$projNo&rewardNo=$rewardNo';             
 console.log(userNo);
 const $pageRewardOrderFormAddAmt = document.getElementById('pageRewardOrderFormAddAmt').value;
+var pageCheck2 = document.getElementById('pageCheck2');
+var pageCheck1 = document.getElementById('pageCheck1');
 $(function(){
     $('#submitPay').click(function(){
         
-       
+        if(!(pageCheck1.checked && pageCheck2.checked)){
+            alert("개인정보제공 동의에 체크하세요")
+        } else {
+
+        
+
         console.log($pageRewardOrderFormAddAmt);
         const $rewradAddress1 = document.getElementById('detailed-address').value;
         const $finalPrice = document.getElementById('finalPrice').innerText;
@@ -263,7 +295,7 @@ $(function(){
                         reward : {projNo : $projNo,
                             rewardNo : $rewardNo
                     }, 
-                    rewardQuantity : $countbox, 
+                    rewardQuantity : $countbox.innerText, 
                     rewardPrice : $rewardPrice, 
                     extraReward : $pageRewardOrderFormAddAmt,
                     deliveryFee : $deliveryPrice, 
@@ -344,7 +376,7 @@ $(function(){
                             reward : {projNo : $projNo,
                                 rewardNo : $rewardNo
                         }, 
-                        rewardQuantity : $countbox, 
+                        rewardQuantity : $countbox.innerText, 
                         rewardPrice : $rewardPrice, 
                         extraReward : $pageRewardOrderFormAddAmt,
                         deliveryFee : $deliveryPrice, 
@@ -397,6 +429,7 @@ $(function(){
             
             
         }
+    }
     })
     
     
