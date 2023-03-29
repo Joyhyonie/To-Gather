@@ -3,8 +3,17 @@ package com.greedy.togather.user.pay.controller;
 
 
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -96,7 +105,7 @@ public class PayController {
 	@GetMapping("/cancel")
 	public String Cancel(@RequestParam(value="orderNo") String orderNo, @RequestParam(value="userNo") String userNo, Model model) {
 		
-		Map<String, Object> rePaymentList = paymentService.slectPaymentFefund(orderNo);
+		Map<String, Object> rePaymentList = paymentService.selectFund(orderNo);
 		log.info("orderNo : {} " + orderNo);
 		log.info("cancel : {}" + rePaymentList);
 		model.addAttribute("cancel", rePaymentList.get("rePayment"));
@@ -108,7 +117,7 @@ public class PayController {
 	@GetMapping("/payFund")
 	public String payFund(/*@RequestParam String userNo, Model model*/@AuthenticationPrincipal UserDTO loginUser, @RequestParam(value="userNo", required=false) String userNo, Model model) {
 		
-		Map<String, Object> fundList = paymentService.slectFund(userNo);
+		Map<String, Object> fundList = paymentService.slectFundList(userNo);
 		log.info("fundList : {}" + fundList); 
 		Map<String, Object> refundList = paymentService.selectRefund(userNo);
 		log.info(userNo);
@@ -120,13 +129,104 @@ public class PayController {
 		return "/user/myPage/fundProject";
 	}
 	
-	@PostMapping("/payCancel")
+	@PostMapping("/orderCancel")
 	public @ResponseBody String payCancel(@RequestBody PaymentDTO cancel) {
 		
-		System.out.println("dddd");
+//		System.out.println("dddd");
 		
+//		String token = "YOUR_ACCESS_TOKEN"; // 발급받은 인증 토큰
+//		String impKey = "YOUR_IMP_KEY"; // 발급받은 API Key
+//		String impSecret = "YOUR_IMP_SECRET"; // 발급받은 API Secret Key
+//		String paymentId = "CANCEL_PAYMENT_ID"; // 취소할 결제 번호
+//		int amount = 1000; // 취소할 금액
+
+//		try {
+//		    URL url = new URL("https://api.iamport.kr/payments/cancel");
+//
+//		    // HTTP 연결 설정
+//		    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+//		    conn.setRequestMethod("POST");
+//		    conn.setRequestProperty("Authorization", token);
+//		    conn.setRequestProperty("Content-Type", "application/json");
+//		    conn.setRequestProperty("Accept", "application/json");
+//		    conn.setDoOutput(true);
+//
+//		    // 취소할 결제 정보 설정
+//		    JSONObject cancelData = new JSONObject();
+//		    cancelData.put("merchant_uid", paymentId);
+//		    cancelData.put("amount", amount);
+//		    String data = cancelData.toString();
+//
+//		    // 요청 데이터 전송
+//		    OutputStream os = conn.getOutputStream();
+//		    os.write(data.getBytes("UTF-8"));
+//		    os.flush();
+//		    os.close();
+//
+//		    // 응답 처리
+//		    int responseCode = conn.getResponseCode();
+//		    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//		    String inputLine;
+//		    StringBuffer response = new StringBuffer();
+//		    while ((inputLine = in.readLine()) != null) {
+//		        response.append(inputLine);
+//		    }
+//		    in.close();
+//
+//		    System.out.println("Response Code : " + responseCode);
+//		    System.out.println("Response Body : " + response.toString());
+//		} catch (Exception e) {
+//		    e.printStackTrace();
+//		}
+		PaymentDTO cancelList = cancel;
+		try {
+			URL address = new URL("https://api.iamport.kr/users/getToken");
+			HttpURLConnection conn = (HttpURLConnection) address.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("Accept", "application/json");
+			
+			conn.setDoOutput(true);
+			
+			JSONObject cancelData = new JSONObject();
+			cancelData.put("imp_key", "4472688766767282");
+			cancelData.put("imp_secret", "uVesZr8wTfgxjSI8vfCN61pqnRsyMdmru5w81ZiHhdMH2TMv0qllSYW81Pi8sqeQKEBbIoZNZ4yOerY6");
+			
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			bw.write(cancelData.toJSONString());
+			bw.flush();
+			bw.close();
+			
+			int result = 0;
+			int responseCode = conn.getResponseCode();
+			
+			System.out.println("응답 코드는 ???" + responseCode);
+			
+			if(responseCode == 200) {
+				paymentService.insertRefund(cancel); 
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				StringBuilder sb = new StringBuilder();
+				String line = null;
+				while((line = br.readLine()) != null) {
+					sb.append(line + "\n");
+				}
+				br.close();
+				System.out.println("" + sb.toString());
+//				return "";
+			} else {
+				return "error";
+			}
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return "";
 	}
+
+
 	
 }

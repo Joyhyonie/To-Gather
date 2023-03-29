@@ -12,6 +12,7 @@ public class RefundDTO {
 	private String refundDate;
 	private String refundPrice;
 	private String refundReason;
+	private String refundStatus;
 	private UserDTO userNo;
 	private PayOrderDTO orderNo;
 	private ProjectDTO projNo;

@@ -90,9 +90,9 @@ public class PaymentService {
 		return payScreenDetails;
 	}
 
-	public Map<String, Object> slectFund(String No) {
+	public Map<String, Object> slectFundList(String No) {
 		
-		List<PayOrderDTO> fundNo = paymentMapper.selectFund(No);
+		List<PayOrderDTO> fundNo = paymentMapper.selectFundList(No);
 		
 		Map<String, Object> fundList = new HashMap<>();
 		fundList.put("fundNo", fundNo);
@@ -100,18 +100,18 @@ public class PaymentService {
 		return fundList;
 	}
 
-	public Map<String, Object> slectPaymentFefund(String orderNo) {
-		
-		List<PayOrderDTO> rePayment = paymentMapper.slectPaymentFefund(orderNo);
-		
-		log.info("orderNo ::::::::::::" + orderNo);
-		System.out.println(rePayment);
-		
-		Map<String, Object> rePaymentList = new HashMap<>(); 
-		rePaymentList.put("rePayment", rePayment);
-		
-		return rePaymentList;
-	}
+//	public Map<String, Object> slectPaymentFefund(String orderNo) {
+//		
+//		List<PayOrderDTO> rePayment = paymentMapper.slectPaymentFefund(orderNo);
+//		
+//		log.info("orderNo ::::::::::::" + orderNo);
+//		System.out.println(rePayment);
+//		
+//		Map<String, Object> rePaymentList = new HashMap<>(); 
+//		rePaymentList.put("rePayment", rePayment);
+//		
+//		return rePaymentList;
+//	}
 
 	public Map<String, Object> selectRefund(String userNo) {
 		
@@ -123,6 +123,29 @@ public class PaymentService {
 		
 		return refundList;
 	}
+
+	public Map<String, Object> selectFund(String orderNo) {
+		
+		PayOrderDTO rePayment = paymentMapper.selectFund(orderNo);
+		
+		log.info("orderNo ::::::::::::" + orderNo);
+		System.out.println(rePayment);
+		
+		Map<String, Object> rePaymentList = new HashMap<>(); 
+		rePaymentList.put("rePayment", rePayment);
+		
+		return rePaymentList;
+	}
+	
+	public void insertRefund(PaymentDTO cancel) {
+		
+		int result7 = paymentMapper.insertRefund(cancel);
+	}
+
+
+
+
+
 
 
 

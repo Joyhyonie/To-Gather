@@ -29,10 +29,16 @@ public interface PaymentMapper {
 
 	RewardDTO selectRewardList(String rewardNo);
 
-	List<PayOrderDTO> selectFund(String No);
+	List<PayOrderDTO> selectFundList(String No);
 
-	List<PayOrderDTO> slectPaymentFefund(String orderNo);
+//	List<PayOrderDTO> slectPaymentFefund(String orderNo);
 
 	List<RefundDTO> selectRefund(String userNo);
+
+	PayOrderDTO selectFund(String orderNo);
+
+	int insertRefund(PaymentDTO cancel);
+
+
 
 }
