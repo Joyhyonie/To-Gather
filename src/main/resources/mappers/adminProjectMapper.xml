@@ -72,7 +72,7 @@
 	</resultMap>
 	
 	<resultMap id="adminMainBanner" type="com.greedy.togather.admin.mainBanner.dto.AdminBannerDTO">
-		<id property="mpCode" column=""/>
+		<id property="mpCode" column="MP_CODE"/>
 		<result property="projNo" column="PROJ_NO"/>		
 		<result property="mpStartDate" column="MP_START_DATE"/>		
 		<result property="mpEndDate" column="MP_END_DATE"/>		
@@ -82,6 +82,18 @@
 
 	</resultMap>
 	
+		<resultMap id="adminTodayProject" type="com.greedy.togather.admin.mainBanner.dto.AdminBannerDTO">
+		<id property="mpCode" column="MP_CODE"/>
+		<result property="projNo" column="PROJ_NO"/>		
+		<result property="mpStartDate" column="MP_START_DATE"/>		
+		<result property="mpEndDate" column="MP_END_DATE"/>		
+		<result property="mpRegDate" column="MP_REG_DATE"/>		
+		<result property="mpCategory" column="MP_CATEGORY"/>		
+		<result property="mpStatus" column="MP_STATUS"/>		
+
+	</resultMap>
+	
+
 	
 	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
         SELECT 
@@ -260,34 +272,58 @@
 )
 VALUES
 (
-  'MP'||LPAD(SEQ_MP_CODE.nextVAL, 9, '0')
+  'MP'||LPAD(SEQ_MP_CODE.NEXTVAL, 9, '0')
   ,	#{ projNo }
   ,	#{ mpStartDate }
   ,	#{ mpEndDate }
   ,	#{ mpCategory }
   ,	#{ mpStatus }  
-); 
+)
 
 </insert>
  
- 
- 
- <!-- <select id="adminReadFile" resultMap="adminFlieResultMap">
- 	SELECT
- 	      C.PROJ_NO
- 	     ,C.FILE_PATH
- 		 ,C.THUM_PATH
- 		 ,C.SAVED_FILE_NM
- 		 ,C.FILE_TYPE
- 	  FROM TBL_FILE C
- LEFT JOIN TBL_PROJECT A ON (C.PROJ_NO = A.PROJ_NO)
- 
-     WHERE C.PROJ_NO = #{ projNo }
+ <update id="adminMainBannerUpdate">
+       UPDATE 
+             TBL_MAINPAGE A
 
+         SET MP_STATUS = '마감'
+            ,MP_END_DATE = #{ mpEndDate }
+		WHERE A.PROJ_NO = #{ projNo }
+</update>
+
+<insert id="adminTodayProject">
  
- </select> -->
+ INSERT
+  INTO TBL_MAINPAGE
+(
+   MP_CODE
+  ,PROJ_NO
+  ,MP_START_DATE
+  ,MP_END_DATE
+  ,MP_CATEGORY
+  ,MP_STATUS
+)
+VALUES
+(
+  'MP'||LPAD(SEQ_MP_CODE.NEXTVAL, 9, '0')
+  ,	#{ projNo }
+  ,	#{ mpStartDate }
+  ,	#{ mpEndDate }
+  ,	#{ mpCategory }
+  ,	#{ mpStatus }  
+)
 
+</insert>
+ 
+ <update id="adminTodayProjectUpdate">
+       UPDATE 
+             TBL_MAINPAGE A
 
+         SET MP_STATUS = '마감'
+            ,MP_END_DATE = #{ mpEndDate }
+		WHERE A.PROJ_NO = #{ projNo }
+</update>
+ 
 
 
 

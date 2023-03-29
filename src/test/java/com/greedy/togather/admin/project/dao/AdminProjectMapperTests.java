@@ -16,6 +16,8 @@ import com.greedy.togather.Chap99ToGatherApplication;
 import com.greedy.togather.admin.project.common.Pagenation;
 import com.greedy.togather.admin.project.common.SelectCriteria;
 import com.greedy.togather.admin.project.dto.AdminProjectDTO;
+import com.greedy.togather.admin.project.dto.AdminProjectPageDTO;
+import com.greedy.togather.admin.project.dto.AdminRewardDTO;
 
 @SpringBootTest
 @ContextConfiguration(classes = {Chap99ToGatherApplication.class})
@@ -49,7 +51,7 @@ public class AdminProjectMapperTests {
 	}
 	
 	@Test
-
+	@Disabled
 	public void 프로젝트_리스트_매퍼_테스트() {
 		
 		//given
@@ -73,8 +75,41 @@ public class AdminProjectMapperTests {
 		//then
 		assertNotNull(adminProjectList);
 		
+	}
+	
+	@Test
+	@Disabled
+	public void 프로젝트_상세페이지_조회_매퍼_테스트() {
+		
+		//given1
+		
+		String projNo = "PJ000000021"; 
+		
+		//when
+		AdminProjectPageDTO adminProjectpage = adminProjectMapper.readProjectPage(projNo);
+		
+		//then
+		assertNotNull(adminProjectpage);
 		
 	}
+	
+	@Test
+
+	public void 프로젝트_상세페이지_내용_불러오기_매퍼_테스트() {
+		
+		//given1
+		
+		String projNo = "PJ000000002"; 
+		
+		//when
+		List<AdminRewardDTO> adminRewardList = adminProjectMapper.readProjectPageReward(projNo);
+		
+		//then
+		assertNotNull(adminRewardList);
+		
+	}
+	
+	
 	
 
 	
