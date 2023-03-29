@@ -86,9 +86,6 @@
 	</resultMap> 
 	
 
-
-
-
 	<select id="findByUserId" resultMap="loginUserResultMap">
 	
 		  SELECT
@@ -113,7 +110,7 @@
          WHERE A.QUIT_YN = 'N'
            AND A.EMAIL = #{ email }
            
-	</select>
+	</select> 
 	
 	<select id="selectUserById" resultType="string">
         SELECT
@@ -196,7 +193,7 @@
            AND EMAIL = #{ email }
 	</select>
 	
-	<select id="selectUser">
+	<!-- <select id="selectUser">
 		SELECT
 			   USER_NO
 		     , EMAIL
@@ -211,7 +208,7 @@
 		 FROM  TBL_USER A
 		WHERE  QUIT_YN = 'N'
 		  AND  EMAIL = #{ email }
-	</select>
+	</select> -->
 
     <update id="updateUser">
         UPDATE 
@@ -287,8 +284,17 @@
 	
 	</update>
 	
+	<select id="selectUserProfile" resultMap="loginUserResultMap">
+	SELECT
+			PROFILE_NM
+			FROM TBL_USER
+			WHERE QUIT_YN = 'N'
+			AND USER_NO = #{ userNo }
 	
-	<select id="selectLikeProject" resultMap="likeResultMap">
+	</select>
+	
+	
+   <select id="selectLikeProject" resultMap="likeResultMap">
 
 	SELECT
        A.PROJ_NO
@@ -296,16 +302,96 @@
      , A.PROJ_NM
      , A.PROJ_SUMMARY
      , B.LIKE_NO
-     , D.FILE_NO
-     , D.SAVED_FILE_NM
-     , D.FILE_PATH
      FROM TBL_PROJECT A
      LEFT JOIN TBL_LIKE B ON(A.PROJ_NO = B.PROJ_NO)
      LEFT JOIN TBL_USER C ON(A.USER_NO = C.USER_NO)
-     LEFT JOIN TBL_FILE D ON(A.PROJ_NO = D.PROJ_NO)
      WHERE B.USER_NO = #{ userNo }
+
+	</select>  
 	
-	</select>
+
+		<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+		
+		SELECT
+		
+			 COUNT(*)
+	 	FROM TBL_PROJECT A
+	 	
+        <if test="searchCondition == 'projNo'">
+            JOIN TBL_LIKE B ON(A.PROJ_NO = B.PROJ_NO)
+        </if>
+		   <where>
+		  <if test="searchCondition == 'projNo'">
+		     B.PROJ_NO LIKE '%' || #{ searchValue } || '%'
+		  </if>
+		   <if test="searchCondition == 'projName'">
+		     A.PROJ_NM LIKE '%' || #{ searchValue } || '%'
+		  </if>
+		    <if test="searchCondition == 'projSummary'">
+		     A.PROJ_SUMMARY LIKE '%' || #{ searchValue } || '%'	
+		   </if>
+		   </where>
+		</select>
+
+
+	<!--   <select id="selectLikeProject" resultMap="likeResultMap">  
+         
+  SELECT 
+          A.PROJ_NO
+      	, A.USER_NO
+        , A.PROJ_NM
+        , A.PROJ_SUMMARY
+    FROM (
+        SELECT 
+            ROWNUM RNUM
+            , B.PROJ_NO
+            , B.USER_NO
+            , B.PROJ_NM
+            , B.PROJ_SUMMARY
+        FROM (
+            SELECT
+                  C.PROJ_NO
+              	, C.USER_NO
+                , C.PROJ_NM
+                , C.PROJ_SUMMARY
+                
+            FROM TBL_PROJECT C
+            
+               <if test="searchCondition == 'userNo'">
+               JOIN TBL_USER D ON(C.USER_NO = D.USER_NO)
+               </if>
+               <if test="searchCondition == 'projNo'">
+               JOIN TBL_LIKE D ON(C.PROJ_NO = D.PROJ_NO)
+               </if>
+               
+            <where>
+            
+                <if test="searchCondition == 'projNo'">
+                    C.PROJ_NO LIKE '%' || #{ searchValue } || '%'   
+                </if>
+                <if test="searchCondition == 'projName'">
+                    C.PROJ_NM LIKE '%' || #{ searchValue } || '%'            
+                </if>
+                <if test="searchCondition == 'projSummary'">
+                    C.PROJ_SUMMARY LIKE '%' || #{ searchValue } || '%'
+                </if>       
+            </where>
+            ORDER BY C.PROJ_NO DESC
+        ) B
+        <![CDATA[
+        WHERE ROWNUM <= #{ endRow }
+        ]]>
+    ) A
+     JOIN TBL_USER D ON(A.USER_NO = D.USER_NO)
+     JOIN TBL_LIKE E ON(A.PROJ_NO = E.PROJ_NO)
+    WHERE A.RNUM >= #{ startRow }
+
+    ORDER BY 1 DESC  
+    
+    </select> 
+    -->
+
+	
 	
 
 

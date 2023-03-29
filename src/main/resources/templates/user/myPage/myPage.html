@@ -23,7 +23,7 @@
             <br>
             <li><a class="menu-link" href="#" th:onclick="|location.href='@{/user/likedProject?(userNo=${#authentication.principal.userNo})}'|">좋아요한 프로젝트</a></li>
             <br>
-            <li><a class="menu-link" th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo})}'|">후원한 프로젝트</a></li>
+            <li><a class="menu-link" href="#">후원한 프로젝트</a></li>
             <br>
             <li><a class="menu-link" href="#" onclick="location.href='/user/myProject'">나의 프로젝트</a></li>
             <br>
@@ -46,7 +46,7 @@
     </div>
 
     <div class="item">
-           <a href="/user/myCoupon"><img src="/user/myPage/images/보유쿠폰.png" alt="보유 쿠폰"
+           <a href="https://www.google.com/search?q=%EC%A3%84%EC%86%A1%ED%95%A9%EB%8B%88%EB%8B%A4&source=lnms&tbm=isch&sa=X&ved=2ahUKEwipl77H94D-AhUBe94KHXIaC-sQ_AUoAXoECAEQAw&biw=1555&bih=785&dpr=1"><img src="/user/myPage/images/보유쿠폰.png" alt="보유 쿠폰"
            onmouseover="this.src='/user/myPage/images/보유쿠폰 hover.png'"
            onmouseout="this.src='/user/myPage/images/보유쿠폰.png'"></a>
         
@@ -62,7 +62,7 @@
     </div>
 
     <div class="item">
-            <a th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo})}'|"><img src="/user/myPage/images/후원.png" alt="후원한 프로젝트"
+            <a href="http://www.naver.com"><img src="/user/myPage/images/후원.png" alt="후원한 프로젝트"
             onmouseover="this.src='/user/myPage/images/후원 hover.png'"
             onmouseout="this.src='/user/myPage/images/후원.png'"></a>
 
