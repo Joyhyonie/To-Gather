@@ -13,7 +13,7 @@ html {
     margin: 0 auto; 
 }
 
-img {
+.logo {
     width: 1000px;
     opacity: 7%;
     transform: translate(5%, -60%);

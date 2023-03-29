@@ -1,6 +1,6 @@
 package com.greedy.togather.user.project.service;
 
-import java.util.HashMap; 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.greedy.togather.common.paging.MorePagenation;
 import com.greedy.togather.common.paging.MoreSelectCriteria;
 import com.greedy.togather.user.project.dao.ProjectMapper;
+import com.greedy.togather.user.project.dto.FileDTO;
+import com.greedy.togather.user.project.dto.LikeDTO;
+import com.greedy.togather.user.project.dto.MakerDTO;
 import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.project.dto.ReplyDTO;
 import com.greedy.togather.user.project.dto.RewardDTO;
@@ -28,31 +31,20 @@ public class ProjectService {
 	}
 	
 	/* 프로젝트 리스트 조회 */
-	public Map<String, Object> selectProjectList(int page, String categoryNo) {
+	public Map<String, Object> selectProjectList(String categoryNo) {
 		
-		/* 전체 게시글 수 확인 (페이징 처리를 위해) */
-		int totalCount = projectMapper.selectProjectsTotalCount(categoryNo);
-		log.info("[ProjectService] totalCount : {}", totalCount);
-		log.info("[ProjectService] categoryNo : {}", categoryNo);
 		
-		/* 프로젝트 페이지 구성 */
-		int limit = 8;
-		
-		MoreSelectCriteria selectCriteria = MorePagenation.getSelectCriteria(page, totalCount, limit);
-		log.info("[ProjectService] selectCriteria : {}",  selectCriteria);
-		
-		List<ProjectDTO> projectList = projectMapper.selectProjectList(selectCriteria, categoryNo);
+		List<ProjectDTO> projectList = projectMapper.selectProjectList(categoryNo);
 		log.info("[ProjectService] projectList : {}",  projectList);
 		
-		Map<String, Object> projectListAndPaging = new HashMap<>();
-		projectListAndPaging.put("paging", selectCriteria);
-		projectListAndPaging.put("projectList", projectList);
+		Map<String, Object> allProjectList = new HashMap<>();
+		allProjectList.put("projectList", projectList);
 		
-		return projectListAndPaging;
+		return allProjectList;
 	}
 	
 	/* 프로젝트 상세 페이지 조회 */
-	public Map<String, Object> selectProjectDetail(String projNo) {
+	public Map<String, Object> selectProjectDetail(String projNo, LikeDTO likeProject) {
 		
 		/* 프로젝트 상세 내용 */
 		ProjectDTO projectDetail = projectMapper.selectProjectDetail(projNo);
@@ -66,10 +58,16 @@ public class ProjectService {
 		ReplyDTO donationAndReplyCount = projectMapper.selectDonationAndReplyCount(projNo);
 		log.info("[ProjectService] donationAndReplyCount : {}", donationAndReplyCount);
 		
+		/* 현재 로그인한 유저가 해당 프로젝트를 좋아요 했는지 조회 */
+		log.info("[ProjectService] likeProject : {}", likeProject);
+		int loadIsLiked = projectMapper.loadIsLiked(likeProject);
+		log.info("[ProjectService] loadIsLiked : {}", loadIsLiked);
+		
 		Map<String, Object> allProjectDetails = new HashMap<>();
 		allProjectDetails.put("projectDetail", projectDetail);
 		allProjectDetails.put("rewardList", rewardList);
 		allProjectDetails.put("donationAndReplyCount", donationAndReplyCount);
+		allProjectDetails.put("loadIsLiked", loadIsLiked);
 		
 		return allProjectDetails;
 	}
@@ -86,8 +84,50 @@ public class ProjectService {
 		
 		projectMapper.insertReply(reply);
 	}
+
+	/* 프로젝트 신청 페이지 */
+	public void createProject(ProjectDTO project, MakerDTO maker) {
+		
+		/* 각 테이블에 데이터 저장 */
+		projectMapper.insertProjectInfo(project);
+		
+		projectMapper.insertMakerInfo(maker);		
+		
+		for(RewardDTO reward : project.getRewardList()) {
+			projectMapper.insertRewardInfo(reward);
+		}
+		
+		projectMapper.insertMakerProfile(project.getProcessedMakerProfile());
+		
+		projectMapper.insertMainImage(project.getProcessedMainImage());
+		
+		for(FileDTO file : project.getProcessedSubImageList()) {
+			projectMapper.insertSubImage(file);
+		}
+
+		projectMapper.insertSettleDoc(project.getProcessedSettleDoc()); 
+		
+		projectMapper.insertAccountDoc(project.getProcessedAccountDoc());
+		
+		projectMapper.insertEtcDoc(project.getProcessedEtcDoc());
+		
+	}
 	
-	
+	/* 현재 사용자가 해당 프로젝트를 좋아요 했는지 확인 후 좋아요 추가 or 취소 */
+	public int isLikedByUser(LikeDTO likeProject) {
+		
+		int count = projectMapper.isLikedByUser(likeProject);
+		
+		if(count > 0) { 
+			/* 좋아요 취소 */
+			projectMapper.deleteProjectLike(likeProject);
+		} else {
+			/* 좋아요 추가 */
+			projectMapper.insertProjectLike(likeProject);
+		}
+		
+	    return count;
+	}
 
 	
 }

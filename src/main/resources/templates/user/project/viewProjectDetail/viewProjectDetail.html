@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,10 +19,9 @@
     <div class="wrapper">
         <!-- 대표 사진 -->
         <div class="slider">
-            <img src="/user/project/images/dummy1.png" class="slide current-slide">
-            <img src="/user/project/images/dummy1.png" class="slide slide-right">
-            <img src="/user/project/images/dummy1.png" class="slide slide-right">
-            <img src="/user/project/images/dummy1.png" class="slide slide-right">
+        	<th:block th:each=" file : ${ detail.fileList }">
+            		<img th:src="${ file.filePath + file.savedFileName }" class="slide">
+		    </th:block>
         </div>
 
         <!-- 프로젝트 정보 -->
@@ -34,23 +34,23 @@
             </th:block>
             <h1 id="title" th:text="${ detail.projName }"></h1>
             <div id="funding">
-                <p id="amount"><span th:text="${ #numbers.formatInteger(detail.fundingAchive, 3, 'COMMA') }"></span>원</p>
+            	<p id="amount" th:text="${detail.fundingAchive == 0 ? '0원' : #numbers.formatInteger(detail.fundingAchive, 3, 'COMMA') + '원'}"></p>
                 <p id="percent"><span th:text="${ detail.percent }"></span>%</p>
                 <div id="goal-box">
                 <p id="goal"><span th:text="${ #numbers.formatInteger(detail.fundingGoal, 3, 'COMMA') }"></span>원 목표</p>
                 </div>
             </div>
             <div id="maker">
-                <img th:if="${ detail.maker.makerProfileName != null }" th:src="${ detail.maker.makerProfileName }" id="maker-image">
+                	<img id="maker-image" th:src="${ detail.maker.makerProfileName }">
                 <div id="maker-info">
                     <p id="maker-name" th:text="${ detail.maker.makerName }"></p>
                     <p id="maker-summary" th:text="${ detail.maker.makerIntro }"></p>
                 </div>
             </div>
             <div id="boxes">
-                <div id="like-box">
-                    <img src="/user/project/images/like-empty.png" id="like-btn" class="like">
-                    <p id="like-people"><span th:text="${ detail.totalLikes }">63</span>명이 좋아합니다 :)</p>
+                <div id="like-box" th:data-proj-no="${ detail.projNo }">
+                    <img th:src="${ loadIsLiked == 1 ? '/user/project/images/like-full.png' : '/user/project/images/like-empty.png'}" id="like-btn" class="like">
+                    <p id="like-people"><span th:text="${ detail.totalLikes }"></span>명이 좋아합니다 :)</p>
                 </div>
                 <div id="share-box">
                     <img src="/user/project/images/share.png" id="share">
@@ -63,10 +63,10 @@
         <div class="story-bar">
             <ul class="menu">
                 <flex>
-                    <li class="is_on">
+                    <li class="menu-bar is_on">
                     <a href="#story" class="btn"><span>스토리</span></a>
                     </li>
-                    <li>
+                    <li class="menu-bar">
                     <a href="#review" class="btn"><span>소식ㆍ후기</span></a>
                     </li>
                 </flex>
@@ -75,7 +75,7 @@
 
         <!-- 스토리&후기 바디 -->
         <div class="story-body">
-            <div th:text="${ detail.projDetail }" id="story" class="content"></div>
+            <div th:utext="${ detail.projDetail }" id="story" class="content"></div>
             <div id="review" class="content">
             	<th:block th:if="${ detail.projReview == null }">
 		            <p class="no-review">아직 작성된 후기가<br> 존재하지 않습니다.</p>
@@ -85,7 +85,7 @@
 		            </div>
 		        </th:block>
 	            <th:block th:unless="${ detail.projReview == null }">
-	            	<div th:text="${ detail.projReview }">뭐임 왜 안나와???</div>
+	            	<div th:utext="${ detail.projReview }"></div>
                 </th:block>
             </div>
         </div>
@@ -143,10 +143,21 @@
 		
         <!-- 댓글 -->
         <div class="comment">
-            <div id="comment-title">총 댓글 기부금 <span th:text="${ #numbers.formatInteger(donationAndReplyCount.totalDonation, 3, 'COMMA') }" id="donation"></span>원</div>
+        	<th:block th:if="${ donationAndReplyCount.totalDonation != 0 }">
+            	<div id="comment-title">총 댓글 기부금 <span th:text="${ #numbers.formatInteger(donationAndReplyCount.totalDonation, 3, 'COMMA') }" id="donation"></span>원</div>
+            </th:block>
+            <th:block th:unless="${ donationAndReplyCount.totalDonation != 0 }">
+            	<div id="comment-title">총 댓글 기부금 <span th:text="${ donationAndReplyCount.totalDonation }" id="donation"></span>원</div>
+            </th:block>
             <div id="comment-body">
                 <div id="comment-container">
-                    <img src="/user/project/images/profile1.png" id="commenter">
+                	<th:block sec:authorize="isAnonymous()">
+                	<img th:src="'/user/project/images/profile4.png'" id="commenter">
+                	</th:block>
+                	<th:block sec:authorize="isAuthenticated()">
+                    <img th:src="${ #authentication.principal.profileNm == null? '/user/project/images/profile4.png' : #authentication.principal.profileNm }" id="commenter">
+                    </th:block>
+                    
                     <textarea id="comment-box" maxlength="500" placeholder="따뜻한 댓글을 작성해주세요! To-Gather가 기부금을 지원합니다 :)"></textarea>
                 </div>
                 <div id="mini-container">
@@ -165,6 +176,11 @@
                             alert('댓글은 500자까지 입력 가능합니다 :)');
                         };
                     });
+                    
+                    /* 등록 버튼 누르면 counter 초기화 */
+                    $('#regist-comment').click(function (e) {
+                    	$('#counter').text(0);
+                    })
                 </script>
             </div>
             <div id="comments-count">댓글 <span th:text="${ donationAndReplyCount.totalReply }" id="total-count"></span>개</div>
@@ -180,7 +196,7 @@
 		                <p th:text="${ reply.replyRegDate }" id="regist-date"></p>
 		            </div>
 		            <div id="flex3">
-		                <img src="/user/project/images/profile4.png" id="profiles">
+		               		<img th:src="${ reply.writer.profileNm == null ? '/user/project/images/profile4.png' : reply.writer.profileNm }" id="profiles">
 		                <div>
 		                    <textarea th:text="${ reply.replyBody }" id="comment" readonly></textarea>
 		                </div>
@@ -250,15 +266,15 @@
 						
 						/* 댓글 하나하나 동적으로 생성 */
 						const commentList = document.createElement('div');
-							const flex1 = document.createElement('div');
-								const flex2 = document.createElement('div');
-									const userId = document.createElement('p');
-									const gift = document.createElement('p');
-								const registDate = document.createElement('p');
-							const flex3 = document.createElement('div');
-								const profiles = document.createElement('img');
-								const divInFlex3 = document.createElement('div');
-									const comment = document.createElement('textarea');
+						const flex1 = document.createElement('div');
+						const flex2 = document.createElement('div');
+						const userId = document.createElement('p');
+						const gift = document.createElement('p');
+						const registDate = document.createElement('p');
+						const flex3 = document.createElement('div');
+						const profiles = document.createElement('img');
+						const divInFlex3 = document.createElement('div');
+						const comment = document.createElement('textarea');
 						
 						commentList.id = 'comment-list';
 						flex1.id = 'flex1';
@@ -281,7 +297,11 @@
 						divInFlex3.appendChild(comment);
 						
 						/* 프로필 사진 */
-						profiles.src = '/user/project/images/profile4.png';
+						if(reply.writer.profileNm == null) {
+							profiles.src = '/user/project/images/profile4.png';
+						} else {
+							profiles.src = reply.writer.profileNm;
+						}
 						
 						/* 아이디 */
 						userId.textContent = reply.userId;
@@ -305,6 +325,36 @@
 				
 				}
 				
+				/* 좋아요 기능 */
+				$(document).ready(function() {
+					  // 좋아요 버튼 클릭 시
+					  $('#like-btn').on('click', function() {
+					    let projNo = $('#like-box').data('proj-no');
+					    let data = { projNo: projNo };
+					    /* LikeDTO의 필드명: 변수명 (자동으로 LikeDTO 타입으로 받을 수 있도록) */
+						console.log(projNo);
+					    $.ajax({
+					      type: 'POST',
+					      url: '/project/like',
+					      data: JSON.stringify(data),
+					      contentType: 'application/json;charset=UTF-8',
+					      success: function(result) {
+					    	  console.log(result);
+					        if (result === 'liked') {
+					          $('#like-btn').attr('src', '/user/project/images/like-full.png');
+					          $('#like-people').html('<span>' + (parseInt($('#like-people span').text()) + 1) + '</span>명이 좋아합니다 :)');
+					        } else {
+					          $('#like-btn').attr('src', '/user/project/images/like-empty.png');
+					          $('#like-people').html('<span>' + (parseInt($('#like-people span').text()) - 1) + '</span>명이 좋아합니다 :)');
+					        }
+					      },
+					      error: function(xhr, status, error) {
+					        alert('에러 발생!');
+					        console.log(xhr.responseText);
+					      }
+					    });
+					  });
+				});
 			</script>
 			
         </div>

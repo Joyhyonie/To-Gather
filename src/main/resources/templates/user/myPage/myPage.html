@@ -21,7 +21,7 @@
             <br>
             <li><a class="menu-link" href="#">보유 쿠폰</a></li>
             <br>
-            <li><a class="menu-link" href="#" onclick="location.href='/user/likedProject'">좋아요한 프로젝트</a></li>
+            <li><a class="menu-link" href="#" th:onclick="|location.href='@{/user/likedProject?(userNo=${#authentication.principal.userNo})}'|">좋아요한 프로젝트</a></li>
             <br>
             <li><a class="menu-link" th:onclick="|location.href='@{/pay/payFund?(userNo=${#authentication.principal.userNo})}'|">후원한 프로젝트</a></li>
             <br>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="item">
-           <a href="/user/likedProject"><img src="/user/myPage/images/좋아요.png" alt="좋아요한 프로젝트"
+           <a th:onclick="|location.href='@{/user/likedProject?(userNo=${#authentication.principal.userNo})}'|"><img src="/user/myPage/images/좋아요.png" alt="좋아요한 프로젝트"
            onmouseover="this.src='/user/myPage/images/좋아요 hover.png'"
            onmouseout="this.src='/user/myPage/images/좋아요.png'"></a>
 

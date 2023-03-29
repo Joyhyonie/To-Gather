@@ -84,7 +84,6 @@ public class ProjectMapperTests {
 	}
 	
 	@Test
-	@Disabled
 	@DisplayName("댓글 조회용 매퍼 테스트")
 	public void selectReplyListTest() {
 		// given

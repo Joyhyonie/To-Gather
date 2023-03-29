@@ -142,6 +142,11 @@ window.onload = function() {
     const removeBtn = document.querySelector('#remove-reward');
     const container = document.querySelector('.reward-container');
     let rewardCount = 1;
+    let rewardNameCount = 0;
+    let rewardPriceCount = 0;
+    let rewardDueDateCount = 0;
+    let rewardContentCount = 0;
+    let shippingFeeName = "rewardList[0].rewardFee"; // 초기 값 설정 (리워드 배송비는 아래의 코드를 통해 추가되지 않기 때문에 리워드의 갯수 -1만큼 동적으로 증가하는 코드 작성)
                     
     addBtn.addEventListener('click', () => {
         const rewardBox = document.createElement('div');
@@ -154,24 +159,29 @@ window.onload = function() {
                 <flex>
                     <div>
                         <p class="title">* 리워드명</p>
-                        <input type="text" name="rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;" required>
+                        <input type="text" name="rewardList[${++rewardNameCount}].rewardName" id="reward-name" class="input" maxlength="12" style="width:210px;" required>
                     </div>
                     <div>
                         <p class="title">* 리워드 금액</p>
-                        <input type="number" name="rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:110px;" required>
+                        <input type="number" name="rewardList[${++rewardPriceCount}].rewardPrice" id="reward-price" class="input" placeholder="단위 : 원" style="width:110px;" required>
                     </div>
                     <div>
                         <p class="title">* 리워드 예상 발송일</p>
-                        <input type="date" name="expectedShipping" id="expected-shipping" class="input" style="width:140px;" required>
+                        <input type="date" name="rewardList[${++rewardDueDateCount}].rewardDueDate" id="expected-shipping" class="input" style="width:140px;" required>
                     </div>
                 </flex>
                 <div>
                     <p class="title">* 리워드 구성</p>
-                    <input type="text" name="rewardContents" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:670px;" required>
+                    <input type="text" name="rewardList[${++rewardContentCount}].rewardContent" id="reward-contents" class="input" maxlength="55" placeholder="ex) 우드 다이어리, 산제로 샤프" style="width:670px;" required>
                 </div>
             </div>
         `;
         container.appendChild(rewardBox);
+        
+        // shipping-fee의 name 속성값 동적으로 변경
+	    shippingFeeName = `rewardList[${rewardCount - 1}].rewardFee`;
+	    const shippingFee = document.querySelector('#shipping-fee');
+	    shippingFee.setAttribute('name', shippingFeeName);
     });
                     
     removeBtn.addEventListener('click', () => {
@@ -212,6 +222,30 @@ window.onload = function() {
         etcDocName.value = etcDoc.files[0].name;
     }
     });
+    
+    /* ------------------------------------------------------------------------------------ */
+    
+    /* 사용자가 입력한 목표 금액에 따른 정산 예상 금액 계산해주기 */
+    const fundingGoalInput = document.getElementById('funding-goal');
+	const settleGoal = document.getElementById('settle-goal');
+	const settleManageFee = document.getElementById('settle-manage-fee');
+	const settlePayFee = document.getElementById('settle-pay-fee');
+	const settleTax = document.getElementById('settle-tax');
+	const settleTotal = document.getElementById('settle-total');
+	
+	fundingGoalInput.addEventListener('input', (event) => {
+		const value = parseInt(event.target.value);
+	    const manageFee = Math.round(value * 0.07);
+	    const payFee = Math.round(value * 0.03);
+	    const tax = Math.round(value * 0.01);
+	    const total = value - manageFee - payFee - tax;
+	          
+	    settleGoal.textContent = `${value.toLocaleString()}`;
+	    settleManageFee.textContent = `${manageFee.toLocaleString()}`;
+	    settlePayFee.textContent = `${payFee.toLocaleString()}`;
+	    settleTax.textContent = `${tax.toLocaleString()}`;
+	    settleTotal.textContent = `${total.toLocaleString()}`;
+	});
     
     /* ------------------------------------------------------------------------------------ */
 

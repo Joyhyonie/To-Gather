@@ -16,10 +16,10 @@ spring:
     username: C##TOGATHER
     password: TOGATHER
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: com.greedy.to.gather@gmail.com
-    password: xnrpej0609
+    host: smtp.naver.com
+    port: 465
+    username: rth0204@naver.com
+    password: 
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
@@ -30,7 +30,7 @@ spring:
       enabled: true
       max-file-size: 20MB
       max-request-size: 20MB
-      location: D:/semi-project/To-Gather_Files/To-Gather/
+      location: D:/semi-project/To-Gather_Files/To-Gather_2/ # 경로 반드시 확인
       
 
 # image upload directory (이미지를 저장할 경로 설정)

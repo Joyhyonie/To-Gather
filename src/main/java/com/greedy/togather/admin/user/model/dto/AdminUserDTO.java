@@ -1,5 +1,9 @@
 package com.greedy.togather.admin.user.model.dto;
 
+import java.util.List;
+
+import com.greedy.togather.admin.project.dto.AdminProjectDTO;
+
 import lombok.Data;
 
 
@@ -18,4 +22,6 @@ public class AdminUserDTO {
 	private String quitYn;
 	private String userToken;
 	
+	private List<AdminFundingDTO> fundingList;
+	private List<AdminProjectDTO> projList;
 }
