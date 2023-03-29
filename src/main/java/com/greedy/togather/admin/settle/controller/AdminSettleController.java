@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +63,7 @@ public class AdminSettleController {
 		
 		/* 체크된 리스트가 가지고 있는 settleNo를 settleDTO에 set한 후에 service 레이어에 보낸다 */ 
 		
-		log.info("[AdminSettleController] checkList {}", checkList );
+		log.info("[AdminSettleController] checkList {}", checkList);
 		
 		for(String checkInfo : checkList) {
 			settle.setSettleNo(checkInfo);
@@ -79,40 +81,16 @@ public class AdminSettleController {
 		
 		log.info("[AdminSettleController] settleNo : {}", settleNo);
 		
-		/* 프로젝트 정보 조회*/
-		AdminSettleDTO projInfo = adminSettleService.selectProjInfo(settleNo);
-		log.info("[AdminSettleController] projInfo : {}", projInfo);
+		Map<String, Object> settleInfo = adminSettleService.selectSettleDetail(settleNo);
 		
-
-		/* 펀딩 내역 조회*/
-		String projNo = projInfo.getProjNo();
-		log.info("[AdminSettleController] projInfo.ProjNo : {}", projInfo.getProjNo());
+		model.addAttribute("projInfo", settleInfo.get("projInfo"));
+		model.addAttribute("fundingInfo", settleInfo.get("fundingInfo"));
+		model.addAttribute("totalPay", settleInfo.get("totalpay"));
+		model.addAttribute("totalRefund", settleInfo.get("totalRefund"));
+		model.addAttribute("totalFunding", settleInfo.get("totalFunding"));
+		model.addAttribute("mnCharge", settleInfo.get("mnCharge"));
+		model.addAttribute("payCharge", settleInfo.get("payCharge"));
 		
-		List<AdminFundingDTO> fundingInfo = adminSettleService.selectFundingInfo(projNo);
-		log.info("[AdminSettleController] fundingInfo : {}", fundingInfo);
-
-		/* 총 펀딩 금액 계산 */
-		int totalPay = 0; // 총 결제금액
-		int totalRefund = 0; // 총 환불 금액
-		
-		for(AdminFundingDTO funding : fundingInfo) {
-			totalPay += funding.getPay().getPayPrice();
-			totalRefund += funding.getPay().getRefund().getRefundPrice();
-			
-		}
-		
-		int totalFunding = totalPay - totalRefund; // 총 펀딩금액
-		int mnCharge = (int) (totalFunding * 0.07); // 운영 수수료
-		int payCharge = (int) (totalFunding * 0.03); // 결제 수수료
-		
-		
-		model.addAttribute("projInfo", projInfo);
-		model.addAttribute("fundingInfo", fundingInfo);
-		model.addAttribute("totalPay", totalPay);
-		model.addAttribute("totalRefund", totalRefund);
-		model.addAttribute("totalFunding", totalFunding);
-		model.addAttribute("mnCharge", mnCharge);
-		model.addAttribute("payCharge", payCharge);
 
 		return "admin/settle/settleDetail";
 	}
@@ -128,6 +106,20 @@ public class AdminSettleController {
 		return "success";
 	}
 	
+	/* 정산 테이블로 마감 프로젝트 가져오는 스케쥴링 */
+	//@Scheduled(cron="0 0 0 * * *") // 매일 자정마다 동작
+	//@Scheduled(cron="0 * * * * *") // 1분마다 동작
+	public void insertEndProject() {
+		
+		List<AdminProjectDTO> projList = adminSettleService.selectEndProject();
+		
+		log.info("[AdminSettleController] projList : {}", projList);
+		
+		for(AdminProjectDTO project : projList) {			
+			String projNo = project.getProjNo();			
+			adminSettleService.insertTblSettle(projNo);
+		}
+	}
 	
 
 }
