@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.greedy.togather.admin.settle.model.dao.AdminSettleMapper;
+import com.greedy.togather.admin.settle.model.dto.AdminFundingDTO;
+import com.greedy.togather.admin.settle.model.dto.AdminProjectDTO;
 import com.greedy.togather.admin.settle.model.dto.AdminSettleDTO;
+
 import com.greedy.togather.common.paging.Pagenation;
 import com.greedy.togather.common.paging.SelectCriteria;
 
@@ -51,5 +54,16 @@ private final AdminSettleMapper adminSettleMapper;
 
 		adminSettleMapper.deleteSettleChecked(settle);
 	}
+
+	public AdminSettleDTO selectProjInfo(String settleNo) {
+		return adminSettleMapper.selectProjInfo(settleNo);
+	}
+
+	public List<AdminFundingDTO> selectFundingInfo(String projNo) {
+		return adminSettleMapper.selectFundingInfo(projNo);
+	}
+
+
+
 
 }

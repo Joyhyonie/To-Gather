@@ -30,59 +30,53 @@
             <table>
                 <tr>
                     <th class="table-header">프로젝트번호</th>
-                    <td class="table-body">PJ00000001</td>
+                    <td class="table-body" th:text="${ projInfo.proj.projNo }"></td>
                     <th class="table-header">프로젝트명</th>
-                    <td colspan="3" class="table-body">생분해 나무로 만든 숲내음 다이어리</td>
+                    <td colspan="3" class="table-body" th:text="${ projInfo.proj.projNm }"></td>
                 </tr>
                 <tr>
                     <th class="table-header">Maker</th>
-                    <td class="table-body">김나무</td>
+                    <td class="table-body" th:text="${ projInfo.proj.maker.makerNm }"></td>
                     <th class="table-header">프로젝트 종료일</th>
-                    <td class="table-body">2023.03.01</td>
+                    <td class="table-body" th:text="${ #dates.format(projInfo.proj.fundingEndDate, 'yyyy-MM-dd') }"></td>
                     <th class="table-header">정산일</th>
-                    <td class="table-body">2023.03.14</td>
+                    <td class="table-body" th:text="${ #dates.format(projInfo.settleDate, 'yyyy-MM-dd') }"></td>
                 </tr>
             </table>
         </div>
 
 
         <div class="content3">
-            <p>펀딩 금액 조회</p>
+            <p>펀딩 내역 조회</p>
             <table>
                 <tr class="table-header">
-                    <th>날짜</th>
+                    <th>번호</th>
                     <th>아이디</th>
                     <th>이름</th>
+                    <th>결제날짜</th>
                     <th>결제금액</th>
+                    <th>환불날짜</th>
                     <th>환불금액</th>
-                    <th>비고</th>
                 </tr>
-                <tr>
-                    <td>2023.03.01</td>
-                    <td>gogil123@naver.com</td>
-                    <td>고길동</td>
-                    <td>25,000</td>
-                    <td>-</td>
-                    <td>-</td>
+                <tr th:each="funding : ${ fundingInfo }">
+                    <td th:text="${ funding.pay.payNo }"></td>
+                    <td th:text="${ funding.user.email }"></td>
+                    <td th:text="${ funding.user.userNm }"></td>
+                    <td th:text="${ #dates.format(funding.pay.payDate, 'yyyy-MM-dd') }"></td>
+                    <td th:text="${ #numbers.formatInteger(funding.pay.payPrice, 3, 'COMMA') }"></td>
+                    <td th:text="${ #dates.format(funding.pay.refund.refundDate, 'yyyy-MM-dd') }"></td>
+                    <td th:if="${ funding.pay.refund.refundDate != 0 }" th:text="${ #numbers.formatInteger(funding.pay.refund.refundPrice, 3, 'COMMA') }"></td>
                 </tr>
-                <tr>
-                    <td>2023.03.01</td>
-                    <td>duli123@naver.com</td>
-                    <td>고길동</td>
-                    <td>-</td>
-                    <td>25,000</td>
-                    <td>리워드 불량</td>
-                </tr>
-                <tr>
-                    <td colspan="6"><button type="button">더보기</button></td>
-                </tr>
+
+
                 <tr>
                     <th class="table-header">총 펀딩금액</th>
-                    <td class="table-body">2,598,000</td>
+                    <td class="table-body" th:text="${ #numbers.formatInteger(totalFunding, 3, 'COMMA') }"></td>
                     <th class="table-header">총 결제금액</th>
-                    <td class="table-body">2,673,000</td>
+                    <td class="table-body" th:text="${ #numbers.formatInteger(totalPay, 3, 'COMMA') }">2,673,000</td>
                     <th class="table-header">총 환불금액</th>
-                    <td class="table-body">7,5000</td>
+                    <td class="table-body" th:text="${ #numbers.formatInteger(totalRefund, 3, 'COMMA') }"></td>
+                    <td class="table-body"></td>         
                 </tr>
             </table>
         </div>
@@ -96,9 +90,9 @@
                     <th class="table-header">총 수수료</th>
                 </tr>
                 <tr>
-                    <td>181,860</td>
-                    <td>77,940</td>
-                    <td>259,800</td>
+                    <td th:text="${ #numbers.formatInteger(mnCharge, 3, 'COMMA') }"></td>
+                    <td th:text="${ #numbers.formatInteger(payCharge, 3, 'COMMA') }"></td>
+                    <td th:text="${ #numbers.formatInteger(mnCharge + payCharge, 3, 'COMMA') }"></td>
                 </tr>
             </table>
         </div>
@@ -107,27 +101,23 @@
             <p>정산 금액 조회</p>
             <table>
                 <tr>
-                    <th class="table-header">정산일</th>
                     <th class="table-header">총 펀딩금액</th>
                     <th class="table-header">총 수수료</th>
                     <th class="table-header">부가세</th>
-                    <th class="table-header">기부금</th>
                     <th class="table-header">정산금액</th>
                 </tr>
                 <tr>
-                    <td>정산일</td>
-                    <td>총 펀딩금액</td>
-                    <td>총 수수료</td>
-                    <td>부가세</td>
-                    <td>기부금</td>
-                    <td>정산금액</td>
+                    <td th:text="${ #numbers.formatInteger(totalFunding, 3, 'COMMA') }"></td>
+                    <td th:text="${ #numbers.formatInteger(mnCharge + payCharge, 3, 'COMMA') }"></td>
+                    <td th:text="${ #numbers.formatInteger(totalFunding * 0.01, 3, 'COMMA') }"></td>
+                    <td th:text="${ #numbers.formatInteger(totalFunding * 1.1, 3, 'COMMA') }"></td>
                 </tr>
             </table>
         </div>
 
 
         <div class="content6">
-            <button class="settle-exit">이전 페이지로</button>
+            <button class="settle-exit">취소</button>
             <button class="doSettle">정산</button>
         </div>
 	</div>

@@ -99,18 +99,18 @@
                     <th class="table-header">환불 금액</th>
                     <th class="table-header">총 펀딩 금액</th>
                 </tr>
-                <tr class="table-content">
+                <tr class="table-cont ent">
                     <th class="total">합계</th>
                     <td th:text="${ #lists.size(fundingList) }"></td>
                     <td th:text="${ #numbers.formatInteger(totalPay, 3, 'COMMA') }"></td>
                     <td th:text="${ #numbers.formatInteger(totalRefund, 3, 'COMMA') }"></td>
                     <td th:text="${ #numbers.formatInteger((totalPay - totalRefund), 3, 'COMMA') }"></td>
-                </tr>
+                </tr> 
             </table>
         </div>
 
         <div class="content5">
-            <button class="user-cancel">취소</button>
+            <button type="button" class="user-cancel">취소</button>
             <button type="button" class="user-update">수정</button>
         </div>
 
