@@ -167,7 +167,7 @@
 	<delete id="deleteSettleChecked" parameterType="string">
 		DELETE
  		  FROM TBL_SETTLE 
-  	     WHERE PROJ_NO = #{ PROJ_NO }     
+  	     WHERE PROJ_NO = #{ projNo }     
 	</delete>
 	
 	<select id="selectProjInfo" resultMap="settleResultMap">
@@ -200,6 +200,14 @@
 		  LEFT JOIN TBL_REFUND RF ON (PY.PAY_NO = RF.PAY_NO)
 		  WHERE PJ.PROJ_NO = #{ projNo }
 	</select>
+	
+	<update id="doSettle">
+		UPDATE
+		       TBL_SETTLE SE
+		   SET SE.SETTLE_STATUS = 'Y'
+		     , SE.SETTLE_DATE = SYSDATE
+		 WHERE SE.PROJ_NO = #{ projNo }      
+	</update>
 
 
 </mapper>

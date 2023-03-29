@@ -69,7 +69,7 @@ public class AdminUserController {
 			adminUserService.deleteUserChecked(user);
 		}
 
-		return "redirect:/admin/user/userList";
+		return "redirect:/admin/user/list";
 	}
 	
 	
