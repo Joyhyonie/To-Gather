@@ -53,14 +53,23 @@ private final AdminSettleMapper adminSettleMapper;
 	public void deleteSettleChecked(AdminSettleDTO settle) {
 
 		adminSettleMapper.deleteSettleChecked(settle);
+		
 	}
 
 	public AdminSettleDTO selectProjInfo(String settleNo) {
+		
 		return adminSettleMapper.selectProjInfo(settleNo);
+		
 	}
 
 	public List<AdminFundingDTO> selectFundingInfo(String projNo) {
+		
 		return adminSettleMapper.selectFundingInfo(projNo);
+	}
+
+	public void doSettle(String projNo) {		
+		
+		adminSettleMapper.doSettle(projNo);
 	}
 
 
