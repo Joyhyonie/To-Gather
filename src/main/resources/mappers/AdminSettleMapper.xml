@@ -204,10 +204,30 @@
 	<update id="doSettle">
 		UPDATE
 		       TBL_SETTLE SE
-		   SET SE.SETTLE_STATUS = 'Y'
+		   SET SE.SETTLE_STATUS = 'N'
 		     , SE.SETTLE_DATE = SYSDATE
 		 WHERE SE.PROJ_NO = #{ projNo }      
 	</update>
-
+	
+	<select id="selectEndProject" resultMap="projectResultMap">
+		SELECT
+			   *	
+		  FROM TBL_PROJECT 
+		 WHERE TO_CHAR(FUNDING_END_DATE, 'YYMMDD') = TO_CHAR(SYSDATE, 'YYMMDD')
+		   AND PROJ_STATUS = '마감'
+	</select>
+	
+	<insert id="insertTblSettle">
+		INSERT INTO TBL_SETTLE
+		(
+		SETTLE_NO,
+		PROJ_NO
+		)
+		VALUES
+		(
+		'SE'||LPAD(SEQ_SETTLE_NO.NEXTVAL, 9, '0'),
+         #{ projNo }
+        )
+	</insert>
 
 </mapper>

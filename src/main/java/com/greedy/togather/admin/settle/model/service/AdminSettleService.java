@@ -60,6 +60,7 @@ private final AdminSettleMapper adminSettleMapper;
 		
 		return adminSettleMapper.selectProjInfo(settleNo);
 		
+		
 	}
 
 	public List<AdminFundingDTO> selectFundingInfo(String projNo) {
@@ -71,6 +72,16 @@ private final AdminSettleMapper adminSettleMapper;
 		
 		adminSettleMapper.doSettle(projNo);
 	}
+
+	public List<AdminProjectDTO> selectEndProject() {
+		return adminSettleMapper.selectEndProject();
+	}
+
+	public void insertTblSettle(String projNo) {
+		adminSettleMapper.insertTblSettle(projNo);
+		
+	}
+
 
 
 

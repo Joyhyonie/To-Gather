@@ -26,4 +26,8 @@ public interface AdminSettleMapper {
 
 	void doSettle(String projNo);
 
+	List<AdminProjectDTO> selectEndProject();
+
+	void insertTblSettle(String projNo);
+
 }

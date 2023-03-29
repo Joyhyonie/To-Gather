@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -83,7 +85,6 @@ public class AdminSettleController {
 		AdminSettleDTO projInfo = adminSettleService.selectProjInfo(settleNo);
 		log.info("[AdminSettleController] projInfo : {}", projInfo);
 		
-
 		/* 펀딩 내역 조회*/
 		String projNo = projInfo.getProjNo();
 		log.info("[AdminSettleController] projInfo.ProjNo : {}", projInfo.getProjNo());
@@ -128,6 +129,21 @@ public class AdminSettleController {
 		return "success";
 	}
 	
+	/* 정산 테이블로 마감 프로젝트 가져오는 스케쥴링 */
+	//@Scheduled(cron="0 * * * * *")
+	public void insertEndProject() {
+		
+		List<AdminProjectDTO> projList = adminSettleService.selectEndProject();
+		
+		log.info("[AdminSettleController] projList : {}", projList);
+		
+		for(AdminProjectDTO project : projList) {
+			
+		String projNo = project.getProjNo();
+			
+		adminSettleService.insertTblSettle(projNo);
+		}
+	}
 	
 
 }
