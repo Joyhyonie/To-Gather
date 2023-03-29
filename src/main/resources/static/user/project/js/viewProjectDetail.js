@@ -98,13 +98,6 @@ window.onload = function() {
 	}
     
 	  
-	/* 후원하기 버튼 클릭 시 이동 */
-	const $fundingbutton = document.querySelectorAll('.funding-button');
-    
-    for(let i = 0; i < $fundingbutton.length; i++){
-     $fundingbutton[i].addEventListener('click', function(){
-      location.href="/user/payScreen"
-      })
-    }
+
 }
 
