@@ -99,7 +99,7 @@
                                             <span  class="desc1">참여금을 추가로 후원할 수 있습니다(선택)</span>
                                         </div>
                                         <div  class="content1">
-                                            <input class="contentbox" id="pageRewardOrderFormAddAmt" type="tel" pattern="[0-9]+" inputmode="numeric" autocomplete="off" placeholder="최소 1,000원 이상 입력하세요." maxlength="20" oninput="onlyNumber(this);">
+                                            <input class="contentbox" id="pageRewardOrderFormAddAmt" type="tel" pattern="[0-9]+" inputmode="numeric" autocomplete="off" maxlength="20" oninput="onlyNumber(this);">
                                         </div>
                                     </div>
                                     <!---->
@@ -297,11 +297,11 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                
-                                                <div  class="subject clearfix">
+                                                <div  class="subject clearfix" th:with="ejgkrl=${reward.rewardPrice}">
+                                                    <p hidden id="rmaksenj" th:text="${ ejgkrl }"></p>
                                                     <span  class="float-left">최종 금액</span>
-                                                    <span  class="float-right"><b  id="finalPrice" th:text="${ reward.rewardPrice+2500 }"></b>
-                                                        <span  class="asdf">원</span>
+                                                    <span  class="float-right"><b  id="finalPrice" th:text="${ ejgkrl } ? ${ ejgkrl +2500 } : ${ ejgkrl } "></b>
+                                                        <span  class="asdf" id="">원</span>
                                                     </span>
                                                 </div>
                                             </div>

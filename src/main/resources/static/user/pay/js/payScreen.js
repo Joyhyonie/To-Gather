@@ -1,3 +1,5 @@
+
+
 function onlyNumber(obj) {
     //숫자 아닌 표현식 찾기
     const regexp = /\D/g;
@@ -9,22 +11,26 @@ function onlyNumber(obj) {
         str = String(str);
         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
     }
-
+    
     function uncomma(str) {
         str = String(str);
         return str.replace(/[^\d]+/g, '');
     }
     const rrrrr = event.target.value; 
     console.log(rrrrr);
-
+    
+    const plus = rrrrr.replace(/,/g,"");
+    
     // const aaaa = rrrrr+$rewardPrice;
-    // console.log(aaaa);
-
-
+    console.log(plus);
+    // console.log( reward.rewardPrice );
+    
+    var rmaksenj = parseFloat(document.getElementById('rmaksenj').textContent) + parseFloat(plus);
+    console.log(rmaksenj);
+    document.getElementById('finalPrice').innerHTML=rmaksenj +2500;
+    
+    
 }
-
-
-
 window.onload = function () {
     const $rewradAddress = document.getElementById("rewradAddress");
     const $outer = document.getElementById("addre");
@@ -37,7 +43,7 @@ window.onload = function () {
                 $rewradAddress.innerHTML = "[" + data.zonecode + "]" + data.address + "<input type='button' value='X' onclick='remove1()'>";
                 $new.innerHTML = "<input type='text' id='detailed-address' placeholder='상세주소 입력' style='text-align: center;'>";
                 $outer.appendChild($new);
-                
+                document.getElementById('detailed-address').focus();
             }
         }).open({
             // popupKey: 'popup1'
@@ -51,6 +57,12 @@ window.onload = function () {
         }
     };
     
+$countbox.addEventListener('input', function(){
+    
+    var countbox = $countbox.value
+    console.log(countbox);
+    document.getElementById('finalPrice').innerHTML= rmaksenj;
+});
     
     const $btn = document.querySelectorAll('.btn');
     const $img = document.querySelectorAll('.img');
@@ -71,15 +83,15 @@ window.onload = function () {
             $text1[0].style.color = 'green';
             $off[1].style.display = 'none';
             $img[1].style.display = 'block';
-    $text1[1].style.color = 'black';
-    $off[2].style.display = 'none';
-    $img[2].style.display = 'block';
-    $text1[2].style.color = 'black';
-    $pay1.style.display = 'none';
-    $btn[1].style.border = " 3px solid black"
-    $btn[2].style.border = " 3px solid black"
-    state="on";
-    state1 = "off";
+            $text1[1].style.color = 'black';
+            $off[2].style.display = 'none';
+            $img[2].style.display = 'block';
+            $text1[2].style.color = 'black';
+            $pay1.style.display = 'none';
+            $btn[1].style.border = " 3px solid black"
+            $btn[2].style.border = " 3px solid black"
+            state="on";
+            state1 = "off";
     state2 = "off";
 } else {
     $off[0].style.display = 'none';
@@ -106,19 +118,19 @@ $btn[1].addEventListener('click', function(){
         $text1[2].style.color = 'black';
         $btn[1].style.border = " 3px solid green";
         $btn[0].style.border = " 3px solid black"
-    $btn[2].style.border = " 3px solid black"
-    state = "off";
-    state1="on";
-    state2 = "off";
-} else {
-    $off[1].style.display = 'none';
-    $img[1].style.display = 'block';
-    $text1[1].style.color = 'black';
-    $off[2].style.display = 'none';
-    $img[2].style.display = 'block';
-    $text1[2].style.color = 'black';
-    $pay1.style.display = 'none';
-    $btn[1].style.border = " 3px solid black"
+        $btn[2].style.border = " 3px solid black"
+        state = "off";
+        state1="on";
+        state2 = "off";
+    } else {
+        $off[1].style.display = 'none';
+        $img[1].style.display = 'block';
+        $text1[1].style.color = 'black';
+        $off[2].style.display = 'none';
+        $img[2].style.display = 'block';
+        $text1[2].style.color = 'black';
+        $pay1.style.display = 'none';
+        $btn[1].style.border = " 3px solid black"
     state1 = "off";
     
 }
@@ -135,17 +147,17 @@ $btn[2].addEventListener('click', function(){
         $img[0].style.display = 'block';
         $text1[0].style.color = 'black';
         $pay1.style.display = 'none';
-    $btn[2].style.border = " 3px solid green";
-    $btn[0].style.border = " 3px solid black"
-    $btn[1].style.border = " 3px solid black"
-    state = "off";
-    state1="off";
-    state2 = "on";
-} else {
-    $off[2].style.display = 'none';
-    $img[2].style.display = 'block';
-    $text1[2].style.color = 'black';
-    $btn[2].style.border = " 3px solid black"
+        $btn[2].style.border = " 3px solid green";
+        $btn[0].style.border = " 3px solid black"
+        $btn[1].style.border = " 3px solid black"
+        state = "off";
+        state1="off";
+        state2 = "on";
+    } else {
+        $off[2].style.display = 'none';
+        $img[2].style.display = 'block';
+        $text1[2].style.color = 'black';
+        $btn[2].style.border = " 3px solid black"
     state2 = "off";
 }
 });
@@ -156,7 +168,10 @@ const $cutext = document.getElementsByClassName('cutext')[0];
 
 const $cuprice = document.getElementsByClassName('cuprice')[0];
 
-const $countbox = document.getElementById('countbox').value;
+const $countbox = document.getElementById('countbox');
+
+
+
 
 
 $(document).ready(function() {

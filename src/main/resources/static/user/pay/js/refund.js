@@ -12,7 +12,7 @@ window.onload = function () {
         console.log($price);
         jQuery.ajax({
             "imp_uid" : 'imp63382662',
-            "url": "/payments/cancel", 
+            "url": "/pay/orderCancel", 
             "type": "POST",
             "contentType": "application/json; charset = utf-8",
             "data": JSON.stringify({
@@ -28,6 +28,9 @@ window.onload = function () {
             }),
             "dataType": "json",
             
-        });
+        })
+        .then()
+        alert('환불 완료');
+        location.href='/';
     }
 }    //9cbfda94434df83c9bda00060bfae001b51da7f3
