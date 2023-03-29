@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.greedy.togather.admin.mainBanner.dto.AdminBannerDTO;
 import com.greedy.togather.admin.project.dao.StatusDTO;
 import com.greedy.togather.admin.project.service.AdminProjectService;
 
@@ -17,10 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/admin/project")
+@RequestMapping(value="/admin/project", method = {RequestMethod.POST,RequestMethod.GET})
 public class AdminProjectController {
 	
 	private final AdminProjectService adminProjectService;
+	//private Object adminBannerList;
 	
 	
 	public AdminProjectController(AdminProjectService adminProjectService) {
@@ -69,10 +72,9 @@ public class AdminProjectController {
 	}
 	
 	@GetMapping("/page")
-	public String adminProjectPage(@RequestParam(value="projNo", required=false) String projNo,
+	public String adminProjectPage(@RequestParam(value="projNo", required=false) String projNo, AdminBannerDTO banner,
 			Model model) {
-		
-		
+				
 		Map<String, Object> adminProjectAll = adminProjectService.readProjectPage(projNo); 
 		log.info("[AdminProjectController] adminProjectAll : {}", adminProjectAll);
 		
@@ -81,22 +83,54 @@ public class AdminProjectController {
 		model.addAttribute("adminFile", adminProjectAll.get("adminFileList"));
 		log.info("[AdminProjectController] adminProjectAll : {}", adminProjectAll.get("adminRewardList"));
 		log.info("[AdminProjectController] adminProjectAll : {}", adminProjectAll.get("adminFileList"));
-
+		
+			
 		
 		return "admin/project/projectPage";
 	}
 	
-	@GetMapping("/review")
-	public String adminProjectReview(@RequestParam(value="projNo", required=false) String projNo, Model model) {
+	@PostMapping("/bannerReg")
+	public String mainBannerReg(AdminBannerDTO banner) {
+		log.info("[AdminProjectController] banner : {}", banner);
+				
+		adminProjectService.adminMainBanner(banner);
 		
-		Map<String, Object> adminProjectAll = adminProjectService.readProjectPage(projNo); 
-		log.info("[AdminProjectController] Review : {}", adminProjectAll);
-		
-		model.addAttribute("adminPage", adminProjectAll.get("adminProjectPage"));
-		log.info("[AdminProjectController] Review : {}", adminProjectAll.get("adminProjectPage"));
-		
-		return "admin/project/projectReview";
+		return "redirect:/admin/project/page";
 	}
+	
+	@PostMapping("/bannerUpdate")
+	public String mainBannerUpdate(AdminBannerDTO bannerUpdate) {
+		log.info("[AdminProjectController] bannerUpdate : {}", bannerUpdate);
+				
+		adminProjectService.adminMainBannerUpdate(bannerUpdate);
+		
+		return "redirect:/admin/project/page";
+	}
+	
+	
+	
+	@PostMapping("/todayProj")
+	public String todayProjectReg(AdminBannerDTO today) {
+		
+		log.info("[AdminProjectController] today : {}", today);
+		
+		adminProjectService.adminTodayProject(today);
+		
+		
+		return "redirect:/admin/project/page";
+	}
+	
+	
+	@PostMapping("/todayProjUpdate")
+	public String todayProjUpdate(AdminBannerDTO todayUpdate) {
+		log.info("[AdminProjectController] todayUpdate : {}", todayUpdate);
+				
+		adminProjectService.adminTodayProjectUpdate(todayUpdate);
+		
+		return "redirect:/admin/project/page";
+	}
+	
+	
 	
 	
 	
@@ -132,26 +166,13 @@ public class AdminProjectController {
 		
 	}
 	
-
-	
-	
-	
-
 	
 	
 	
 	
-	/*@GetMapping("/approval/{projNo}")
-	public String updateConfirm(@PathVariable("projNo") String projNo) {
-	
-		//confirm 
-		adminProjectService.updateConfirm(projNo);
-		
-		return "admin/project/projectPage";
-		
-	}*/
 	
 	
-
+	
+	
 
 }

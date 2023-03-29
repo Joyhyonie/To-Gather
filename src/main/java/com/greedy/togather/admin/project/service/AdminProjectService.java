@@ -1,5 +1,6 @@
 package com.greedy.togather.admin.project.service;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.greedy.togather.admin.mainBanner.dto.AdminBannerDTO;
 import com.greedy.togather.admin.project.common.Pagenation;
 import com.greedy.togather.admin.project.common.SelectCriteria;
 import com.greedy.togather.admin.project.dao.AdminProjectMapper;
@@ -76,6 +78,10 @@ public class AdminProjectService{
 		
 		return adminProjectAll;
 	}
+	
+	
+	
+	
 
 	public void updateConfirm(String projNo) {
 		
@@ -92,6 +98,31 @@ public class AdminProjectService{
 		adminProjectMapper.updateStop(projNo);
 		
 	}
+	
+	public void adminMainBanner(AdminBannerDTO banner) {
+		
+		adminProjectMapper.adminMainBanner(banner);
+			
+	}
+	
+	public void adminMainBannerUpdate(AdminBannerDTO bannerUpdate) {
+		
+		adminProjectMapper.adminMainBannerUpdate(bannerUpdate);
+		
+	}
+
+	public void adminTodayProject(AdminBannerDTO today) {
+		
+		adminProjectMapper.adminTodayProject(today);
+	}
+
+
+	public void adminTodayProjectUpdate(AdminBannerDTO todayUpdate) {
+		
+		adminProjectMapper.adminTodayProjectUpdate(todayUpdate);
+	}
+
+
 
 
 

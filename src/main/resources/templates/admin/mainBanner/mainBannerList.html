@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/admin/mainBanner/mainBannerList.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="common/userCommon/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
     <title>메인관리</title>                    
 </head>
 <body>
@@ -21,12 +21,14 @@
         <div class="content1">
             <div class="menu-title">메인배너</div>
             <div class="searchbar">
-                <form id="searchForm" action="/admin/main/list" method="get">
+                <form id="searchForm" action="/admin/mainbanner/list" method="get">
                     <select class="searchCondition" name="searchCondition">
                         <option value="projNo"
                         		th:selected="${ paging.searchCondition eq 'projNo' }">프로젝트번호</option>
                         <option value="mpStatus"
-                        		th:selected="${ paging.searchCondition eq 'mpStatus' }">상태</option>    
+                        		th:selected="${ paging.searchCondition eq 'mpStatus' }">상태</option>
+                        <option value="mpCategory"
+                        		th:selected="${ paging.searchCondition eq 'mpCategory' }">카테고리</option>     
                     </select>
                     <input type="search" id="searchValue" name="searchValue"
                     		th:value="${ paging.searchValue}">
@@ -38,35 +40,36 @@
         <div class="content2">
             <table>
                 <tr>
-                    <th class="table-header">번호</th>
+                    <th class="table-header">배너코드</th>
+
                     <th class="table-header">프로젝트 번호</th>
                     <th class="table-header">게시일</th>
                     <th class="table-header">만료일</th>
                     <th class="table-header">상태</th>
                 </tr>
 
-                 <tr class="table-content" th:each="banner : ${bannerList}">
+                 <tr class="table-content" th:data-proj-no="${ banner.projNo }" th:each="banner : ${bannerList}">
                     	<td th:text="${ banner.mpCode }"></td>
+                    	
                     	<td th:text="${ banner.projNo }"></td>
-                    	<td th:text="${ banner.mpStartDate }"></td>
-						<td th:text="${ banner.mpEndDate }"></td>
- 						<td class="table-text3" name="banner_status" th:block th:switch="${ banner.mpStatus }">
+                    	<td th:text="${#dates.format(banner.mpStartDate, 'yyyy-MM-dd')}"></td>
+						<td th:text="${#dates.format(banner.mpEndDate, 'yyyy-MM-dd')}"></td>
+ 						
+ 						<td class="table-text3" name="banner_status" th:switch="${ banner.mpStatus }">
 						
-						<div class="status-button">
-                            <div class="button1" id="start" name="start" th:case="게시">게시</div>
-                            <div class="button1" id="end" name="end" th:case="마감">마감</div>
-						</div>
+							<div class="status-button">
+	                            <div class="button1" id="start" name="start" th:case="게시">게시</div>
+	                            <div class="button1" id="end" name="end" th:case="마감">마감</div>
+							</div>
                            
-     					</td>                
-                    
+                        </td>   
+                      
                 </tr>
 
             </table>
         </div>
 
-        <div class="button-wrapper">
-            <a class="button-confirm" href=""><p class="button-confirm-text">등록</p></a>
-        </div>
+
 
 
 
@@ -134,7 +137,17 @@
 		</th:block>
 
 	</div>
+	 <script>
+			<!-- location.href 이동하고자 하는 곳으로 이동하는 자바스크립트 코드가 필요함 -->
+			const tableContent = document.querySelectorAll(".table-content");
 
+			tableContent.forEach(row => {
+				row.addEventListener("click", (e) => {
+			    const projNo = e.currentTarget.dataset.projNo;
+			    location.href = '/admin/mainbanner/page?projNo=' + projNo;
+			  });
+			});
+		</script> 
 
 
     </div>
