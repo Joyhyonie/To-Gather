@@ -17,4 +17,5 @@ public class AdminOrderDTO {
 	private int dcPrice;
 	private int payPrice;
 	
+	private AdminPaymentDTO pay;
 }

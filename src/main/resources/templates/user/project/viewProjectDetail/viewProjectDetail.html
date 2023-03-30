@@ -13,7 +13,8 @@
 <body>
 	<div th:replace="common/header/userHeader.html"></div>
 	<script type="text/javascript" src="/user/project/js/viewProjectDetail.js"></script> 
-	<script src="/user/project/js/jquery-3.6.3.min.js"></script> 
+	<script src="/user/project/js/jquery-3.6.3.min.js"></script>
+	 
 
     <div class="wrapper">
         <!-- 대표 사진 -->
@@ -158,6 +159,7 @@
         </div>
 
         <!-- 리워드 선택 바디 -->
+		<p hidden id="reward" ></p>
         <div class="reward-body">
             <th:block th:each="reward : ${ rewardList }">
 	            <div class="rewards">
@@ -174,12 +176,14 @@
 	                <div id="reward-footer">
 	                <p id="expected">발송 예정일<br> : <span th:text="${ reward.rewardDueDate }" id="date"></span></p>
 	                <th:block th:if="${ detail.leftDays } > 0">
+                  
 		                <th:block sec:authorize="isAnonymous()">
 	                	<button type="button" class="funding-button" onclick="location.href='/user/login'">후원하기</button>
 						</th:block>
 						<th:block sec:authorize="isAuthenticated()">
 	                	<button type="button" class="funding-button">후원하기</button>
 						</th:block>
+	                	<button type="button" class="funding-button" th:onclick="|location.href='@{/pay/payScreen?(projNo=${detail.projNo},rewardNo=${reward.rewardNo})}'|">후원하기</button>
 	                </th:block>
 	                <th:block th:if="${ detail.leftDays } <= 0">
 	                	<button type="button" class="funding-button close">후원마감</button>
@@ -188,7 +192,7 @@
 	            </div>
             </th:block>
         </div>
-
+		
         <!-- 댓글 -->
         <div class="comment">
         	<th:block th:if="${ donationAndReplyCount.totalDonation != 0 }">

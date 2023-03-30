@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.greedy.togather.admin.user.model.dto.AdminFundingDTO;
 import com.greedy.togather.admin.user.model.dto.AdminUserDTO;
 import com.greedy.togather.common.paging.SelectCriteria;
 
@@ -16,6 +17,10 @@ public interface AdminUserMapper {
 		List<AdminUserDTO> selectUserList(SelectCriteria selectCriteria);
 
 		void deleteUserChecked(AdminUserDTO user);
+
+		AdminUserDTO selectUserDetail(String userNo);
+
+		List<AdminFundingDTO> selectFundingDetail(String userNo);
 
 
 

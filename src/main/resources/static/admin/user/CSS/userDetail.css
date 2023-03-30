@@ -28,6 +28,7 @@ p {
     text-align: left;
     margin-bottom: 5px;
     padding-left: 10px;
+    
 }
 
 /* content1 */
@@ -35,6 +36,7 @@ p {
     color: #355d3b;
     font-size: 24px;
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 
@@ -57,9 +59,11 @@ table td {
 }
 
 /* content2 (회원 정보 조회 테이블)*/
-button {
+#addressBtn {
     width: 50px;
+    height: 25px;
     margin: 0;
+    text-align: center;
 }
 
 .table-header {
@@ -67,6 +71,7 @@ button {
     width: 200px;
     height: 10px;
     border-bottom: 2px solid #c9c9c9;
+    min-width: 100px;
 }
 
 .table-body {
@@ -74,10 +79,13 @@ button {
     text-align: left;
     padding-left: 20px;
     border-bottom: 2px solid #c9c9c9;
+    min-width: 100px;
 }
 
 .inputbox {
     margin-right: 10px;
+    margin-bottom: 5px;
+    height: 25px;
 }
 
 .box1 {
@@ -133,13 +141,21 @@ button {
     flex-direction: row-reverse;
     height: 30px;
     padding: 0 10px;
+
 }
+
 
 .content5 button{
     border: 0px;
     border-radius: 8px;
     width: 70px;
     height: 30px;
-    background-color: #c7e78e;
+    background-color: #81ae64;
+    color: #ffffff;
     margin-left: 10px;
+    cursor: pointer;
+}
+
+.content5 button:hover{
+	background-color: #c7e78e;
 }

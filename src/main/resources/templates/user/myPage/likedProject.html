@@ -34,55 +34,93 @@
             </ul>
         </div>
         <h1>좋아요한 프로젝트</h1>
+        
+        
+          <div class="content">
+			<table>
+			  <thead>
+			    <tr>
+			      <th class="table-header">프로젝트 번호</th>
+			      <th class="table-header">프로젝트 이름</th>
+			      <th class="table-header">프로젝트 설명</th>
+			    </tr>
+			  </thead>
+			  <tbody class="table-content">
+			   	  <tr th:each="like : ${ likedProjectList }">
+				  <td th:text="${like.projNo}"></td>
+			      <td th:text="${like.projName}"></td>
+			      <td th:text="${like.projSummary}"></td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
 
-        <div class="grid">
-            <div class="item">
-                <!-- 해당 프로젝트 상세보기로 이동하는 링크-->
-                <a href="http://www.naver.com"><img src="/user/myPage/images/환경.png" alt="환경"></a>
+    
+    <!-- 페이징 바 -->
+	<div class="paging" id="paging" align="center" style="margin-top: 20px;">
+		<th:block
+			th:if="${ paging.searchCondition != null and paging.searchValue != null }">
+			<!-- 맨 앞으로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''">&lt;&lt;</button>
 
-                <p>프로젝트1</p>
-            </div>
+			<!-- 이전 페이지로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+				th:disabled="${ paging.page <= 1 }">&lt;</button>
 
-            <div class="item">
+			<!-- 숫자 버튼 -->
+			<th:block
+				th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+				<button
+					th:onclick="'location.href=\'/user/likedProject?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+					th:text="${ page }" th:disabled="${ paging.page eq page }">
+				</button>
+			</th:block>
 
-                <a href="http://www.naver.com"><img src="/user/myPage/images/페트병.jpg" alt="페트병 사용"></a>
+			<!-- 다음 페이지로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+				th:disabled="${ paging.page >= paging.maxPage }">></button>
 
-                <p>프로젝트2</p>
-            </div>
+			<!-- 맨 끝으로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''">>></button>
 
-            <div class="item">
+		</th:block>
 
-                <a href="http://www.naver.com"><img src="/user/myPage/images/재활용.jpg" alt="재활용 실천"></a>
-                <p>프로젝트3</p>
-            </div>
+		<th:block
+			th:if="${ paging.searchCondition == null || paging.searchCondition.isEmpty() || paging.searchValue == null || paging.searchValue.isEmpty()}">
+			<!-- 맨 앞으로 이동 -->
+			<button th:onclick="'location.href=\'/user/likedProject?page=1\''">&lt;&lt;</button>
 
-            <div class="item">
+			<!-- 이전 페이지로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.page - 1}} + '\''"
+				th:disabled="${ paging.page <= 1 }">&lt;</button>
 
-                <a href="http://www.naver.com"><img src="/user/myPage/images/강아지.jpg" alt="유기동물 후원"></a>
-                <p>프로젝트4</p>
-            </div>
+			<!-- 숫자 버튼 -->
+			<th:block
+				th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+				<button
+					th:onclick="'location.href=\'/user/likedProject?page=' + @{${page}} + '\''"
+					th:text="${ page }" th:disabled="${ paging.page eq page }">
+				</button>
+			</th:block>
 
-            <div class="item">
+			<!-- 다음 페이지로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.page + 1}} + '\''"
+				th:disabled="${ paging.page >= paging.maxPage }">></button>
 
-                <a href="http://www.naver.com"><img src="/user/myPage/images/북극곰.jpg" alt="환경 보호"></a>
-                <p>프로젝트5</p>
-            </div>
-
-            <div class="item">
-
-                <a href="http://www.naver.com"><img src="/user/myPage/images/기부.jpg" alt="기부"></a>
-                <p>프로젝트6</p>
-            </div>
-
-            </div>
-
-        <br>
-        <br>
-        <br>
-        <div class="arrow">
-            <img src="/user/myPage/images/화살표.png">
-        </div>
-    </div>
+			<!-- 맨 끝으로 이동 -->
+			<button
+				th:onclick="'location.href=\'/user/likedProject?page=' + @{${paging.maxPage}} + '\''">>></button>
+		</th:block>
+	</div>
+      </div>
+		
+		 <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
 <div th:replace="common/footer/userFooter.html"></div>
 </body>
 </html>

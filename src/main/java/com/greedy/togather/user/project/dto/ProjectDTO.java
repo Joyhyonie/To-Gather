@@ -3,8 +3,6 @@ package com.greedy.togather.user.project.dto;
 import java.sql.Date;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.greedy.togather.user.main.dto.MainPageDTO;
 import com.greedy.togather.user.user.model.dto.UserDTO;
 
@@ -46,4 +44,10 @@ public class ProjectDTO {
 	private FileDTO processedSettleDoc;				// 정산 서류
 	private FileDTO processedAccountDoc;			// 통장 사본
 	private FileDTO processedEtcDoc;				// 기타 서류
+	
+	
+	/* 좋아요한 프로젝트 조회 */
+	private LikeDTO likeDTO;
+	private UserDTO userDTO;
+	private FileDTO fileDTO;
 }

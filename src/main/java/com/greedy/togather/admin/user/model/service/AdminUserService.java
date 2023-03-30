@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.greedy.togather.admin.user.model.dao.AdminUserMapper;
+import com.greedy.togather.admin.user.model.dto.AdminFundingDTO;
 import com.greedy.togather.admin.user.model.dto.AdminUserDTO;
 import com.greedy.togather.common.paging.Pagenation;
 import com.greedy.togather.common.paging.SelectCriteria;
@@ -52,11 +53,21 @@ public class AdminUserService {
 		adminUserMapper.deleteUserChecked(user);
 	}
 
+	public AdminUserDTO selectUserDetail(String userNo) {
+		
+		return adminUserMapper.selectUserDetail(userNo);
+	}
 
-
-
+	public List<AdminFundingDTO> selectFundingDetail(String userNo) {
+		return adminUserMapper.selectFundingDetail(userNo);
+	}
 
 
 	
+
+
+
+
+
 
 }

@@ -1,7 +1,7 @@
 
 .wrapper { 
     padding-top: 120px; 
-    max-width: 1100px;
+  	max-width: 1100px;
     margin: 0 auto; 
     justify-content: center; /* 모든 요소 가운데 정렬 */
 
@@ -15,6 +15,10 @@ body {
 h1 {
     font-size: 40px;
     margin-top: -3px;
+}
+
+input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기 */
+    display: none;
 }
 
 .menu-link {
@@ -226,7 +230,9 @@ h1 {
     box-shadow: 5px 5px 5px #eee;
 }
 
-.btn-myInfo {
+.btn-myInfo,
+.btn-myProject,
+.btn-delete {
 
     width:150px;
     height: 35px;
@@ -280,15 +286,12 @@ h1 {
 .my-Info {
     text-align: center;
 
-    margin-left: 270px;
-
-    margin-left: 240px;
-
+    margin-left: -260px;
 }
 
 .aside {
     width: 250px;
-    float: left;
+    float: right;
 }
 
 
@@ -310,4 +313,9 @@ h1 {
 #real-file { 
     display: none;
 }
+
+.info {
+	margin-top: -220px;
+}
+
 

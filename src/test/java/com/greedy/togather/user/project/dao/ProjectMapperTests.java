@@ -52,6 +52,20 @@ public class ProjectMapperTests {
 		assertNotNull(projectList);
 		System.out.println(projectList);
 	}
+	/*
+	 * @Test
+	 * 
+	 * @Disabled
+	 * 
+	 * @DisplayName("프로젝트 리스트 조회용 매퍼 테스트") public void selectProjectListTest() { //
+	 * given MoreSelectCriteria critetia = new MoreSelectCriteria();
+	 * critetia.setEndRow(3); critetia.setStartRow(1);
+	 * 
+	 * // when List<ProjectDTO> projectList =
+	 * projectMapper.selectProjectList(critetia, "CA003");
+	 * 
+	 * // then assertNotNull(projectList); System.out.println(projectList); }
+	 */
 	
 	@Test
 	@DisplayName("프로젝트 상세 페이지 조회용 매퍼 테스트")

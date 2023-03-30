@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>프로젝트 후기</title>
-    <link rel="stylesheet" href="admin/project/CSS/projectReview.css" type="text/css">
+    <link rel="stylesheet" href="/admin/project/CSS/projectReview.css" type="text/css">
     <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="common/userCommon/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
 </head>
 <body>
 
-    <div th:replace="common/header/adminHeader.html">
-    </div>
-    <div th:replace="common/sidebar/adminSidebar.html">
-    </div>
+    <div th:replace="common/header/adminHeader.html"></div>
+    <div th:replace="common/sidebar/adminSidebar.html"></div>
 
     
     <div class="body-content wrapper">
@@ -29,21 +27,16 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td class="text-title" colspan="2">후기 번호</td>
-                        <td class="content-text1">EP232222221</td>
-                        <td class="content-text2"></td>
-                    </tr>
 
                     <tr>
                         <td class="text-title" colspan="2">프로젝트 번호</td>
-                        <td class="content-text1"><a href="">PJ232222221</a></td>
+                        <td class="content-text1" th:text="${ adminPage.projNo }"></td>
                         <td class="content-text2"></td>
                     </tr>
 
                     <tr>
                         <td class="text-title" colspan="2">제목</td>
-                        <td class="content-text1">생분해 나무로 만든 숲내음 다이어리</td>
+                        <td class="content-text1"></td>
                         <td class="content-text2"></td>
                     </tr>
 
@@ -51,7 +44,7 @@
                         <td class="text-title" rowspan="1">후기</td>
                         <td class="content-title">상세 내용</td>
                         <td class="content-text1">
-                            <iframe id="reviewbox" src="projectHome.html"></iframe>
+                        
                         </td>
                         <td class="content-text2"></td>
                     </tr>
@@ -62,9 +55,9 @@
 
             <div class="button-wrapper">
                 
-                    <a class="button-confirm" href=""><p class="button-confirm-text">확인</p></a>
+                    <!--  <a class="button-confirm" href=""><p class="button-confirm-text">확인</p></a>-->
                     <a class="button-box" href=""><p class="button-text">삭제</p></a>
-                    <a class="button-box" href=""><p class="button-text">취소</p></a>
+                    <a class="button-box" href="/admin/project/list"><p class="button-text">취소</p></a>
                   
             </div>
 

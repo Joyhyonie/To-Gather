@@ -11,4 +11,5 @@ public class AdminPaymentDTO {
 	private int payPrice;
 	private java.util.Date payDate;
 	
+	private AdminRefundDTO refund;
 }

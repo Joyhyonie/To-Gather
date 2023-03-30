@@ -11,8 +11,9 @@ import com.greedy.togather.admin.mainBanner.common.Pagenation;
 import com.greedy.togather.admin.mainBanner.common.SelectCriteria;
 import com.greedy.togather.admin.mainBanner.dao.AdminBannerMapper;
 import com.greedy.togather.admin.mainBanner.dto.AdminBannerDTO;
-import com.greedy.togather.admin.project.dao.AdminProjectMapper;
+import com.greedy.togather.admin.mainBanner.dto.AdminBannerFileDTO;
 
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -61,4 +62,31 @@ public class AdminBannerService {
 		return boardListAndPaging;
 	}
 
+
+	public AdminBannerDTO bannerReadPage(String projNo) {
+
+		AdminBannerDTO adminBannerPage = adminBannerMapper.bannerReadPage(projNo);
+		log.info("[AdminBannerService] adminBannerPage : {}", adminBannerPage);
+		
+		return adminBannerPage;
+		
+	}
+
+	
+	public AdminBannerFileDTO AdminBannerFileDTO(String projNo) {
+		
+		AdminBannerFileDTO adminBannerFileList = adminBannerMapper.adminBannerReadFile(projNo);
+		
+		
+		return adminBannerFileList;
+	}
+
+
+
+
+	
+	
+	
+	
+	
 }

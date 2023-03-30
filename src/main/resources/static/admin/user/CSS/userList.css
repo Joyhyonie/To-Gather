@@ -51,7 +51,7 @@
 
 .searchContent {
     width: 220px;
-    height: 33px;
+    height: 33.5px;
     border: 1px solid #424242;
     border-radius: 8px;
 }
@@ -66,7 +66,9 @@
     border: 1px solid #424242;
     border-radius: 8px;
     background-color: #424242;
+    cursor: pointer
 }
+
 
 .bi {
    position: absolute;
@@ -103,7 +105,7 @@ table {
 
 }
 
-.table-content {
+.table-content {	
     height: 50px;
     min-width: 80px;
     border-bottom: 2px solid #c9c9c9;
@@ -114,8 +116,13 @@ table {
     border-radius: 5px;
     width: 60px;
     height: 25px;
-    background-color: #c7e78e;
+    background-color: #81ae64;
     cursor: pointer;
+    color: #ffffff;
+}
+
+.user-detail:hover {
+	background-color : #c7e78e;
 }
 
 input[type="checkbox"] {
@@ -136,15 +143,19 @@ input[type="checkbox"] {
     padding: 0 10px;
 }
 
-.user-delete{
+.user-delete {
     border: 0px;
     border-radius: 8px;
     width: 70px;
     height: 30px;
-    background-color: #c7e78e;
+    background-color: #81ae64;
     cursor: pointer;
+    color: #ffffff;
 }
 
+.user-delete:hover {
+    background-color : #c7e78e;
+}
 /* content4 (페이징 바)*/
 
 .content4 {

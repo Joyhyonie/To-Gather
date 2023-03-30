@@ -15,6 +15,6 @@ public class PaymentDTO {
 	private int payPrice;
 //	@JsonFormat(pattern = "yyyy-mm-dd")
 	private Date payDate;
-//	private String projName;
+//	private ProjectDTO projName;
 	
 }

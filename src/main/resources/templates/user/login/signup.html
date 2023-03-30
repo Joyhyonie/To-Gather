@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/user/login/CSS/signup.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-	
 	<script>
 	    const message = '[[${message}]]';
 	    message && alert(message);
@@ -19,13 +18,13 @@
 <body>
 <div th:replace="common/header/userHeader.html"></div>
   <script type="text/javascript" src="/user/login/js/event.js"></script> 
-	
+
+ 
     <div class="wrapper">
-    <h1 align="center">간편 가입하기</h1>
-       
+ 
     <h1 align="center">회원가입</h1>
    
-    <form action="/user/signup" method="post">
+    <form name="joinform" action="/user/signup" method="post">
         <table style="margin: 0 auto">
             <tr>
                 <td style="width: 110px">* 아이디(이메일) </td>
@@ -35,22 +34,22 @@
 
             <tr>
                 <td>* 이름 </td>
-                <td><input class="userName" type="text" name="userNm" required placeholder="이름을 입력해주세요."></td>
+                <td><input class="userName" type="text" name="userNm" id="userNm" required placeholder="이름을 입력해주세요."></td>
             </tr>
             <tr>
                 <td>* 비밀번호</td>
-                <td><input  class="userPwd" type="password" maxlength="13" id="userPwd" name="pwd" required placeholder="비밀번호를 입력해주세요."></td>
+                <td><input  class="userPwd" type="password" maxlength="15" id="pwd" name="pwd" required placeholder="비밀번호를 입력해주세요."></td>
                 <td></td>
             </tr>
             <tr>
                 <td>* 비밀번호확인</td>
-                <td><input class="userPwd2" type="password" maxlength="13" id="userPwd2" name="userPwd2" required placeholder="비밀번호 재확인"></td>
+                <td><input class="userPwd2" type="password" maxlength="15" id="repwd" name="repwd" required placeholder="비밀번호 재확인"></td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>* 연락처 </td>
-                <td><input class="phone" type="tel" name="phone" placeholder="연락처를 입력해주세요."></td>
+                <td><input class="phone" type="tel" name="phone" id="phone" placeholder="-를 포함해서 입력해주세요." required></td>
                 <td></td>
             </tr>
 
@@ -79,18 +78,17 @@
                <input type="checkbox" id="check_02">
                <label for="check_02">(선택) 새로운 프로젝트 소식을 이메일과 SNS로 받겠습니다.</label>
                <br>
-               <input type="checkbox" id="check_03">
+               <input type="checkbox" id="agree" name="agree">
                <label for="check_03">(필수) 본인은 만 14세 이상이며, 회원 기본약관, 이용약관, 개인정보처리방침을 확인하였고 이 내용에 동의합니다.</label>
            </div>
        </div>
        <br>
        <br>
        <div align="center">
-        <input id="signup" class="btn-sign_up" type="submit" value="가입하기">
-    </div>
-</div>   
-</form>
-
+        <input id="signup" class="btn-sign_up" type="submit" value="가입하기" onclick="joinform_check();">
+    </div>  
+</form> 
+</div> 
 <div th:replace="common/footer/userFooter.html"></div>
 
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -113,6 +111,7 @@
     };
 
 </script>
-           
+
+
 </body>
 </html>

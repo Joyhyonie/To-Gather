@@ -65,8 +65,10 @@
                     <td th:text="${ #dates.format(user.joinDate, 'yyyy-MM-dd') }"></td>
                     <td th:text="${ #dates.format(user.quitDate, 'yyyy-MM-dd') }"></td>
                     <td th:text="${ user.quitYn }"></td>
-                    <td><button class="user-detail">조회</button></td>
-                </tr>
+                    <td><button class="user-detail" type="button" 
+                                th:onclick="|location.href='@{'/admin/user/detail/' + ${user.userNo}}'|">조회</button></td>
+                </tr>                                 
+                        
             </table>
         </div>
 
@@ -187,11 +189,6 @@
 		    }  		    
 		   });
 			
-			/* 조회 버튼*/
-			$(".user-detail").click(function(){
-						
-				
-			});
 		</script>
 		
 

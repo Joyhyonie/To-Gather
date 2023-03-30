@@ -21,37 +21,9 @@ h1 {
 .aside {
 
     width: 250px;
-    float: left;
+    float: right;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    
-}
-
-.item {
-    margin: auto;
-    width: 200px;
-    height: 200px;
-    padding: 15px 25px 15px;
-    border-radius: 30px;
-    border: 3px solid #709053;
-    box-shadow: 5px 5px 5px #eee;
-    margin: 0 auto;
-    margin-bottom: 15px;
-    text-align: center;
-    font-size: 20px;
-    font-family: 'Do Hyeon', sans-serif;
-    box-shadow: 20px 20px #FFF4C9;
-}
-
-.item img {
-    margin-top: 3px;
-    height: 150px;
-    width: 200px;   
-}
 
 .aside ul li {
 
@@ -74,11 +46,35 @@ h1 {
     color: #81AE64;
  }
 
-.arrow {
-    text-align: center;
+.table-header {
+    background-color: #f8f8f8;
+    height: 55px;
+    border-top: 2px solid #c9c9c9;
+    border-bottom: 2px solid #c9c9c9;
+    min-width: 80px;
+    
 }
 
-.arrow img {
-    width: 100px;
-    height: 100px;
+.table-content {
+    height: 50px;
+    min-width: 80px;
+    border-bottom: 2px solid #c9c9c9;
 }
+
+table {
+    width: 800px;
+    border-collapse: collapse;
+    text-align: center;
+    line-height: 2.5;
+    padding: 0 10px;
+    box-shadow: 0px 2px 1px 0px #C9C9C9;
+}
+
+.paging {
+	
+	text-align: center;
+	border: 0px;
+	
+
+}
+

@@ -51,7 +51,7 @@
 
 .searchContent {
     width: 220px;
-    height: 30px;
+    height: 33.5px;
     border: 1px solid #424242;
     border-radius: 8px;
 }
@@ -66,6 +66,7 @@
     border: 1px solid #424242;
     border-radius: 8px;
     background-color: #424242;
+    cursor: pointer;
 }
 
 .bi {
@@ -81,7 +82,7 @@
 .content2 {
     display: inline-block;
     align-items: center;
-    height: 700px; /* 나중에 조정*/
+    height: 580px; /* 나중에 조정*/
     color:#424242;
 
 }
@@ -91,7 +92,6 @@ table {
     border-collapse: collapse;
     text-align: center;
     line-height: 2.5;
-    height: 100px;
     padding: 0 10px;
     box-shadow: 0px 2px 1px 0px #C9C9C9;
 }
@@ -101,50 +101,71 @@ table {
     height: 55px;
     border-top: 2px solid #c9c9c9;
     border-bottom: 2px solid #c9c9c9;
+    min-width: 80px;
 
 }
 
 .table-content {
     height: 50px;
     border-bottom: 2px solid #c9c9c9;
+    min-width: 80px;
 }
 
-.user-detail {
+.settle-detail {
     border: 0px;
     border-radius: 5px;
     width: 60px;
     height: 25px;
-    background-color: #c7e78e;
+    background-color: #81ae64;
+    cursor: pointer;
+    color: #ffffff;
 }
 
+.settle-detail:hover {
+	background-color : #c7e78e;
+}
 
+input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	position: relative;
+	top: 9px;	
+}
 
 /* content3 (삭제버튼) */
 .content3 {
     display: flex;
     flex-direction: row-reverse;
-    height: 30px;
+    height: 50px;
     padding: 0 10px;
 }
 
-.user-delete{
+.settle-delete{
     border: 0px;
     border-radius: 8px;
     width: 70px;
     height: 30px;
-    background-color: #c7e78e;
+    background-color: #81ae64;
+    cursor: pointer;
+    color: #ffffff;
 }
 
-/* content4 (페이지네이션)*/
-.pagination {
-    text-align: center;
-    width:100%;
-    padding-left: 0px;
-    text-decoration: none;
-    list-style: none;
+.settle-delete:hover {
+    background-color : #c7e78e;
 }
 
-.pagination li {
-    display: inline-block;
-    margin: 3px 5px;
+/* content4 (페이징 바)*/
+
+.content4 {
+	text-align: center;
+	border: 0px;
+}
+
+.paging {
+	font-size: 20px;
+	margin-right: 20px;
+	border: 0px;
+	background-color: #ffffff;
 }
