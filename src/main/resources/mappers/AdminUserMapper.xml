@@ -96,7 +96,7 @@
 	                USER_NM LIKE '%' || #{ searchValue } || '%'
 	            </if>
 	            <if test="searchCondition == 'quitYn'">
-	                QUIT_YN = #{ searchValue }
+	                QUIT_YN LIKE '%' || #{ searchValue } || '%'
 	            </if>
 	            </where>
     </select>
@@ -202,12 +202,12 @@
     </select>
  -->
  
- 	<update id="modifyUserDetail">
+ 	<update id="modifyUserInfo">
  	UPDATE
  	       TBL_USER US
  	   SET US.USER_PHONE = #{ phone }
  	       US.USER_ADDRESS = #{ address }
- 	 WHERE US.USER_NO = ${ userNo }
+ 	 WHERE US.USER_NO = #{ userNo }
  	</update>
 
 

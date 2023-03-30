@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.greedy.togather.admin.user.model.dto.AdminFundingDTO;
 import com.greedy.togather.admin.user.model.dto.AdminUserDTO;
 import com.greedy.togather.admin.user.model.service.AdminUserService;
+import com.greedy.togather.user.user.model.dto.UserDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -104,6 +106,24 @@ public class AdminUserController {
 		return "admin/user/userDetail";
 	}
 	
+	/* 해당 유저의 정보 수정 */
+	@ResponseBody
+	@PostMapping("/update")
+	public String modifyUserInfo(@ModelAttribute UserDTO updateUser,
+    		@RequestParam String address1, @RequestParam String address2,
+    		@RequestParam String userNo) {
+		
+		
+		
+		String address = "$" + address1 + "$" + address2;
+		
+		updateUser.setAddress(address);
+		updateUser.setUserNo(userNo);
+		
+		adminUserService.modifyUserInfo(updateUser);
+		
+		return "success";
+	}
 
 	
 	

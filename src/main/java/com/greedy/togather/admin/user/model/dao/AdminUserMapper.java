@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.greedy.togather.admin.user.model.dto.AdminFundingDTO;
 import com.greedy.togather.admin.user.model.dto.AdminUserDTO;
 import com.greedy.togather.common.paging.SelectCriteria;
+import com.greedy.togather.user.user.model.dto.UserDTO;
 
 @Mapper
 public interface AdminUserMapper {
@@ -21,6 +22,8 @@ public interface AdminUserMapper {
 		AdminUserDTO selectUserDetail(String userNo);
 
 		List<AdminFundingDTO> selectFundingDetail(String userNo);
+
+		void modifyUserInfo(UserDTO user);
 
 
 

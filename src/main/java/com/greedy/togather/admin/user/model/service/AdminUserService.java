@@ -12,6 +12,7 @@ import com.greedy.togather.admin.user.model.dto.AdminFundingDTO;
 import com.greedy.togather.admin.user.model.dto.AdminUserDTO;
 import com.greedy.togather.common.paging.Pagenation;
 import com.greedy.togather.common.paging.SelectCriteria;
+import com.greedy.togather.user.user.model.dto.UserDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,6 +61,10 @@ public class AdminUserService {
 
 	public List<AdminFundingDTO> selectFundingDetail(String userNo) {
 		return adminUserMapper.selectFundingDetail(userNo);
+	}
+
+	public void modifyUserInfo(UserDTO user) {
+			adminUserMapper.modifyUserInfo(user);
 	}
 
 

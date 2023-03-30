@@ -35,6 +35,7 @@ public class SecurityConfig {
 					.disable()
 					.authorizeHttpRequests()
 					.antMatchers("/user/mypage" ,"/user/project", "/user/project/detail").hasRole("USER")
+					.antMatchers("/admin/*").hasRole("ADMIN")
 					.anyRequest().permitAll()
 				.and()
 					.formLogin()

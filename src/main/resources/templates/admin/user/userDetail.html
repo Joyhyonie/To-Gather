@@ -48,9 +48,11 @@
                 <tr>
                     <th class="table-header">주소</th>
                     <td colspan="3" class="table-body">
-                        <input type="text" class="inputbox box2" th:value="${ user.address }">
+                        <input type="text" class="inputbox box2" name="address1" id="address1" th:placeholder="${ user.address }">
+                               
                         <input type="button" value="검색" id="addressBtn"><br>
-                        <input type="text" class="inputbox box3">
+                        
+                        <input type="text" class="inputbox box3"  name="address2" id="address2">
                     </td>
                 </tr>
                 <tr>
@@ -120,8 +122,8 @@
         </div>
 
         <div class="content5">
-            <button type="button" class="user-cancel">취소</button>
-            <button type="button" class="user-update">수정</button>
+            <button type="button" class="user-cancel" id="cancelBtn">취소</button>
+            <button type="button" class="user-update" id="updateBtn">수정</button>
         </div>
 
 
@@ -129,19 +131,48 @@
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 	
-	    const $searchZipCode = document.getElementById("#addressBtn");
+	    const $searchZipCode = document.getElementById("addressBtn");
 	
 	    $searchZipCode.onclick = function() {
 	
 	        new daum.Postcode({
 	            oncomplete: function(data){
-	                document.getElementById("zipCode").value = data.zonecode;
 	                document.getElementById("address1").value = data.address;
 	                document.getElementById("address2").focus();
 	            }
+	       
 	        }).open();
 	    }
-	
+	    
+		/* 취소 버튼 */ 
+	    if(document.getElementById("cancelBtn")) {
+	        const $cancelBtn = document.getElementById("cancelBtn");
+	        $cancelBtn.onclick = function() {
+	            location.href = "/admin/user/list";
+	        }
+	    }
+		
+		/* 수정 버튼 */
+	    $("#updateBtn").click(function(){
+		    const confirmMessage = confirm("수정하시겠습니까?");
+		    
+		    if(confirmMessage) {    
+		    		   
+		    const userNo = '[[${ user.userNo }]]';
+		    
+		    console.log(userNo);
+		    
+		     $.ajax({
+		      url : "/admin/user/update",
+		      type : 'post',
+			  data : { userNo : userNo },			  
+		      success : function(data){
+		    	  if(data === 'success')
+		       location.href = "/admin/user/list";
+		      }     
+		     });		     
+		    }  		    
+		   });
 	</script>
 
 
