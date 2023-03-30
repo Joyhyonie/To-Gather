@@ -13,7 +13,7 @@ function rhqgkrl(){
     } else if(countbox <= 0 && plus === undefined ){
         document.getElementById('finalPrice').innerHTML = 0
     } else {
-        document.getElementById('finalPrice').innerHTML = rlqhsrkqt * countbox ;
+        document.getElementById('finalPrice').innerHTML = rlqhsrkqt * countbox + 2500;
     }
 
     // if(countbox <= 0 && plus === undefined ){
