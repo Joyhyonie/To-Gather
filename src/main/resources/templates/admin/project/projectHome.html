@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>프로젝트 관리</title>
-    <link rel="stylesheet" href="admin/project/CSS/projectHome.css" type="text/css">
+    <link rel="stylesheet" href="/admin/project/CSS/projectHome.css" type="text/css">
     <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
@@ -21,7 +21,7 @@
         
         <div class="grid-content">
             
-            <a class="menu-box" th:href="@{/admin/mainbanner/list(searchCondition=${ mainStatusMap['statMain'].searchCondition}, searchValue=${ mainStatusMap['statMain'].searchValue})}">
+            <a class="menu-box" th:href="@{/admin/project/list(searchCondition=${ statusMap['statEvaluation'].searchCondition}, searchValue=${ statusMap['statEvaluation'].searchValue})}">
                 				
                     <div class="menu-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-file-earmark-break-fill" viewBox="0 0 16 16">
@@ -31,7 +31,7 @@
                     <p class="menu-text">심사 대기 프로젝트</p>
                 
             </a>       
-            <a class="menu-box" th:href="@{/admin/project/list(searchCondition=${ mainStatusMap['statToday'].searchCondition}, searchValue=${ mainStatusMap['statToday'].searchValue})}">
+            <a class="menu-box" th:href="@{/admin/project/list(searchCondition=${ statusMap['statStart'].searchCondition}, searchValue=${ statusMap['statStart'].searchValue})}">
               <div class="menu-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-clipboard2-check-fill" viewBox="0 0 16 16">
                     <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5Z"/>
