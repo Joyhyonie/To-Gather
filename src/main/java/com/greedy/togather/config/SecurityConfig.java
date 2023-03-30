@@ -34,7 +34,7 @@ public class SecurityConfig {
 				.csrf()
 					.disable()
 					.authorizeHttpRequests()
-					.antMatchers("/user/mypage" ,"/user/project", "/user/project/detail", "/user/project/create", "/user/pay/payScreen").hasRole("USER")
+					.antMatchers("/user/mypage" ,"/user/project", "/user/project/detail", "/user/project/create", "/pay/payScreen").hasRole("USER")
 					.antMatchers("/admin/*").hasRole("ADMIN")
 					.anyRequest().permitAll()
 				.and()
