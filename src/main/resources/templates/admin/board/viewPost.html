@@ -1,14 +1,33 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시판 예시화면</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/src/main/resources/static/admin/board/CSS/viewPost.css">
+   	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/admin/board/CSS/viewPost.css">
+	
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+	<title>게시판 예시화면</title>
+
 </head>
+
 <body>
-    <div class="container">
+
+	<div th:replace="common/header/adminHeader.html">
+    </div>
+    
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div> 
+    
+    <div class="content">
         <!-- 좌측 상단 제목 -->
 
             <div class="content1">
@@ -30,19 +49,19 @@
             <!-- 두 번째 줄: 내용 -->
             <div class="form-group">
                 <label for="content">내용</label>
-                <textarea class="form-control" id="content" rows="10" readonly>배송 제한 지역에 관한 안내 내용입니다.</textarea>
+                <textarea class="form-control" id="content" rows="20" readonly>배송 제한 지역에 관한 안내 내용입니다.</textarea>
             
             </div>
 
              <!-- 하단: 녹색버튼 -->
              <div class="content2">
-                <button class="delete">삭제</button>
-                <button class="write">수정</button></div>
+            <button class="board-cancel">취소</button>
+            <button class="modify-post">수정</button>
            </div>
         </div>
     </div>
     
 
-    <script src="/src/main/resources/static/admin/board/CSS/viewPost.css"></script>
+    <script src="/src/main/resources/static/admin/board/CSS/viewPost.js"></script>
 </body>
 </html>
