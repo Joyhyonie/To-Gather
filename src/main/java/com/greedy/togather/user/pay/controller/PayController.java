@@ -3,7 +3,7 @@ package com.greedy.togather.user.pay.controller;
 
 
 
-import java.io.BufferedReader;
+import java.io.BufferedReader; 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-import org.json.simple.JSONObject;
+//import org.json.simple.JSONObject;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -129,8 +129,8 @@ public class PayController {
 		return "/user/myPage/fundProject";
 	}
 	
-	@PostMapping("/orderCancel")
-	public @ResponseBody String payCancel(@RequestBody PaymentDTO cancel) {
+//	@PostMapping("/orderCancel")
+//	public @ResponseBody String payCancel(@RequestBody PaymentDTO cancel) {
 		
 //		System.out.println("dddd");
 		
@@ -178,54 +178,54 @@ public class PayController {
 //		} catch (Exception e) {
 //		    e.printStackTrace();
 //		}
-		PaymentDTO cancelList = cancel;
-		try {
-			URL address = new URL("https://api.iamport.kr/users/getToken");
-			HttpURLConnection conn = (HttpURLConnection) address.openConnection();
-			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Content-Type", "application/json");
-			conn.setRequestProperty("Accept", "application/json");
+//		PaymentDTO cancelList = cancel;
+//		try {
+//			URL address = new URL("https://api.iamport.kr/users/getToken");
+//			HttpURLConnection conn = (HttpURLConnection) address.openConnection();
+//			conn.setRequestMethod("POST");
+//			conn.setRequestProperty("Content-Type", "application/json");
+//			conn.setRequestProperty("Accept", "application/json");
+//			
+//			conn.setDoOutput(true);
 			
-			conn.setDoOutput(true);
-			
-			JSONObject cancelData = new JSONObject();
-			cancelData.put("imp_key", "4472688766767282");
-			cancelData.put("imp_secret", "uVesZr8wTfgxjSI8vfCN61pqnRsyMdmru5w81ZiHhdMH2TMv0qllSYW81Pi8sqeQKEBbIoZNZ4yOerY6");
-			
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			bw.write(cancelData.toJSONString());
-			bw.flush();
-			bw.close();
-			
-			int result = 0;
-			int responseCode = conn.getResponseCode();
-			
-			System.out.println("응답 코드는 ???" + responseCode);
-			
-			if(responseCode == 200) {
-				paymentService.insertRefund(cancel); 
-				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-				StringBuilder sb = new StringBuilder();
-				String line = null;
-				while((line = br.readLine()) != null) {
-					sb.append(line + "\n");
-				}
-				br.close();
-				System.out.println("" + sb.toString());
-//				return "";
-			} else {
-				return "error";
-			}
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return "";
-	}
+//			JSONObject cancelData = new JSONObject();
+//			cancelData.put("imp_key", "4472688766767282");
+//			cancelData.put("imp_secret", "uVesZr8wTfgxjSI8vfCN61pqnRsyMdmru5w81ZiHhdMH2TMv0qllSYW81Pi8sqeQKEBbIoZNZ4yOerY6");
+//			
+//			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+//			bw.write(cancelData.toJSONString());
+//			bw.flush();
+//			bw.close();
+//			
+//			int result = 0;
+//			int responseCode = conn.getResponseCode();
+//			
+//			System.out.println("응답 코드는 ???" + responseCode);
+//			
+//			if(responseCode == 200) {
+//				paymentService.insertRefund(cancel); 
+//				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//				StringBuilder sb = new StringBuilder();
+//				String line = null;
+//				while((line = br.readLine()) != null) {
+//					sb.append(line + "\n");
+//				}
+//				br.close();
+//				System.out.println("" + sb.toString());
+////				return "";
+//			} else {
+//				return "error";
+//			}
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		return "";
+//	}
 
 
 	
