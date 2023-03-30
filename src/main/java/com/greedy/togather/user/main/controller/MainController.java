@@ -42,6 +42,12 @@ public class MainController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/user/chat")
+	public String goChat() {
+		
+		return "common/header/userChat";
+	}
+	
 	
 	
 }

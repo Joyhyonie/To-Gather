@@ -1,6 +1,6 @@
 package com.greedy.togather.user.project.dao;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals; 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.greedy.togather.Chap99ToGatherApplication;
-import com.greedy.togather.common.paging.MoreSelectCriteria;
 import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.project.dto.ReplyDTO;
 import com.greedy.togather.user.project.dto.RewardDTO;
@@ -25,7 +24,34 @@ public class ProjectMapperTests {
 	@Autowired
 	private ProjectMapper projectMapper;
 	
+	@Test
+	@DisplayName("검색된 프로젝트 조회용 매퍼 테스트")
+	public void selectSearchedProjectListTest() {
+		// given
+		
+		// when
+		List<ProjectDTO> projectList = projectMapper.selectProjectList("프로젝트");
+				
+		// then
+		assertNotNull(projectList);
+		System.out.println(projectList);
+		
+	}
 	
+	
+	@Test
+	@Disabled
+	@DisplayName("프로젝트 리스트 조회용 매퍼 테스트")
+	public void selectProjectListTest() {
+		// given
+		
+		// when
+		List<ProjectDTO> projectList = projectMapper.selectProjectList("CA003");
+		
+		// then
+		assertNotNull(projectList);
+		System.out.println(projectList);
+	}
 	/*
 	 * @Test
 	 * 

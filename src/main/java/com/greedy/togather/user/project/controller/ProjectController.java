@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,11 +51,16 @@ public class ProjectController {
 	}
 	
 	/* 검색한 키워드를 조회한 페이지로의 이동 */
-	@GetMapping("/")
-	public String goSearchedProject() {
+	@GetMapping("/searched")
+	public String goSearchedProject(@RequestParam(name="word") String word, Model model) {
 		
+		log.info(word);
 		
-		return IMAGE_DIR;
+		Map<String, Object> allProjectList = projectService.selectSearchedProjectList(word);
+		model.addAttribute("searchedWord", word);
+		model.addAttribute("searchedProjectList", allProjectList.get("searchedProjectList"));
+		
+		return "user/project/viewProjects/viewSearchedProjects";
 	}
 	
 	
@@ -161,7 +167,7 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/create")
-	public String createProject(ProjectDTO project, MakerDTO maker, @AuthenticationPrincipal UserDTO writer, RedirectAttributes rttr,
+	public String createProject(ProjectDTO project, MakerDTO maker, @AuthenticationPrincipal UserDTO writer,
 								MultipartFile makerProfile, MultipartFile mainImage,  List<MultipartFile> subImageList, 
 								MultipartFile settleDoc, MultipartFile accountDoc, MultipartFile etcDoc,
 								@RequestParam String zipCode, @RequestParam String address1, @RequestParam String address2) {
@@ -401,10 +407,31 @@ public class ProjectController {
 	
 	/* 프로젝트 후기 작성 */
 	@GetMapping("/review")
-	public String goToWriteReview() {
+	public String goToWriteReview(@RequestParam(value="projNo", required=false) String projNo, ProjectDTO project, Model model) {
 		
-
+		log.info("[ProjectController] 프로젝트 후기(GET) 의 projNo : {}", projNo);
+		
+		model.addAttribute("projNo", projNo);
+		
 		return "/user/project/writeReview/writeReview";
+	}
+	
+	@PostMapping("/review")
+	public String WriteReview(@RequestParam(name="projNo") String projNo, ProjectDTO project, @RequestParam String reviewBody, RedirectAttributes rttr) {
+		
+		log.info("[ProjectController] 프로젝트 후기의 project : {}", project);
+		log.info("[ProjectController] 프로젝트 후기(POST)의 projNo : {}", projNo);
+		log.info("[ProjectController] 프로젝트 후기의 reviewBody : {}", reviewBody);
+		
+		/* 해당 프로젝트의 projNo도 함께 전송 */
+		project.setProjNo(projNo);
+		project.setProjReview(reviewBody);
+		projectService.updateReview(project);
+		
+		rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("write.review"));
+		
+		return "redirect:/";
+		
 	}
 	
 	/* ------------------------------------------------------------------------------------------------------ */

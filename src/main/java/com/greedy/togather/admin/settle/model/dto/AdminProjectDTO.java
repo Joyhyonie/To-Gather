@@ -1,6 +1,6 @@
 package com.greedy.togather.admin.settle.model.dto;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;

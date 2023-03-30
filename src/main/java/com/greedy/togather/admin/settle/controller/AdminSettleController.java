@@ -91,7 +91,8 @@ public class AdminSettleController {
 		model.addAttribute("mnCharge", settleInfo.get("mnCharge"));
 		model.addAttribute("payCharge", settleInfo.get("payCharge"));
 		
-
+		adminSettleService.insertSettleDetail(settleInfo);
+		
 		return "admin/settle/settleDetail";
 	}
 	
