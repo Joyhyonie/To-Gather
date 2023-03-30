@@ -26,18 +26,18 @@
         <p hidden id="userNo"></p>
         <div class="aside">
             <ul>
-                <li><a class="menu-link" href="#myInfo">내 정보</a></li>
+                <li><a class="menu-link" href="#myInfo" onclick="location.href='/user/myInfo'">내 정보</a></li>
                 <br>
                 <li><a class="menu-link" href="#">보유 쿠폰</a></li>
                 <br>
-                <li><a class="menu-link" href="#likedProject">좋아요한 프로젝트</a></li>
+                <li><a class="menu-link" href="#likedProject" th:onclick="|location.href='@{/user/likedProject?(userNo=${#authentication.principal.userNo})}'|" >좋아요한 프로젝트</a></li>
                 <br>
                 <li><a class="menu-link" href="#">후원한 프로젝트</a></li>
                 <br>
-                <li><a class="menu-link" href="#">나의 프로젝트</a></li>
+                <li><a class="menu-link" href="#" onclick="location.href='/user/myProject'">나의 프로젝트</a></li>
                 <br>
                 <br>
-                <li><a class="menu-link" href="#">로그아웃</a></li>
+                <li><a class="menu-link" href="#" id="logout">로그아웃</a></li>
                 <br>
                 <li><a class="menu-link" href="#withdrawal">회원탈퇴</a></li>
             </ul>
