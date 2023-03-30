@@ -1,37 +1,59 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/admin/board/CSS/viewBoardList.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <title>게시판</title>                    
+    
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+   	<link rel="icon" type="image/x-icon" href="/common/userCommon/images/favicon.ico">
+   	<link rel="stylesheet" type="text/css" href="/admin/board/CSS/viewBoardList.css">
+    <script src="/src/main/resources/static/admin/board/JS/viewBoardList.js"></script>
+   
+	<title>게시판 리스트</title>     
+	               
 </head>
+
 <body>
+
+	<div th:replace="common/header/adminHeader.html">
+    </div>
+    
+    <div th:replace="common/sidebar/adminSidebar.html">
+    </div> 
 
     <div class="content">
 
         <div class="content1">
             <div class="menu-title">게시판</div>
             <div class="searchbar">
-                <form id="searchForm" action="" method="get">
-                    <select class="sort">
-                        <option value="num">NO.</option>
-                        <option value="sort">분류</option>
-                        <option value="titleContent">제목</option>
-                        <option value="writeDate">작성일</option>
-                    </select>
-                    <input type="text" class="searchContent">
-                    <button class="search-button" type="submit"><i class="bi bi-search"></i></button>
-                </form>                  
+                <form id="searchForm" action="/admin/board/list" method="get">
+                
+			<select id="searchCondition" name="searchCondition" class="sort">
+				<option value="boardNo"
+					th:selected="${ paging.searchCondition eq 'boardNo'}">NO.</option>
+				<option value="boardType"
+					th:selected="${ paging.searchCondition eq 'boardType'}">분류</option>
+				<option value="boardTitle"
+					th:selected="${ paging.searchCondition eq 'boardTitle'}">제목</option>
+			
+			
+			</select> 
+			
+			<input type="search"  class="searchContent" name="searchValue"
+				th:value="${ paging.searchValue }">
+                <button class="search-button" type="submit"><i class="bi bi-search"></i></button>
+                </form>         
+                                 
             </div>
         </div>
 
         <div class="content2">
             <table>
                 <tr>
-                    <th class="table-header"><form><input type="checkbox" class="checkbox"/></form></th>
+                    <th class="table-header"><input type="checkbox" id="checkAll"/></th></th>
                     <th class="table-header">NO.</th>
                     <th class="table-header">분류</th>
                     <th class="table-header">제목</th>
@@ -40,53 +62,95 @@
                    
                   
                 </tr>
-                <tr class="table-content">
+                 <tr th:each="board : ${ viewBoardList }" class="table-content">
                     <td><form><input type="checkbox"/></form></td>
-                    <td>1</td>
-                    <td>FAQ</td>
-                    <td>결제/환불 관련..</td>
-                    <td>2023.02.26</td>
-                    <td>87987</td>
-                </tr>
-                <tr class="table-content">
-                    <td><form><input type="checkbox"/></form></td>
-                    <td>2</td>
-                    <td>NOTICE</td>
-                    <td>[안내]TO-GATHER Social..</td>
-                    <td>2023/02/27</td>
-                    <td>76558</td>
+                    <td th:text="${ board.boardNo }"></td>
+                    <td th:text="${ board.boardType }"></td>
+                    <td th:text="${ board.boardTitle}"></td>
+                    <td th:text="${#dates.format(board.writeDate, 'MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${ board.views }"></td>
                     
                 </tr>
-
             </table>
         </div>
+                    
 
         <div class="content3">
-            <button class="write">글쓰기</button>
-            <button class="delete">삭제</button>
-        </div>
-
-        <div class="content4">
-            <ul class="pagination">
-                <li class="prev"><a href=""><</a></li>
-                <li calss="page1"><a href="">1</a></li>
-                <li class="page2"><a href="">2</a></li>
-                <li class="page3"><a href="">3</a></li>
-                <li class="page4"><a href="">4</a></li>
-                <li class="page5"><a href="">5</a></li>
-                <li class="page6"><a href="">6</a></li>
-                <li class="page7"><a href="">7</a></li>
-                <li class="page8"><a href="">8</a></li>
-                <li class="page9"><a href="">9</a></li>
-                <li class="page10"><a href="">10</a></li>
-                <li class="next"><a href="">></a></li>
-            </ul>
+         
+            <button class="writePost">글쓰기</button>
+            <button class="board-delete">삭제</button>
         </div>
 
 
 
-
-    </div>
+        <div class="content4" id="paging">
+        	<!-- 페이징 바 -->
+				<!--  검색어가 있을 때 -->
+				<th:block
+					th:if="${ paging.searchCondition != null and paging.searchValue!= null and !paging.searchValue.isEmpty() }">
+					<!-- 맨 앞으로 이동 -->
+					<button class="paging prev2"
+						th:onclick="'location.href=\'/admin/board/list?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
+		
+					<!-- 이전 페이지로 이동 -->
+					<button class="paging prev1"
+						th:onclick="'location.href=\'/admin/board/list?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;</button>
+		
+					<!-- 숫자 버튼 -->
+					<th:block 
+						th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+						<button class="paging numbers"
+							th:onclick="'location.href=\'/admin/board/list?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+							th:text="${ page }" th:disabled="${ paging.page eq page }">
+						</button>
+					</th:block>
+		
+					<!-- 다음 페이지로 이동 -->
+					<button class="paging next1"
+						th:onclick="'location.href=\'/admin/board/list?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
+		
+					<!-- 맨 끝으로 이동 -->
+					<button class="paging next2"
+						th:onclick="'location.href=\'/admin/board/list?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;&gt;</button>
+				</th:block>
+				
+				<!--  검색어가 없을 때 -->
+				<th:block
+					th:if="${ paging.searchCondition == null || paging.searchCondition.isEmpty() || paging.searchValue == null || paging.searchValue.isEmpty()}">
+					<!-- 맨 앞으로 이동 -->
+					<button class="paging prev2" 
+					  	th:onclick="'location.href=\'/admin/board/list?page=1\''"
+					    th:disabled="${ paging.page <= 1 }">&lt;&lt;</button>
+		
+					<!-- 이전 페이지로 이동 -->
+					<button class="paging prev1"
+						th:onclick="'location.href=\'/admin/board/list?page=' + @{${paging.page - 1}} + '\''"
+						th:disabled="${ paging.page <= 1 }">&lt;</button>
+		
+					<!-- 숫자 버튼 -->
+					<th:block 
+						th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+						<button class="paging numbers"
+							th:onclick="'location.href=\'/admin/board/list?page=' + @{${page}} + '\''"
+							th:text="${ page }" th:disabled="${ paging.page eq page }">
+						</button>
+					</th:block>
+		
+					<!-- 다음 페이지로 이동 -->
+					<button class="paging next1"
+						th:onclick="'location.href=\'/admin/board/list?page=' + @{${paging.page + 1}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
+		
+					<!-- 맨 끝으로 이동 -->
+					<button class="paging next2"
+						th:onclick="'location.href=\'/admin/board/list?page=' + @{${paging.maxPage}} + '\''"
+						th:disabled="${ paging.page >= paging.maxPage }">&gt;&gt;</button>
+				</th:block>			     
+		</div>
 
 </body>
 </html>

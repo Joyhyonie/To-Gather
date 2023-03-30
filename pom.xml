@@ -104,11 +104,7 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>com.greedy</groupId>
-			<artifactId>thymeleaf</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+	
 	</dependencies>
 <!--<repositories>
 	<repository>
