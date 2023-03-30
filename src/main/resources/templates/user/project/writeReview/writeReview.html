@@ -52,5 +52,15 @@
     </form>
     </div>
     
+    <script type="text/javascript">
+	    const submitBtn = document.querySelector('.submit');
+	    submitBtn.addEventListener('click', () => {
+	      const confirmSubmit = confirm('제출 된 후기는 수정이 불가 합니다. 제출 하시겠습니까?');
+	      if (confirmSubmit) {
+	        alert('프로젝트의 후기가 등록 완료되었습니다 😇');
+	      }
+	    });
+    </script>
+    
 </body>
 </html>
