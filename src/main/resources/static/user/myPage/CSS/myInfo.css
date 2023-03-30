@@ -231,7 +231,8 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
 }
 
 .btn-myInfo,
-.btn-myProject {
+.btn-myProject,
+.btn-delete {
 
     width:150px;
     height: 35px;
