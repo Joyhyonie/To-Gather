@@ -109,10 +109,6 @@ private final AdminSettleMapper adminSettleMapper;
 		
 	}
 
-	public void insertSettleDetail(Map<String, Object> settleInfo) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 

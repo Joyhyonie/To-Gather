@@ -91,7 +91,6 @@ public class AdminSettleController {
 		model.addAttribute("mnCharge", settleInfo.get("mnCharge"));
 		model.addAttribute("payCharge", settleInfo.get("payCharge"));
 		
-		adminSettleService.insertSettleDetail(settleInfo);
 		
 		return "admin/settle/settleDetail";
 	}
@@ -109,7 +108,7 @@ public class AdminSettleController {
 	
 	/* 정산 테이블로 마감 프로젝트 가져오는 스케쥴링 */
 	//@Scheduled(cron="0 0 0 * * *") // 매일 자정마다 동작
-	@Scheduled(cron="0 * * * * *") // 1분마다 동작
+	//@Scheduled(cron="0 * * * * *") // 1분마다 동작
 	public void insertEndProject() {
 		
 		List<AdminProjectDTO> projList = adminSettleService.selectEndProject();
