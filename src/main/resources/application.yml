@@ -1,6 +1,8 @@
 # server config
 server:
   port: 8001
+  tomcat:
+    max-http-form-post-size: 200MB
 
 # mybatis config
 mybatis:
@@ -28,9 +30,9 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 20MB
-      max-request-size: 20MB
-      location: D:/semi-project/To-Gather_Files/To-Gather_3/ # 경로 반드시 확인
+      max-file-size: 200MB
+      max-request-size: 200MB
+      location: D:/semi-project/To-Gather_Files/To-Gather_4/ # 경로 반드시 확인
       
 
 # image upload directory (이미지를 저장할 경로 설정)

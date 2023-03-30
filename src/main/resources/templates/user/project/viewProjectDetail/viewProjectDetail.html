@@ -119,11 +119,11 @@
 		                <button class="create-review-button" id="create-review-button" onclick="alert('해당 프로젝트의 Maker만 후기를 작성할 수 있습니다!');">후기 작성하기</button>
 		                </th:block>
 						</th:block>
-		            </div>
-		        </th:block>
 	            <th:block th:unless="${ detail.projReview == null }">
 	            	<div th:utext="${ detail.projReview }"></div>
                 </th:block>
+		            </div>
+		        </th:block>
             </div>
         </div>
         <script>

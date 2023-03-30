@@ -20,12 +20,12 @@
 </head>
 <body>
     
-    <th:block sec:authorize="isAnonymous()">
+<!--     <th:block sec:authorize="isAnonymous()">
         <SCript>
             location.href="http://localhost:8001/user/login";
         </SCript>
-    </th:block>
- <th:block sec:authorize="isAuthenticated()">
+    </th:block> -->
+ <!-- <th:block sec:authorize="isAuthenticated()"> -->
 	<div th:replace="/common/header/userHeader.html"></div>
     <script type="text/javascript" src="/user/pay/js/payScreen.js"></script>	
     <section id="grid1">
@@ -346,6 +346,6 @@
 
     </section>
 <div th:replace="/common/footer/userFooter.html"></div>
-</th:block>
+<!-- </th:block> -->
 </body>
 </html>

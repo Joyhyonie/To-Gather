@@ -172,20 +172,6 @@ public class ProjectController {
 								MultipartFile settleDoc, MultipartFile accountDoc, MultipartFile etcDoc,
 								@RequestParam String zipCode, @RequestParam String address1, @RequestParam String address2) {
 		
-		log.info("[ProjectController] project : {}", project);
-		log.info("[ProjectController] maker : {}", maker);
-		log.info("[ProjectController] rewardList : {}", project.getRewardList());
-		log.info("[ProjectController] writer : {}", writer);
-		log.info("[ProjectController] makerProfile : {}", makerProfile);
-		log.info("[ProjectController] mainImage : {}", mainImage);
-		log.info("[ProjectController] subImage : {}", subImageList);
-		log.info("[ProjectController] settleDoc : {}", settleDoc);
-		log.info("[ProjectController] accountDoc : {}", accountDoc);
-		log.info("[ProjectController] etcDoc : {}", etcDoc);
-		log.info("[ProjectController] zipCode : {}", zipCode);
-		log.info("[ProjectController] address1 : {}", address1);
-		log.info("[ProjectController] address2 : {}", address2);
-		
 		/* 주소 가공 */
 		String address = zipCode + "$" + address1 + "$" + address2;
     	maker.setMakerAddress(address);
@@ -199,10 +185,6 @@ public class ProjectController {
 		File dir1 = new File(fileUploadDir);
 		File dir2 = new File(makerProfileDir);
 		File dir3 = new File(documentDir);
-		
-		log.info("[ProjectController] dir1 : {}", dir1);
-		log.info("[ProjectController] dir2 : {}", dir2);
-		log.info("[ProjectController] dir3 : {}", dir3);
 		
 		
 		/* 디렉토리가 없을 경우 생성 */
@@ -230,13 +212,6 @@ public class ProjectController {
 				processedSubImageList.add(processedSubImage);
 			}
 		}
-		
-		log.info("[ProjectController] processedMakerProfile : {}", processedMakerProfile); 
-		log.info("[ProjectController] processedMainImage : {}", processedMainImage);
-		log.info("[ProjectController] processedSettleDoc : {}", processedSettleDoc); 
-		log.info("[ProjectController] processedAccountDoc : {}", processedAccountDoc); 
-		log.info("[ProjectController] processedEtcDoc : {}", processedEtcDoc); 	
-		log.info("[ProjectController] processedSubImageList : {}", processedSubImageList); 
 		
 		/* 메이커 프로필은 TBL_MAKER에도 저장 */
 		maker.setMakerProfileName("/upload/makerProfile/" + processedMakerProfile.getSavedFileName());
@@ -407,11 +382,13 @@ public class ProjectController {
 	
 	/* 프로젝트 후기 작성 */
 	@GetMapping("/review")
-	public String goToWriteReview(@RequestParam(value="projNo", required=false) String projNo, ProjectDTO project, Model model) {
+	public String goToWriteReview(@RequestParam(value="projNo", required=false) String projNo, ProjectDTO project, Model model, RedirectAttributes rttr) {
 		
 		log.info("[ProjectController] 프로젝트 후기(GET) 의 projNo : {}", projNo);
 		
 		model.addAttribute("projNo", projNo);
+		
+		rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("write.review"));
 		
 		return "/user/project/writeReview/writeReview";
 	}
