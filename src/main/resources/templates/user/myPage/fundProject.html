@@ -43,8 +43,8 @@
             </ul>
         </div>
         <div class="project-list">
+            <caption><strong>후원 한 프로젝트</strong></caption>
             <table class="fund">
-                <caption><strong>후원 중인 프로젝트</strong></caption>
             <th:block th:each="fund : ${ fundList }">
                 <tr class="table-header">
                     <th hidden id="payNo"></th>
@@ -118,8 +118,8 @@
             </table> -->
             <table class="fund">
                 <caption><strong>환불 한 프로젝트</strong></caption>
-            <th:block th:each="refund : ${ refundList }">
-                <tr clas="table-header">
+                <th:block th:each="refund : ${ refundList }">
+                <tr class="table-header">
                     <th>프로젝트</th>
                     <th>상품 정보</th>
                     <th>환불 일자</th>

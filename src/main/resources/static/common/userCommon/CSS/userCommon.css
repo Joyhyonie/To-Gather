@@ -171,6 +171,15 @@ body {
     cursor: pointer;
 }
 
+/* chat button */
+#chat {
+	position: fixed;
+    width: 60px;
+    bottom: 10%;
+    right: 1%;
+    cursor: pointer;
+}
+
 /* --------------------------------------------------------------------------- */
 
 /* footer */

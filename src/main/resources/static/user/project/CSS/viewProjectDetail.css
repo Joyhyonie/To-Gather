@@ -307,7 +307,7 @@ flex {
     font-size: 26px;
 }
 
-#create-review-button {
+.create-review-button {
     font-family: 'Do Hyeon', sans-serif;
     background-color: #81AE64;
     color: #ffffff;
@@ -316,6 +316,7 @@ flex {
     font-size: 30px;
     padding: 5px 30px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 #create-review-button:hover {
@@ -642,24 +643,26 @@ pre {
     background-color: rgba(255, 255, 255, 0); /* 투명 */
 }
 
-/* 댓글 페이징 바 */
-#paging-bar {
-    font-family: 'Do Hyeon', sans-serif;
-    font-weight: 900;
-    display: flex;
-    padding-top: 50px;
-    justify-content: center; /* 화면 가운데로 */
-}
-
-.move {
-    padding: 20px;
-    font-size: 20px;
-    background-color: white;
-    color: #DEDCDC;
-    border: none;
+/* 더보기 기능을 위한 css */
+.more-button {
+    width: 1000px;
+    background-color: #f3f3f3;
+    text-align: center;
+    padding: 10px;
+    font-size: 25px;
     cursor: pointer;
+    margin: 0 auto;
+    margin-top: 50px;
 }
 
-.move:hover {
-    color : #709053;
+.more-button:hover {
+    background-color: white;
+}
+
+.loading { /* active가 아닌 프로젝트들은 노출X */
+    display: none;
+}
+
+.loading.active { /* active인 프로젝트들만 노출 */
+    display: block;
 }

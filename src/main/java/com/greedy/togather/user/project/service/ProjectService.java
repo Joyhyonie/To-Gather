@@ -1,14 +1,12 @@
 package com.greedy.togather.user.project.service;
 
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.greedy.togather.common.paging.MorePagenation;
-import com.greedy.togather.common.paging.MoreSelectCriteria;
 import com.greedy.togather.user.project.dao.ProjectMapper;
 import com.greedy.togather.user.project.dto.FileDTO;
 import com.greedy.togather.user.project.dto.LikeDTO;
@@ -30,9 +28,20 @@ public class ProjectService {
 		this.projectMapper = projectMapper;
 	}
 	
+	/* 검색된 프로젝트 조회 */
+	public Map<String, Object> selectSearchedProjectList(String word) {
+		
+		List<ProjectDTO> searchedProjectList = projectMapper.selectSearchedProjectList(word);
+		log.info("[ProjectService] searchedProjectList : {}",  searchedProjectList);
+		
+		Map<String, Object> allProjectList = new HashMap<>();
+		allProjectList.put("searchedProjectList", searchedProjectList);
+		
+		return allProjectList;
+	}
+	
 	/* 프로젝트 리스트 조회 */
 	public Map<String, Object> selectProjectList(String categoryNo) {
-		
 		
 		List<ProjectDTO> projectList = projectMapper.selectProjectList(categoryNo);
 		log.info("[ProjectService] projectList : {}",  projectList);
@@ -129,5 +138,11 @@ public class ProjectService {
 	    return count;
 	}
 
-	
+	/* 프로젝트 후기 등록*/
+	public void updateReview(ProjectDTO project) {
+		
+		projectMapper.updateReview(project);
+		
+	}
+
 }

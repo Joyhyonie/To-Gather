@@ -15,4 +15,5 @@ public class DeliveryDTO {
 	private String invoiceNo;
 	private Date deliveryStartDate;
 	private Date buyFixedDate;
+	private String deliveryStatus;
 }

@@ -9,3 +9,5 @@
 /.settings/
 /bin/
 /target/
+src/main/resources/application.yml
+.gitignore

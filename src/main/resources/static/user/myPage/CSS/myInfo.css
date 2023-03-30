@@ -230,7 +230,9 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
     box-shadow: 5px 5px 5px #eee;
 }
 
-.btn-myInfo {
+.btn-myInfo,
+.btn-myProject,
+.btn-delete {
 
     width:150px;
     height: 35px;
@@ -315,3 +317,5 @@ input[type="file"] { /* 프리뷰 및 첨부파일 커스텀을 위해 숨기기
 .info {
 	margin-top: -220px;
 }
+
+

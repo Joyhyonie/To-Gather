@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.greedy.togather.common.exception.user.UserModifyException;
 import com.greedy.togather.common.exception.user.UserRegistException;
 import com.greedy.togather.common.exception.user.UserRemoveException;
+import com.greedy.togather.common.paging.Pagenation;
+import com.greedy.togather.common.paging.SelectCriteria;
 import com.greedy.togather.user.project.dto.ProjectDTO;
 import com.greedy.togather.user.user.model.dao.UserMapper;
 import com.greedy.togather.user.user.model.dto.AuthDTO;
@@ -127,21 +129,42 @@ public class UserService {
 			
 		}
 
-		
-		public Map<String, Object> selectLikeProject(String userNo) {
-		
-	    List<ProjectDTO> likeProjectList = mapper.selectLikeProject(userNo);
-	    
-	    Map<String, Object> resultMap = new HashMap<>();
-	    
-	    resultMap.put("likeProjectList", likeProjectList);
-	    
-	    return resultMap;
-	}
+		public Map<String, Object> selectLikeListProject(String userNo, Map<String, String> searchMap, int page) {
+			
+		    /* 1. 전체 게시글 수 확인 (검색어가 있는 경우 포함) => 페이징 처리 계산을 위해서 */
+		    int totalCount = mapper.selectTotalCount(searchMap);
+		    log.info("[userService] totalCount : {}", totalCount);
+
+		    /* 한 페이지에 보여줄 게시물의 수 */
+		    int limit = 10;
+		    /* 한 번에 보여질 페이징 버튼의 수 */
+		    int buttonAmount = 5;
+
+		    /* 2. 페이징 처리와 연관 된 값을 계산하여 SelectCriteria 타입의 객체에 담는다. */
+		    SelectCriteria selectCriteria = Pagenation.getSelectCriteria(page, totalCount, limit, buttonAmount, searchMap);
+		    log.info("[BoardService] selectCriteria : {}", selectCriteria);
+
+		    List<ProjectDTO> likeProjectList = mapper.selectLikeProject(userNo, selectCriteria);
+
+		    Map<String, Object> resultMap = new HashMap<>();
+
+		    resultMap.put("likeProjectList", likeProjectList);
+		    resultMap.put("paging", selectCriteria);
+
+		    return resultMap;
+		}
+
+
+		public UserDTO getUserProfile(String email) {
+			
+			return mapper.selectUserProfile(email);
+		}
+
 
 	
-}
 
+
+}
 
 
 

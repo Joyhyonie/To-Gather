@@ -99,7 +99,7 @@
                                             <span  class="desc1">참여금을 추가로 후원할 수 있습니다(선택)</span>
                                         </div>
                                         <div  class="content1">
-                                            <input class="contentbox" id="pageRewardOrderFormAddAmt" type="tel" pattern="[0-9]+" inputmode="numeric" autocomplete="off" placeholder="최소 1,000원 이상 입력하세요." maxlength="20" oninput="onlyNumber(this);">
+                                            <input class="contentbox" id="pageRewardOrderFormAddAmt" type="tel" pattern="[0-9]+" inputmode="numeric" autocomplete="off" maxlength="20" oninput="onlyNumber(this);">
                                         </div>
                                     </div>
                                     <!---->
@@ -297,11 +297,11 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                
-                                                <div  class="subject clearfix">
+                                                <div  class="subject clearfix" th:with="ejgkrl=${reward.rewardPrice}">
+                                                    <p hidden id="rmaksenj" th:text="${ ejgkrl }"></p>
                                                     <span  class="float-left">최종 금액</span>
-                                                    <span  class="float-right"><b  id="finalPrice" th:text="${ reward.rewardPrice+2500 }"></b>
-                                                        <span  class="asdf">원</span>
+                                                    <span  class="float-right"><b  id="finalPrice" th:text="${ ejgkrl } ? ${ ejgkrl +2500 } : ${ ejgkrl } "></b>
+                                                        <span  class="asdf" id="">원</span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -314,15 +314,15 @@
                                                 <p  class="keep-all">투게더는 플랫폼을 제공하는 중개자로 리워드 제공에 관한 지연, 제품의 하자 등으로 인한 일체의 법적 책임은 프로젝트 진행자에게 있습니다. 하지만 오마이컴퍼니는 진행자와 후원자간의 원활한 의사소통을 위해 최선의 노력을 다하겠습니다.</p>
                                                 <div  class="form-check">
                                                     <div >
-                                                        <input  type="checkbox" id="pageRewardOrderFormCheck1" class="form-check-input">
-                                                        <label  for="pageRewardOrderFormCheck1" class="form-check-label">개인정보 제3자 제공 동의</label>
+                                                        <input  type="checkbox" id="pageCheck1" class="form-check-input">
+                                                        <label  for="pageCheck1" class="form-check-label">개인정보 제3자 제공 동의</label>
                                                         <a  class="pointer-u float-right">내용 보기</a>
                                                     </div>
                                                 </div>
                                                 <div  class="form-check">
                                                     <div >
-                                                        <input  type="checkbox" id="pageRewardOrderFormCheck2" class="form-check-input">
-                                                        <label  for="pageRewardOrderFormCheck2" class="form-check-label">펀딩 결제시 유의사항 확인</label>
+                                                        <input  type="checkbox" id="pageCheck2" class="form-check-input">
+                                                        <label  for="pageCheck2" class="form-check-label">펀딩 결제시 유의사항 확인</label>
                                                         <a  class="pointer-u float-right">내용 보기</a>
                                                     </div>
                                                 </div>

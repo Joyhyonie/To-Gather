@@ -154,6 +154,7 @@
 		<result property="refundDate" column="REFUND_DATE"/>
 		<result property="refundPrice" column="REFUND_PRICE"/>
 		<result property="refundReason" column="REFUND_REASON"/>
+		<result property="refundStatus" column="REFUND_STATUS"/>
 		
 		<association property="userNo" resultMap="loginUserResultMap"/>
 		<association property="orderNo" resultMap="PayOrderMentResultMap"/>
@@ -268,6 +269,7 @@
 	, B.INVOICE_NO
 	, B.DELIVERY_START_DATE
 	, B.BUY_FIXED_DATE
+	, B.DELIVERY_STATUS
 	)
 	VALUES
 	(
@@ -275,6 +277,7 @@
 	, #{ delivery.recipientNm }
 	, #{ delivery.recipientAddress }
 	, #{ delivery.recipientPhone }
+	, NULL
 	, NULL
 	, NULL
 	, NULL
@@ -319,7 +322,27 @@
 	 WHERE ROWNUM = 1
 	</select>
 	
-	<select id="selectFund" resultMap="PayOrderMentResultMap">
+	<insert id="insertRefund">
+	INSERT 
+	INTO TBL_REFUND
+	(
+	  PAY_NO
+	, REFUND_DATE
+	, REFUND_PRICE
+	, REFUND_REASON
+	, REFUND_STATUS  
+	)
+	VALUES
+	(
+	  #{ payNo }
+	, SYSDATE
+	, #{ payPrice }
+	, '리워드불량'
+	, 'Yes'
+	)
+	</insert>
+	
+	<select id="selectFundList" resultMap="PayOrderMentResultMap">
 	SELECT DISTINCT
 		   A.ORDER_NO
 		 , A.USER_NO
@@ -340,7 +363,7 @@
 	ORDER BY A.ORDER_DATE DESC
 	</select>
 	
-	<select id="slectPaymentFefund" resultMap="PayOrderMentResultMap">
+	<select id="selectFund" resultMap="PayOrderMentResultMap">
     SELECT DISTINCT
 		   A.ORDER_NO
 		 , A.USER_NO
@@ -355,16 +378,14 @@
 		 , B.REWARD_NM
 		 , C.PROJ_NM
 	  FROM TBL_ORDER A
-LEFT OUTER JOIN TBL_REWARD B ON(A.PROJ_NO = B.PROJ_NO)
-LEFT OUTER JOIN TBL_PROJECT C ON (B.PROJ_NO = C.PROJ_NO)
-LEFT OUTER JOIN TBL_PAYMENT D ON (A.ORDER_NO = D.ORDER_NO)
-LEFT OUTER JOIN TBL_REFUND E ON (D.PAY_NO = E.PAY_NO)
-     WHERE E.PAY_NO NOT IN D.PAY_NO
-	   AND A.USER_NO = #{ userNo }
- ORDER BY A.ORDER_DATE DESC
+ LEFT JOIN TBL_REWARD B ON(A.PROJ_NO = B.PROJ_NO)
+ LEFT JOIN TBL_PROJECT C ON (B.PROJ_NO = C.PROJ_NO)
+ LEFT JOIN TBL_PAYMENT D ON (A.ORDER_NO = D.ORDER_NO)
+ LEFT JOIN TBL_REFUND E ON (D.PAY_NO = E.PAY_NO)
+	 WHERE A.ORDER_NO = #{ orderNo }
 	</select>	
 	<select id="selectRefund" resultMap="RefundDTOResultMap">
-	SELECT
+<!-- 	SELECT
 		   A.PAY_NO
 		 , A.REFUND_DATE
 		 , A.REFUND_PRICE
@@ -379,8 +400,29 @@ LEFT OUTER JOIN TBL_REFUND E ON (D.PAY_NO = E.PAY_NO)
       FULL JOIN TBL_ORDER C ON(D.ORDER_NO = C.ORDER_NO)
       FULL OUTER JOIN TBL_PROJECT E ON(C.PROJ_NO = E.PROJ_NO)
      WHERE C.USER_NO = #{ userNo }
-    ORDER BY A.REFUND_DATE DESC
+       AND 
+    ORDER BY A.REFUND_DATE DESC   -->
+    SELECT
+		   A.PAY_NO
+		 , A.REFUND_DATE
+		 , A.REFUND_PRICE
+		 , A.REFUND_REASON
+		 , A.REFUND_STATUS
+		 , C.USER_NO
+		 , D.ORDER_NO
+		 , E.PROJ_NO
+		 , E.PROJ_NM
+      FROM TBL_REFUND A
+      FULL OUTER JOIN TBL_PAYMENT B ON(A.PAY_NO = B.PAY_NO)
+      FULL OUTER JOIN TBL_ORDER D ON(B.ORDER_NO = D.ORDER_NO)
+      FULL JOIN TBL_ORDER C ON(D.ORDER_NO = C.ORDER_NO)
+      FULL OUTER JOIN TBL_PROJECT E ON(C.PROJ_NO = E.PROJ_NO)
+     WHERE C.USER_NO = #{ userNo }
+       AND A.REFUND_STATUS = 'Yes'
+    ORDER BY A.REFUND_DATE DESC  
 	</select>
+	
+
 </mapper>
 
 

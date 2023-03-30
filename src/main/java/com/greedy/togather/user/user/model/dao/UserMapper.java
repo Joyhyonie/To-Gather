@@ -14,7 +14,7 @@ import com.greedy.togather.user.user.model.dto.UserDTO;
 @Mapper
 public interface UserMapper {
 	
-	UserDTO findByUserId(String userId);
+	UserDTO findByUserId(String userId); 
 
 	String selectUserById(String userId);
 
@@ -40,7 +40,16 @@ public interface UserMapper {
 
 	void deleteThumb(UserDTO user);
 
-	List<ProjectDTO> selectLikeProject(String userNo);
+	int selectTotalCount(Map<String, String> searchMap);
+
+	List<ProjectDTO> selectLikeProject(String userNo, SelectCriteria selectCriteria);
+
+	UserDTO selectUserProfile(String email);
+
+	
+
+
+	
 
 
 

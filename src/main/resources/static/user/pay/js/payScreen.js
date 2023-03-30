@@ -1,3 +1,26 @@
+var rmaksenj;
+var rlqhsrkqt
+var notNaN;
+var countbox;
+var plus
+function rhqgkrl(){
+    rlqhsrkqt = parseFloat(document.getElementById('rmaksenj').textContent);
+    const $countbox = document.getElementById('countbox');
+    countbox = $countbox.value
+    console.log(rlqhsrkqt);
+    if(plus !== undefined && plus != ""){
+        document.getElementById('finalPrice').innerHTML = rlqhsrkqt * countbox + parseFloat(plus) + 2500;
+    } else if(countbox <= 0 && plus === undefined ){
+        document.getElementById('finalPrice').innerHTML = 0
+    } else {
+        document.getElementById('finalPrice').innerHTML = rlqhsrkqt * countbox ;
+    }
+
+    // if(countbox <= 0 && plus === undefined ){
+    // }
+    console.log(countbox);
+    console.log(plus);
+}
 function onlyNumber(obj) {
     //숫자 아닌 표현식 찾기
     const regexp = /\D/g;
@@ -9,23 +32,42 @@ function onlyNumber(obj) {
         str = String(str);
         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
     }
-
+    
     function uncomma(str) {
         str = String(str);
         return str.replace(/[^\d]+/g, '');
     }
     const rrrrr = event.target.value; 
     console.log(rrrrr);
-
+    
+    plus = rrrrr.replace(/,/g,"");
+    console.log(countbox);
     // const aaaa = rrrrr+$rewardPrice;
-    // console.log(aaaa);
-
+    console.log(plus);
+    // console.log( reward.rewardPrice );
+    if(countbox == undefined){
+        rmaksenj = parseFloat(document.getElementById('rmaksenj').textContent) + parseFloat(plus);
+        notNaN = parseFloat(document.getElementById('rmaksenj').textContent)
+    } else {
+        rmaksenj = parseFloat(document.getElementById('rmaksenj').textContent) * countbox + parseFloat(plus);
+        notNaN = parseFloat(document.getElementById('rmaksenj').textContent) * countbox
+    }
+    console.log(rlqhsrkqt);
+    console.log(rmaksenj);
+    if( rmaksenj >= 0 ){
+        document.getElementById('finalPrice').innerHTML= 2500+rmaksenj;
+    } else if(!(rmaksenj >= 0)){
+        document.getElementById('finalPrice').innerHTML=notNaN;
+    }
+    
 
 }
-
-
-
 window.onload = function () {
+
+    const $countbox = document.getElementById('countbox');    
+    $countbox.addEventListener('input', rhqgkrl);
+
+
     const $rewradAddress = document.getElementById("rewradAddress");
     const $outer = document.getElementById("addre");
     const $new = document.createElement("p");
@@ -37,7 +79,7 @@ window.onload = function () {
                 $rewradAddress.innerHTML = "[" + data.zonecode + "]" + data.address + "<input type='button' value='X' onclick='remove1()'>";
                 $new.innerHTML = "<input type='text' id='detailed-address' placeholder='상세주소 입력' style='text-align: center;'>";
                 $outer.appendChild($new);
-                
+                document.getElementById('detailed-address').focus();
             }
         }).open({
             // popupKey: 'popup1'
@@ -50,7 +92,7 @@ window.onload = function () {
             $new.remove();
         }
     };
-    
+
     
     const $btn = document.querySelectorAll('.btn');
     const $img = document.querySelectorAll('.img');
@@ -71,15 +113,15 @@ window.onload = function () {
             $text1[0].style.color = 'green';
             $off[1].style.display = 'none';
             $img[1].style.display = 'block';
-    $text1[1].style.color = 'black';
-    $off[2].style.display = 'none';
-    $img[2].style.display = 'block';
-    $text1[2].style.color = 'black';
-    $pay1.style.display = 'none';
-    $btn[1].style.border = " 3px solid black"
-    $btn[2].style.border = " 3px solid black"
-    state="on";
-    state1 = "off";
+            $text1[1].style.color = 'black';
+            $off[2].style.display = 'none';
+            $img[2].style.display = 'block';
+            $text1[2].style.color = 'black';
+            $pay1.style.display = 'none';
+            $btn[1].style.border = " 3px solid black"
+            $btn[2].style.border = " 3px solid black"
+            state="on";
+            state1 = "off";
     state2 = "off";
 } else {
     $off[0].style.display = 'none';
@@ -106,19 +148,19 @@ $btn[1].addEventListener('click', function(){
         $text1[2].style.color = 'black';
         $btn[1].style.border = " 3px solid green";
         $btn[0].style.border = " 3px solid black"
-    $btn[2].style.border = " 3px solid black"
-    state = "off";
-    state1="on";
-    state2 = "off";
-} else {
-    $off[1].style.display = 'none';
-    $img[1].style.display = 'block';
-    $text1[1].style.color = 'black';
-    $off[2].style.display = 'none';
-    $img[2].style.display = 'block';
-    $text1[2].style.color = 'black';
-    $pay1.style.display = 'none';
-    $btn[1].style.border = " 3px solid black"
+        $btn[2].style.border = " 3px solid black"
+        state = "off";
+        state1="on";
+        state2 = "off";
+    } else {
+        $off[1].style.display = 'none';
+        $img[1].style.display = 'block';
+        $text1[1].style.color = 'black';
+        $off[2].style.display = 'none';
+        $img[2].style.display = 'block';
+        $text1[2].style.color = 'black';
+        $pay1.style.display = 'none';
+        $btn[1].style.border = " 3px solid black"
     state1 = "off";
     
 }
@@ -135,17 +177,17 @@ $btn[2].addEventListener('click', function(){
         $img[0].style.display = 'block';
         $text1[0].style.color = 'black';
         $pay1.style.display = 'none';
-    $btn[2].style.border = " 3px solid green";
-    $btn[0].style.border = " 3px solid black"
-    $btn[1].style.border = " 3px solid black"
-    state = "off";
-    state1="off";
-    state2 = "on";
-} else {
-    $off[2].style.display = 'none';
-    $img[2].style.display = 'block';
-    $text1[2].style.color = 'black';
-    $btn[2].style.border = " 3px solid black"
+        $btn[2].style.border = " 3px solid green";
+        $btn[0].style.border = " 3px solid black"
+        $btn[1].style.border = " 3px solid black"
+        state = "off";
+        state1="off";
+        state2 = "on";
+    } else {
+        $off[2].style.display = 'none';
+        $img[2].style.display = 'block';
+        $text1[2].style.color = 'black';
+        $btn[2].style.border = " 3px solid black"
     state2 = "off";
 }
 });
@@ -156,7 +198,10 @@ const $cutext = document.getElementsByClassName('cutext')[0];
 
 const $cuprice = document.getElementsByClassName('cuprice')[0];
 
-const $countbox = document.getElementById('countbox').value;
+
+
+
+
 
 
 $(document).ready(function() {
@@ -204,10 +249,17 @@ const $card = '카드';
 // location.href='/pay/payScreen?projNo=$projNo&rewardNo=$rewardNo';             
 console.log(userNo);
 const $pageRewardOrderFormAddAmt = document.getElementById('pageRewardOrderFormAddAmt').value;
+var pageCheck2 = document.getElementById('pageCheck2');
+var pageCheck1 = document.getElementById('pageCheck1');
 $(function(){
     $('#submitPay').click(function(){
         
-       
+        if(!(pageCheck1.checked && pageCheck2.checked)){
+            alert("개인정보제공 동의에 체크하세요")
+        } else {
+
+        
+
         console.log($pageRewardOrderFormAddAmt);
         const $rewradAddress1 = document.getElementById('detailed-address').value;
         const $finalPrice = document.getElementById('finalPrice').innerText;
@@ -248,7 +300,7 @@ $(function(){
                         reward : {projNo : $projNo,
                             rewardNo : $rewardNo
                     }, 
-                    rewardQuantity : $countbox, 
+                    rewardQuantity : $countbox.innerText, 
                     rewardPrice : $rewardPrice, 
                     extraReward : $pageRewardOrderFormAddAmt,
                     deliveryFee : $deliveryPrice, 
@@ -329,7 +381,7 @@ $(function(){
                             reward : {projNo : $projNo,
                                 rewardNo : $rewardNo
                         }, 
-                        rewardQuantity : $countbox, 
+                        rewardQuantity : $countbox.innerText, 
                         rewardPrice : $rewardPrice, 
                         extraReward : $pageRewardOrderFormAddAmt,
                         deliveryFee : $deliveryPrice, 
@@ -382,6 +434,7 @@ $(function(){
             
             
         }
+    }
     })
     
     

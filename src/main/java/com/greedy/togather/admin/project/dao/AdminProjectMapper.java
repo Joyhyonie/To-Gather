@@ -1,10 +1,12 @@
 package com.greedy.togather.admin.project.dao;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.greedy.togather.admin.mainBanner.dto.AdminBannerDTO;
 import com.greedy.togather.admin.project.common.SelectCriteria;
 import com.greedy.togather.admin.project.dto.AdminFileDTO;
 import com.greedy.togather.admin.project.dto.AdminProjectDTO;
@@ -30,6 +32,13 @@ public interface AdminProjectMapper {
 
 	List<AdminFileDTO> adminReadFile(String projNo);
 
+	void adminMainBanner(AdminBannerDTO banner);
 
+	void adminMainBannerUpdate(AdminBannerDTO bannerUpdate);
 
+	void adminTodayProject(AdminBannerDTO today);
+
+	void adminTodayProjectUpdate(AdminBannerDTO todayUpdate);
+
+	
 }
