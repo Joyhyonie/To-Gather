@@ -39,6 +39,7 @@
 		
 		<association property="maker" resultMap="makerResultMap"/>
 		<collection property="fundingList" resultMap="fundingResultMap"/>
+		<collection property="userList" resultMap="userResultMap"/>
 	</resultMap>
 
 	<resultMap id="makerResultMap" type="com.greedy.togather.admin.settle.model.dto.AdminMakerDTO">
@@ -120,6 +121,7 @@
 	            </if>
 	            </where>
     </select>
+   
     
 	<select id="selectSettleList" resultMap="settleResultMap">
 		SELECT
@@ -157,7 +159,7 @@
 			                SE.SETTLE_STATUS = #{ searchValue }
 			            </if>
 			            </where>
-			            AND PJ.PROJ_STATUS = '마감'
+			            AND PJ.PROJ_STATUS = '마감' 
 			            ORDER BY SE.SETTLE_NO DESC) S1
 		          <![CDATA[ WHERE ROWNUM <= #{ endRow } ]]>
 		        )S2
@@ -166,8 +168,8 @@
 
 	<delete id="deleteSettleChecked" parameterType="string">
 		DELETE
- 		  FROM TBL_SETTLE 
-  	     WHERE PROJ_NO = #{ projNo }     
+ 		  FROM TBL_SETTLE SE 
+  	     WHERE SE.PROJ_NO = #{ projNo }     
 	</delete>
 	
 	<select id="selectProjInfo" resultMap="settleResultMap">
@@ -180,7 +182,7 @@
 	     , SE.SETTLE_DATE
 	  FROM TBL_SETTLE SE
 	  LEFT JOIN TBL_PROJECT PJ ON (SE.PROJ_NO = PJ.PROJ_NO)
-	  LEFT JOIN TBL_MAKER MK ON (PJ.PROJ_NO = MK.PROJ_NO)
+	  JOIN TBL_MAKER MK ON (PJ.PROJ_NO = MK.PROJ_NO)
 	  WHERE SE.SETTLE_NO = #{ settleNo }
 	</select>
 	
@@ -202,6 +204,7 @@
 		  WHERE PJ.PROJ_NO = #{ projNo }
 	</select>
 	
+	<!-- 정산 버튼 -->
 	<update id="doSettle">
 		UPDATE
 		       TBL_SETTLE SE
@@ -210,12 +213,27 @@
 		 WHERE SE.PROJ_NO = #{ projNo }      
 	</update>
 	
+	<!--  스케쥴링 -->
 	<select id="selectEndProject" resultMap="projectResultMap">
-		SELECT
+	<!-- 	SELECT
 			   *	
-		  FROM TBL_PROJECT 
+		  FROM TBL_PROJECT
 		 WHERE TO_CHAR(FUNDING_END_DATE, 'YYMMDD') = TO_CHAR(SYSDATE, 'YYMMDD')
-		   AND PROJ_STATUS = '마감'
+		   AND PROJ_STATUS = '마감' 
+	-->	    
+		   		SELECT
+               PJ.*
+             , MK.*
+             , O.*
+             , PY.*
+             , RF.*
+		  FROM TBL_PROJECT PJ
+		  JOIN TBL_MAKER MK ON (PJ.PROJ_NO = MK.PROJ_NO)
+		  LEFT JOIN TBL_ORDER O ON (PJ.PROJ_NO = O.PROJ_NO)
+		  LEFT JOIN TBL_PAYMENT PY ON (O.ORDER_NO = PY.ORDER_NO)
+		  LEFT JOIN TBL_REFUND RF ON (PY.PAY_NO = RF.PAY_NO)
+		 WHERE TO_CHAR(PJ.FUNDING_END_DATE, 'YYMMDD') = TO_CHAR(SYSDATE, 'YYMMDD')
+		   AND PJ.PROJ_STATUS = '마감'
 	</select>
 	
 	<insert id="insertTblSettle">

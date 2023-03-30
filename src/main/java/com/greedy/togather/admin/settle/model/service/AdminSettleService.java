@@ -96,8 +96,7 @@ private final AdminSettleMapper adminSettleMapper;
 	}
 
 
-	public void doSettle(String projNo) {		
-		
+	public void doSettle(String projNo) {			
 		adminSettleMapper.doSettle(projNo);
 	}
 
@@ -107,6 +106,11 @@ private final AdminSettleMapper adminSettleMapper;
 
 	public void insertTblSettle(String projNo) {
 		adminSettleMapper.insertTblSettle(projNo);
+		
+	}
+
+	public void insertSettleDetail(Map<String, Object> settleInfo) {
+		// TODO Auto-generated method stub
 		
 	}
 

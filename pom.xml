@@ -102,8 +102,13 @@
 		    <artifactId>gson</artifactId>
 		    <version>2.8.6</version>
 		</dependency>
-		
 
+
+		<dependency>
+			<groupId>com.greedy</groupId>
+			<artifactId>security</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
