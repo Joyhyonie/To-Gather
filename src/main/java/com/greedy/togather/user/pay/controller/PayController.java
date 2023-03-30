@@ -136,50 +136,50 @@ public class PayController {
 		
 		System.out.println("dddd");
 		
-		String token = "YOUR_ACCESS_TOKEN"; // 발급받은 인증 토큰
-		String impKey = "YOUR_IMP_KEY"; // 발급받은 API Key
-		String impSecret = "YOUR_IMP_SECRET"; // 발급받은 API Secret Key
-		String paymentId = "CANCEL_PAYMENT_ID"; // 취소할 결제 번호
-		int amount = 1000; // 취소할 금액
-
-		try {
-		    URL url = new URL("https://api.iamport.kr/payments/cancel");
-
-		    // HTTP 연결 설정
-		    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-		    conn.setRequestMethod("POST");
-		    conn.setRequestProperty("Authorization", token);
-		    conn.setRequestProperty("Content-Type", "application/json");
-		    conn.setRequestProperty("Accept", "application/json");
-		    conn.setDoOutput(true);
-
-		    // 취소할 결제 정보 설정
-		    JSONObject cancelData = new JSONObject();
-		    cancelData.put("merchant_uid", paymentId);
-		    cancelData.put("amount", amount);
-		    String data = cancelData.toString();
-
-		    // 요청 데이터 전송
-		    OutputStream os = conn.getOutputStream();
-		    os.write(data.getBytes("UTF-8"));
-		    os.flush();
-		    os.close();
-
-		    // 응답 처리
-		    int responseCode = conn.getResponseCode();
-		    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		    String inputLine;
-		    StringBuffer response = new StringBuffer();
-		    while ((inputLine = in.readLine()) != null) {
-		        response.append(inputLine);
-		    }
-		    in.close();
-
-		    System.out.println("Response Code : " + responseCode);
-		    System.out.println("Response Body : " + response.toString());
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
+//		String token = "YOUR_ACCESS_TOKEN"; // 발급받은 인증 토큰
+//		String impKey = "YOUR_IMP_KEY"; // 발급받은 API Key
+//		String impSecret = "YOUR_IMP_SECRET"; // 발급받은 API Secret Key
+//		String paymentId = "CANCEL_PAYMENT_ID"; // 취소할 결제 번호
+//		int amount = 1000; // 취소할 금액
+//
+//		try {
+//		    URL url = new URL("https://api.iamport.kr/payments/cancel");
+//
+//		    // HTTP 연결 설정
+//		    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+//		    conn.setRequestMethod("POST");
+//		    conn.setRequestProperty("Authorization", token);
+//		    conn.setRequestProperty("Content-Type", "application/json");
+//		    conn.setRequestProperty("Accept", "application/json");
+//		    conn.setDoOutput(true);
+//
+//		    // 취소할 결제 정보 설정
+//		    JSONObject cancelData = new JSONObject();
+//		    cancelData.put("merchant_uid", paymentId);
+//		    cancelData.put("amount", amount);
+//		    String data = cancelData.toString();
+//
+//		    // 요청 데이터 전송
+//		    OutputStream os = conn.getOutputStream();
+//		    os.write(data.getBytes("UTF-8"));
+//		    os.flush();
+//		    os.close();
+//
+//		    // 응답 처리
+//		    int responseCode = conn.getResponseCode();
+//		    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//		    String inputLine;
+//		    StringBuffer response = new StringBuffer();
+//		    while ((inputLine = in.readLine()) != null) {
+//		        response.append(inputLine);
+//		    }
+//		    in.close();
+//
+//		    System.out.println("Response Code : " + responseCode);
+//		    System.out.println("Response Body : " + response.toString());
+//		} catch (Exception e) {
+//		    e.printStackTrace();
+//		}
 		PaymentDTO cancelList = cancel;
 		try {
 			URL address = new URL("https://api.iamport.kr/users/getToken");
