@@ -79,23 +79,7 @@ window.onload = function() {
 		window.open(openUrl, 'shareProject', option);
 	}
 	  
-	/* 후원하기 버튼 클릭 시 이동 */
-	const $fundingbutton = document.querySelectorAll('.funding-button');
-    
-    for(let i = 0; i < $fundingbutton.length; i++){
-     $fundingbutton[i].addEventListener('click', function(){
-      location.href="/user/payScreen"
-      })
-    }
-    
-    /* 후기 작성하기 버튼 클릭 시 해당 프로젝트 번호와 함께 이동 */
-/*    const reviewButton = document.querySelector("#create-review-button");
-	
-	    reviewButton.addEventListener("click", (e) => {
-	    const projNo = e.currentTarget.dataset.projNo;
-	    console.log(projNo);
-	    window.location.href = '/project/review?projNo=' + projNo;
-		});*/
+
 		
 }
 
