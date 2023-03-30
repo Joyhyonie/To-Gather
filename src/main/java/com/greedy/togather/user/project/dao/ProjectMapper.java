@@ -1,10 +1,9 @@
 package com.greedy.togather.user.project.dao;
 
-import java.util.List;
+import java.util.List; 
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.greedy.togather.common.paging.MoreSelectCriteria;
 import com.greedy.togather.user.project.dto.FileDTO;
 import com.greedy.togather.user.project.dto.LikeDTO;
 import com.greedy.togather.user.project.dto.MakerDTO;
@@ -17,9 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 @Mapper
 public interface ProjectMapper {
 
+	/* 검색된 프로젝트 조회 */
+	List<ProjectDTO> selectSearchedProjectList(String word);
+	
 	/* 프로젝트 리스트 조회 */
-	int selectProjectsTotalCount(String categoryNo); /* 페이징 처리를 위한 카테고리별 총 프로젝트 수 */
 	List<ProjectDTO> selectProjectList(String categoryNo);
+	
 	
 	/* 프로젝트 상세 페이지 */
 	/* 전체 화면 조회 */
@@ -34,6 +36,7 @@ public interface ProjectMapper {
 	/* 댓글 조회 & 등록 */
 	List<ReplyDTO> selectReplyList(ReplyDTO reply);
 	void insertReply(ReplyDTO reply);
+	
 	
 	/* 프로젝트 신청 */
 	/* TBL_PROJECT에 정보 등록 */
@@ -65,6 +68,7 @@ public interface ProjectMapper {
 	
 	
 	/* 프로젝트 후기 등록 */
+	void updateReview(ProjectDTO project);
 	
 	
 	/* 좋아요 기능 */
@@ -75,6 +79,9 @@ public interface ProjectMapper {
 	void insertProjectLike(LikeDTO likeProject);
 	
 	void deleteProjectLike(LikeDTO likeProject);
+
+
+	
 	
 	
 	

@@ -58,10 +58,18 @@
         </div>
         </th:block>
         <div id="Container">
-        <div class="Search">
-            <input type="text" placeholder="제목으로 프로젝트 검색 :)" id="Search-bar">
-            <img id="Find" src="/common/userCommon/images/find.png" onclick="location.href='/project/searched'">
-        </div>
+        <form action="/project/searched" method="get">
+	        <div class="Search">
+	            <input type="text" placeholder="프로젝트명 / Maker명 입력 :)" name="word" id="Search-bar">
+	            <img id="Find" src="/common/userCommon/images/find.png" onclick="submitForm()">
+	        </div>
+        </form>
+        
+        <script>
+		function submitForm() {
+		  document.querySelector('form').submit();
+		}
+		</script>
         
         <th:block sec:authorize="isAnonymous()">
         <button type="button" class="UserStatus" id="Log-in" onclick="location.href='/user/login'">Log In</button>
@@ -69,7 +77,12 @@
         <th:block sec:authorize="isAuthenticated()">
         <button type="button" class="UserStatus" id="My-page" onclick="location.href='/user/myPage'">My Page</button>
         </th:block>
+        <th:block sec:authorize="isAnonymous()">
+        <button type="button" id="Start-project" onclick="location.href='/user/login'">프로젝트 신청</button>
+		</th:block>
+		<th:block sec:authorize="isAuthenticated()">
         <button type="button" id="Start-project" onclick="location.href='/project/create'">프로젝트 신청</button>
+		</th:block>
         </div>
     </div>
 
@@ -78,6 +91,18 @@
     <img src="/common/userCommon/images/to-top-button.png" id="To-top">
     </a>
     
+    <!-- chat button -->
+    <img src="/common/userCommon/images/chat.png" id="chat">
     
+    <script>
+	    /* chat 버튼 클릭 시, 팝업창 띄우기 */
+		const openPopUp = document.querySelector('#chat')
+		
+		openPopUp.onclick = function(){
+			let option = "width=500px, height=400px, toolbars=no, scrollbars=no";
+			let openUrl = '/user/chat'
+			window.open(openUrl, 'Chat with To-Gather!', option);
+		}
+    </script>
 </body>
 </html>
