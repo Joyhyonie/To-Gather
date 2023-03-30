@@ -29,7 +29,6 @@ public class UserDTO implements UserDetails {
 	private String confrimCode;
 	private List<UserRoleDTO> userRole;
 	
-	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> roles = new HashSet<>();
