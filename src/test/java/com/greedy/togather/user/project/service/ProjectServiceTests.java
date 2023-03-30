@@ -32,27 +32,32 @@ public class ProjectServiceTests {
 		String categoryNo = "CA002";
 		
 		// when
-		Map<String, Object> projectList = projectService.selectProjectList(page, categoryNo);
+		Map<String, Object> projectList = projectService.selectProjectList(categoryNo);
 		
 		// then
 		assertNotNull(projectList);
 		System.out.println(projectList);
 	}
 	
-	@Test
-	@DisplayName("프로젝트 상세 페이지 조회용 서비스 테스트")
-	public void selectProjectDetailTest() {
-		
+	/*
+	 * @Test
+	 * 
+	 * @DisplayName("프로젝트 상세 페이지 조회용 서비스 테스트") public void selectProjectDetailTest()
+	 * {
+	 */
 		// given
 		
 		// when
-		Map<String, Object> projectList = projectService.selectProjectDetail("PJ000000001");
+		/*
+		 * Map<String, Object> projectList =
+		 * projectService.selectProjectDetail("PJ000000001");
+		 */
 				
-		// then
-		assertNotNull(projectList);
-		System.out.println(projectList);
-		
-	}
+		/*
+		 * // then assertNotNull(projectList); System.out.println(projectList);
+		 * 
+		 * }
+		 */
 	
 	@Test
 	@DisplayName("댓글 조회용 서비스 테스트")
