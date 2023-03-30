@@ -8,11 +8,16 @@ function rhqgkrl(){
     const $countbox = document.getElementById('countbox');
     countbox = $countbox.value
     console.log(rlqhsrkqt);
-    if(plus !== undefined){
+    if(plus !== undefined && plus != ""){
         document.getElementById('finalPrice').innerHTML = rlqhsrkqt * countbox + parseFloat(plus) + 2500;
+    } else if(countbox <= 0 && plus === undefined ){
+        document.getElementById('finalPrice').innerHTML = 0
     } else {
-        document.getElementById('finalPrice').innerHTML = rlqhsrkqt * countbox + 2500;
+        document.getElementById('finalPrice').innerHTML = rlqhsrkqt * countbox ;
     }
+
+    // if(countbox <= 0 && plus === undefined ){
+    // }
     console.log(countbox);
     console.log(plus);
 }
@@ -42,10 +47,10 @@ function onlyNumber(obj) {
     // console.log( reward.rewardPrice );
     if(countbox == undefined){
         rmaksenj = parseFloat(document.getElementById('rmaksenj').textContent) + parseFloat(plus);
-        notNaN = parseFloat(document.getElementById('rmaksenj').textContent) + 2500
+        notNaN = parseFloat(document.getElementById('rmaksenj').textContent)
     } else {
         rmaksenj = parseFloat(document.getElementById('rmaksenj').textContent) * countbox + parseFloat(plus);
-        notNaN = parseFloat(document.getElementById('rmaksenj').textContent) * countbox + 2500
+        notNaN = parseFloat(document.getElementById('rmaksenj').textContent) * countbox
     }
     console.log(rlqhsrkqt);
     console.log(rmaksenj);
