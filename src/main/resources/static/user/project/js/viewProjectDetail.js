@@ -70,24 +70,6 @@ window.onload = function() {
         nextSlide();
     }, 2500);
 
-
-    /* 좋아요 버튼 */
-/*    const likeBtn = document.querySelector('#like-btn');  querySelectorAll을 통해 모든 class=like-btn 가져옴 
-        
-        let isLiked = false;
-
-        likeBtn.addEventListener('click', like)
-    
-        function like() {
-            if(isLiked) {
-                likeBtn.src = "/user/project/images/like-empty.png";
-                isLiked = false;
-            } else {
-                likeBtn.src = "/user/project/images/like-full.png";
-                isLiked = true;
-            }
-        }
-*/
 	/* 공유하기 버튼 클릭 시, 팝업창 띄우기 */
 	const openPopUp = document.querySelector('#share-box')
 	
@@ -96,7 +78,6 @@ window.onload = function() {
 		let openUrl = '/project/share'
 		window.open(openUrl, 'shareProject', option);
 	}
-    
 	  
 	/* 후원하기 버튼 클릭 시 이동 */
 	const $fundingbutton = document.querySelectorAll('.funding-button');
@@ -106,5 +87,15 @@ window.onload = function() {
       location.href="/user/payScreen"
       })
     }
+    
+    /* 후기 작성하기 버튼 클릭 시 해당 프로젝트 번호와 함께 이동 */
+/*    const reviewButton = document.querySelector("#create-review-button");
+	
+	    reviewButton.addEventListener("click", (e) => {
+	    const projNo = e.currentTarget.dataset.projNo;
+	    console.log(projNo);
+	    window.location.href = '/project/review?projNo=' + projNo;
+		});*/
+		
 }
 

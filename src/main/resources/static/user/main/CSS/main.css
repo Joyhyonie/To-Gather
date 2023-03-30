@@ -67,6 +67,7 @@ html {
     width: 100%;
     height: 100%;
     transition: transform 0.5s ease-in-out;
+    cursor: pointer;
 }
   
 .slide:first-child {
@@ -118,11 +119,15 @@ html {
     flex-wrap: wrap;
 }
 
-#today,
-#popular {
+#today {
     margin-top: -100px;
     padding-bottom: 80px;
     border-bottom: 2px solid #DEDCDC;
+}
+
+#popular {
+	margin-top: -100px;
+    padding-bottom: 80px;
 }
 
 .title {

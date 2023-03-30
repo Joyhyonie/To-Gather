@@ -14,7 +14,6 @@
 		<result property="projStatus" column="PROJ_STATUS" />
 		<result property="leftDays" column="LEFT_DAYS" /> <!-- 쿼리문에서 가공된 데이터 -->
 		<result property="percent" column="PERCENT" /> <!-- 쿼리문에서 가공된 데이터 -->
-		<result property="totalLikes" column="TOTAL_LIKES" /> <!-- 쿼리문에서 가공된 데이터 -->
 
 		<association property="category" resultMap="categoryResultMap" />
 		<association property="maker" resultMap="makerResultMap" />
@@ -25,6 +24,7 @@
 	<!-- 프로젝트의 상세 페이지 조회를 위한 resultMap -->
 	<resultMap type="com.greedy.togather.user.project.dto.ProjectDTO" id="viewProjectDetailResultMap">
 		<id property="projNo" column="PROJ_NO" />
+		<result property="userNo" column="USER_NO" />
 		<result property="projName" column="PROJ_NM" />
 		<result property="projDetail" column="PROJ_DETAIL" />
 		<result property="projInfoTitle" column="PROJ_INFO_TITLE" />
@@ -132,8 +132,8 @@
 
 	<!-- ========================================================================================================= -->
 
-	<!-- 프로젝트 리스트 조회 -->
-	<select id="selectProjectList" resultMap="viewProjectsResultMap">
+	<!-- 검색된 프로젝트 조회 -->
+	<select id="selectSearchedProjectList" resultMap="viewProjectsResultMap">
 		SELECT
 	      A.PROJ_NO
 	    , B.THUM_PATH
@@ -149,9 +149,29 @@
 	    LEFT JOIN TBL_FILE B ON A.PROJ_NO = B.PROJ_NO
 	    LEFT JOIN TBL_MAKER C ON A.PROJ_NO = C.PROJ_NO
 	    WHERE A.PROJ_STATUS IN ('진행', '마감')
+	    AND A.PROJ_NM LIKE '%'||#{ word }||'%'
+        OR C.MAKER_NM LIKE '%'||#{ word }||'%'
+	    ORDER BY A.PROJ_NO DESC 
+	</select>
+
+	<!-- 프로젝트 리스트 조회 -->
+	<select id="selectProjectList" resultMap="viewProjectsResultMap">
+		SELECT
+	      A.PROJ_NO
+	    , B.THUM_PATH
+	    , A.PROJ_SUMMARY
+	    , A.PROJ_NM
+	    , TRUNC(A.FUNDING_END_DATE - SYSDATE) AS LEFT_DAYS
+	    , A.FUNDING_ACHIVE
+	    , TRUNC(A.FUNDING_ACHIVE / A.FUNDING_GOAL * 100) AS PERCENT
+	    , A.PROJ_STATUS
+	    , C.MAKER_NM
+	    FROM TBL_PROJECT A
+	    LEFT JOIN TBL_FILE B ON A.PROJ_NO = B.PROJ_NO
+	    LEFT JOIN TBL_MAKER C ON A.PROJ_NO = C.PROJ_NO
+	    WHERE A.PROJ_STATUS IN ('진행', '마감')
 	    AND A.CATEGORY_NO = #{ categoryNo }
 	    ORDER BY A.PROJ_NO DESC 
-
 	</select>
 
 	<!-- 프로젝트 상세 페이지 조회 -->
@@ -159,6 +179,7 @@
 		resultMap="viewProjectDetailResultMap">
 		SELECT
 		A.PROJ_NO
+		, A.USER_NO
 		, TRUNC(A.FUNDING_END_DATE - SYSDATE) AS LEFT_DAYS
 		, A.PROJ_NM
 		, A.FUNDING_ACHIVE
@@ -167,6 +188,7 @@
 		, C.MAKER_PROFILE_NM
 		, C.MAKER_NM
 		, C.MAKER_INTRO
+		, C.MAKER_EMAIL
 		, (SELECT COUNT(LIKE_NO) FROM TBL_LIKE D WHERE D.PROJ_NO = A.PROJ_NO)
 		AS TOTAL_LIKES
 		, A.PROJ_INFO_TITLE
@@ -498,9 +520,12 @@
 	<!-- ========================================================================================================= -->
 	
 	<!-- 후기 등록 -->
-	<insert id="">
-		
-	</insert>
+	<update id="updateReview">
+		UPDATE
+	        TBL_PROJECT
+	    SET PROJ_REVIEW = #{ projReview }
+	    WHERE PROJ_NO = #{ projNo }
+	</update>
 	
 	<!-- ========================================================================================================= -->
 	
