@@ -101,4 +101,40 @@
                 
                 		
             </table>
-        </div>
+            
+               
+				
+			<div class="content4">
+  			<button type="button" class="order-back" id="backBtn">이전 페이지</button>
+			</div>
+
+			<script>
+ 			 const backBtn = document.getElementById("backBtn");
+
+  				backBtn.addEventListener("click", function() {
+   				 window.location.href = "/admin/orderManage/orderList";
+  				});
+			</script>
+
+				<style>
+  				.order-back {
+   				 border: 0px;
+   				 border-radius: 8px;
+   				 width: 70px;
+  				 height: 30px;
+   				 background-color: #81ae64;
+    			 color: #ffffff;
+    			 cursor: pointer;
+  				}
+
+  				 .order-back:hover {
+    			  background-color: #c7e78e;
+    			 }
+				</style>
+
+             </div>
+            </div>
+           </body>
+           
+           
+     </html>

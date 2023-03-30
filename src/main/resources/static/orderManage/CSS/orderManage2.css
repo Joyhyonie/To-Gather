@@ -17,7 +17,7 @@
     position: relative;
     max-width: 1100px;
     margin: auto;
-    top: 150px;
+    top: 1350px;
     height: 100vh;
 }
 
@@ -121,30 +121,15 @@ table td {
 }
 
 
-/* content3 (펀딩내역 테이블)*/
-.content3 { }
 
 
-/* content4 (합계 테이블) */
-.total {
-    background-color: #f8f8f8;
-    border-top: 2px solid #c9c9c9;
-    border-bottom: 2px solid #c9c9c9;
-}
-
-/* content5*/
-.content5 {
+/* content4*/
+.content4 {
     display: flex;
     flex-direction: row-reverse;
     height: 30px;
     padding: 0 10px;
-}
 
-.content5 button{
-    border: 0px;
-    border-radius: 8px;
-    width: 70px;
-    height: 30px;
-    background-color: #c7e78e;
-    margin-left: 10px;
+
 }
+  
