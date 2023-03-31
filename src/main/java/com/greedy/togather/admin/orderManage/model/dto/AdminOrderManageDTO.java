@@ -26,10 +26,12 @@ public class AdminOrderManageDTO {
 		private String phone;
 		private String address;
 		private String userNm;
+		
 		private String makerNm;
 		private String makerEmail;
 		private String makerPhone;
 		private String makerAddress;
+		private String makerIntro;			// 소개
 		
 		
 		

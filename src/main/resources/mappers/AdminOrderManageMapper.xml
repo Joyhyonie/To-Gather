@@ -21,6 +21,7 @@
 		<result property="email" column="EMAIL"/>
 		<result property="phone" column="PHONE"/>
 		<result property="address" column="ADDRESS"/>
+		<result property="userNm" column="USER_NM"/>
 		<result property="makerNm" column="MAKER_NM"/>
 		<result property="makerEmail" column="MAKER_EMAIL"/>
 		<result property="makerPhone" column="MAKER_PHONE"/>

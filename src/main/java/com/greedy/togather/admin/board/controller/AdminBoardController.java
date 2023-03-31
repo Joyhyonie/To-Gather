@@ -44,7 +44,8 @@ public class AdminBoardController {
 		model.addAttribute("paging", viewBoardListAndPaging.get("paging"));
 		model.addAttribute("viewBoardList", viewBoardListAndPaging.get("viewBoardList"));
 		
-		return "admin/board/viewBoardList";
+		return "admin/board/viewBoardList" ;
+		
 	}
 	
 	

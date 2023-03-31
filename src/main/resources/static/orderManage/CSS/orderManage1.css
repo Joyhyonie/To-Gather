@@ -81,7 +81,7 @@
 .content2 {
     display: inline-block;
     align-items: center;
-    height: 700px; /* 나중에 조정*/
+    height: 600px; /* 나중에 조정*/
     color:#424242;
 
 }
@@ -98,7 +98,7 @@ table {
 
 .table-header {
     background-color: #f8f8f8;
-    height: 55px;
+    height: 35px;
     border-top: 2px solid #c9c9c9;
     border-bottom: 2px solid #c9c9c9;
 
