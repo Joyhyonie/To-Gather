@@ -82,15 +82,13 @@
                <p>Supporter 정보</p>
             <table>
                 <tr class="table-header" >
-                    <th style="width: 100px">Supporter 이름</th>
-					<th style="width: 100px">이메일</th>
-					<th style="width: 100px">휴대폰</th>
+					<th style="width: 150px">이메일</th>
+					<th style="width: 150px">휴대폰</th>
 					<th style="width: 300px">주소</th>
 				
                 </tr>
                 		
                 	<tr class="table-content" th:each=" order : ${orderManage2}">
-                    <td style="height: 35px" th:text="${ order.userNm }"></td>
                     <td style="height: 35px" th:text="${ order.email }"></td>
                     <td style="height: 35px" th:text="${ order.phone }"></td>
                     <td style="height: 35px" th:text="${ order.address }" ></td>
