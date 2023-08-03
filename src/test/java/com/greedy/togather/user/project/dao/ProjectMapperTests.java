@@ -73,7 +73,7 @@ public class ProjectMapperTests {
 		// given
 		
 		// when
-		ProjectDTO projectDetail = projectMapper.selectProjectDetail("PJ000000001"); 
+		ProjectDTO projectDetail = projectMapper.selectProjectDetail("PJ000000002"); 
 		
 		// then
 		assertNotNull(projectDetail);
@@ -133,10 +133,10 @@ public class ProjectMapperTests {
 		reply.setDonation(100);
 		
 		// when
-//		int result = projectMapper.insertReply(reply);
+		projectMapper.insertReply(reply);
 		
 		// then
-//		assertEquals(1, result);
+		assertNotNull(reply.getReplyNo());
 		
 	}
 

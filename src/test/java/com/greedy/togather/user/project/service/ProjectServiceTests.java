@@ -1,6 +1,5 @@
 package com.greedy.togather.user.project.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -39,25 +38,20 @@ public class ProjectServiceTests {
 		System.out.println(projectList);
 	}
 	
-	/*
-	 * @Test
-	 * 
-	 * @DisplayName("프로젝트 상세 페이지 조회용 서비스 테스트") public void selectProjectDetailTest()
-	 * {
-	 */
+	@Test
+	@DisplayName("프로젝트 상세 페이지 조회용 서비스 테스트") public void selectProjectDetailTest() {
+		
 		// given
 		
 		// when
-		/*
-		 * Map<String, Object> projectList =
-		 * projectService.selectProjectDetail("PJ000000001");
-		 */
+		Map<String, Object> projectList = projectService.selectProjectDetail("PJ000000001", null);
 				
-		/*
-		 * // then assertNotNull(projectList); System.out.println(projectList);
-		 * 
-		 * }
-		 */
+		// then 
+		assertNotNull(projectList); 
+		System.out.println(projectList);
+	
+	}
+
 	
 	@Test
 	@DisplayName("댓글 조회용 서비스 테스트")
@@ -74,6 +68,7 @@ public class ProjectServiceTests {
 		// then
 		assertNotNull(replyList);
 		System.out.println(replyList);
+		
 	}
 	
 	@Test
@@ -87,10 +82,10 @@ public class ProjectServiceTests {
 		reply.setDonation(0);
 		
 		// when
-//		int result = projectService.insertReply(reply);
+		projectService.insertReply(reply);
 		
 		// then
-//		assertEquals(1, result);
+		assertNotNull(reply.getReplyNo());
 		
 	}
 	

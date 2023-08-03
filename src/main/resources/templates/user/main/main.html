@@ -96,35 +96,7 @@
 	        </div>
 		</th:block>
     </div>
-
     <!--------------------------------------------------------------------------->
-	
-<!--     <div class="wrapper">
-        <flex>
-            <div class="board-box">
-                <div class="board-type">Notice</div>
-                <div class="board-block">
-                    <div class="board-title">[안내] To-Gather 서비스 개선 사항 안내</div>
-                    <div class="board-title">[모집] 스타트업 펀딩 지원 프로그램 참여 Maker 모집</div>
-                    <div class="board-title">[안내] To-Gather SNS 광고 수수료 변경 및 정책 안내</div>
-                    <div class="board-title">[안내] 배송 제한 지역 안내</div>
-                    <div class="board-title">[약관/정책] 개인정보처리방침 개정</div>
-                    <div class="board-title">[안내] To-Gather 서비스 개선 사항 안내</div>
-                </div>
-            </div>
-            <div class="board-box">
-                <div class="board-type">FAQ</div>
-                <div class="board-block">
-                    <div class="board-title">To-Gather는 어떤 역할을 담당하나요?</div>
-                    <div class="board-title">회원가입을 해야만 펀딩에 참여할 수 있나요?</div>
-                    <div class="board-title">후원 및 결제 취소는 어떻게 하나요?</div>
-                    <div class="board-title">연말정산을 위해 기부금 영수증이 필요합니다.</div>
-                    <div class="board-title">후원 및 결제한 영수증이 필요합니다.</div>
-                    <div class="board-title">결제가 완료되었음을 어떻게 확인할 수 있나요?</div>
-                </div>
-            </div>
-        </flex>
-    </div> -->
     
     <div th:replace="common/footer/userFooter.html"></div>
     
@@ -132,76 +104,78 @@
 	    /* 프로젝트 블럭 클릭 시 해당 프로젝트 페이지로 이동 */
 	    const projectBlock = document.querySelectorAll(".project-block");
 	
-			projectBlock.forEach(block => {
-			  block.addEventListener("click", (e) => {
-			    const projNo = e.currentTarget.dataset.projNo;
-			    console.log(projNo);
+		projectBlock.forEach(block => {
+			block.addEventListener("click", (e) => {
+				const projNo = e.currentTarget.dataset.projNo;
 			    window.location.href = '/project/detail?projNo=' + projNo;
-			  });
 			});
+		});
 			
-			/* 메인 배너 슬라이드 */
-		    const slides = document.querySelectorAll('.slide');
-		    const slider = document.querySelector('.slider');
-		    const prevBtn = document.querySelector('.prev');
-		    const nextBtn = document.querySelector('.next');
+		/* 메인 배너 슬라이드 */
+		const slides = document.querySelectorAll('.slide');
+		const slider = document.querySelector('.slider');
+		const prevBtn = document.querySelector('.prev');
+		const nextBtn = document.querySelector('.next');
 		      
-		    let currentSlide = 0;
-		    let slideInterval;
+		let currentSlide = 0;
+		let slideInterval;
 		      
-		    function showSlide(n) {
-		        if (n < 0) {
-		            currentSlide = slides.length - 1;
-		        } else if (n >= slides.length) {
-		            currentSlide = 0;
+		function showSlide(n) {
+			
+		    if (n < 0) {
+		        currentSlide = slides.length - 1;
+		    } else if (n >= slides.length) {
+		        currentSlide = 0;
+		    }
+		    
+		    for (let i = 0; i < slides.length; i++) {
+		        if (i < currentSlide) {
+		            slides[i].classList.add('slide-left');
+		            slides[i].classList.remove('slide-right', 'current-slide');
+		        } else if (i === currentSlide) {
+		            slides[i].classList.add('current-slide');
+		            slides[i].classList.remove('slide-right', 'slide-left');
+		        } else {
+		            slides[i].classList.add('slide-right');
+		            slides[i].classList.remove('slide-left', 'current-slide');
 		        }
-		        for (let i = 0; i < slides.length; i++) {
-		            if (i < currentSlide) {
-		                slides[i].classList.add('slide-left');
-		                slides[i].classList.remove('slide-right', 'current-slide');
-		            } else if (i === currentSlide) {
-		                slides[i].classList.add('current-slide');
-		                slides[i].classList.remove('slide-right', 'slide-left');
-		            } else {
-		                slides[i].classList.add('slide-right');
-		                slides[i].classList.remove('slide-left', 'current-slide');
-		            }
-		        }
 		    }
+		    
+		}
 		      
-		    function prevSlide() {
-		        currentSlide--;
-		        showSlide(currentSlide);
-		    }
+		function prevSlide() {
+		    currentSlide--;
+		    showSlide(currentSlide);
+		}
 		      
-		    function nextSlide() {
-		        currentSlide++;
-		        showSlide(currentSlide);
-		    }
+		function nextSlide() {
+		    currentSlide++;
+		    showSlide(currentSlide);
+		}
 		
-		    prevBtn.addEventListener('click', () => {
-		        clearInterval(slideInterval);
-		        prevSlide();
-		    });
+		prevBtn.addEventListener('click', () => {
+		    clearInterval(slideInterval);
+		    prevSlide();
+		});
 		      
-		    nextBtn.addEventListener('click', () => {
-		        clearInterval(slideInterval);
-		        nextSlide();
-		    });
+		nextBtn.addEventListener('click', () => {
+		    clearInterval(slideInterval);
+		    nextSlide();
+		});
 		      
-		    slider.addEventListener('mouseover', () => {
-		        clearInterval(slideInterval);
-		    });
+		slider.addEventListener('mouseover', () => {
+		    clearInterval(slideInterval);
+		});
 		      
-		    slider.addEventListener('mouseout', () => {
-		        slideInterval = setInterval(() => {
-		          nextSlide();
-		        }, 2500);
-		    });
-		      
+		slider.addEventListener('mouseout', () => {
 		    slideInterval = setInterval(() => {
-		        nextSlide();
+		      nextSlide();
 		    }, 2500);
+		});
+		      
+		slideInterval = setInterval(() => {
+		    nextSlide();
+		}, 2500);
     </script>
 </body>
 </html>
