@@ -79,20 +79,5 @@ public interface ProjectMapper {
 	void insertProjectLike(LikeDTO likeProject);
 	
 	void deleteProjectLike(LikeDTO likeProject);
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

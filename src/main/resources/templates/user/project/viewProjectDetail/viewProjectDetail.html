@@ -406,34 +406,39 @@
 				
 				
 				/* 좋아요 기능 */
-				$(document).ready(function() {
-					  // 좋아요 버튼 클릭 시
-					  $('#like-btn').on('click', function() {
-					    let projNo = $('#like-box').data('proj-no');
-					    let data = { projNo: projNo };
-					    /* LikeDTO의 필드명: 변수명 (자동으로 LikeDTO 타입으로 받을 수 있도록) */
-						console.log(projNo);
-					    $.ajax({
-					      type: 'POST',
-					      url: '/project/like',
-					      data: JSON.stringify(data),
-					      contentType: 'application/json;charset=UTF-8',
-					      success: function(result) {
-					    	  console.log(result);
-					        if (result === 'liked') {
-					          $('#like-btn').attr('src', '/user/project/images/like-full.png');
-					          $('#like-people').html('<span>' + (parseInt($('#like-people span').text()) + 1) + '</span>명이 좋아합니다 :)');
-					        } else {
-					          $('#like-btn').attr('src', '/user/project/images/like-empty.png');
-					          $('#like-people').html('<span>' + (parseInt($('#like-people span').text()) - 1) + '</span>명이 좋아합니다 :)');
-					        }
-					      },
-					      error: function(xhr, status, error) {
-					        alert('에러 발생!');
-					        console.log(xhr.responseText);
-					      }
-					    });
-					  });
+				document.addEventListener('DOMContentLoaded', function() {
+				  // 좋아요 버튼 클릭 시
+				  document.getElementById('like-btn').addEventListener('click', function() {
+				    let projNo = document.getElementById('like-box').dataset.projNo;
+				    let data = { projNo: projNo };
+				    /* LikeDTO의 필드명: 변수명 (자동으로 LikeDTO 타입으로 받을 수 있도록) */
+				    console.log(projNo);
+				
+				    fetch('/project/like', {
+				      method: 'POST',
+				      headers: {
+				        'Content-Type': 'application/json;charset=UTF-8'
+				      },
+				      body: JSON.stringify(data)
+				    })
+				    .then(response => response.text())
+				    .then(result => {
+				      console.log(result);
+				      if (result === 'liked') {
+				        document.getElementById('like-btn').src = '/user/project/images/like-full.png';
+				        let likePeople = document.getElementById('like-people');
+				        likePeople.innerHTML = '<span>' + (parseInt(likePeople.querySelector('span').textContent) + 1) + '</span>명이 좋아합니다 :)';
+				      } else {
+				        document.getElementById('like-btn').src = '/user/project/images/like-empty.png';
+				        let likePeople = document.getElementById('like-people');
+				        likePeople.innerHTML = '<span>' + (parseInt(likePeople.querySelector('span').textContent) - 1) + '</span>명이 좋아합니다 :)';
+				      }
+				    })
+				    .catch(error => {
+				      alert('로그인을 해주세요 :)');
+				      console.log(error);
+				    });
+				  });
 				});
 			</script>
 			

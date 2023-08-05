@@ -186,7 +186,6 @@ public class ProjectController {
 		File dir2 = new File(makerProfileDir);
 		File dir3 = new File(documentDir);
 		
-		
 		/* 디렉토리가 없을 경우 생성 */
 		if(!dir1.exists() || !dir2.exists() || !dir3.exists()) {
 			dir1.mkdirs();
@@ -205,17 +204,14 @@ public class ProjectController {
 		
 		for(int i = 0; i < subImageList.size(); i++) {
 			FileDTO processedSubImage = processedFile(subImageList.get(i), fileUploadDir, "서브사진");
-			log.info("[ProjectController] processedSubImage : {}", processedSubImage); 
 			/* processedSubImage가 null이 아닐 때만 담기도록 조건문 설정 (호출한 뒤 반환받은 fileInfo가 null이라는 것은 이미지 첨부가 되지 않았음을 의미 - 서브사진은 nullable) */
 			if(processedSubImage != null) {
-				log.info("[ProjectController] processedSubImage : {}", processedSubImage); 
 				processedSubImageList.add(processedSubImage);
 			}
 		}
 		
 		/* 메이커 프로필은 TBL_MAKER에도 저장 */
 		maker.setMakerProfileName("/upload/makerProfile/" + processedMakerProfile.getSavedFileName());
-		log.info("[ProjectController] maker.getMakerProfileName() : {}", maker.getMakerProfileName());
 		
 		/* DB와의 연결 */
 		project.setWriter(writer);
@@ -225,7 +221,6 @@ public class ProjectController {
 		project.setProcessedSettleDoc(processedSettleDoc);
 		project.setProcessedAccountDoc(processedAccountDoc);
 		project.setProcessedEtcDoc(processedEtcDoc);
-
 		
 		/* 저장한 값 Service에 보내기 */
 		projectService.createProject(project, maker);
@@ -324,24 +319,18 @@ public class ProjectController {
 		
 		/* 프로젝트 상세 내용 조회 */
 		Map<String, Object> allProjectDetails = projectService.selectProjectDetail(projNo, likeProject);
-		log.info("[ProjectController] allProjectDetails : {}", allProjectDetails);
 		
 		model.addAttribute("detail", allProjectDetails.get("projectDetail"));
 		model.addAttribute("rewardList", allProjectDetails.get("rewardList"));
 		model.addAttribute("donationAndReplyCount", allProjectDetails.get("donationAndReplyCount"));
 		model.addAttribute("loadIsLiked", allProjectDetails.get("loadIsLiked"));
-		
-	    log.info("[ProjectController] 프로젝트 상세 페이지의 loadIsLiked : {}", allProjectDetails.get("loadIsLiked"));
 
-		
 		return "user/project/viewProjectDetail/viewProjectDetail";
 	}
 	
 	/* 댓글 조회(비동기통신) */
 	@GetMapping("/loadReply")
 	public ResponseEntity<List<ReplyDTO>> viewReplyList(ReplyDTO loadReply, Model model) {
-		
-		log.info("[ProjectController] loadReply : {}", loadReply);
 		
 		List<ReplyDTO> replyList = projectService.selectReplyList(loadReply);
 		log.info("[ProjectController] replyList : {}", replyList); /* 조회된 최신 댓글 확인 */
@@ -355,13 +344,10 @@ public class ProjectController {
 	@PostMapping("/registReply")
 	public ResponseEntity<String> registReply(@RequestBody ReplyDTO registReply,
 			  								  @AuthenticationPrincipal UserDTO writer) {
-		log.info("[ProjectController] registReply : {}", registReply);
-		log.info("[ProjectController] writer : {}", writer);
 		
 		/* 랜덤 댓글 기부금 설정 */
 		int random = (int)(Math.random() * 2) + 1; 
 		int donation = (random == 1) ? 100 : 0;
-		log.info("[ProjectController] donation : {}", donation);
 		
 		/* registReply에는 projNo, replyBody만 담겨 있는 상태 */
 		registReply.setWriter(writer); 		// 댓글 작성자 = 로그인 유저
@@ -384,8 +370,6 @@ public class ProjectController {
 	@GetMapping("/review")
 	public String goToWriteReview(@RequestParam(value="projNo", required=false) String projNo, ProjectDTO project, Model model, RedirectAttributes rttr) {
 		
-		log.info("[ProjectController] 프로젝트 후기(GET) 의 projNo : {}", projNo);
-		
 		model.addAttribute("projNo", projNo);
 		
 		rttr.addFlashAttribute("message", messageSourceAccessor.getMessage("write.review"));
@@ -395,10 +379,6 @@ public class ProjectController {
 	
 	@PostMapping("/review")
 	public String WriteReview(@RequestParam(name="projNo") String projNo, ProjectDTO project, @RequestParam String reviewBody, RedirectAttributes rttr) {
-		
-		log.info("[ProjectController] 프로젝트 후기의 project : {}", project);
-		log.info("[ProjectController] 프로젝트 후기(POST)의 projNo : {}", projNo);
-		log.info("[ProjectController] 프로젝트 후기의 reviewBody : {}", reviewBody);
 		
 		/* 해당 프로젝트의 projNo도 함께 전송 */
 		project.setProjNo(projNo);
@@ -421,7 +401,6 @@ public class ProjectController {
 		likeProject.setUser(user); // 좋아요한 유저 = 로그인 유저
 	    
 	    int isLiked = projectService.isLikedByUser(likeProject);
-	    log.info("[ProjectController] 프로젝트 좋아요의 isLiked : {}", isLiked);
 	    
 	    String result = null;
 	    
@@ -430,28 +409,9 @@ public class ProjectController {
 	    } else { /* 좋아요가 되어있지 않은 경우 */
 	    	result = "liked";
 	    }
-	    log.info("[ProjectController] 프로젝트 좋아요의 result : {}", result);
+
 	    return ResponseEntity.ok(result);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 
 }

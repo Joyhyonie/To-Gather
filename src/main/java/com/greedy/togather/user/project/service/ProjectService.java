@@ -32,7 +32,6 @@ public class ProjectService {
 	public Map<String, Object> selectSearchedProjectList(String word) {
 		
 		List<ProjectDTO> searchedProjectList = projectMapper.selectSearchedProjectList(word);
-		log.info("[ProjectService] searchedProjectList : {}",  searchedProjectList);
 		
 		Map<String, Object> allProjectList = new HashMap<>();
 		allProjectList.put("searchedProjectList", searchedProjectList);
@@ -44,7 +43,6 @@ public class ProjectService {
 	public Map<String, Object> selectProjectList(String categoryNo) {
 		
 		List<ProjectDTO> projectList = projectMapper.selectProjectList(categoryNo);
-		log.info("[ProjectService] projectList : {}",  projectList);
 		
 		Map<String, Object> allProjectList = new HashMap<>();
 		allProjectList.put("projectList", projectList);
@@ -57,20 +55,15 @@ public class ProjectService {
 		
 		/* 프로젝트 상세 내용 */
 		ProjectDTO projectDetail = projectMapper.selectProjectDetail(projNo);
-		log.info("[ProjectService] projectDetail : {}", projectDetail);
 		
 		/* 리워드 조회 */
 		List<RewardDTO> rewardList = projectMapper.selectRewardList(projNo);
-		log.info("[ProjectService] rewardList : {}", rewardList);
 		
 		/* 총 기부금 & 댓글 개수 조회 */
 		ReplyDTO donationAndReplyCount = projectMapper.selectDonationAndReplyCount(projNo);
-		log.info("[ProjectService] donationAndReplyCount : {}", donationAndReplyCount);
 		
 		/* 현재 로그인한 유저가 해당 프로젝트를 좋아요 했는지 조회 */
-		log.info("[ProjectService] likeProject : {}", likeProject);
 		int loadIsLiked = projectMapper.loadIsLiked(likeProject);
-		log.info("[ProjectService] loadIsLiked : {}", loadIsLiked);
 		
 		Map<String, Object> allProjectDetails = new HashMap<>();
 		allProjectDetails.put("projectDetail", projectDetail);
