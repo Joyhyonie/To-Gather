@@ -75,11 +75,11 @@ To-Gather **모으다**의 의미인 `to gather`와 **함께**를 뜻하는 동�
 <br>
 
 # 🐬 About Team 빙그레
-| 형상관리 | 🌟 | 팀장, 산출물관리 | 🌟 | DB관리 | 🌟 |
+| 형상관리 | 🌟 | 팀장<br>산출물관리 | 🌟 | DB관리 | 🌟 |
 |:---------:|:--------:|:----------:|:--------:|:----------:|:----------:|
 |<img src="https://github.com/Joyhyonie/To-Gather/assets/109155268/3b69c916-7be7-499f-9660-4f3e8bb710ce" alt="유명" width="140">|<img src="https://github.com/Joyhyonie/To-Gather/assets/109155268/f1be64e3-4ada-4591-8f91-4f74cabcc2ea" alt="태훈" width="140">|<img src="https://github.com/Joyhyonie/To-Gather/assets/109155268/c03aa8bc-992b-41c5-9f24-a547e8223a52" alt="효연" width="140">|<img src="https://github.com/Joyhyonie/To-Gather/assets/109155268/7f58e859-c5e8-46ae-ab07-f64878332a73" alt="영주" width="140">|<img src="https://github.com/Joyhyonie/To-Gather/assets/109155268/06310a5e-1380-4546-b450-17767270c038" alt="유찬" width="140">|<img src="https://github.com/Joyhyonie/To-Gather/assets/109155268/8533b9a0-59c6-4574-bd63-4d7e683a4b94" alt="현준" width="140">|
 | **이유명** | **김태훈** | **조효연** | **김영주** | **최유찬** | **신현준** |
-|리워드 결제|로그인<br>마이페이지|프로젝트 조회<br>프로젝트 신청<br>좋아요/공유/댓글<br>프로젝트 후기|프로젝트 관리<br>메인 페이지 관리|회원 관리|주문관리<br>게시판 관리|
+|리워드 결제|로그인<br>마이페이지|프로젝트 조회<br>프로젝트 신청<br>프로젝트 상세<br>프로젝트 후기|프로젝트 관리<br>메인 페이지 관리|회원 관리|주문관리<br>게시판 관리|
 <br>
 
 # ✨ Features
