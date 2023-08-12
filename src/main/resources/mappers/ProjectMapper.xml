@@ -244,7 +244,7 @@
 		FROM TBL_REPLY A
 		LEFT JOIN TBL_USER B ON(A.USER_NO = B.USER_NO)
 		WHERE PROJ_NO = #{ projNo }
-		ORDER BY A.REPLY_NO DESC
+		ORDER BY A.REPLY_REG_DATE DESC
 	</select>
 
 	<!-- 프로젝트 상세 페이지 중, 총 기부금 & 댓글 개수 조회 -->
